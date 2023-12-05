@@ -1,0 +1,10 @@
+name: HomePlugin
+version: '${project.version}'
+main: fr.fuzeblocks.homeplugin.HomePlugin
+api-version: '1.18'
+load: STARTUP
+authors: [fuzeblocks]
+description: [Created by fuzeblocks]
+commands:
+  home:
+    description: Se tp a un de ses homes
