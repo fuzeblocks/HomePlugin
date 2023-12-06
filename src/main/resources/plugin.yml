@@ -8,3 +8,11 @@ description: [Created by fuzeblocks]
 commands:
   home:
     description: Se tp a un de ses homes
+  sethome:
+    description: Sert a poser un home
+  spawn:
+    description: Sert a se tp au spawn
+  setspawn:
+    description: Sert a set le spawn
+  delhome:
+    description: Sert a supprimer un home

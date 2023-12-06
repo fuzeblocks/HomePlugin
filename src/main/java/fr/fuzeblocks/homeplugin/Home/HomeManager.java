@@ -78,6 +78,20 @@ public class HomeManager {
             }
             return null;
         }
+        public boolean delHome(Player player,String homeName) {
+            String key = player.getUniqueId() + ".Home." + homeName + ".";
+            if (yaml.contains(key)) {
+                yaml.set(key,null);
+                try {
+                    yaml.save(file);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                return true;
+            } else {
+                return false;
+            }
+        }
         public void saveFile() {
             try {
                 yaml.save(file);
