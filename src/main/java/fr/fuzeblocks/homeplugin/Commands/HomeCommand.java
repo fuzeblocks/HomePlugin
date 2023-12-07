@@ -2,6 +2,8 @@ package fr.fuzeblocks.homeplugin.Commands;
 
 import fr.fuzeblocks.homeplugin.Home.HomeManager;
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.Status.Status;
+import fr.fuzeblocks.homeplugin.Status.StatusManager;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -21,18 +23,25 @@ public class HomeCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (args.length == 1) {
+                if (StatusManager.getPlayerStatus(player) != null && StatusManager.getPlayerStatus(player).equals(Status.TRUE)) {
+                    player.sendMessage("§cUne téléportation est déja en cours !");
+                    return false;
+                }
                 String home_name = args[0];
                 HomeManager home = instance.homeManager;
                 if (home.getHomeNumber(player) > 0) {
                     Location location = home.getHomeLocation(player, home_name);
                     if (location != null) {
                         player.sendMessage("§6Début de la téléportation pour le home : " + home_name);
+                        StatusManager.setPlayerStatus(player, Status.TRUE);
                         new BukkitRunnable() {
                             @Override
                             public void run() {
                                 player.teleport(location);
+                                player.sendMessage("§aVous vous étes téléporté a votre home : " + home_name);
+                                StatusManager.setPlayerStatus(player,Status.FALSE);
                             }
-                        }.runTaskLater(instance, 3 * 20);
+                        }.runTaskLater(instance, 20L * 3L);
                         return true;
                     } else {
                         player.sendMessage("§cLe home spécifié n'existe pas.");

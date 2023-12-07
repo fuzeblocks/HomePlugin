@@ -5,6 +5,8 @@ api-version: '1.18'
 load: STARTUP
 authors: [fuzeblocks]
 description: [Created by fuzeblocks]
+depend:
+  - LuckPerms
 commands:
   home:
     description: Se tp a un de ses homes

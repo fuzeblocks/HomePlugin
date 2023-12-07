@@ -23,14 +23,14 @@ public class HomeManager {
     }
     public boolean addHome(Player player,String name) {
         String key = player.getUniqueId() + ".Home";
-            if (yaml.contains(key + "." + name)) {
+            if (!yaml.contains(key + "." + name)) {
                 Location location = player.getLocation();
                 yaml.set(key + "." + name + ".X", location.getX());
                 yaml.set(key + "." + name + ".Y", location.getY());
                 yaml.set(key + "." + name + ".Z", location.getZ());
                 yaml.set(key + "." + name + ".PITCH", location.getPitch());
                 yaml.set(key + "." + name + ".YAW", location.getYaw());
-                yaml.set(key + "." + name + ".World", location.getWorld());
+                yaml.set(key + "." + name + ".World", location.getWorld().getName());
                 try {
                     yaml.save(file);
                     return true;
@@ -79,7 +79,7 @@ public class HomeManager {
             return null;
         }
         public boolean delHome(Player player,String homeName) {
-            String key = player.getUniqueId() + ".Home." + homeName + ".";
+            String key = player.getUniqueId() + ".Home." + homeName;
             if (yaml.contains(key)) {
                 yaml.set(key,null);
                 try {
