@@ -1,4 +1,4 @@
-package fr.fuzeblocks.homeplugin.Status;
+package fr.fuzeblocks.homeplugin.status;
 
 import org.bukkit.entity.Player;
 

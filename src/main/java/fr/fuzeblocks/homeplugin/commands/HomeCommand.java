@@ -1,9 +1,9 @@
-package fr.fuzeblocks.homeplugin.Commands;
+package fr.fuzeblocks.homeplugin.commands;
 
-import fr.fuzeblocks.homeplugin.Home.HomeManager;
+import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.Status.Status;
-import fr.fuzeblocks.homeplugin.Status.StatusManager;
+import fr.fuzeblocks.homeplugin.status.Status;
+import fr.fuzeblocks.homeplugin.status.StatusManager;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,12 +23,11 @@ public class HomeCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (args.length == 1) {
-                if (StatusManager.getPlayerStatus(player) != null && StatusManager.getPlayerStatus(player).equals(Status.TRUE)) {
-                    player.sendMessage("§cUne téléportation est déja en cours !");
-                    return false;
-                }
                 String home_name = args[0];
                 HomeManager home = instance.homeManager;
+                if (!home.isStatus(player)) {
+                    return false;
+                }
                 if (home.getHomeNumber(player) > 0) {
                     Location location = home.getHomeLocation(player, home_name);
                     if (location != null) {
@@ -50,8 +49,10 @@ public class HomeCommand implements CommandExecutor {
                     player.sendMessage("§cVous n'avez aucun home enregistré.");
                 }
             } else {
-                player.sendMessage("§cUtilisation: /home <nom-du-home>");
+                player.sendMessage("§cUtilisation de la commande : /home <nom-du-home>");
             }
+        }  else {
+            sender.sendMessage("§cSeul un joueur peut executer cette commande !");
         }
         return false;
     }

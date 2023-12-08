@@ -1,4 +1,4 @@
-package fr.fuzeblocks.homeplugin.Commands;
+package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import org.bukkit.command.Command;
@@ -19,7 +19,11 @@ public class DelHomeCommand implements CommandExecutor {
                 } else {
                     player.sendMessage("§cLe home séléctionné n'existe pas !");
                 }
+            } else {
+                player.sendMessage("§cUtilisation de la commande : /delhome <nom-du-home>");
             }
+        } else {
+            sender.sendMessage("§cSeul un joueur peut executer cette commande !");
         }
         return false;
     }

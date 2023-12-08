@@ -1,5 +1,7 @@
-package fr.fuzeblocks.homeplugin.Home;
+package fr.fuzeblocks.homeplugin.home;
 
+import fr.fuzeblocks.homeplugin.status.Status;
+import fr.fuzeblocks.homeplugin.status.StatusManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
@@ -9,7 +11,6 @@ import org.bukkit.entity.Player;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -41,6 +42,7 @@ public class HomeManager {
                 return false;
             }
         }
+
     public List<Location> getHomesLocation(Player player) {
         List<Location> homes = new ArrayList<>();
         if (getHomeNumber(player) > 0) {
@@ -70,7 +72,15 @@ public class HomeManager {
             return 0;
         }
     }
-
+    public List<String> getHomesNames(Player player) {
+        List<String> home_names = new ArrayList<>();
+        ConfigurationSection homesSection = yaml.getConfigurationSection(player.getUniqueId() + ".Home");
+        if (homesSection != null) {
+            Set<String> homeNames = homesSection.getKeys(false);
+            home_names.addAll(homeNames);
+        }
+        return home_names;
+    }
     public Location getHomeLocation(Player player,String homeName) {
             String key = player.getUniqueId() + ".Home." + homeName + ".";
             if (yaml.contains(key)) {
@@ -92,13 +102,15 @@ public class HomeManager {
                 return false;
             }
         }
-        public void saveFile() {
-            try {
-                yaml.save(file);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        public boolean isStatus(Player player) {
+        if (StatusManager.getPlayerStatus(player) != null && StatusManager.getPlayerStatus(player).equals(Status.TRUE)) {
+            player.sendMessage("§cUne téléportation est déja en cours !");
+            return false;
+        } else {
+            return true;
         }
+    }
+
 
     public File getFile() {
         return file;
@@ -112,7 +124,5 @@ public class HomeManager {
         return yaml;
     }
 
-    public void setYaml(YamlConfiguration yaml) {
-        this.yaml = yaml;
-    }
+ 
 }

@@ -1,9 +1,7 @@
-package fr.fuzeblocks.homeplugin.Commands;
+package fr.fuzeblocks.homeplugin.commands;
 
-import fr.fuzeblocks.homeplugin.Home.HomeManager;
+import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.Status.Status;
-import fr.fuzeblocks.homeplugin.Status.StatusManager;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
 import org.bukkit.command.Command;
@@ -17,22 +15,27 @@ public class SetHomeCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = ((Player) sender).getPlayer();
             if (args.length == 1) {
-                if (StatusManager.getPlayerStatus(player) != null && StatusManager.getPlayerStatus(player).equals(Status.TRUE)) {
-                    player.sendMessage("§cUne téléportation est déja en cours !");
-                    return false;
-                }
                 String home_name = args[0];
                 HomeManager homeManager = HomePlugin.homeManager;
-                if (sethomecheck(player, homeManager) == false) {
+                if (homeManager.isStatus(player)) {
+                    return false;
+                }
+                if (!sethomecheck(player, homeManager)) {
                    if (homeManager.addHome(player,home_name)) {
                        player.sendMessage("§aHome ajouté !");
+                   } else {
+                       player.sendMessage("§cUne erreur est survenu !");
                    }
                     return true;
                 } else {
                     player.sendMessage("§cVous avez atteint la limite d'homes disponible !");
                     return false;
                 }
+            } else {
+                player.sendMessage("§cUtilisation de la commande : /sethome <nom-du-home>");
             }
+        }  else {
+            sender.sendMessage("§cSeul un joueur peut executer cette commande !");
         }
         return false;
     }
