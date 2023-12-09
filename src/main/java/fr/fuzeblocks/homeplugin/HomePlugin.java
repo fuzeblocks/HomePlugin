@@ -4,6 +4,7 @@ import fr.fuzeblocks.homeplugin.commands.*;
 import fr.fuzeblocks.homeplugin.completer.HomeCompleter;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.listener.OnJoinListener;
+import fr.fuzeblocks.homeplugin.listener.OnMoveListener;
 import fr.fuzeblocks.homeplugin.spawn.SpawnManager;
 import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
@@ -25,9 +26,10 @@ public final class HomePlugin extends JavaPlugin {
         System.out.println("------------------------------------------------------");
         luckPermRegistration();
         homeRegistration();
-        spawnManager();
         commandRegistration();
         eventRegistration();
+        completerManager();
+        spawnManager();
     }
 
         @Override
@@ -64,7 +66,8 @@ public final class HomePlugin extends JavaPlugin {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                getLogger().severe("Cannot create file exiting...");
+                Bukkit.getPluginManager().disablePlugin(this);
             }
         }
     }
@@ -75,9 +78,11 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("delhome").setExecutor(new DelHomeCommand());
         getCommand("setspawn").setExecutor(new SetSpawnCommand());
         getCommand("delspawn").setExecutor(new DelSpawnCommand());
+        getCommand("spawn").setExecutor(new SpawnCommand(this));
     }
     private void eventRegistration() {
         Bukkit.getPluginManager().registerEvents(new OnJoinListener(),this);
+        Bukkit.getPluginManager().registerEvents(new OnMoveListener(),this);
     }
     private void completerManager() {
         getCommand("home").setTabCompleter(new HomeCompleter());

@@ -4,15 +4,22 @@ import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.status.Status;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
+import fr.fuzeblocks.homeplugin.task.CancelTask;
+import fr.fuzeblocks.homeplugin.task.TaskManager;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
-public class HomeCommand implements CommandExecutor {
+import java.util.HashMap;
+
+import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.getTaskManagerInstance;
+import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance;
+
+public class HomeCommand implements CommandExecutor, CancelTask {
     private final HomePlugin instance;
+    private static TaskManager taskManager;
 
     public HomeCommand(HomePlugin instance) {
         this.instance = instance;
@@ -23,24 +30,20 @@ public class HomeCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (args.length == 1) {
-                String home_name = args[0];
-                HomeManager home = instance.homeManager;
-                if (!home.isStatus(player)) {
+                String homeName = args[0];
+                HomeManager homeManager = HomePlugin.homeManager;
+                if (homeManager.isStatus(player)) {
                     return false;
                 }
-                if (home.getHomeNumber(player) > 0) {
-                    Location location = home.getHomeLocation(player, home_name);
-                    if (location != null) {
-                        player.sendMessage("§6Début de la téléportation pour le home : " + home_name);
+                if (homeManager.getHomeNumber(player) > 0) {
+                    Location homeLocation = homeManager.getHomeLocation(player, homeName);
+                    if (homeLocation != null) {
+                        player.sendMessage("§6Début de la téléportation pour le home : " + homeName);
                         StatusManager.setPlayerStatus(player, Status.TRUE);
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                player.teleport(location);
-                                player.sendMessage("§aVous vous étes téléporté a votre home : " + home_name);
-                                StatusManager.setPlayerStatus(player,Status.FALSE);
-                            }
-                        }.runTaskLater(instance, 20L * 3L);
+                        taskManager = new TaskManager(instance);
+                        taskManager.homeTask(homeName,player);
+                        taskManager.startTeleportTask();
+                        setTaskManagerInstance(player,taskManager);
                         return true;
                     } else {
                         player.sendMessage("§cLe home spécifié n'existe pas.");

@@ -16,5 +16,7 @@ commands:
     description: Sert a se tp au spawn
   setspawn:
     description: Sert a set le spawn
+  delspawn:
+    description: Sert a supprimer le spawn
   delhome:
     description: Sert a supprimer un home

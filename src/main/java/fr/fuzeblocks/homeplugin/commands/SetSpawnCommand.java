@@ -14,6 +14,10 @@ public class SetSpawnCommand implements CommandExecutor {
             Player player = ((Player) sender).getPlayer();
             if (player.isOp()) {
                 Location location = player.getLocation();
+                if (HomePlugin.spawnManager.hasSpawn()) {
+                    player.sendMessage("§cLe spawn existe deja !");
+                    return false;
+                }
                 HomePlugin.spawnManager.setSpawn(location);
                 player.sendMessage("§aLe spawn a été defini en X : " + location.getX() + " Y : " + location.getY() + " Z : " + location.getZ());
                 return true;

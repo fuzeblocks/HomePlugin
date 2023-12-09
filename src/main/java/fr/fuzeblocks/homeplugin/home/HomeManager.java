@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 public class HomeManager {
     private File file;
@@ -105,9 +106,9 @@ public class HomeManager {
         public boolean isStatus(Player player) {
         if (StatusManager.getPlayerStatus(player) != null && StatusManager.getPlayerStatus(player).equals(Status.TRUE)) {
             player.sendMessage("§cUne téléportation est déja en cours !");
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
         }
     }
 

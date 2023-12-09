@@ -1,12 +1,15 @@
 package fr.fuzeblocks.homeplugin.spawn;
 
+import fr.fuzeblocks.homeplugin.status.Status;
+import fr.fuzeblocks.homeplugin.status.StatusManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
-
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+
 
 public class SpawnManager {
     private YamlConfiguration yaml;
@@ -23,7 +26,7 @@ public class SpawnManager {
         yaml.set(key + "Z",location.getZ());
         yaml.set(key + "YAW",location.getYaw());
         yaml.set(key + "PITCH",location.getPitch());
-        yaml.set(key + "World",location.getWorld().getUID().toString());
+        yaml.set(key + "World", location.getWorld().getName());
         try {
             yaml.save(file);
             return true;
@@ -58,19 +61,12 @@ public class SpawnManager {
         }
     }
 
-    public YamlConfiguration getYaml() {
-        return yaml;
-    }
-
-    public void setYaml(YamlConfiguration yaml) {
-        this.yaml = yaml;
-    }
-
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
+    public boolean isStatus(Player player) {
+        if (StatusManager.getPlayerStatus(player) != null && StatusManager.getPlayerStatus(player).equals(Status.TRUE)) {
+            player.sendMessage("§cUne téléportation est déja en cours !");
+            return true;
+        } else {
+            return false;
+        }
     }
 }
