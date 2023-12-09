@@ -9,6 +9,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import static fr.fuzeblocks.homeplugin.HomePlugin.homeManager;
 import static fr.fuzeblocks.homeplugin.HomePlugin.spawnManager;
 
@@ -18,6 +21,8 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
     private BukkitTask teleportTask;
     private HomePlugin plugin;
     private String homeName;
+    private int time = 3;
+
 
     public Task getTask() {
         return task;
@@ -29,6 +34,7 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
 
     @Override
     public void run() {
+        //Add title
         if (task.equals(Task.Home)) {
             teleportHome();
         } else if (task.equals(Task.Spawn)) {
@@ -74,5 +80,21 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
     public void spawnTask(Player player) {
         this.player = player;
         task = Task.Spawn;
+    }
+    private void addTimeTitle() {
+        if (time == 3) {
+            player.sendTitle("§eTeleportation dans :", String.valueOf(time),100,1000,100);
+            time--;
+        }
+        if (time == 2) {
+            player.sendTitle("§eTeleportation dans :", String.valueOf(time),100,1000,100);
+            player.resetTitle();
+            time--;
+        }
+        if (time == 1) {
+            player.sendTitle("§eTeleportation dans :", String.valueOf(time),100,1000,100);
+            player.resetTitle();
+            time--;
+        }
     }
 }
