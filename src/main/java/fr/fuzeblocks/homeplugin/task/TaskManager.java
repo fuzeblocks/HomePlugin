@@ -16,6 +16,7 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
     private Task task;
     private Player player;
     private BukkitTask teleportTask;
+    private BukkitRunnable titleTask;
     private HomePlugin plugin;
     private String homeName;
     private Location location;
@@ -49,13 +50,13 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
 
     public void startTeleportTask() {
         teleportTask = runTaskLater(plugin, 20L * 3L);
-        addTimeTitle();
+        titleTask.runTaskTimer(plugin, 20L, 20L);
     }
 
     public void cancelTeleportTask() throws TeleportTaskException {
         if (teleportTask != null && !teleportTask.isCancelled()) {
             teleportTask.cancel();
-            addTimeTitle().cancel();
+            titleTask.cancel();
             player.sendMessage("§cLa téléportation a été annulée car vous avez bougé.");
             StatusManager.setPlayerStatus(player,false);
         } else {
@@ -76,32 +77,31 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
         this.player = player;
         task = Task.Spawn;
     }
-    private BukkitRunnable addTimeTitle() {
-        player.sendMessage("Title on");
-        new BukkitRunnable() {
+    private void addTimeTitle() {
+         titleTask = new BukkitRunnable() {
             int time = 3;
 
             @Override
             public void run() {
-                player.sendMessage("Title : " + time);
                 if (time == 3) {
-                    player.sendTitle("§eTeleportation dans :", String.valueOf(time), 100, 1000, 100);
+                    player.sendTitle("§eTeleportation dans :", String.valueOf(time), 0, 1000, 0);
                     time--;
                 } else if (time == 2) {
                     player.resetTitle();
-                    player.sendTitle("§eTeleportation dans :", String.valueOf(time), 100, 1000, 100);
+                    player.sendTitle("§eTeleportation dans :", String.valueOf(time), 0, 1000, 0);
                     time--;
                 } else if (time == 1) {
                     player.resetTitle();
-                    player.sendTitle("§eTeleportation dans :", String.valueOf(time), 100, 1000, 100);
+                    player.sendTitle("§eTeleportation dans :", String.valueOf(time), 0, 1000, 0);
                     time--;
                 } else if (time == 0) {
                     cancel();
                 }
             }
-        }.runTaskTimer(plugin, 20L, 20L);
-        return this;
+        };
+
     }
+
 
 
     public Player getPlayer() {
