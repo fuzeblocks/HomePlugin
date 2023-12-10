@@ -9,13 +9,12 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeCompleter implements TabCompleter {
+public class DelHomeCompleter implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        List<String> home = new ArrayList<>();
         if (args.length == 1) {
+            List<String> home = new ArrayList<>();
             home.addAll(HomePlugin.getHomeManager().getHomesNames((Player) sender));
-            return home;
         }
         return null;
     }

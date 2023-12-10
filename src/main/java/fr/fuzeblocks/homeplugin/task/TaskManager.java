@@ -79,28 +79,27 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
     private void addTimeTitle() {
         new BukkitRunnable() {
             int time = 3;
+
             @Override
             public void run() {
                 if (time == 3) {
-                    player.sendTitle("§eTeleportation dans :", String.valueOf(time),100,1000,100);
+                    player.sendTitle("§eTeleportation dans :", String.valueOf(time), 100, 1000, 100);
                     time--;
-                }
-                if (time == 2) {
-                    player.sendTitle("§eTeleportation dans :", String.valueOf(time),100,1000,100);
+                } else if (time == 2) {
                     player.resetTitle();
+                    player.sendTitle("§eTeleportation dans :", String.valueOf(time), 100, 1000, 100);
                     time--;
-                }
-                if (time == 1) {
-                    player.sendTitle("§eTeleportation dans :", String.valueOf(time),100,1000,100);
+                } else if (time == 1) {
                     player.resetTitle();
+                    player.sendTitle("§eTeleportation dans :", String.valueOf(time), 100, 1000, 100);
                     time--;
-                }
-                if (time == 0) {
+                } else if (time == 0) {
                     cancel();
                 }
             }
-        }.runTaskTimer(plugin,20L,0L);
+        }.runTaskTimer(plugin, 20L, 20L);
     }
+
 
     public Player getPlayer() {
         return player;

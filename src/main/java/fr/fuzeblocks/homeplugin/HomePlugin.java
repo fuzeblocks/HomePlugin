@@ -2,6 +2,7 @@ package fr.fuzeblocks.homeplugin;
 
 import fr.fuzeblocks.homeplugin.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.commands.*;
+import fr.fuzeblocks.homeplugin.completer.DelHomeCompleter;
 import fr.fuzeblocks.homeplugin.completer.HomeCompleter;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.listener.OnJoinListener;
@@ -89,6 +90,7 @@ public final class HomePlugin extends JavaPlugin {
     }
     private void completerManager() {
         getCommand("home").setTabCompleter(new HomeCompleter());
+        getCommand("delhome").setTabCompleter(new DelHomeCompleter());
     }
 
     public static LuckPerms getApi() {
