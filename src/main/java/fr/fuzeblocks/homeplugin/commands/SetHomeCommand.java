@@ -2,8 +2,6 @@ package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import net.luckperms.api.model.user.User;
-import net.luckperms.api.node.Node;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -41,18 +39,9 @@ public class SetHomeCommand implements CommandExecutor {
     }
 
     public boolean sethomecheck(Player player, HomeManager homeManager) {
-        User user = HomePlugin.getApi().getUserManager().getUser(player.getUniqueId());
-        if (user != null) {
-            for (Node node : user.getNodes()) {
-                if (node.getKey().equals("group")) {
-                    String groupName = String.valueOf(node.getValue());
-                    if (groupName.equalsIgnoreCase("VIP") && homeManager.getHomeNumber(player) >= 6) {
-                        return true;
-                    }
-                }
-            }
+        if (player.hasPermission("HomePlugin.vip")) {
+            return true;
         }
-
         return homeManager.getHomeNumber(player) >= 3;
     }
 }

@@ -35,7 +35,6 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
     }
 
     private void teleportHome() {
-        addTimeTitle();
         player.teleport(location);
         player.sendMessage("§aVous vous êtes téléporté à votre home : " + homeName);
         player.playEffect(getHomeManager().getHomeLocation(player, homeName), Effect.MOBSPAWNER_FLAMES, 5000);
@@ -43,7 +42,6 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
     }
 
     private void teleportSpawn() {
-        addTimeTitle();
         player.teleport(getSpawnManager().getSpawn());
         player.sendMessage("§aVous vous êtes téléporté au spawn");
         StatusManager.setPlayerStatus(player, false);
@@ -51,11 +49,13 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
 
     public void startTeleportTask() {
         teleportTask = runTaskLater(plugin, 20L * 3L);
+        addTimeTitle();
     }
 
     public void cancelTeleportTask() throws TeleportTaskException {
         if (teleportTask != null && !teleportTask.isCancelled()) {
             teleportTask.cancel();
+            addTimeTitle().cancel();
             player.sendMessage("§cLa téléportation a été annulée car vous avez bougé.");
             StatusManager.setPlayerStatus(player,false);
         } else {
@@ -76,12 +76,14 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
         this.player = player;
         task = Task.Spawn;
     }
-    private void addTimeTitle() {
+    private BukkitRunnable addTimeTitle() {
+        player.sendMessage("Title on");
         new BukkitRunnable() {
             int time = 3;
 
             @Override
             public void run() {
+                player.sendMessage("Title : " + time);
                 if (time == 3) {
                     player.sendTitle("§eTeleportation dans :", String.valueOf(time), 100, 1000, 100);
                     time--;
@@ -98,6 +100,7 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
                 }
             }
         }.runTaskTimer(plugin, 20L, 20L);
+        return this;
     }
 
 
