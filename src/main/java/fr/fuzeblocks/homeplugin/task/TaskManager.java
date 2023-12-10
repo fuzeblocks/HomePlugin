@@ -1,19 +1,16 @@
 package fr.fuzeblocks.homeplugin.task;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.status.Status;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import fr.fuzeblocks.homeplugin.task.exception.TeleportTaskException;
 import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.Timer;
-import java.util.TimerTask;
 
-import static fr.fuzeblocks.homeplugin.HomePlugin.homeManager;
-import static fr.fuzeblocks.homeplugin.HomePlugin.spawnManager;
+import static fr.fuzeblocks.homeplugin.HomePlugin.*;
 
 public class TaskManager extends BukkitRunnable implements TaskInterface {
     private Task task;
@@ -21,11 +18,8 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
     private BukkitTask teleportTask;
     private HomePlugin plugin;
     private String homeName;
+    private Location location;
 
-
-    public Task getTask() {
-        return task;
-    }
 
     public TaskManager(HomePlugin plugin) {
         this.plugin = plugin;
@@ -34,25 +28,25 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
     @Override
     public void run() {
         if (task.equals(Task.Home)) {
-            addTimeTitle();
             teleportHome();
         } else if (task.equals(Task.Spawn)) {
-            addTimeTitle();
             teleportSpawn();
         }
     }
 
     private void teleportHome() {
-        player.teleport(homeManager.getHomeLocation(player, homeName));
+        addTimeTitle();
+        player.teleport(location);
         player.sendMessage("§aVous vous êtes téléporté à votre home : " + homeName);
-        player.playEffect(homeManager.getHomeLocation(player, homeName), Effect.MOBSPAWNER_FLAMES, 5000);
-        StatusManager.setPlayerStatus(player, Status.FALSE);
+        player.playEffect(getHomeManager().getHomeLocation(player, homeName), Effect.MOBSPAWNER_FLAMES, 5000);
+        StatusManager.setPlayerStatus(player, false);
     }
 
     private void teleportSpawn() {
-        player.teleport(spawnManager.getSpawn());
+        addTimeTitle();
+        player.teleport(getSpawnManager().getSpawn());
         player.sendMessage("§aVous vous êtes téléporté au spawn");
-        StatusManager.setPlayerStatus(player, Status.FALSE);
+        StatusManager.setPlayerStatus(player, false);
     }
 
     public void startTeleportTask() {
@@ -63,16 +57,17 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
         if (teleportTask != null && !teleportTask.isCancelled()) {
             teleportTask.cancel();
             player.sendMessage("§cLa téléportation a été annulée car vous avez bougé.");
-            StatusManager.setPlayerStatus(player,Status.FALSE);
+            StatusManager.setPlayerStatus(player,false);
         } else {
             throw new TeleportTaskException();
         }
     }
 
     @Override
-    public void homeTask(String homeName, Player player) {
+    public void homeTask(String homeName, Player player,Location location) {
         this.player = player;
         this.homeName = homeName;
+        this.location = location;
         task = Task.Home;
     }
 
@@ -104,6 +99,13 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
                     cancel();
                 }
             }
-        }.runTaskTimer(plugin,0L,20L);
+        }.runTaskTimer(plugin,20L,0L);
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+    public Task getTask() {
+        return task;
     }
 }

@@ -1,6 +1,5 @@
 package fr.fuzeblocks.homeplugin.listener;
 
-import fr.fuzeblocks.homeplugin.status.Status;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import fr.fuzeblocks.homeplugin.task.CancelTask;
 import fr.fuzeblocks.homeplugin.task.Task;
@@ -15,12 +14,12 @@ public class OnMoveListener implements Listener {
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
-        if (StatusManager.getPlayerStatus(player) != null && StatusManager.getPlayerStatus(player).equals(Status.TRUE)) {
+        if (StatusManager.getPlayerStatus(player)) {
                 if (getTaskManagerInstance(player).getTask().equals(Task.Spawn)) {
                     CancelTask.cancelTeleportTask(getTaskManagerInstance(player));
                 }
             }
-        if (StatusManager.getPlayerStatus(player) != null && StatusManager.getPlayerStatus(player).equals(Status.TRUE)) {
+        if (StatusManager.getPlayerStatus(player)) {
                 if (getTaskManagerInstance(player).getTask().equals(Task.Home)) {
                     CancelTask.cancelTeleportTask(getTaskManagerInstance(player));
                 }

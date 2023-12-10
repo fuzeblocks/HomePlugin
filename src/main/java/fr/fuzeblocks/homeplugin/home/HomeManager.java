@@ -1,6 +1,7 @@
 package fr.fuzeblocks.homeplugin.home;
 
-import fr.fuzeblocks.homeplugin.status.Status;
+import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -11,9 +12,9 @@ import org.bukkit.entity.Player;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 public class HomeManager {
     private File file;
@@ -82,6 +83,9 @@ public class HomeManager {
         }
         return home_names;
     }
+   public CacheManager getCacheManager() {
+        return HomePlugin.getCacheManager();
+   }
     public Location getHomeLocation(Player player,String homeName) {
             String key = player.getUniqueId() + ".Home." + homeName + ".";
             if (yaml.contains(key)) {
@@ -104,26 +108,11 @@ public class HomeManager {
             }
         }
         public boolean isStatus(Player player) {
-        if (StatusManager.getPlayerStatus(player) != null && StatusManager.getPlayerStatus(player).equals(Status.TRUE)) {
+        if (StatusManager.getPlayerStatus(player)) {
             player.sendMessage("§cUne téléportation est déja en cours !");
             return true;
         } else {
             return false;
         }
     }
-
-
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
-    }
-
-    public YamlConfiguration getYaml() {
-        return yaml;
-    }
-
- 
 }

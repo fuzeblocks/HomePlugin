@@ -16,7 +16,7 @@ public class SetHomeCommand implements CommandExecutor {
             Player player = ((Player) sender).getPlayer();
             if (args.length == 1) {
                 String home_name = args[0];
-                HomeManager homeManager = HomePlugin.homeManager;
+                HomeManager homeManager = HomePlugin.getHomeManager();
                 if (homeManager.isStatus(player)) {
                     return false;
                 }
@@ -41,7 +41,7 @@ public class SetHomeCommand implements CommandExecutor {
     }
 
     public boolean sethomecheck(Player player, HomeManager homeManager) {
-        User user = HomePlugin.api.getUserManager().getUser(player.getUniqueId());
+        User user = HomePlugin.getApi().getUserManager().getUser(player.getUniqueId());
         if (user != null) {
             for (Node node : user.getNodes()) {
                 if (node.getKey().equals("group")) {

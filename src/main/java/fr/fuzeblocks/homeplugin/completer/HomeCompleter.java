@@ -15,7 +15,7 @@ public class HomeCompleter implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> home = new ArrayList<>();
         if (args.length == 1) {
-            HomeManager homeManager = HomePlugin.homeManager;
+            HomeManager homeManager = HomePlugin.getHomeManager();
             Player player = (Player) sender;
             home.addAll(homeManager.getHomesNames(player));
             return home;

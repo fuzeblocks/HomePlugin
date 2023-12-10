@@ -12,7 +12,7 @@ public class DelSpawnCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = ((Player) sender).getPlayer();
             if (player.isOp()) {
-                HomePlugin.spawnManager.removeSpawn();
+                HomePlugin.getSpawnManager().removeSpawn();
                 player.sendMessage("§cLe spawn a été supprimé !");
                 return true;
             } else {

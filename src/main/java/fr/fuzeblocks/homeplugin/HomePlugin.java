@@ -1,5 +1,6 @@
 package fr.fuzeblocks.homeplugin;
 
+import fr.fuzeblocks.homeplugin.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.commands.*;
 import fr.fuzeblocks.homeplugin.completer.HomeCompleter;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
@@ -15,9 +16,10 @@ import java.io.File;
 import java.io.IOException;
 
 public final class HomePlugin extends JavaPlugin {
-   public static LuckPerms api;
-    public static HomeManager homeManager;
-    public static SpawnManager spawnManager;
+   private static LuckPerms api;
+    private static HomeManager homeManager;
+    private static SpawnManager spawnManager;
+    private static CacheManager cacheManager;
 
     @Override
     public void onEnable() {
@@ -30,6 +32,7 @@ public final class HomePlugin extends JavaPlugin {
         eventRegistration();
         completerManager();
         spawnManager();
+        cacheManager = new CacheManager();
     }
 
         @Override
@@ -86,5 +89,21 @@ public final class HomePlugin extends JavaPlugin {
     }
     private void completerManager() {
         getCommand("home").setTabCompleter(new HomeCompleter());
+    }
+
+    public static LuckPerms getApi() {
+        return api;
+    }
+
+    public static HomeManager getHomeManager() {
+        return homeManager;
+    }
+
+    public static SpawnManager getSpawnManager() {
+        return spawnManager;
+    }
+
+    public static CacheManager getCacheManager() {
+        return cacheManager;
     }
 }

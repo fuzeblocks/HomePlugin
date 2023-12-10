@@ -12,7 +12,7 @@ public class OnJoinListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (!player.hasPlayedBefore()) {
-            SpawnManager spawnManager = HomePlugin.spawnManager;
+            SpawnManager spawnManager = HomePlugin.getSpawnManager();
             if (spawnManager.hasSpawn()) {
                 player.teleport(spawnManager.getSpawn());
             }

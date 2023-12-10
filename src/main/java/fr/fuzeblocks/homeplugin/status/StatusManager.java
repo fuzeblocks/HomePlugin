@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 
 public class StatusManager {
-    private static HashMap<Player,Status> player_status = new HashMap<>();
-    public static void setPlayerStatus(Player player,Status status) {
+    private static HashMap<Player,Boolean> player_status = new HashMap<>();
+    public static void setPlayerStatus(Player player,boolean status) {
         if (player_status.containsKey(player)) {
             player_status.remove(player);
             player_status.put(player,status);
@@ -15,10 +15,10 @@ public class StatusManager {
         }
     }
 
-    public static Status getPlayerStatus(Player player) {
+    public static boolean getPlayerStatus(Player player) {
         if (player_status.containsKey(player)) {
             return player_status.get(player);
         }
-        return null;
+        return false;
     }
 }

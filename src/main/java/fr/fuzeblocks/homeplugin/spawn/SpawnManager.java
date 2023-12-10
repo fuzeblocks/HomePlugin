@@ -1,6 +1,7 @@
 package fr.fuzeblocks.homeplugin.spawn;
 
-import fr.fuzeblocks.homeplugin.status.Status;
+import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -62,7 +63,7 @@ public class SpawnManager {
     }
 
     public boolean isStatus(Player player) {
-        if (StatusManager.getPlayerStatus(player) != null && StatusManager.getPlayerStatus(player).equals(Status.TRUE)) {
+        if (StatusManager.getPlayerStatus(player)) {
             player.sendMessage("§cUne téléportation est déja en cours !");
             return true;
         } else {
