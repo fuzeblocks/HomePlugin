@@ -21,7 +21,6 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
     private BukkitTask teleportTask;
     private HomePlugin plugin;
     private String homeName;
-    private int time = 3;
 
 
     public Task getTask() {
@@ -34,10 +33,11 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
 
     @Override
     public void run() {
-        //Add title
         if (task.equals(Task.Home)) {
+            addTimeTitle();
             teleportHome();
         } else if (task.equals(Task.Spawn)) {
+            addTimeTitle();
             teleportSpawn();
         }
     }
@@ -82,19 +82,28 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
         task = Task.Spawn;
     }
     private void addTimeTitle() {
-        if (time == 3) {
-            player.sendTitle("§eTeleportation dans :", String.valueOf(time),100,1000,100);
-            time--;
-        }
-        if (time == 2) {
-            player.sendTitle("§eTeleportation dans :", String.valueOf(time),100,1000,100);
-            player.resetTitle();
-            time--;
-        }
-        if (time == 1) {
-            player.sendTitle("§eTeleportation dans :", String.valueOf(time),100,1000,100);
-            player.resetTitle();
-            time--;
-        }
+        new BukkitRunnable() {
+            int time = 3;
+            @Override
+            public void run() {
+                if (time == 3) {
+                    player.sendTitle("§eTeleportation dans :", String.valueOf(time),100,1000,100);
+                    time--;
+                }
+                if (time == 2) {
+                    player.sendTitle("§eTeleportation dans :", String.valueOf(time),100,1000,100);
+                    player.resetTitle();
+                    time--;
+                }
+                if (time == 1) {
+                    player.sendTitle("§eTeleportation dans :", String.valueOf(time),100,1000,100);
+                    player.resetTitle();
+                    time--;
+                }
+                if (time == 0) {
+                    cancel();
+                }
+            }
+        }.runTaskTimer(plugin,0L,20L);
     }
 }
