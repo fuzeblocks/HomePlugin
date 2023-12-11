@@ -40,7 +40,7 @@ public class SetHomeCommand implements CommandExecutor {
 
     public boolean sethomecheck(Player player, HomeManager homeManager) {
         if (player.hasPermission("HomePlugin.vip")) {
-            return true;
+            return false;
         }
         return homeManager.getHomeNumber(player) >= 3;
     }

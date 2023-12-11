@@ -1,4 +1,4 @@
-package fr.fuzeblocks.homeplugin.listener;
+package fr.fuzeblocks.homeplugin.listeners;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.spawn.SpawnManager;

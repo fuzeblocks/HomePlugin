@@ -18,3 +18,5 @@ commands:
     description: Sert a supprimer le spawn
   delhome:
     description: Sert a supprimer un home
+  cache:
+    description: Sert a vider le cache de tous ou un joueur/s

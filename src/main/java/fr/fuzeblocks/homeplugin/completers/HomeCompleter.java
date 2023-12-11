@@ -1,4 +1,4 @@
-package fr.fuzeblocks.homeplugin.completer;
+package fr.fuzeblocks.homeplugin.completers;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import org.bukkit.command.Command;

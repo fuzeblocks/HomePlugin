@@ -1,4 +1,4 @@
-package fr.fuzeblocks.homeplugin.listener;
+package fr.fuzeblocks.homeplugin.listeners;
 
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import fr.fuzeblocks.homeplugin.task.CancelTask;

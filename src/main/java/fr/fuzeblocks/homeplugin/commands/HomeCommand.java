@@ -35,7 +35,6 @@ public class HomeCommand implements CommandExecutor, CancelTask {
                 }
                 if (homeManager.getHomeNumber(player) > 0) {
                     if (verifyInCache(homeManager,player,homeName)) {
-                        System.out.println("The home : " + homeName + " has been found in cache ");
                         setPlayerTeleportation(player,homeName,homeManager.getCacheManager().getHomesInCache(player).get(homeName));
                         return true;
                     }

@@ -13,7 +13,7 @@ public class DelHomeCommand implements CommandExecutor {
             Player player = ((Player) sender).getPlayer();
             if (args.length == 1) {
                 String home_name = args[0];
-                if (HomePlugin.getHomeManager().delHome(player,home_name)) {
+                if (HomePlugin.getHomeManager().delHome(player,home_name) && HomePlugin.getCacheManager().delHomeInCache(player,home_name)) {
                     player.sendMessage("§aLe home a été supprimé avec succés !");
                     return true;
                 } else {

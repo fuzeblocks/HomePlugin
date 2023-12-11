@@ -12,7 +12,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import static fr.fuzeblocks.homeplugin.HomePlugin.*;
 
-public class TaskManager extends BukkitRunnable implements TaskInterface {
+public class TaskManager extends BukkitRunnable {
     private Task task;
     private Player player;
     private BukkitTask teleportTask;
@@ -38,8 +38,9 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
     private void teleportHome() {
         player.teleport(location);
         player.sendMessage("§aVous vous êtes téléporté à votre home : " + homeName);
-        player.playEffect(getHomeManager().getHomeLocation(player, homeName), Effect.MOBSPAWNER_FLAMES, 5000);
+        player.resetTitle();
         StatusManager.setPlayerStatus(player, false);
+        player.playEffect(getHomeManager().getHomeLocation(player, homeName), Effect.MOBSPAWNER_FLAMES, 5000);
     }
 
     private void teleportSpawn() {
@@ -49,14 +50,18 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
     }
 
     public void startTeleportTask() {
+        addTimeTitle();
+        titleTask.runTaskTimer(plugin, 0L, 20L);
         teleportTask = runTaskLater(plugin, 20L * 3L);
-        titleTask.runTaskTimer(plugin, 20L, 20L);
     }
+
+
 
     public void cancelTeleportTask() throws TeleportTaskException {
         if (teleportTask != null && !teleportTask.isCancelled()) {
             teleportTask.cancel();
             titleTask.cancel();
+            player.resetTitle();
             player.sendMessage("§cLa téléportation a été annulée car vous avez bougé.");
             StatusManager.setPlayerStatus(player,false);
         } else {
@@ -64,7 +69,7 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
         }
     }
 
-    @Override
+
     public void homeTask(String homeName, Player player,Location location) {
         this.player = player;
         this.homeName = homeName;
@@ -72,7 +77,6 @@ public class TaskManager extends BukkitRunnable implements TaskInterface {
         task = Task.Home;
     }
 
-    @Override
     public void spawnTask(Player player) {
         this.player = player;
         task = Task.Spawn;

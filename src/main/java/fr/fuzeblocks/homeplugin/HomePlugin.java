@@ -2,11 +2,12 @@ package fr.fuzeblocks.homeplugin;
 
 import fr.fuzeblocks.homeplugin.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.commands.*;
-import fr.fuzeblocks.homeplugin.completer.DelHomeCompleter;
-import fr.fuzeblocks.homeplugin.completer.HomeCompleter;
+import fr.fuzeblocks.homeplugin.completers.CacheCompleter;
+import fr.fuzeblocks.homeplugin.completers.DelHomeCompleter;
+import fr.fuzeblocks.homeplugin.completers.HomeCompleter;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
-import fr.fuzeblocks.homeplugin.listener.OnJoinListener;
-import fr.fuzeblocks.homeplugin.listener.OnMoveListener;
+import fr.fuzeblocks.homeplugin.listeners.OnJoinListener;
+import fr.fuzeblocks.homeplugin.listeners.OnMoveListener;
 import fr.fuzeblocks.homeplugin.spawn.SpawnManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -29,13 +30,13 @@ public final class HomePlugin extends JavaPlugin {
         eventRegistration();
         completerManager();
         spawnManager();
-        cacheManager = new CacheManager();
+        cacheManager = new CacheManager(this);
     }
 
         @Override
     public void onDisable() {
             System.out.println("----------------------HomePlugin----------------------");
-            System.out.println("----------HomePlugin a été éteint  avec succés !----------");
+            System.out.println("----------HomePlugin a été éteint avec succés !----------");
             System.out.println("------------------------------------------------------");
     }
     private void homeRegistration() {
@@ -69,6 +70,7 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("setspawn").setExecutor(new SetSpawnCommand());
         getCommand("delspawn").setExecutor(new DelSpawnCommand());
         getCommand("spawn").setExecutor(new SpawnCommand(this));
+        getCommand("cache").setExecutor(new CacheCommand());
     }
     private void eventRegistration() {
         Bukkit.getPluginManager().registerEvents(new OnJoinListener(),this);
@@ -77,6 +79,7 @@ public final class HomePlugin extends JavaPlugin {
     private void completerManager() {
         getCommand("home").setTabCompleter(new HomeCompleter());
         getCommand("delhome").setTabCompleter(new DelHomeCompleter());
+        getCommand("cache").setTabCompleter(new CacheCompleter());
     }
 
 
