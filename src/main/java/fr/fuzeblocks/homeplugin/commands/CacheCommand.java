@@ -20,23 +20,23 @@ public class CacheCommand implements CommandExecutor {
             if (player.hasPermission("HomePlugin.cache")) {
                 CacheManager cacheManager = HomePlugin.getCacheManager();
                 HomeManager homeManager = HomePlugin.getHomeManager();
-                if (args[0] != null) {
+                if (args.length >= 1) {
                     switch (args[0].toLowerCase()) {
                        case "clearall":
                            cacheManager.clear();
                            player.sendMessage("§aLe cache a étés vidé pour tous les joueurs !");
                            return true;
                         case "view":
-                            if (args[1] != null) {
+                            if (args.length >= 2) {
                                 Player target = Bukkit.getPlayer(args[1]);
                                     if (cacheManager.getHomesInCache(player) != null) {
-                                        player.sendMessage("§aLe joueur : " + target.getName() + "§a a en cache :");
+                                        player.sendMessage("§eLe joueur : " + target.getName() + "§e a en cache :");
                                         HashMap<String, Location> home = cacheManager.getHomesInCache(player);
-                                        player.sendMessage(home.size() + "§a home/s");
+                                        player.sendMessage("§6" + home.size() + "§6 home/s");
                                         for (String homeName : homeManager.getHomesNames(player)) {
                                             if (home.get(homeName) != null) {
                                                 Location homeLocation = home.get(homeName);
-                                                player.sendMessage("§aNom du home en cache : " + homeName);
+                                                player.sendMessage("§4Nom du home en cache : " + homeName);
                                                 player.sendMessage("§aLocalisation de " + homeName + " : X : " + homeLocation.getX() + " Y : " + homeLocation.getY() + " Z : " + homeLocation.getZ() + " Monde : " + homeLocation.getWorld().getName());
                                             }
                                         }
@@ -47,6 +47,7 @@ public class CacheCommand implements CommandExecutor {
                             } else {
                                 player.sendMessage("§cUtilisation de la commande : /cache <view> joueur");
                             }
+                            break;
                         default:
                           Player target = Bukkit.getPlayerExact(args[0]);
                           if (target != null) {
@@ -58,7 +59,7 @@ public class CacheCommand implements CommandExecutor {
                           }
                     }
                 } else {
-                    player.sendMessage("§cUtilisation de la commande : /cache <clearall> <joueur>");
+                    player.sendMessage("§cUtilisation de la commande : /cache <clearall> <view>");
                 }
             } else {
                 player.sendMessage("§cVous n'avez pas la permission pour utiliser cette commande !");

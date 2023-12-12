@@ -14,6 +14,9 @@ public class OnMoveListener implements Listener {
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
+        if (event.getFrom().getYaw() != event.getTo().getYaw() || event.getFrom().getPitch() != event.getTo().getPitch()) {
+            return;
+        }
         if (StatusManager.getPlayerStatus(player)) {
                 if (getTaskManagerInstance(player).getTask().equals(Task.Spawn)) {
                     CancelTask.cancelTeleportTask(getTaskManagerInstance(player));
