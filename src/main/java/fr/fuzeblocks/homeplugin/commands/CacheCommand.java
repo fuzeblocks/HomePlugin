@@ -24,7 +24,7 @@ public class CacheCommand implements CommandExecutor {
                     switch (args[0].toLowerCase()) {
                        case "clearall":
                            cacheManager.clear();
-                           player.sendMessage("§aLe cache a étés vidé pour tous les joueurs !");
+                           player.sendMessage();
                            return true;
                         case "view":
                             if (args.length >= 2) {

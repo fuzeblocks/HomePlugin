@@ -20,3 +20,5 @@ commands:
     description: Sert a supprimer un home
   cache:
     description: Sert a vider le cache de tous ou un joueur/s
+  homeadmin:
+    description: Sert a voir les homes de joueur

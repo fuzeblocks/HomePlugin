@@ -9,6 +9,7 @@ import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.listeners.OnJoinListener;
 import fr.fuzeblocks.homeplugin.listeners.OnMoveListener;
 import fr.fuzeblocks.homeplugin.spawn.SpawnManager;
+import fr.fuzeblocks.homeplugin.updater.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,6 +32,7 @@ public final class HomePlugin extends JavaPlugin {
         completerManager();
         spawnManager();
         cacheManager = new CacheManager(this);
+        new UpdateChecker(this,113935);
     }
 
         @Override
@@ -57,7 +59,7 @@ public final class HomePlugin extends JavaPlugin {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                getLogger().severe("Cannot create file exiting...");
+                getLogger().severe("[HomePlugin] Cannot create file exiting...");
                 Bukkit.getPluginManager().disablePlugin(this);
             }
         }
@@ -71,6 +73,7 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("delspawn").setExecutor(new DelSpawnCommand());
         getCommand("spawn").setExecutor(new SpawnCommand(this));
         getCommand("cache").setExecutor(new CacheCommand());
+        getCommand("homeadmin").setExecutor(new HomeAdminCommand());
     }
     private void eventRegistration() {
         Bukkit.getPluginManager().registerEvents(new OnJoinListener(),this);
