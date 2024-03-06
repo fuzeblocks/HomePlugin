@@ -1,34 +1,24 @@
 package fr.fuzeblocks.homeplugin.cache;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import org.bukkit.Bukkit;
+import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 
 public class CacheManager {
-    public CacheManager(HomePlugin instance) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-              clear();
-              System.out.println("Le cache a été vidé !");
-            }
-        }.runTaskTimer(instance, 0, 20 * 60 * 30);
-    }
-
-
     private HashMap<Player,HashMap<String, Location>> playerHomes = new HashMap<>();
     public void addHomeInCache(Player player,String homeName,Location location) {
         if (playerHomes.containsKey(player)) {
             playerHomes.get(player).put(homeName,location);
             return;
         }
-        HashMap<String,Location> homes = new HashMap<>();
-            homes.put(homeName,location);
-            playerHomes.put(player,homes);
+        playerHomes.computeIfAbsent(player, key -> {
+            HashMap<String, Location> homeMap = new HashMap<>();
+            homeMap.put(homeName,location);
+            return homeMap;
+        });
     }
     public HashMap<String, Location> getHomesInCache(Player player) {
         return playerHomes.get(player);
@@ -46,6 +36,14 @@ public class CacheManager {
     public void clearPlayer(Player player) {
         if (playerHomes.containsKey(player)) {
             playerHomes.get(player).clear();
+        }
+    }
+    public void addAllPlayerHomes(Player player) {
+        HomeManager homeManager = HomePlugin.getHomeManager();
+        for (String homeName :  homeManager.getHomesName(player)) {
+            for (Location homeLocation : homeManager.getHomesLocation(player)) {
+                addHomeInCache(player,homeName,homeLocation);
+            }
         }
     }
 }

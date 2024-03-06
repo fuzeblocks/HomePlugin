@@ -1,4 +1,4 @@
-package fr.fuzeblocks.homeplugin.home;
+package fr.fuzeblocks.homeplugin.home.yml;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.cache.CacheManager;
@@ -74,7 +74,7 @@ public class HomeManager {
             return 0;
         }
     }
-    public List<String> getHomesNames(Player player) {
+    public List<String> getHomesName(Player player) {
         List<String> home_names = new ArrayList<>();
         ConfigurationSection homesSection = yaml.getConfigurationSection(player.getUniqueId() + ".Home");
         if (homesSection != null) {

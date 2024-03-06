@@ -1,7 +1,5 @@
-package fr.fuzeblocks.homeplugin.spawn;
+package fr.fuzeblocks.homeplugin.spawn.yml;
 
-import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

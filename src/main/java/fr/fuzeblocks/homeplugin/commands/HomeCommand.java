@@ -1,23 +1,21 @@
 package fr.fuzeblocks.homeplugin.commands;
 
-import fr.fuzeblocks.homeplugin.home.HomeManager;
+import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.status.StatusManager;
-import fr.fuzeblocks.homeplugin.task.CancelTask;
+import fr.fuzeblocks.homeplugin.status.StatusManager ;
 import fr.fuzeblocks.homeplugin.task.TaskManager;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
-import javax.security.auth.login.Configuration;
 import java.util.HashMap;
 
 import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance;
 
-public class HomeCommand implements CommandExecutor, CancelTask {
+
+public class HomeCommand implements CommandExecutor {
     private final HomePlugin instance;
     private static TaskManager taskManager;
 
@@ -33,24 +31,47 @@ public class HomeCommand implements CommandExecutor, CancelTask {
             if (args.length == 1) {
                 String homeName = args[0];
                 HomeManager homeManager = HomePlugin.getHomeManager();
-                if (homeManager.isStatus(player)) {
-                    return false;
-                }
-                if (homeManager.getHomeNumber(player) > 0) {
-                    if (verifyInCache(homeManager,player,homeName)) {
-                        setPlayerTeleportation(player,homeName,homeManager.getCacheManager().getHomesInCache(player).get(homeName));
-                        return true;
+                fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
+                if (HomePlugin.getRegistrationType() == 1) {
+                    if (homeSQLManager.isStatus(player)) {
+                        return false;
                     }
-                    Location homeLocation = homeManager.getHomeLocation(player, homeName);
-                    if (homeLocation != null) {
-                        homeManager.getCacheManager().addHomeInCache(player,homeName,homeLocation);
-                        setPlayerTeleportation(player,homeName,homeLocation);
-                        return true;
+                    if (homeSQLManager.getHomeNumber(player) > 0) {
+                        if (verifyInCache(homeSQLManager, player, homeName)) {
+                            setPlayerTeleportation(player, homeName, homeSQLManager.getCacheManager().getHomesInCache(player).get(homeName));
+                            return true;
+                        }
+                        Location homeLocation = homeSQLManager.getHomeLocation(player, homeName);
+                        if (homeLocation != null) {
+                            homeSQLManager.getCacheManager().addHomeInCache(player, homeName, homeLocation);
+                            setPlayerTeleportation(player, homeName, homeLocation);
+                            return true;
+                        } else {
+                            player.sendMessage("§cLe home spécifié n'existe pas.");
+                        }
                     } else {
-                        player.sendMessage("§cLe home spécifié n'existe pas.");
+                        player.sendMessage("§cVous n'avez aucun home enregistré.");
                     }
                 } else {
-                    player.sendMessage("§cVous n'avez aucun home enregistré.");
+                    if (homeManager.isStatus(player)) {
+                        return false;
+                    }
+                    if (homeManager.getHomeNumber(player) > 0) {
+                        if (verifyInCache(homeManager, player, homeName)) {
+                            setPlayerTeleportation(player, homeName, homeManager.getCacheManager().getHomesInCache(player).get(homeName));
+                            return true;
+                        }
+                        Location homeLocation = homeManager.getHomeLocation(player, homeName);
+                        if (homeLocation != null) {
+                            homeManager.getCacheManager().addHomeInCache(player, homeName, homeLocation);
+                            setPlayerTeleportation(player, homeName, homeLocation);
+                            return true;
+                        } else {
+                            player.sendMessage("§cLe home spécifié n'existe pas.");
+                        }
+                    } else {
+                        player.sendMessage("§cVous n'avez aucun home enregistré.");
+                    }
                 }
             } else {
                 player.sendMessage("§cUtilisation de la commande : /home <nom-du-home>");
@@ -80,4 +101,15 @@ public class HomeCommand implements CommandExecutor, CancelTask {
        }
        return false;
    }
+    private boolean verifyInCache(fr.fuzeblocks.homeplugin.home.sql.HomeManager homeManager, Player player, String homeName) {
+        if (homeManager.getCacheManager().getHomesInCache(player) != null) {
+            HashMap<String, Location> homes = homeManager.getCacheManager().getHomesInCache(player);
+            if (homes.containsKey(homeName)) {
+                return true;
+            }
+        }  else {
+            return false;
+        }
+        return false;
+    }
 }

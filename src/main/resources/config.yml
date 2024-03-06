@@ -1,0 +1,9 @@
+Config:
+  Connector:
+    TYPE: "YAML" #MYSQL ou YAML Config.Connector.
+    #Optional
+    HOST: "localhost"
+    PORT: 3306
+    USERNAME: "root"
+    PASSWORD: ""
+    DATABASE: "HomePlugin"

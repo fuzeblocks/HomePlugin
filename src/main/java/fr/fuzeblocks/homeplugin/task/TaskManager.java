@@ -1,8 +1,11 @@
 package fr.fuzeblocks.homeplugin.task;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.api.event.OnHomeTeleport;
+import fr.fuzeblocks.homeplugin.api.event.OnSpawnTeleport;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import fr.fuzeblocks.homeplugin.task.exception.TeleportTaskException;
+import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -19,7 +22,7 @@ public class TaskManager extends BukkitRunnable {
     private BukkitRunnable titleTask;
     private HomePlugin plugin;
     private String homeName;
-    private Location location;
+    private Location homeLocation;
 
 
     public TaskManager(HomePlugin plugin) {
@@ -36,17 +39,38 @@ public class TaskManager extends BukkitRunnable {
     }
 
     private void teleportHome() {
-        player.teleport(location);
-        player.sendMessage("§aVous vous êtes téléporté à votre home : " + homeName);
-        player.resetTitle();
+        OnHomeTeleport onHomeTeleport;
+        if (HomePlugin.getRegistrationType() == 1) {
+            onHomeTeleport = new OnHomeTeleport(player,homeLocation);
+        } else {
+            onHomeTeleport = new OnHomeTeleport(player,homeLocation);
+        }
+        Bukkit.getServer().getPluginManager().callEvent(onHomeTeleport);
+        if (!onHomeTeleport.isCancelled()) {
+            player.teleport(onHomeTeleport.getHomeLocation());
+            player.sendMessage("§aVous vous êtes téléporté à votre home : " + homeName);
+            player.resetTitle();
+            player.playEffect(homeLocation, Effect.MOBSPAWNER_FLAMES, 5000);
+        }
         StatusManager.setPlayerStatus(player, false);
-        player.playEffect(getHomeManager().getHomeLocation(player, homeName), Effect.MOBSPAWNER_FLAMES, 5000);
+        player.resetTitle();
     }
 
     private void teleportSpawn() {
-        player.teleport(getSpawnManager().getSpawn());
-        player.sendMessage("§aVous vous êtes téléporté au spawn");
+        OnSpawnTeleport onSpawnTeleport;
+        if (HomePlugin.getRegistrationType() == 1) {
+            onSpawnTeleport = new OnSpawnTeleport(player,getSpawnSQLManager().getSpawn());
+        } else {
+           onSpawnTeleport = new OnSpawnTeleport(player, getSpawnManager().getSpawn());
+        }
+        Bukkit.getServer().getPluginManager().callEvent(onSpawnTeleport);
+        if (!onSpawnTeleport.isCancelled()) {
+            player.teleport(onSpawnTeleport.getSpawnLocation());
+            player.sendMessage("§aVous vous êtes téléporté au spawn");
+            player.resetTitle();
+        }
         StatusManager.setPlayerStatus(player, false);
+        player.resetTitle();
     }
 
     public void startTeleportTask() {
@@ -73,7 +97,7 @@ public class TaskManager extends BukkitRunnable {
     public void homeTask(String homeName, Player player,Location location) {
         this.player = player;
         this.homeName = homeName;
-        this.location = location;
+        this.homeLocation = location;
         task = Task.Home;
     }
 
@@ -88,15 +112,15 @@ public class TaskManager extends BukkitRunnable {
             @Override
             public void run() {
                 if (time == 3) {
-                    player.sendTitle("§eTeleportation dans :", String.valueOf(time), 0, 1000, 0);
+                    player.sendTitle("§l§eTeleportation dans : ", String.valueOf(time), 0, 1000, 0);
                     time--;
                 } else if (time == 2) {
                     player.resetTitle();
-                    player.sendTitle("§eTeleportation dans :", String.valueOf(time), 0, 1000, 0);
+                    player.sendTitle("§l§eTeleportation dans : ", String.valueOf(time), 0, 1000, 0);
                     time--;
                 } else if (time == 1) {
                     player.resetTitle();
-                    player.sendTitle("§eTeleportation dans :", String.valueOf(time), 0, 1000, 0);
+                    player.sendTitle("§l§eTeleportation dans : ", String.valueOf(time), 0, 1000, 0);
                     time--;
                 } else if (time == 0) {
                     cancel();

@@ -1,6 +1,6 @@
 package fr.fuzeblocks.homeplugin.commands;
 
-import fr.fuzeblocks.homeplugin.home.HomeManager;
+import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,20 +15,28 @@ public class SetHomeCommand implements CommandExecutor {
             if (args.length == 1) {
                 String home_name = args[0];
                 HomeManager homeManager = HomePlugin.getHomeManager();
+                fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
+                if (HomePlugin.getRegistrationType() == 1) {
+                    if (homeSQLManager.isStatus(player)) {
+                        return false;
+                    }
+                    if (homeSQLManager.addHome(player,home_name)) {
+                        player.sendMessage("§aHome ajouté !");
+                    } else {
+                        player.sendMessage("§cUne erreur est survenu !");
+                    }
+                    return true;
+                }
                 if (homeManager.isStatus(player)) {
                     return false;
                 }
-                if (!sethomecheck(player, homeManager)) {
+
                    if (homeManager.addHome(player,home_name)) {
                        player.sendMessage("§aHome ajouté !");
                    } else {
                        player.sendMessage("§cUne erreur est survenu !");
                    }
                     return true;
-                } else {
-                    player.sendMessage("§cVous avez atteint la limite d'homes disponible !");
-                    return false;
-                }
             } else {
                 player.sendMessage("§cUtilisation de la commande : /sethome <nom-du-home>");
             }
@@ -38,11 +46,5 @@ public class SetHomeCommand implements CommandExecutor {
         return false;
     }
 
-    public boolean sethomecheck(Player player, HomeManager homeManager) {
-        if (player.hasPermission("HomePlugin.vip")) {
-            return homeManager.getHomeNumber(player) >= 6;
-        }
-        return homeManager.getHomeNumber(player) >= 3;
-    }
 }
 

@@ -2,7 +2,7 @@ package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.cache.CacheManager;
-import fr.fuzeblocks.homeplugin.home.HomeManager;
+import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -20,11 +20,12 @@ public class CacheCommand implements CommandExecutor {
             if (player.hasPermission("HomePlugin.cache")) {
                 CacheManager cacheManager = HomePlugin.getCacheManager();
                 HomeManager homeManager = HomePlugin.getHomeManager();
+                fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
                 if (args.length >= 1) {
                     switch (args[0].toLowerCase()) {
                        case "clearall":
                            cacheManager.clear();
-                           player.sendMessage();
+                           player.sendMessage("§l§cLe cache a été vidé !");
                            return true;
                         case "view":
                             if (args.length >= 2) {
@@ -33,7 +34,16 @@ public class CacheCommand implements CommandExecutor {
                                         player.sendMessage("§eLe joueur : " + target.getName() + "§e a en cache :");
                                         HashMap<String, Location> home = cacheManager.getHomesInCache(player);
                                         player.sendMessage("§6" + home.size() + "§6 home/s");
-                                        for (String homeName : homeManager.getHomesNames(player)) {
+                                        if (HomePlugin.getRegistrationType() == 1) {
+                                            for (String homeName : homeSQLManager.getHomesName(player)) {
+                                                if (home.get(homeName) != null) {
+                                                    Location homeLocation = home.get(homeName);
+                                                    player.sendMessage("§4Nom du home en cache : " + homeName);
+                                                    player.sendMessage("§aLocalisation de " + homeName + " : X : " + homeLocation.getX() + " Y : " + homeLocation.getY() + " Z : " + homeLocation.getZ() + " Monde : " + homeLocation.getWorld().getName());
+                                                }
+                                            }
+                                        }
+                                        for (String homeName : homeManager.getHomesName(player)) {
                                             if (home.get(homeName) != null) {
                                                 Location homeLocation = home.get(homeName);
                                                 player.sendMessage("§4Nom du home en cache : " + homeName);
@@ -69,4 +79,5 @@ public class CacheCommand implements CommandExecutor {
         }
         return false;
     }
+
 }
