@@ -25,13 +25,7 @@ public class CreateTable {
     }
 
     public void createSpawn() {
-        String request = "CREATE TABLE IF NOT EXISTS SpawnPlugin (\n" +
-                "X DOUBLE,\n" +
-                "Y DOUBLE,\n" +
-                "Z DOUBLE,\n" +
-                "YAW FLOAT,\n" +
-                "PITCH FLOAT,\n" +
-                "WORLD VARCHAR(255))";
+        String request = "CREATE TABLE IF NOT EXISTS SpawnPlugin (X INT(11), Y INT(11), Z INT(11), YAW INT(11), PITCH INT(11), WORLD VARCHAR(255))";
         try {
              PreparedStatement preparedStatement = connection.prepareStatement(request);
             preparedStatement.execute();
