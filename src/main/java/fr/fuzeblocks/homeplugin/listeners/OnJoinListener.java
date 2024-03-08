@@ -28,8 +28,8 @@ public class OnJoinListener implements Listener {
         }
         if (!player.hasPlayedBefore()) {
             SpawnManager spawnManager = HomePlugin.getSpawnManager();
-            if (spawnManager.hasSpawn()) {
-                player.teleport(spawnManager.getSpawn());
+            if (spawnManager.hasSpawn(player.getWorld())) {
+                player.teleport(spawnManager.getSpawn(player.getWorld()));
             }
         }
 

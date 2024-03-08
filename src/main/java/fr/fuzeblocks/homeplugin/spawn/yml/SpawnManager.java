@@ -1,8 +1,10 @@
 package fr.fuzeblocks.homeplugin.spawn.yml;
 
+import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -33,24 +35,24 @@ public class SpawnManager {
             return false;
         }
     }
-    public Location getSpawn() {
-        String key = "Spawn.";
+    public Location getSpawn(World world) {
+        String key = "Spawn." + world.getName();
         if (yaml.contains(key)) {
             return new Location(Bukkit.getWorld(yaml.getString(key + "World")),yaml.getDouble(key + "X"),yaml.getDouble(key + "Y"),yaml.getDouble(key + "Z"), (float) yaml.getDouble(key + "YAW"), (float) yaml.getDouble(key + "PITCH"));
         } else {
             return null;
         }
     }
-    public boolean hasSpawn() {
-        String key = "Spawn.";
+    public boolean hasSpawn(World world) {
+        String key = "Spawn." + world.getName();
         if (yaml.contains(key)) {
             return true;
         } else {
             return false;
         }
     }
-    public boolean removeSpawn() {
-        String key = "Spawn";
+    public boolean removeSpawn(World world) {
+        String key = "Spawn" + world;
         yaml.set(key,null);
         try {
             yaml.save(file);
@@ -62,7 +64,7 @@ public class SpawnManager {
 
     public boolean isStatus(Player player) {
         if (StatusManager.getPlayerStatus(player)) {
-            player.sendMessage("§cUne téléportation est déja en cours !");
+            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.A-teleport-is-already-in-progress")));
             return true;
         } else {
             return false;

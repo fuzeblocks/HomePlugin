@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 
 public class CacheCommand implements CommandExecutor {
+    private String key = "Config.Language.";
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -25,7 +26,7 @@ public class CacheCommand implements CommandExecutor {
                     switch (args[0].toLowerCase()) {
                        case "clearall":
                            cacheManager.clear();
-                           player.sendMessage("§l§cLe cache a été vidé !");
+                           player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Cache-cleared")));
                            return true;
                         case "view":
                             if (args.length >= 2) {
@@ -52,7 +53,7 @@ public class CacheCommand implements CommandExecutor {
                                         }
                                         return true;
                                     } else {
-                                        player.sendMessage("§cLe joueur n'a pas de cache !");
+                                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Have-no-cache")));
                                     }
                             } else {
                                 player.sendMessage("§cUtilisation de la commande : /cache <view> joueur");
@@ -62,10 +63,10 @@ public class CacheCommand implements CommandExecutor {
                           Player target = Bukkit.getPlayerExact(args[0]);
                           if (target != null) {
                               cacheManager.clearPlayer(player);
-                              player.sendMessage("§aLe cache pour le joueur : " + target.getName() + " §aa été vidé !");
+                              player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Cache-player-cleared").replace("%player%",player.getName())));
                               return true;
                           } else {
-                              player.sendMessage("§cLe joueur choisi n'existe pas ou n'est pas en ligne !");
+                              player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Player-is-not-online")));
                           }
                     }
                 } else {

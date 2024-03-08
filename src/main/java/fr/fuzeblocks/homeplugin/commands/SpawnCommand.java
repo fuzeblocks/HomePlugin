@@ -14,7 +14,7 @@ import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance
 public class SpawnCommand implements CommandExecutor {
     private HomePlugin instance;
     private static TaskManager taskManager;
-
+    private String key = "Config.Language.";
 
     public SpawnCommand(HomePlugin instance) {
         this.instance = instance;
@@ -28,22 +28,22 @@ public class SpawnCommand implements CommandExecutor {
                 SpawnManager spawnManager = HomePlugin.getSpawnManager();
                 fr.fuzeblocks.homeplugin.spawn.sql.SpawnManager spawnSQLManager = HomePlugin.getSpawnSQLManager();
                 if (HomePlugin.getRegistrationType() == 1) {
-                    if (spawnSQLManager.hasSpawn()) {
+                    if (spawnSQLManager.hasSpawn(player.getWorld())) {
                         if (spawnSQLManager.isStatus(player)) {
                             return false;
                         }
                         addTask(player);
                     } else {
-                        player.sendMessage("§cAucun spawn n'est défini !");
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "No-spawn-defined")));
                     }
                 } else {
-                    if (spawnManager.hasSpawn()) {
+                    if (spawnManager.hasSpawn(player.getWorld())) {
                         if (spawnManager.isStatus(player)) {
                             return false;
                         }
                         addTask(player);
                     } else {
-                        player.sendMessage("§cAucun spawn n'est défini !");
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "No-spawn-defined")));
                     }
                 }
 
@@ -63,6 +63,6 @@ public class SpawnCommand implements CommandExecutor {
         taskManager.startTeleportTask();
         setTaskManagerInstance(player,taskManager);
         StatusManager.setPlayerStatus(player, true);
-        player.sendMessage("§6Début de la téléportation pour le spawn");
+        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Start-of-teleportation-for-spawn")));
     }
 }

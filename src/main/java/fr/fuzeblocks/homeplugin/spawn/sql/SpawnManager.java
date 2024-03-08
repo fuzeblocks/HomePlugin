@@ -1,9 +1,11 @@
 package fr.fuzeblocks.homeplugin.spawn.sql;
 
+import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.database.DbConnection;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,10 +34,11 @@ public class SpawnManager {
         }
     }
 
-    public Location getSpawn() {
-        String request = "SELECT * FROM SpawnPlugin";
+    public Location getSpawn(World world) {
+        String request = "SELECT * FROM `SpawnPlugin` WHERE `WORLD` = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(request);
+            preparedStatement.setString(1,world.getName().toString());
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 String worldName = resultSet.getString("WORLD");
@@ -52,14 +55,15 @@ public class SpawnManager {
         return null;
     }
 
-    public boolean hasSpawn() {
-        return getSpawn() != null;
+    public boolean hasSpawn(World world) {
+        return getSpawn(world) != null;
     }
 
-    public boolean removeSpawn() {
-        String request = "DELETE FROM SpawnPlugin";
+    public boolean removeSpawn(World world) {
+        String request = "DELETE FROM `SpawnPlugin` WHERE `WORLD` = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(request);
+            preparedStatement.setString(1,world.getName());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -70,7 +74,7 @@ public class SpawnManager {
 
     public boolean isStatus(Player player) {
         if (StatusManager.getPlayerStatus(player)) {
-            player.sendMessage("§cUne téléportation est déja en cours !");
+            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.A-teleport-is-already-in-progress")));
             return true;
         } else {
             return false;

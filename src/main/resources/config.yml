@@ -1,9 +1,30 @@
 Config:
   Connector:
-    TYPE: "YAML" #MYSQL ou YAML Config.Connector.
+    TYPE: "YAML" #MYSQL ou YAML
     #Optional
     HOST: "localhost"
     PORT: 3306
     USERNAME: "root"
     PASSWORD: ""
     DATABASE: "HomePlugin"
+  Language:
+    Teleportation-in-progress: "&l&eTeleportation dans :"
+    Teleport-canceled: "&cLa téléportation a été annulée car vous avez bougé."
+    Teleport-to-spawn: "&aVous vous êtes téléporté au spawn"
+    Teleport-to-home: "&aVous vous êtes téléporté à votre home :"
+    Cache-cleared: "&l&cLe cache a été vidé !"
+    Have-no-cache: "&cLe joueur n'a pas de cache !"
+    Player-is-not-online: "&cLe joueur choisi n'existe pas ou n'est pas en ligne !"
+    Cache-player-cleared: "&aLe cache pour le joueur : %player% &aa été vidé !"
+    Home-deleted: "&aLe home a été supprimé avec succés !"
+    Home-does-not-exist: "&cLe home séléctionné n'existe pas !"
+    Spawn-deleted: "&cLe spawn a été supprimé !"
+    Have-no-home: "&cVous n'avez aucun home enregistré."
+    Start-of-teleportation: "&6Début de la téléportation pour le home :"
+    Home-added: "&aHome ajouté !"
+    Error: "&cUne erreur est survenu !"
+    Spawn-already-exists: "§cLe spawn existe deja !"
+    Spawn-has-been-set: "§aLe spawn a été defini en X : %x% Y : %y% Z : %z%"
+    No-spawn-defined: "&cAucun spawn n'est défini !"
+    Start-of-teleportation-for-spawn: "&6Début de la téléportation pour le spawn"
+    A-teleport-is-already-in-progress: "&cUne téléportation est déja en cours !"

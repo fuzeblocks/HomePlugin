@@ -18,6 +18,7 @@ import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance
 public class HomeCommand implements CommandExecutor {
     private final HomePlugin instance;
     private static TaskManager taskManager;
+    private String key = "Config.Language.";
 
     public HomeCommand(HomePlugin instance) {
         this.instance = instance;
@@ -47,10 +48,10 @@ public class HomeCommand implements CommandExecutor {
                             setPlayerTeleportation(player, homeName, homeLocation);
                             return true;
                         } else {
-                            player.sendMessage("§cLe home spécifié n'existe pas.");
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-does-not-exist")));
                         }
                     } else {
-                        player.sendMessage("§cVous n'avez aucun home enregistré.");
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Have-no-home")));
                     }
                 } else {
                     if (homeManager.isStatus(player)) {
@@ -67,10 +68,10 @@ public class HomeCommand implements CommandExecutor {
                             setPlayerTeleportation(player, homeName, homeLocation);
                             return true;
                         } else {
-                            player.sendMessage("§cLe home spécifié n'existe pas.");
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-does-not-exist")));
                         }
                     } else {
-                        player.sendMessage("§cVous n'avez aucun home enregistré.");
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Have-no-home")));
                     }
                 }
             } else {
@@ -82,7 +83,7 @@ public class HomeCommand implements CommandExecutor {
         return false;
     }
     private void setPlayerTeleportation(Player player,String homeName,Location location) {
-        player.sendMessage("§6Début de la téléportation pour le home : " + homeName);
+        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Start-of-teleportation")) + " " + homeName);
         StatusManager.setPlayerStatus(player, true);
         taskManager = new TaskManager(instance);
         taskManager.homeTask(homeName,player,location);

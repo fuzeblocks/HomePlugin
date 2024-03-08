@@ -127,7 +127,7 @@ public class HomeManager {
     }
     public boolean isStatus(Player player) {
         if (StatusManager.getPlayerStatus(player)) {
-            player.sendMessage("§cUne téléportation est déja en cours !");
+            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.A-teleport-is-already-in-progress")));
             return true;
         } else {
             return false;

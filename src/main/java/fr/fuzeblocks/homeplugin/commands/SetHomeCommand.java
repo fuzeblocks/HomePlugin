@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class SetHomeCommand implements CommandExecutor {
+    private String key = "Config.Language.";
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -21,9 +22,9 @@ public class SetHomeCommand implements CommandExecutor {
                         return false;
                     }
                     if (homeSQLManager.addHome(player,home_name)) {
-                        player.sendMessage("§aHome ajouté !");
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-added")));
                     } else {
-                        player.sendMessage("§cUne erreur est survenu !");
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-Error")));
                     }
                     return true;
                 }
@@ -32,9 +33,9 @@ public class SetHomeCommand implements CommandExecutor {
                 }
 
                    if (homeManager.addHome(player,home_name)) {
-                       player.sendMessage("§aHome ajouté !");
+                       player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-added")));
                    } else {
-                       player.sendMessage("§cUne erreur est survenu !");
+                       player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Error")));
                    }
                     return true;
             } else {

@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class SetSpawnCommand implements CommandExecutor {
+    private String key = "Config.Language.";
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -15,21 +16,22 @@ public class SetSpawnCommand implements CommandExecutor {
             if (player.isOp()) {
                 Location location = player.getLocation();
                 if (HomePlugin.getRegistrationType() == 1) {
-                    if (HomePlugin.getSpawnSQLManager().hasSpawn()) {
-                        player.sendMessage("§cLe spawn existe deja !");
+                    if (HomePlugin.getSpawnSQLManager().hasSpawn(location.getWorld())) {
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Spawn-already-exists")));
                         return false;
                     }
                     HomePlugin.getSpawnSQLManager().setSpawn(location);
-                    player.sendMessage("§aLe spawn a été defini en X : " + location.getX() + " Y : " + location.getY() + " Z : " + location.getZ());
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Spawn-has-been-set").replace("%x%",String.valueOf(location.getX())).replace("%y%",String.valueOf(location.getY())).replace("%z%",String.valueOf(location.getZ()))));
+                    return true;
+                } else {
+                    if (HomePlugin.getSpawnManager().hasSpawn(location.getWorld())) {
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Spawn-already-exists")));
+                        return false;
+                    }
+                    HomePlugin.getSpawnManager().setSpawn(location);
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Spawn-has-been-set").replace("%x%",String.valueOf(location.getX())).replace("%y%",String.valueOf(location.getY())).replace("%z%",String.valueOf(location.getZ()))));
                     return true;
                 }
-                if (HomePlugin.getSpawnManager().hasSpawn()) {
-                    player.sendMessage("§cLe spawn existe deja !");
-                    return false;
-                }
-                HomePlugin.getSpawnManager().setSpawn(location);
-                player.sendMessage("§aLe spawn a été defini en X : " + location.getX() + " Y : " + location.getY() + " Z : " + location.getZ());
-                return true;
             } else {
                 player.sendMessage("§cVous n'étes pas op !");
             }

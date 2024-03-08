@@ -13,6 +13,7 @@ import fr.fuzeblocks.homeplugin.listeners.OnJoinListener;
 import fr.fuzeblocks.homeplugin.listeners.OnMoveListener;
 import fr.fuzeblocks.homeplugin.spawn.yml.SpawnManager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -143,5 +144,12 @@ public final class HomePlugin extends JavaPlugin {
         } else {
             return 0;
         }
+    }
+
+    public static ConfigurationSection getConfigurationSection() {
+        return configurationSection;
+    }
+    public static String translateAlternateColorCodes(String s) {
+        return s.replace('&','§');
     }
 }

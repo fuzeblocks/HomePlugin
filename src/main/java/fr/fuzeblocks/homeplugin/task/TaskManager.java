@@ -48,7 +48,7 @@ public class TaskManager extends BukkitRunnable {
         Bukkit.getServer().getPluginManager().callEvent(onHomeTeleport);
         if (!onHomeTeleport.isCancelled()) {
             player.teleport(onHomeTeleport.getHomeLocation());
-            player.sendMessage("§aVous vous êtes téléporté à votre home : " + homeName);
+            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.Teleport-to-home")) + " " + homeName);
             player.resetTitle();
             player.playEffect(homeLocation, Effect.MOBSPAWNER_FLAMES, 5000);
         }
@@ -59,14 +59,14 @@ public class TaskManager extends BukkitRunnable {
     private void teleportSpawn() {
         OnSpawnTeleport onSpawnTeleport;
         if (HomePlugin.getRegistrationType() == 1) {
-            onSpawnTeleport = new OnSpawnTeleport(player,getSpawnSQLManager().getSpawn());
+            onSpawnTeleport = new OnSpawnTeleport(player,getSpawnSQLManager().getSpawn(player.getWorld()));
         } else {
-           onSpawnTeleport = new OnSpawnTeleport(player, getSpawnManager().getSpawn());
+           onSpawnTeleport = new OnSpawnTeleport(player, getSpawnManager().getSpawn(player.getWorld()));
         }
         Bukkit.getServer().getPluginManager().callEvent(onSpawnTeleport);
         if (!onSpawnTeleport.isCancelled()) {
             player.teleport(onSpawnTeleport.getSpawnLocation());
-            player.sendMessage("§aVous vous êtes téléporté au spawn");
+            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.Teleport-to-spawn")));
             player.resetTitle();
         }
         StatusManager.setPlayerStatus(player, false);
@@ -86,7 +86,7 @@ public class TaskManager extends BukkitRunnable {
             teleportTask.cancel();
             titleTask.cancel();
             player.resetTitle();
-            player.sendMessage("§cLa téléportation a été annulée car vous avez bougé.");
+            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.Teleport-canceled")));
             StatusManager.setPlayerStatus(player,false);
         } else {
             throw new TeleportTaskException();
@@ -111,16 +111,17 @@ public class TaskManager extends BukkitRunnable {
 
             @Override
             public void run() {
+                String key = "Config.Language.Teleportation-in-progress";
                 if (time == 3) {
-                    player.sendTitle("§l§eTeleportation dans : ", String.valueOf(time), 0, 1000, 0);
+                    player.sendTitle(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key)) + " ", String.valueOf(time), 0, 1000, 0);
                     time--;
                 } else if (time == 2) {
                     player.resetTitle();
-                    player.sendTitle("§l§eTeleportation dans : ", String.valueOf(time), 0, 1000, 0);
+                    player.sendTitle(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key)) + " ", String.valueOf(time), 0, 1000, 0);
                     time--;
                 } else if (time == 1) {
                     player.resetTitle();
-                    player.sendTitle("§l§eTeleportation dans : ", String.valueOf(time), 0, 1000, 0);
+                    player.sendTitle(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key)) + " ", String.valueOf(time), 0, 1000, 0);
                     time--;
                 } else if (time == 0) {
                     cancel();
