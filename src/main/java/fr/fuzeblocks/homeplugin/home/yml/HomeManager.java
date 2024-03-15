@@ -109,10 +109,13 @@ public class HomeManager {
         }
         public boolean isStatus(Player player) {
         if (StatusManager.getPlayerStatus(player)) {
-            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.A-teleport-is-already-in-progress")));
             return true;
         } else {
             return false;
         }
+    }
+    public boolean exist(Player player,String homeName) {
+        String key = player.getUniqueId() + ".Home." + homeName;
+        return yaml.contains(key);
     }
 }

@@ -5,6 +5,9 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 
 public class TaskSaveUtils {
+    private TaskSaveUtils() {
+    }
+
     private static HashMap<Player, TaskManager> taskManagerHashMap = new HashMap<>();
     public static TaskManager getTaskManagerInstance(Player player) {
         return taskManagerHashMap.get(player);

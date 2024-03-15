@@ -11,9 +11,9 @@ import fr.fuzeblocks.homeplugin.database.DbConnection;
 import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
 import fr.fuzeblocks.homeplugin.listeners.OnJoinListener;
 import fr.fuzeblocks.homeplugin.listeners.OnMoveListener;
+import fr.fuzeblocks.homeplugin.placeholder.HomePluginExpansion;
 import fr.fuzeblocks.homeplugin.spawn.yml.SpawnManager;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,9 +31,6 @@ public final class HomePlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        System.out.println("----------------------HomePlugin----------------------");
-        System.out.println("----------HomePlugin a démmaré avec succés !----------");
-        System.out.println("------------------------------------------------------");
         configurationSection = getConfig();
         if (getConfig().getString("Config.Connector.TYPE").isEmpty()) {
             getConfig().set("Config.Connector.TYPE","YAML");
@@ -47,7 +44,15 @@ public final class HomePlugin extends JavaPlugin {
         eventRegistration();
         completerManager();
         spawnManager();
-        cacheManager = new CacheManager();
+        cacheManager = CacheManager.getInstance();
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new HomePluginExpansion(this).register();
+        } else {
+            getLogger().warning("PlaceholderAPI is not installed. Placeholders will not be available.");
+        }
+        System.out.println("----------------------HomePlugin----------------------");
+        System.out.println("----------HomePlugin a démmaré avec succés !----------");
+        System.out.println("------------------------------------------------------");
     }
 
 
@@ -102,7 +107,7 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("delhome").setExecutor(new DelHomeCommand());
         getCommand("setspawn").setExecutor(new SetSpawnCommand());
         getCommand("delspawn").setExecutor(new DelSpawnCommand());
-        getCommand("spawn").setExecutor(new SpawnCommand(this));
+        getCommand("spawn").setExecutor(new SpawnCommand());
         getCommand("cache").setExecutor(new CacheCommand());
         getCommand("homeadmin").setExecutor(new HomeAdminCommand());
     }

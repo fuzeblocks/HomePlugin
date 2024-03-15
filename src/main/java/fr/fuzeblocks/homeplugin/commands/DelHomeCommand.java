@@ -1,6 +1,8 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.api.event.OnHomeDelete;
+import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -8,6 +10,7 @@ import org.bukkit.entity.Player;
 
 public class DelHomeCommand implements CommandExecutor {
     private String key = "Config.Language.";
+    private OnHomeDelete onHomeDelete;
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -15,16 +18,20 @@ public class DelHomeCommand implements CommandExecutor {
             if (args.length == 1) {
                 String home_name = args[0];
                 if (HomePlugin.getRegistrationType() == 1) {
-                    if (HomePlugin.getHomeSQLManager().delHome(player, home_name) && HomePlugin.getCacheManager().delHomeInCache(player, home_name)) {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-deleted")));
-                        return true;
+                    onHomeDelete = new OnHomeDelete(player, HomePlugin.getHomeSQLManager().getHomeLocation(player,home_name),1,home_name);
+                    if (!onHomeDelete.isCancelled()) {
+                        if (HomePlugin.getHomeSQLManager().delHome(player, onHomeDelete.getHomeName()) && HomePlugin.getCacheManager().delHomeInCache(player, onHomeDelete.getHomeName())) {
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-deleted")));
+                            return true;
+                        }
                     }
                 } else {
-                    if (HomePlugin.getHomeManager().delHome(player, home_name) && HomePlugin.getCacheManager().delHomeInCache(player, home_name)) {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-deleted")));
-                        return true;
-                    } else {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-does-not-exist")));
+                    onHomeDelete = new OnHomeDelete(player, HomePlugin.getHomeManager().getHomeLocation(player,home_name),0,home_name);
+                    if (!onHomeDelete.isCancelled()) {
+                        if (HomePlugin.getHomeManager().delHome(player, onHomeDelete.getHomeName()) && HomePlugin.getCacheManager().delHomeInCache(player, onHomeDelete.getHomeName())) {
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-deleted")));
+                            return true;
+                        }
                     }
                 }
             }  else {

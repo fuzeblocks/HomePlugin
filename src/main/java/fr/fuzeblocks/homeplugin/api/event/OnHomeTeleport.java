@@ -8,14 +8,13 @@ import org.bukkit.event.HandlerList;
 
 public class OnHomeTeleport extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled;
+    private boolean cancelled = false;
     private Player player;
     private Location homeLocation;
 
     public OnHomeTeleport(Player player, Location homeLocation) {
         this.player = player;
         this.homeLocation = homeLocation;
-        this.cancelled = false;
     }
 
     public Player getPlayer() {

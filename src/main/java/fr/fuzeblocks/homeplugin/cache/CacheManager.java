@@ -8,6 +8,13 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 
 public class CacheManager {
+    private static CacheManager instance;
+    public static synchronized CacheManager getInstance() {
+        if (instance == null) {
+            instance = new CacheManager();
+        }
+        return instance;
+    }
     private HashMap<Player,HashMap<String, Location>> playerHomes = new HashMap<>();
     public void addHomeInCache(Player player,String homeName,Location location) {
         if (playerHomes.containsKey(player)) {
@@ -46,4 +53,6 @@ public class CacheManager {
             }
         }
     }
+    private CacheManager() {}
+
 }

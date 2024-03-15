@@ -55,6 +55,7 @@ public class HomeCommand implements CommandExecutor {
                     }
                 } else {
                     if (homeManager.isStatus(player)) {
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.A-teleport-is-already-in-progress")));
                         return false;
                     }
                     if (homeManager.getHomeNumber(player) > 0) {

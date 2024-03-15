@@ -127,9 +127,24 @@ public class HomeManager {
     }
     public boolean isStatus(Player player) {
         if (StatusManager.getPlayerStatus(player)) {
-            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.A-teleport-is-already-in-progress")));
             return true;
         } else {
+            return false;
+        }
+    }
+    public boolean exist(Player player, String homeName) {
+        String sql = "SELECT * FROM HomePlugin WHERE player_uuid = ? AND HOME_NAME = ?";
+        try {
+             PreparedStatement pstmt = connection.prepareStatement(sql);
+                pstmt.setString(1, player.getUniqueId().toString());
+                pstmt.setString(2, homeName);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    return true;
+                } else {
+                    return false;
+                }
+        } catch (SQLException e) {
             return false;
         }
     }

@@ -50,7 +50,9 @@ public class TaskManager extends BukkitRunnable {
             player.teleport(onHomeTeleport.getHomeLocation());
             player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.Teleport-to-home")) + " " + homeName);
             player.resetTitle();
-            player.playEffect(homeLocation, Effect.MOBSPAWNER_FLAMES, 5000);
+            if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.Add-particles-after-teleport")) {
+                player.playEffect(homeLocation, Effect.MOBSPAWNER_FLAMES, 5000);
+            }
         }
         StatusManager.setPlayerStatus(player, false);
         player.resetTitle();
@@ -107,23 +109,19 @@ public class TaskManager extends BukkitRunnable {
     }
     private void addTimeTitle() {
          titleTask = new BukkitRunnable() {
-            int time = 3;
+            int time = HomePlugin.getConfigurationSection().getInt("Config.Task.Task-duration");
 
             @Override
             public void run() {
                 String key = "Config.Language.Teleportation-in-progress";
-                if (time == 3) {
+                if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.UseTitle")) {
                     player.sendTitle(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key)) + " ", String.valueOf(time), 0, 1000, 0);
-                    time--;
-                } else if (time == 2) {
-                    player.resetTitle();
-                    player.sendTitle(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key)) + " ", String.valueOf(time), 0, 1000, 0);
-                    time--;
-                } else if (time == 1) {
-                    player.resetTitle();
-                    player.sendTitle(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key)) + " ", String.valueOf(time), 0, 1000, 0);
-                    time--;
-                } else if (time == 0) {
+                }
+                if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.UseMessage")) {
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key)) + " ", String.valueOf(time));
+                }
+                time--;
+                if (time <= 0) {
                     cancel();
                 }
             }
@@ -138,5 +136,13 @@ public class TaskManager extends BukkitRunnable {
     }
     public Task getTask() {
         return task;
+    }
+
+    public String getHomeName() {
+        return homeName;
+    }
+
+    public Location getHomeLocation() {
+        return homeLocation;
     }
 }

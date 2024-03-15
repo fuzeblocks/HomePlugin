@@ -12,13 +12,8 @@ import org.bukkit.entity.Player;
 import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance;
 
 public class SpawnCommand implements CommandExecutor {
-    private HomePlugin instance;
-    private static TaskManager taskManager;
     private String key = "Config.Language.";
 
-    public SpawnCommand(HomePlugin instance) {
-        this.instance = instance;
-    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -30,6 +25,7 @@ public class SpawnCommand implements CommandExecutor {
                 if (HomePlugin.getRegistrationType() == 1) {
                     if (spawnSQLManager.hasSpawn(player.getWorld())) {
                         if (spawnSQLManager.isStatus(player)) {
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.A-teleport-is-already-in-progress")));
                             return false;
                         }
                         addTask(player);
@@ -39,6 +35,7 @@ public class SpawnCommand implements CommandExecutor {
                 } else {
                     if (spawnManager.hasSpawn(player.getWorld())) {
                         if (spawnManager.isStatus(player)) {
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.A-teleport-is-already-in-progress")));
                             return false;
                         }
                         addTask(player);
@@ -58,7 +55,11 @@ public class SpawnCommand implements CommandExecutor {
 
     }
     private void addTask(Player player) {
-        taskManager = new TaskManager(instance);
+        if (!player.hasPermission(HomePlugin.getConfigurationSection().getString("Config.Spawn.Spawn-teleportation-permission"))) {
+            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Spawn.SetSpawn-permission-deny-message")));
+            return;
+        }
+        TaskManager taskManager = new TaskManager(HomePlugin.getPlugin(HomePlugin.class));
         taskManager.spawnTask(player);
         taskManager.startTeleportTask();
         setTaskManagerInstance(player,taskManager);
