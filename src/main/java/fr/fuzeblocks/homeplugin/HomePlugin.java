@@ -13,6 +13,7 @@ import fr.fuzeblocks.homeplugin.listeners.OnJoinListener;
 import fr.fuzeblocks.homeplugin.listeners.OnMoveListener;
 import fr.fuzeblocks.homeplugin.placeholder.HomePluginExpansion;
 import fr.fuzeblocks.homeplugin.spawn.yml.SpawnManager;
+import fr.fuzeblocks.homeplugin.update.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -50,38 +51,39 @@ public final class HomePlugin extends JavaPlugin {
         } else {
             getLogger().warning("PlaceholderAPI is not installed. Placeholders will not be available.");
         }
-        System.out.println("----------------------HomePlugin----------------------");
-        System.out.println("----------HomePlugin a démmaré avec succés !----------");
-        System.out.println("------------------------------------------------------");
+        new UpdateChecker(this,113935);
+        getLogger().info("----------------------HomePlugin----------------------");
+        getLogger().info("----------HomePlugin a démmaré avec succés !----------");
+        getLogger().info("------------------------------------------------------");
     }
 
 
         @Override
     public void onDisable() {
-            System.out.println("----------------------HomePlugin----------------------");
-            System.out.println("----------HomePlugin a été éteint avec succés !----------");
-            System.out.println("------------------------------------------------------");
+            getLogger().info("----------------------HomePlugin----------------------");
+            getLogger().info("----------HomePlugin a été éteint avec succés !----------");
+            getLogger().info("------------------------------------------------------");
     }
     private void databaseRegistration() {
         if (getConfig().getString("Config.Connector.TYPE").equalsIgnoreCase("MYSQL")) {
-            System.out.println("Registering Database");
+            getLogger().info("Registering Database");
             new DatabaseManager(this);
-            System.out.println("Registering Manager");
+            getLogger().info("Registering Manager");
             new CreateTable(DbConnection.getConnection());
-            System.out.println("Registering Table");
+            getLogger().info("Registering Table");
             homeSQLManager = new fr.fuzeblocks.homeplugin.home.sql.HomeManager();
             spawnSQLManager = new fr.fuzeblocks.homeplugin.spawn.sql.SpawnManager();
-            System.out.println("Registering More");
+            getLogger().info("Registering More");
         }
     }
     private void homeRegistration() {
-        System.out.println("Registering Homes");
+        getLogger().info("Registering Homes");
         File home = new File(this.getDataFolder(), "homes.yml");
         registration(home);
         homeManager = new HomeManager(home);
     }
     private void spawnManager() {
-        System.out.println("Registering Spawns");
+        getLogger().info("Registering Spawns");
         File spawn = new File(this.getDataFolder(), "spawn.yml");
         registration(spawn);
         spawnManager = new SpawnManager(spawn);
@@ -101,7 +103,7 @@ public final class HomePlugin extends JavaPlugin {
     }
 
     private void commandRegistration() {
-        System.out.println("Registering Commands");
+        getLogger().info("Registering Commands");
         getCommand("home").setExecutor(new HomeCommand(this));
         getCommand("sethome").setExecutor(new SetHomeCommand());
         getCommand("delhome").setExecutor(new DelHomeCommand());
@@ -112,12 +114,12 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("homeadmin").setExecutor(new HomeAdminCommand());
     }
     private void eventRegistration() {
-        System.out.println("Registering Events");
+        getLogger().info("Registering Events");
         Bukkit.getPluginManager().registerEvents(new OnJoinListener(),this);
         Bukkit.getPluginManager().registerEvents(new OnMoveListener(),this);
     }
     private void completerManager() {
-        System.out.println("Registering Completers");
+        getLogger().info("Registering Completers");
         getCommand("home").setTabCompleter(new HomeCompleter());
         getCommand("delhome").setTabCompleter(new DelHomeCompleter());
         getCommand("cache").setTabCompleter(new CacheCompleter());
