@@ -51,7 +51,7 @@ public final class HomePlugin extends JavaPlugin {
         } else {
             getLogger().warning("PlaceholderAPI is not installed. Placeholders will not be available.");
         }
-        new UpdateChecker(this,113935);
+        checkUpdate(113935);
         getLogger().info("----------------------HomePlugin----------------------");
         getLogger().info("----------HomePlugin a démmaré avec succés !----------");
         getLogger().info("------------------------------------------------------");
@@ -123,6 +123,15 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("home").setTabCompleter(new HomeCompleter());
         getCommand("delhome").setTabCompleter(new DelHomeCompleter());
         getCommand("cache").setTabCompleter(new CacheCompleter());
+    }
+    private void checkUpdate(int id) {
+        new UpdateChecker(this, id).getVersion(version -> {
+            if (this.getDescription().getVersion().equals(version)) {
+                getLogger().info("There is not a new update available.");
+            } else {
+                getLogger().info("There is a new update available.");
+            }
+        });
     }
 
 
