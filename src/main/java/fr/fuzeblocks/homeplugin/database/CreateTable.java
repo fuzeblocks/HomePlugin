@@ -1,5 +1,8 @@
 package fr.fuzeblocks.homeplugin.database;
 
+import fr.fuzeblocks.homeplugin.home.HomeGetter;
+import fr.fuzeblocks.homeplugin.home.sql.HomeManager;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
