@@ -11,7 +11,7 @@ public class CancelTask {
                 OnTeleportTaskCanceled onTeleportTaskCanceled = new OnTeleportTaskCanceled(taskManager.getPlayer(), taskManager.getHomeLocation(), taskManager.getHomeName(), taskManager.getTask());
                 Bukkit.getPluginManager().callEvent(onTeleportTaskCanceled);
                 System.out.println("[HomePlugin] Canceling teleport task for player " + taskManager.getPlayer().getName());
-                if (onTeleportTaskCanceled.isCancelled()) {
+                if (!onTeleportTaskCanceled.isCancelled()) {
                     taskManager.cancelTeleportTask();
                 }
             }
