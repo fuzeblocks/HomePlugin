@@ -68,13 +68,13 @@ Make sure to replace <name> with the actual name of the home you want to retriev
 
 API:
 
-For developers use : (Wiki) [https://github.com/fuzeblocks/HomePlugin/wiki]
+For developers use : [see](https://github.com/fuzeblocks/HomePlugin/wiki)
 Installation: ️ Download the JAR file from the version page and place it in the "plugins" folder of your Spigot server. Restart the server for changes to take effect. Customize the experience in the configuration file (config.yml).
 
 Note: For assistance, bug reports, or contributions, visit our GitHub repository. Your feedback is crucial in continuously improving FuzeBlocks HomePlugin!
 
 Tested Version :
 1.20.x
-HomePage: (see)[https://www.spigotmc.org/resources/homeplugin.113935/]
+HomePage: [see](https://www.spigotmc.org/resources/homeplugin.113935/)
 
 NOT AN OFFICIAL MINECRAFT SERVICE. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR .
