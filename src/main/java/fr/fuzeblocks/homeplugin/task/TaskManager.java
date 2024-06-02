@@ -1,9 +1,10 @@
 package fr.fuzeblocks.homeplugin.task;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.api.event.OnHomeTeleport;
-import fr.fuzeblocks.homeplugin.api.event.OnSpawnTeleport;
+import fr.fuzeblocks.homeplugin.api.event.OnHomeTeleportEvent;
+import fr.fuzeblocks.homeplugin.api.event.OnSpawnTeleportEvent;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
+import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import fr.fuzeblocks.homeplugin.task.exception.TeleportTaskException;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
@@ -12,15 +13,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-
-import static fr.fuzeblocks.homeplugin.HomePlugin.*;
+import static fr.fuzeblocks.homeplugin.HomePlugin.getSpawnManager;
+import static fr.fuzeblocks.homeplugin.HomePlugin.getSpawnSQLManager;
 
 public class TaskManager extends BukkitRunnable {
     private Task task;
     private Player player;
     private BukkitTask teleportTask;
     private BukkitRunnable titleTask;
-    private HomePlugin plugin;
+    private final HomePlugin plugin;
     private String homeName;
     private Location homeLocation;
 
@@ -39,15 +40,15 @@ public class TaskManager extends BukkitRunnable {
     }
 
     private void teleportHome() {
-        OnHomeTeleport onHomeTeleport;
-        if (HomePlugin.getRegistrationType() == 1) {
-            onHomeTeleport = new OnHomeTeleport(player,homeLocation);
+        OnHomeTeleportEvent onHomeTeleport;
+        if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
+            onHomeTeleport = new OnHomeTeleportEvent(player, homeLocation);
         } else {
-            onHomeTeleport = new OnHomeTeleport(player,homeLocation);
+            onHomeTeleport = new OnHomeTeleportEvent(player, homeLocation);
         }
         Bukkit.getServer().getPluginManager().callEvent(onHomeTeleport);
         if (!onHomeTeleport.isCancelled()) {
-            player.teleport(onHomeTeleport.getHomeLocation());
+            player.teleport(onHomeTeleport.getLocation());
             player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.Teleport-to-home")) + " " + homeName);
             player.resetTitle();
             if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.Add-particles-after-teleport")) {
@@ -59,15 +60,15 @@ public class TaskManager extends BukkitRunnable {
     }
 
     private void teleportSpawn() {
-        OnSpawnTeleport onSpawnTeleport;
-        if (HomePlugin.getRegistrationType() == 1) {
-            onSpawnTeleport = new OnSpawnTeleport(player,getSpawnSQLManager().getSpawn(player.getWorld()));
+        OnSpawnTeleportEvent onSpawnTeleport;
+        if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
+            onSpawnTeleport = new OnSpawnTeleportEvent(player, getSpawnSQLManager().getSpawn(player.getWorld()));
         } else {
-           onSpawnTeleport = new OnSpawnTeleport(player, getSpawnManager().getSpawn(player.getWorld()));
+            onSpawnTeleport = new OnSpawnTeleportEvent(player, getSpawnManager().getSpawn(player.getWorld()));
         }
         Bukkit.getServer().getPluginManager().callEvent(onSpawnTeleport);
         if (!onSpawnTeleport.isCancelled()) {
-            player.teleport(onSpawnTeleport.getSpawnLocation());
+            player.teleport(onSpawnTeleport.getLocation());
             player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.Teleport-to-spawn")));
             player.resetTitle();
         }
@@ -82,21 +83,20 @@ public class TaskManager extends BukkitRunnable {
     }
 
 
-
     public void cancelTeleportTask() throws TeleportTaskException {
         if (teleportTask != null && !teleportTask.isCancelled()) {
             teleportTask.cancel();
             titleTask.cancel();
             player.resetTitle();
             player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.Teleport-canceled")));
-            StatusManager.setPlayerStatus(player,false);
+            StatusManager.setPlayerStatus(player, false);
         } else {
             throw new TeleportTaskException();
         }
     }
 
 
-    public void homeTask(String homeName, Player player,Location location) {
+    public void homeTask(String homeName, Player player, Location location) {
         this.player = player;
         this.homeName = homeName;
         this.homeLocation = location;
@@ -107,8 +107,9 @@ public class TaskManager extends BukkitRunnable {
         this.player = player;
         task = Task.Spawn;
     }
+
     private void addTimeTitle() {
-         titleTask = new BukkitRunnable() {
+        titleTask = new BukkitRunnable() {
             int time = HomePlugin.getConfigurationSection().getInt("Config.Task.Task-duration");
 
             @Override
@@ -130,10 +131,10 @@ public class TaskManager extends BukkitRunnable {
     }
 
 
-
     public Player getPlayer() {
         return player;
     }
+
     public Task getTask() {
         return task;
     }

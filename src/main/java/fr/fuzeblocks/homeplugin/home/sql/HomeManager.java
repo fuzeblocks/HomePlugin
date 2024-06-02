@@ -2,7 +2,7 @@ package fr.fuzeblocks.homeplugin.home.sql;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.cache.CacheManager;
-import fr.fuzeblocks.homeplugin.database.DbConnection;
+import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -16,14 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeManager {
-    private Connection connection = DbConnection.getConnection();
-
+    private final Connection connection = DatabaseConnection.getConnection();
 
 
     public boolean addHome(Player player, String name) {
-            Location location = player.getLocation();
-           return addHome(player.getUniqueId().toString(), name, location);
+        Location location = player.getLocation();
+        return addHome(player.getUniqueId().toString(), name, location);
     }
+
     public List<Location> getHomesLocation(Player player) {
         List<Location> homes = new ArrayList<>();
         List<String> homeNames = getHomesName(player);
@@ -39,7 +39,7 @@ public class HomeManager {
     public int getHomeNumber(Player player) {
         String request = "SELECT COUNT(*) FROM HomePlugin WHERE player_uuid = ?";
         try {
-             PreparedStatement preparedStatement = connection.prepareStatement(request);
+            PreparedStatement preparedStatement = connection.prepareStatement(request);
             preparedStatement.setString(1, player.getUniqueId().toString());
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -56,7 +56,7 @@ public class HomeManager {
         List<String> homeNames = new ArrayList<>();
         String request = "SELECT HOME_NAME FROM HomePlugin WHERE player_uuid = ?";
         try {
-             PreparedStatement preparedStatement = connection.prepareStatement(request);
+            PreparedStatement preparedStatement = connection.prepareStatement(request);
             preparedStatement.setString(1, player.getUniqueId().toString());
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
@@ -72,7 +72,7 @@ public class HomeManager {
     private boolean addHome(String playerUUID, String name, Location location) {
         String request = "INSERT INTO HomePlugin (player_uuid, HOME_NAME, X, Y, Z, PITCH, YAW, WORLD) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
-             PreparedStatement preparedStatement = connection.prepareStatement(request);
+            PreparedStatement preparedStatement = connection.prepareStatement(request);
             preparedStatement.setString(1, playerUUID);
             preparedStatement.setString(2, name);
             preparedStatement.setDouble(3, location.getX());
@@ -83,7 +83,7 @@ public class HomeManager {
             preparedStatement.setString(8, location.getWorld().getName());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-           return false;
+            return false;
         }
         return true;
     }
@@ -91,10 +91,11 @@ public class HomeManager {
     public CacheManager getCacheManager() {
         return HomePlugin.getCacheManager();
     }
+
     public Location getHomeLocation(Player player, String homeName) {
         String request = "SELECT * FROM HomePlugin WHERE player_uuid = ? AND HOME_NAME = ?";
-       try {
-             PreparedStatement preparedStatement = connection.prepareStatement(request);
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(request);
             preparedStatement.setString(1, player.getUniqueId().toString());
             preparedStatement.setString(2, homeName);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -113,10 +114,11 @@ public class HomeManager {
         }
         return null;
     }
+
     public boolean delHome(Player player, String homeName) {
         String request = "DELETE FROM HomePlugin WHERE player_uuid = ? AND HOME_NAME = ?";
         try {
-             PreparedStatement preparedStatement = connection.prepareStatement(request);
+            PreparedStatement preparedStatement = connection.prepareStatement(request);
             preparedStatement.setString(1, player.getUniqueId().toString());
             preparedStatement.setString(2, homeName);
             preparedStatement.executeUpdate();
@@ -125,25 +127,19 @@ public class HomeManager {
             return false;
         }
     }
+
     public boolean isStatus(Player player) {
-        if (StatusManager.getPlayerStatus(player)) {
-            return true;
-        } else {
-            return false;
-        }
+        return StatusManager.getPlayerStatus(player);
     }
+
     public boolean exist(Player player, String homeName) {
         String sql = "SELECT * FROM HomePlugin WHERE player_uuid = ? AND HOME_NAME = ?";
         try {
-             PreparedStatement pstmt = connection.prepareStatement(sql);
-                pstmt.setString(1, player.getUniqueId().toString());
-                pstmt.setString(2, homeName);
-                ResultSet rs = pstmt.executeQuery();
-                if (rs.next()) {
-                    return true;
-                } else {
-                    return false;
-                }
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, player.getUniqueId().toString());
+            pstmt.setString(2, homeName);
+            ResultSet rs = pstmt.executeQuery();
+            return rs.next();
         } catch (SQLException e) {
             return false;
         }

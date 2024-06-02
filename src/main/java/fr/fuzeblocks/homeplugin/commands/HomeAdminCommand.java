@@ -2,6 +2,7 @@ package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
+import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -20,7 +21,7 @@ public class HomeAdminCommand implements CommandExecutor {
                 if (args.length >= 1) {
                     Player target = Bukkit.getPlayerExact(args[0]);
                     if (target != null) {
-                        if (HomePlugin.getRegistrationType() == 1) {
+                        if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
                             fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
                             player.sendMessage("§eLe joueur : " + target.getName() + "§e a pour home/s :");
                             List<String> homeName = homeSQLManager.getHomesName(player);
@@ -47,7 +48,7 @@ public class HomeAdminCommand implements CommandExecutor {
                             }
                             return true;
                         }
-                    }  else {
+                    } else {
                         player.sendMessage("§cLe joueur choisi n'existe pas ou n'est pas en ligne !");
                     }
                 } else {

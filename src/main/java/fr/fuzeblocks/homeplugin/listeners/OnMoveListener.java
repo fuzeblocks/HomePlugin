@@ -18,15 +18,15 @@ public class OnMoveListener implements Listener {
             return;
         }
         if (StatusManager.getPlayerStatus(player)) {
-                if (getTaskManagerInstance(player).getTask().equals(Task.Spawn)) {
-                    CancelTask.cancelTeleportTask(getTaskManagerInstance(player));
-                }
+            if (getTaskManagerInstance(player).getTask().equals(Task.Spawn)) {
+                CancelTask.cancelTeleportTask(getTaskManagerInstance(player));
             }
+        }
         if (StatusManager.getPlayerStatus(player)) {
-                if (getTaskManagerInstance(player).getTask().equals(Task.Home)) {
-                    CancelTask.cancelTeleportTask(getTaskManagerInstance(player));
-                }
+            if (getTaskManagerInstance(player).getTask().equals(Task.Home)) {
+                CancelTask.cancelTeleportTask(getTaskManagerInstance(player));
             }
         }
     }
+}
 

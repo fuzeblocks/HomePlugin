@@ -4,6 +4,7 @@ import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
 import fr.fuzeblocks.homeplugin.spawn.yml.SpawnManager;
+import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,7 +14,7 @@ public class OnJoinListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (HomePlugin.getRegistrationType() == 1) {
+        if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
             fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
             if (homeSQLManager.getHomeNumber(player) > 0) {
                 CacheManager cacheManager = homeSQLManager.getCacheManager();

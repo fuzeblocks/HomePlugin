@@ -1,20 +1,21 @@
 package fr.fuzeblocks.homeplugin.database;
 
-public class DbCredentials {
+public class DatabaseCredentials {
     private final String host;
     private final String user;
     private final String pass;
     private final String databasename;
     private final int port;
 
-    public DbCredentials(String host, String user, String pass, String databasename, int port) {
-        System.out.println("DbCredentials");
+    public DatabaseCredentials(String host, String user, String pass, String databasename, int port) {
+        System.out.println("DatabaseCredentials");
         this.host = host;
         this.user = user;
         this.pass = pass;
         this.databasename = databasename;
         this.port = port;
     }
+
     public String toURI() {
         String builder = "jdbc:mysql://" +
                 host +

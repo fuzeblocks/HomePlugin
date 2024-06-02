@@ -1,8 +1,9 @@
 package fr.fuzeblocks.homeplugin.commands;
 
-import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.status.StatusManager ;
+import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
+import fr.fuzeblocks.homeplugin.status.StatusManager;
+import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import fr.fuzeblocks.homeplugin.task.TaskManager;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -16,9 +17,9 @@ import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance
 
 
 public class HomeCommand implements CommandExecutor {
-    private final HomePlugin instance;
     private static TaskManager taskManager;
-    private String key = "Config.Language.";
+    private final HomePlugin instance;
+    private final String key = "Config.Language.";
 
     public HomeCommand(HomePlugin instance) {
         this.instance = instance;
@@ -33,7 +34,7 @@ public class HomeCommand implements CommandExecutor {
                 String homeName = args[0];
                 HomeManager homeManager = HomePlugin.getHomeManager();
                 fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
-                if (HomePlugin.getRegistrationType() == 1) {
+                if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
                     if (homeSQLManager.isStatus(player)) {
                         return false;
                     }
@@ -83,35 +84,31 @@ public class HomeCommand implements CommandExecutor {
         }
         return false;
     }
-    private void setPlayerTeleportation(Player player,String homeName,Location location) {
+
+    private void setPlayerTeleportation(Player player, String homeName, Location location) {
         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Start-of-teleportation")) + " " + homeName);
         StatusManager.setPlayerStatus(player, true);
         taskManager = new TaskManager(instance);
-        taskManager.homeTask(homeName,player,location);
+        taskManager.homeTask(homeName, player, location);
         taskManager.startTeleportTask();
-        setTaskManagerInstance(player,taskManager);
+        setTaskManagerInstance(player, taskManager);
     }
 
-   private boolean verifyInCache(HomeManager homeManager, Player player, String homeName) {
-       if (homeManager.getCacheManager().getHomesInCache(player) != null) {
-           HashMap<String, Location> homes = homeManager.getCacheManager().getHomesInCache(player);
-           if (homes.containsKey(homeName)) {
-               return true;
-           }
-       }  else {
-           return false;
-       }
-       return false;
-   }
+    private boolean verifyInCache(HomeManager homeManager, Player player, String homeName) {
+        if (homeManager.getCacheManager().getHomesInCache(player) != null) {
+            HashMap<String, Location> homes = homeManager.getCacheManager().getHomesInCache(player);
+            return homes.containsKey(homeName);
+        } else {
+            return false;
+        }
+    }
+
     private boolean verifyInCache(fr.fuzeblocks.homeplugin.home.sql.HomeManager homeManager, Player player, String homeName) {
         if (homeManager.getCacheManager().getHomesInCache(player) != null) {
             HashMap<String, Location> homes = homeManager.getCacheManager().getHomesInCache(player);
-            if (homes.containsKey(homeName)) {
-                return true;
-            }
-        }  else {
+            return homes.containsKey(homeName);
+        } else {
             return false;
         }
-        return false;
     }
 }

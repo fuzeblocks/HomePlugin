@@ -1,6 +1,7 @@
 package fr.fuzeblocks.homeplugin.completers;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -14,7 +15,7 @@ public class HomeCompleter implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> home = new ArrayList<>();
         if (args.length == 1) {
-            if (HomePlugin.getRegistrationType() == 1) {
+            if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
                 home.addAll(HomePlugin.getHomeSQLManager().getHomesName((Player) sender));
             } else {
                 home.addAll(HomePlugin.getHomeManager().getHomesName((Player) sender));

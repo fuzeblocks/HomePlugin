@@ -1,7 +1,8 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.api.event.OnSpawnCreate;
+import fr.fuzeblocks.homeplugin.api.event.OnSpawnCreatedEvent;
+import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -10,20 +11,21 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class SetSpawnCommand implements CommandExecutor {
-    private String key = "Config.Language.";
-    private OnSpawnCreate onSpawnCreate;
+    private final String key = "Config.Language.";
+    private OnSpawnCreatedEvent onSpawnCreate;
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = ((Player) sender).getPlayer();
             if (player.hasPermission(HomePlugin.getConfigurationSection().getString("Config.Spawn.SetSpawn-permission"))) {
                 Location location = player.getLocation();
-                if (HomePlugin.getRegistrationType() == 1) {
+                if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
                     if (HomePlugin.getSpawnSQLManager().hasSpawn(location.getWorld())) {
                         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Spawn-already-exists")));
                         return false;
                     }
-                    onSpawnCreate = new OnSpawnCreate(player,location,1);
+                    onSpawnCreate = new OnSpawnCreatedEvent(player, location, SyncMethod.MYSQL);
                     Bukkit.getPluginManager().callEvent(onSpawnCreate);
                     if (!onSpawnCreate.isCancelled()) {
                         HomePlugin.getSpawnSQLManager().setSpawn(onSpawnCreate.getLocation());
@@ -35,7 +37,7 @@ public class SetSpawnCommand implements CommandExecutor {
                         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Spawn-already-exists")));
                         return false;
                     }
-                    onSpawnCreate = new OnSpawnCreate(player,location,0);
+                    onSpawnCreate = new OnSpawnCreatedEvent(player, location, SyncMethod.YAML);
                     Bukkit.getPluginManager().callEvent(onSpawnCreate);
                     if (!onSpawnCreate.isCancelled()) {
                         HomePlugin.getSpawnManager().setSpawn(onSpawnCreate.getLocation());
@@ -46,7 +48,7 @@ public class SetSpawnCommand implements CommandExecutor {
             } else {
                 player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Spawn.SetSpawn-permission-deny-message")));
             }
-         } else {
+        } else {
             sender.sendMessage("§cSeul un joueur peut executer cette commande !");
         }
         return false;

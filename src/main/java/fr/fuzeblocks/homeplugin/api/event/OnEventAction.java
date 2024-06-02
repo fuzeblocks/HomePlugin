@@ -1,40 +1,43 @@
 package fr.fuzeblocks.homeplugin.api.event;
 
+import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class OnSpawnDelete extends Event implements Cancellable {
-    private boolean isCancelled = false;
+public class OnEventAction extends Event {
     private static final HandlerList handlers = new HandlerList();
     private Player player;
     private Location location;
-    private int type; //return 1 if it is in the database
+    private SyncMethod type;
 
-    public OnSpawnDelete(Player player, Location location, int type) {
+    public OnEventAction(Player player, Location location, SyncMethod type) {
         this.player = player;
         this.location = location;
         this.type = type;
     }
 
-    public int getType() {
-        return type;
+    public OnEventAction(Player player, Location location) {
+        this.player = player;
+        this.location = location;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 
     @Override
-    public boolean isCancelled() {
-        return isCancelled;
-    }
-
-    @Override
-    public void setCancelled(boolean b) {
-        isCancelled = b;
+    public HandlerList getHandlers() {
+        return null;
     }
 
     public Player getPlayer() {
         return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public Location getLocation() {
@@ -45,11 +48,7 @@ public class OnSpawnDelete extends Event implements Cancellable {
         this.location = location;
     }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
-    public static HandlerList getHandlerList() {
-        return handlers;
+    public SyncMethod getType() {
+        return type;
     }
 }

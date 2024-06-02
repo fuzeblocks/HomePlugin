@@ -1,12 +1,12 @@
 package fr.fuzeblocks.homeplugin.spawn.sql;
 
-import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.database.DbConnection;
+import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 
 public class SpawnManager {
-    private Connection connection = DbConnection.getConnection();
+    private final Connection connection = DatabaseConnection.getConnection();
 
     public boolean setSpawn(Location location) {
         String request = "INSERT INTO SpawnPlugin (X, Y, Z, YAW, PITCH, WORLD) VALUES (?, ?, ?, ?, ?, ?)";
@@ -38,7 +38,7 @@ public class SpawnManager {
         String request = "SELECT * FROM `SpawnPlugin` WHERE `WORLD` = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(request);
-            preparedStatement.setString(1,world.getName().toString());
+            preparedStatement.setString(1, world.getName());
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 String worldName = resultSet.getString("WORLD");
@@ -63,7 +63,7 @@ public class SpawnManager {
         String request = "DELETE FROM `SpawnPlugin` WHERE `WORLD` = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(request);
-            preparedStatement.setString(1,world.getName());
+            preparedStatement.setString(1, world.getName());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -73,10 +73,6 @@ public class SpawnManager {
     }
 
     public boolean isStatus(Player player) {
-        if (StatusManager.getPlayerStatus(player)) {
-            return true;
-        } else {
-            return false;
-        }
+        return StatusManager.getPlayerStatus(player);
     }
 }
