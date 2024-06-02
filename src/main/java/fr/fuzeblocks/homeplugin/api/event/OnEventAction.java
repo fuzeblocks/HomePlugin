@@ -29,7 +29,7 @@ public class OnEventAction extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return null;
+        return handlers;
     }
 
     public Player getPlayer() {

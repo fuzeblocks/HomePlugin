@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 
 public class SpawnManager {
@@ -47,7 +48,12 @@ public class SpawnManager {
 
     public boolean hasSpawn(World world) {
         String key = "Spawn." + world.getUID();
-        return yaml.getString(key).equals(world.getUID().toString());
+        try {
+            Objects.requireNonNull(yaml.getString(key)).equalsIgnoreCase(world.getUID().toString());
+        } catch (NullPointerException e) {
+            return false;
+        }
+        return true;
     }
 
     public boolean removeSpawn(World world) {
