@@ -1,0 +1,25 @@
+name: HomePlugin
+version: '0.6.1'
+main: fr.fuzeblocks.homeplugin.HomePlugin
+api-version: '1.13'
+load: STARTUP
+authors: [fuzeblocks]
+description: [Created by fuzeblocks]
+softdepend: [PlaceholderAPI]
+commands:
+  home:
+    description: Se tp a un de ses homes
+  sethome:
+    description: Sert a poser un home
+  spawn:
+    description: Sert a se tp au spawn
+  setspawn:
+    description: Sert a set le spawn
+  delspawn:
+    description: Sert a supprimer le spawn
+  delhome:
+    description: Sert a supprimer un home
+  cache:
+    description: Sert a vider le cache de tous ou un joueur/s
+  homeadmin:
+    description: Sert a voir les homes de joueur
