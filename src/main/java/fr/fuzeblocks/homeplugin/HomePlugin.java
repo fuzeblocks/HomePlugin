@@ -194,22 +194,20 @@ public final class HomePlugin extends JavaPlugin implements PluginLoader {
         });
     }
     private void loadPlugins() {
-        for (fr.fuzeblocks.homeplugin.plugin.HomePlugin homePlugin : homePlugins) {
-            assert homePlugin != null;
-            getLogger().info(homePlugin.getName() + "." + "loaded plugin !");
-        }
+            getLogger().info(checkPlugin().getName() + "." + "loaded plugin !");
     }
     private void initPluginFonc() {
-        for (fr.fuzeblocks.homeplugin.plugin.HomePlugin homePlugin : homePlugins) {
-            assert homePlugin != null;
-            homePlugin.initialize();
-        }
+        checkPlugin().initialize();
     }
     private void stopPluginFonc() {
+        checkPlugin().stop();
+    }
+    private fr.fuzeblocks.homeplugin.plugin.HomePlugin checkPlugin() {
         for (fr.fuzeblocks.homeplugin.plugin.HomePlugin homePlugin : homePlugins) {
             assert homePlugin != null;
-            homePlugin.stop();
+            return homePlugin;
         }
+        return null;
     }
 
     @Override

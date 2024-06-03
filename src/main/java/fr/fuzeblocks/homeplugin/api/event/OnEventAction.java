@@ -3,14 +3,17 @@ package fr.fuzeblocks.homeplugin.api.event;
 import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class OnEventAction extends Event {
+public class OnEventAction extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
+    private String homeName;
     private Player player;
     private Location location;
     private SyncMethod type;
+    private boolean isCancelled = false;
 
     public OnEventAction(Player player, Location location, SyncMethod type) {
         this.player = player;
@@ -21,6 +24,12 @@ public class OnEventAction extends Event {
     public OnEventAction(Player player, Location location) {
         this.player = player;
         this.location = location;
+    }
+    public OnEventAction(Player player, Location location,SyncMethod type,String homeName) {
+        this.player = player;
+        this.location = location;
+        this.type = type;
+        this.homeName = homeName;
     }
 
     public static HandlerList getHandlerList() {
@@ -50,5 +59,22 @@ public class OnEventAction extends Event {
 
     public SyncMethod getType() {
         return type;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return isCancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean b) {
+        isCancelled = b;
+    }
+    public String getHomeName() {
+        return homeName;
+    }
+
+    public void setHomeName(String homeName) {
+        this.homeName = homeName;
     }
 }
