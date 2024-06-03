@@ -4,7 +4,7 @@
   <groupId>fr.fuzeblocks</groupId>
   <artifactId>HomePlugin</artifactId>
   <name>HomePlugin</name>
-  <version>0.6.1</version>
+  <version>0.6.2</version>
   <description>[Created by fuzeblocks]</description>
   <build>
     <resources>

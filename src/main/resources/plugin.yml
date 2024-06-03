@@ -1,5 +1,5 @@
 name: HomePlugin
-version: '${project.version}'
+version: '0.6.2'
 main: fr.fuzeblocks.homeplugin.HomePlugin
 api-version: '1.13'
 load: STARTUP

@@ -12,6 +12,7 @@ import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
 import fr.fuzeblocks.homeplugin.listeners.OnJoinListener;
 import fr.fuzeblocks.homeplugin.listeners.OnMoveListener;
 import fr.fuzeblocks.homeplugin.placeholder.HomePluginExpansion;
+import fr.fuzeblocks.homeplugin.plugin.PluginLoader;
 import fr.fuzeblocks.homeplugin.spawn.yml.SpawnManager;
 import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import fr.fuzeblocks.homeplugin.update.UpdateChecker;
@@ -21,14 +22,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-public final class HomePlugin extends JavaPlugin {
+public final class HomePlugin extends JavaPlugin implements PluginLoader {
+    private static HomePlugin homePlugin;
     private static HomeManager homeManager;
     private static SpawnManager spawnManager;
     private static CacheManager cacheManager;
     private static fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager;
     private static fr.fuzeblocks.homeplugin.spawn.sql.SpawnManager spawnSQLManager;
     private static ConfigurationSection configurationSection;
+    private static List<fr.fuzeblocks.homeplugin.plugin.HomePlugin> homePlugins = new ArrayList<>();
 
     public static HomeManager getHomeManager() {
         return homeManager;
@@ -65,15 +70,20 @@ public final class HomePlugin extends JavaPlugin {
     public static String translateAlternateColorCodes(String s) {
         return s.replace('&', '§');
     }
+    public static synchronized HomePlugin getInstance() {
+        return homePlugin;
+    }
 
     @Override
     public void onEnable() {
         configurationSection = getConfig();
+        homePlugin = this;
         if (getConfig().getString("Config.Connector.TYPE").isEmpty()) {
             getConfig().set("Config.Connector.TYPE", "YAML");
             saveConfig();
         }
         System.out.println(getConfig().getString("Config.Connector.TYPE") + " has been selected !");
+        loadPlugins();
         saveDefaultConfig();
         databaseRegistration();
         homeRegistration();
@@ -81,6 +91,7 @@ public final class HomePlugin extends JavaPlugin {
         eventRegistration();
         completerManager();
         spawnManager();
+        pluginsManager();
         cacheManager = CacheManager.getInstance();
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new HomePluginExpansion(this).register();
@@ -91,6 +102,7 @@ public final class HomePlugin extends JavaPlugin {
         getLogger().info("----------------------HomePlugin----------------------");
         getLogger().info("----------HomePlugin a démmaré avec succés !----------");
         getLogger().info("------------------------------------------------------");
+        initPluginFonc();
     }
 
     @Override
@@ -98,6 +110,7 @@ public final class HomePlugin extends JavaPlugin {
         getLogger().info("----------------------HomePlugin----------------------");
         getLogger().info("----------HomePlugin a été éteint avec succés !----------");
         getLogger().info("------------------------------------------------------");
+        stopPluginFonc();
     }
 
     private void databaseRegistration() {
@@ -125,6 +138,11 @@ public final class HomePlugin extends JavaPlugin {
         File spawn = new File(this.getDataFolder(), "spawn.yml");
         registration(spawn);
         spawnManager = new SpawnManager(spawn);
+    }
+    private void pluginsManager() {
+        getLogger().info("Registering Plugins");
+        File plugins = new File(this.getDataFolder(),"plugins");
+        plugins.mkdirs();
     }
 
     private void registration(File file) {
@@ -174,5 +192,38 @@ public final class HomePlugin extends JavaPlugin {
                 getLogger().info("There is a new update available.");
             }
         });
+    }
+    private void loadPlugins() {
+        for (fr.fuzeblocks.homeplugin.plugin.HomePlugin homePlugin : homePlugins) {
+            assert homePlugin != null;
+            getLogger().info(homePlugin.getName() + "." + "loaded plugin !");
+        }
+    }
+    private void initPluginFonc() {
+        for (fr.fuzeblocks.homeplugin.plugin.HomePlugin homePlugin : homePlugins) {
+            assert homePlugin != null;
+            homePlugin.initialize();
+        }
+    }
+    private void stopPluginFonc() {
+        for (fr.fuzeblocks.homeplugin.plugin.HomePlugin homePlugin : homePlugins) {
+            assert homePlugin != null;
+            homePlugin.stop();
+        }
+    }
+
+    @Override
+    public void loadPlugin(fr.fuzeblocks.homeplugin.plugin.HomePlugin homePlugin) {
+        homePlugins.add(homePlugin);
+    }
+
+    @Override
+    public List<fr.fuzeblocks.homeplugin.plugin.HomePlugin> getHomePlugin() {
+        return homePlugins;
+    }
+
+    @Override
+    public void unregisterPlugin(fr.fuzeblocks.homeplugin.plugin.HomePlugin homePlugin) {
+            homePlugins.remove(homePlugin);
     }
 }
