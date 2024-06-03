@@ -13,6 +13,7 @@ import fr.fuzeblocks.homeplugin.listeners.OnJoinListener;
 import fr.fuzeblocks.homeplugin.listeners.OnMoveListener;
 import fr.fuzeblocks.homeplugin.placeholder.HomePluginExpansion;
 import fr.fuzeblocks.homeplugin.plugin.PluginLoader;
+import fr.fuzeblocks.homeplugin.plugin.PluginManager;
 import fr.fuzeblocks.homeplugin.spawn.yml.SpawnManager;
 import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import fr.fuzeblocks.homeplugin.update.UpdateChecker;
@@ -25,59 +26,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class HomePlugin extends JavaPlugin implements PluginLoader {
-    private static HomePlugin homePlugin;
+public final class HomePlugin extends JavaPlugin {
     private static HomeManager homeManager;
     private static SpawnManager spawnManager;
     private static CacheManager cacheManager;
     private static fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager;
     private static fr.fuzeblocks.homeplugin.spawn.sql.SpawnManager spawnSQLManager;
     private static ConfigurationSection configurationSection;
-    private static List<fr.fuzeblocks.homeplugin.plugin.HomePlugin> homePlugins = new ArrayList<>();
-
-    public static HomeManager getHomeManager() {
-        return homeManager;
-    }
-
-    public static SpawnManager getSpawnManager() {
-        return spawnManager;
-    }
-
-    public static CacheManager getCacheManager() {
-        return cacheManager;
-    }
-
-    public static fr.fuzeblocks.homeplugin.home.sql.HomeManager getHomeSQLManager() {
-        return homeSQLManager;
-    }
-
-    public static fr.fuzeblocks.homeplugin.spawn.sql.SpawnManager getSpawnSQLManager() {
-        return spawnSQLManager;
-    }
-
-    public static SyncMethod getRegistrationType() {
-        if (configurationSection.getString("Config.Connector.TYPE").equalsIgnoreCase("MYSQL")) {
-            return SyncMethod.MYSQL;
-        } else {
-            return SyncMethod.YAML;
-        }
-    }
-
-    public static ConfigurationSection getConfigurationSection() {
-        return configurationSection;
-    }
-
-    public static String translateAlternateColorCodes(String s) {
-        return s.replace('&', '§');
-    }
-    public static synchronized HomePlugin getInstance() {
-        return homePlugin;
-    }
 
     @Override
     public void onEnable() {
         configurationSection = getConfig();
-        homePlugin = this;
         if (getConfig().getString("Config.Connector.TYPE").isEmpty()) {
             getConfig().set("Config.Connector.TYPE", "YAML");
             saveConfig();
@@ -203,25 +162,46 @@ public final class HomePlugin extends JavaPlugin implements PluginLoader {
         checkPlugin().stop();
     }
     private fr.fuzeblocks.homeplugin.plugin.HomePlugin checkPlugin() {
-        for (fr.fuzeblocks.homeplugin.plugin.HomePlugin homePlugin : homePlugins) {
+        for (fr.fuzeblocks.homeplugin.plugin.HomePlugin homePlugin : PluginManager.getInstance().getHomePlugin()) {
             assert homePlugin != null;
             return homePlugin;
         }
         return null;
     }
-
-    @Override
-    public void loadPlugin(fr.fuzeblocks.homeplugin.plugin.HomePlugin homePlugin) {
-        homePlugins.add(homePlugin);
+    public static HomeManager getHomeManager() {
+        return homeManager;
     }
 
-    @Override
-    public List<fr.fuzeblocks.homeplugin.plugin.HomePlugin> getHomePlugin() {
-        return homePlugins;
+    public static SpawnManager getSpawnManager() {
+        return spawnManager;
     }
 
-    @Override
-    public void unregisterPlugin(fr.fuzeblocks.homeplugin.plugin.HomePlugin homePlugin) {
-            homePlugins.remove(homePlugin);
+    public static CacheManager getCacheManager() {
+        return cacheManager;
     }
+
+    public static fr.fuzeblocks.homeplugin.home.sql.HomeManager getHomeSQLManager() {
+        return homeSQLManager;
+    }
+
+    public static fr.fuzeblocks.homeplugin.spawn.sql.SpawnManager getSpawnSQLManager() {
+        return spawnSQLManager;
+    }
+
+    public static SyncMethod getRegistrationType() {
+        if (configurationSection.getString("Config.Connector.TYPE").equalsIgnoreCase("MYSQL")) {
+            return SyncMethod.MYSQL;
+        } else {
+            return SyncMethod.YAML;
+        }
+    }
+
+    public static ConfigurationSection getConfigurationSection() {
+        return configurationSection;
+    }
+
+    public static String translateAlternateColorCodes(String s) {
+        return s.replace('&', '§');
+    }
+
 }
