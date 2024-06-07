@@ -23,3 +23,5 @@ commands:
     description: Sert a vider le cache de tous ou un joueur/s
   homeadmin:
     description: Sert a voir les homes de joueur
+  plugins:
+    description: Renvoye la liste et le nombre de tous les plugins chargés

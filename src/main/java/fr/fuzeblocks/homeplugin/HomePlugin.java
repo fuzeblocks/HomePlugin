@@ -12,7 +12,6 @@ import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
 import fr.fuzeblocks.homeplugin.listeners.OnJoinListener;
 import fr.fuzeblocks.homeplugin.listeners.OnMoveListener;
 import fr.fuzeblocks.homeplugin.placeholder.HomePluginExpansion;
-import fr.fuzeblocks.homeplugin.plugin.PluginLoader;
 import fr.fuzeblocks.homeplugin.plugin.PluginManager;
 import fr.fuzeblocks.homeplugin.spawn.yml.SpawnManager;
 import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
@@ -20,11 +19,12 @@ import fr.fuzeblocks.homeplugin.update.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
+import redis.clients.jedis.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public final class HomePlugin extends JavaPlugin {
     private static HomeManager homeManager;
@@ -33,24 +33,25 @@ public final class HomePlugin extends JavaPlugin {
     private static fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager;
     private static fr.fuzeblocks.homeplugin.spawn.sql.SpawnManager spawnSQLManager;
     private static ConfigurationSection configurationSection;
+    private static JedisPooled jedisPooled;
 
     @Override
     public void onEnable() {
         configurationSection = getConfig();
-        if (getConfig().getString("Config.Connector.TYPE").isEmpty()) {
+        if (Objects.requireNonNull(getConfig().getString("Config.Connector.TYPE")).isEmpty()) {
             getConfig().set("Config.Connector.TYPE", "YAML");
             saveConfig();
         }
-        System.out.println(getConfig().getString("Config.Connector.TYPE") + " has been selected !");
+        getLogger().info(getConfig().getString("Config.Connector.TYPE") + " has been selected !");
         loadPlugins();
         saveDefaultConfig();
+        redisRegistration();
         databaseRegistration();
         homeRegistration();
         commandRegistration();
         eventRegistration();
         completerManager();
         spawnManager();
-        pluginsManager();
         cacheManager = CacheManager.getInstance();
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new HomePluginExpansion(this).register();
@@ -61,6 +62,7 @@ public final class HomePlugin extends JavaPlugin {
         getLogger().info("----------------------HomePlugin----------------------");
         getLogger().info("----------HomePlugin a démmaré avec succés !----------");
         getLogger().info("------------------------------------------------------");
+        countPlugins();
         initPluginFonc();
     }
 
@@ -71,9 +73,25 @@ public final class HomePlugin extends JavaPlugin {
         getLogger().info("------------------------------------------------------");
         stopPluginFonc();
     }
+    private void redisRegistration() {
+        if (getConfig().getBoolean("Config.Redis.UseRedis")) {
+            JedisClientConfig jedisClientConfig = DefaultJedisClientConfig.builder()
+                    .password(getConfig().getString("ConfigRedis.PASSWORD"))
+                    .ssl(getConfig().getBoolean("Config.Redis.SSL")).build();
+            HostAndPort hostAndPort = new HostAndPort(getConfig().getString("Config.Redis.HOST"), getConfig().getInt("Config.Redis.PORT"));
+            jedisPooled = new JedisPooled(hostAndPort, jedisClientConfig);
+        } else {
+                getLogger().info("Skipping Redis...");
+            }
+            if (jedisPooled != null) {
+                getLogger().info("Redis registered successfully !");
+            } else {
+                getLogger().info("Cannot connect to Redis... use default cache!");
+            }
+        }
 
-    private void databaseRegistration() {
-        if (getConfig().getString("Config.Connector.TYPE").equalsIgnoreCase("MYSQL")) {
+        private void databaseRegistration() {
+        if (Objects.requireNonNull(getConfig().getString("Config.Connector.TYPE")).equalsIgnoreCase("MYSQL")) {
             getLogger().info("Registering Database");
             new DatabaseManager(this);
             getLogger().info("Registering Manager");
@@ -98,12 +116,6 @@ public final class HomePlugin extends JavaPlugin {
         registration(spawn);
         spawnManager = new SpawnManager(spawn);
     }
-    private void pluginsManager() {
-        getLogger().info("Registering Plugins");
-        File plugins = new File(this.getDataFolder(),"plugins");
-        plugins.mkdirs();
-    }
-
     private void registration(File file) {
         if (!this.getDataFolder().exists()) {
             this.getDataFolder().mkdirs();
@@ -128,6 +140,7 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("spawn").setExecutor(new SpawnCommand());
         getCommand("cache").setExecutor(new CacheCommand());
         getCommand("homeadmin").setExecutor(new HomeAdminCommand());
+        getCommand("plugins").setExecutor(new PluginCommand());
     }
 
     private void eventRegistration() {
@@ -153,21 +166,31 @@ public final class HomePlugin extends JavaPlugin {
         });
     }
     private void loadPlugins() {
+        if (checkPlugin() != null) {
             getLogger().info(checkPlugin().getName() + "." + "loaded plugin !");
+        }
     }
     private void initPluginFonc() {
-        checkPlugin().initialize();
+        if (Objects.nonNull(checkPlugin())) checkPlugin().initialize();
     }
     private void stopPluginFonc() {
-        checkPlugin().stop();
+       if (Objects.nonNull(checkPlugin())) checkPlugin().stop();
     }
     private fr.fuzeblocks.homeplugin.plugin.HomePlugin checkPlugin() {
-        for (fr.fuzeblocks.homeplugin.plugin.HomePlugin homePlugin : PluginManager.getInstance().getHomePlugin()) {
-            assert homePlugin != null;
-            return homePlugin;
+        List<fr.fuzeblocks.homeplugin.plugin.HomePlugin> pluginManager = PluginManager.getInstance().getHomePlugin();
+        if (!pluginManager.isEmpty()) {
+            for (fr.fuzeblocks.homeplugin.plugin.HomePlugin homePlugin : pluginManager) {
+                return homePlugin;
+            }
         }
         return null;
     }
+    private void countPlugins() {
+        if (PluginManager.getInstance().getHomePlugin().isEmpty()) {
+            getLogger().warning("No plugins to load skipping...");
+        }
+    }
+
     public static HomeManager getHomeManager() {
         return homeManager;
     }
@@ -204,4 +227,7 @@ public final class HomePlugin extends JavaPlugin {
         return s.replace('&', '§');
     }
 
+    public static JedisPooled getJedisPooled() {
+        return jedisPooled;
+    }
 }

@@ -1,12 +1,19 @@
 Config:
   Connector:
-    TYPE: "YAML" #MYSQL ou YAML
-    #Optional
-    HOST: "localhost"
-    PORT: 3306
-    USERNAME: "root"
-    PASSWORD: ""
-    DATABASE: "HomePlugin"
+     TYPE: "YAML" #MYSQL ou YAML
+      #Optional
+     HOST: "localhost"
+     PORT: 3306
+     USERNAME: "root"
+     PASSWORD: ""
+     DATABASE: "HomePlugin"
+  Redis:
+     UseRedis: false
+     #Optional
+     HOST: "localhost"
+     PORT: 6379
+     SSL: false
+     PASSWORD: ""
   Language:
     Teleportation-in-progress: "&l&eTeleportation dans :"
     Teleport-canceled: "&cLa téléportation a été annulée car vous avez bougé."

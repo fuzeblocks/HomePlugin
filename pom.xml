@@ -6,7 +6,7 @@
 
     <groupId>fr.fuzeblocks</groupId>
     <artifactId>HomePlugin</artifactId>
-    <version>0.6.2</version>
+    <version>0.6.3</version>
     <packaging>jar</packaging>
 
     <name>HomePlugin</name>
@@ -66,6 +66,13 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>5.1.2</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>

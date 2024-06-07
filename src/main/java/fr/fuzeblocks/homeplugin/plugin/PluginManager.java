@@ -7,7 +7,7 @@ public class PluginManager implements PluginLoader {
     private static PluginManager pluginManager = null;
     private static List<fr.fuzeblocks.homeplugin.plugin.HomePlugin> homePlugins = new ArrayList<>();
     @Override
-    public void loadPlugin(fr.fuzeblocks.homeplugin.plugin.HomePlugin homePlugin) {
+    public void loadPlugin(HomePlugin homePlugin) {
         homePlugins.add(homePlugin);
     }
 
