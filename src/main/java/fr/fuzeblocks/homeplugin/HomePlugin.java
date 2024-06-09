@@ -161,7 +161,7 @@ public final class HomePlugin extends JavaPlugin {
             if (this.getDescription().getVersion().equals(version)) {
                 getLogger().info("There is not a new update available.");
             } else {
-                getLogger().info("There is a new update available.");
+                getLogger().warning("There is a new update available.");
             }
         });
     }

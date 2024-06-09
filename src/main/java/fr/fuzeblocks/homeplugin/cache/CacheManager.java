@@ -31,7 +31,7 @@ public class CacheManager {
 
     public void addHomeInCache(Player player, String homeName, Location location) {
         if (useRedis) {
-            String serializedLocation = serializeLocation(location);
+            String serializedLocation = getStringFromLocation(location);
             jedisPooled.hset(player.getUniqueId().toString(), homeName, serializedLocation);
         } else {
             playerHomes.computeIfAbsent(player, k -> new HashMap<>()).put(homeName, location);
@@ -87,13 +87,13 @@ public class CacheManager {
         }
     }
 
-    private String serializeLocation(Location location) {
+    private String getStringFromLocation(Location location) {
         YamlConfiguration yamlConfiguration = new YamlConfiguration();
         yamlConfiguration.set("location", location);
         return yamlConfiguration.saveToString();
     }
 
-    private Location deserializeLocation(String serializedLocation) {
+    private Location getLocationFromString(String serializedLocation) {
         YamlConfiguration yamlConfiguration = new YamlConfiguration();
         try {
             yamlConfiguration.loadFromString(serializedLocation);
@@ -106,7 +106,7 @@ public class CacheManager {
     private HashMap<String, Location> deserializeLocationMap(Map<String, String> map) {
         HashMap<String, Location> locationMap = new HashMap<>();
         for (Map.Entry<String, String> entry : map.entrySet()) {
-            Location location = deserializeLocation(entry.getValue());
+            Location location = getLocationFromString(entry.getValue());
             locationMap.put(entry.getKey(), location);
         }
         return locationMap;
