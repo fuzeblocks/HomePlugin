@@ -111,6 +111,6 @@ buildNumber.properties
 
 # Common working directory
 run/
-target/
-.idea/
-.github/
+target/*
+.idea/*
+.github/*
