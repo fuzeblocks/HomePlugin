@@ -32,6 +32,12 @@ public class OnEventAction extends Event implements Cancellable {
         this.homeName = homeName;
     }
 
+    public OnEventAction(Player player, Location location, String homeName) {
+        this.player = player;
+        this.location = location;
+        this.homeName = homeName;
+    }
+
     public static HandlerList getHandlerList() {
         return handlers;
     }

@@ -115,7 +115,7 @@ public class HomeManager {
         return null;
     }
 
-    public boolean delHome(Player player, String homeName) {
+    public boolean deleteHome(Player player, String homeName) {
         String request = "DELETE FROM HomePlugin WHERE player_uuid = ? AND HOME_NAME = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(request);

@@ -97,7 +97,7 @@ public class HomeManager {
         return null;
     }
 
-    public boolean delHome(Player player, String homeName) {
+    public boolean deleteHome(Player player, String homeName) {
         String key = player.getUniqueId() + ".Home." + homeName;
         if (yaml.contains(key)) {
             yaml.set(key, null);

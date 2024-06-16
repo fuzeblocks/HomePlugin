@@ -7,12 +7,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import redis.clients.jedis.JedisPooled;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class CacheManager {
     private static CacheManager instance;
-    private final HashMap<Player, HashMap<String, Location>> playerHomes = new HashMap<>();
+    private final HashMap<Player, HashMap<String, Location>> playerHomes = new HashMap();
     private JedisPooled jedisPooled;
     private final boolean useRedis = HomePlugin.getConfigurationSection().getBoolean("Config.Connector.Redis.UseRedis");
 

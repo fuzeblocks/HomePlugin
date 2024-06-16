@@ -10,5 +10,8 @@
         <module name="HomePlugin" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="HomePlugin (2)" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>
