@@ -1,3 +1,4 @@
+[![Java CI with Maven](https://github.com/fuzeblocks/HomePlugin/actions/workflows/maven.yml/badge.svg?branch=main)](https://github.com/fuzeblocks/HomePlugin/actions/workflows/maven.yml)
 🏠 Welcome to FuzeBlocks HomePlugin! 🏠
 
 Enhance your players' gaming experience with ease using our Spigot plugin for home management created by fuzeblocks.
