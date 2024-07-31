@@ -1,4 +1,4 @@
-[![Java CI with Maven](https://github.com/fuzeblocks/HomePlugin/actions/workflows/maven.yml/badge.svg?branch=main)](https://github.com/fuzeblocks/HomePlugin/actions/workflows/maven.yml)
+[![Java CI with Maven](https://github.com/fuzeblocks/HomePlugin/actions/workflows/maven.yml/badge.svg?branch=main)](https://github.com/fuzeblocks/HomePlugin/actions/workflows/maven.yml) [![Dependency review](https://github.com/fuzeblocks/HomePlugin/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/fuzeblocks/HomePlugin/actions/workflows/dependency-review.yml)
 
 
 
