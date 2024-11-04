@@ -72,7 +72,7 @@ public class HomePluginExpansion extends PlaceholderExpansion {
             HomeManager homeManager = HomePlugin.getHomeManager();
             return homeManager.getHomesName(player);
         } else {
-            fr.fuzeblocks.homeplugin.home.sql.HomeManager homeManager = HomePlugin.getHomeSQLManager();
+            fr.fuzeblocks.homeplugin.home.sql.SQLHomeManager homeManager = HomePlugin.getHomeSQLManager();
             return homeManager.getHomesName(player);
         }
     }
@@ -82,7 +82,7 @@ public class HomePluginExpansion extends PlaceholderExpansion {
             HomeManager homeManager = HomePlugin.getHomeManager();
             return homeManager.getHomeLocation(player, s);
         } else {
-            fr.fuzeblocks.homeplugin.home.sql.HomeManager homeManager = HomePlugin.getHomeSQLManager();
+            fr.fuzeblocks.homeplugin.home.sql.SQLHomeManager homeManager = HomePlugin.getHomeSQLManager();
             return homeManager.getHomeLocation(player, s);
         }
     }
@@ -92,7 +92,7 @@ public class HomePluginExpansion extends PlaceholderExpansion {
             HomeManager homeManager = HomePlugin.getHomeManager();
             return homeManager.getHomeNumber(player);
         } else {
-            fr.fuzeblocks.homeplugin.home.sql.HomeManager homeManager = HomePlugin.getHomeSQLManager();
+            fr.fuzeblocks.homeplugin.home.sql.SQLHomeManager homeManager = HomePlugin.getHomeSQLManager();
             return homeManager.getHomeNumber(player);
         }
     }

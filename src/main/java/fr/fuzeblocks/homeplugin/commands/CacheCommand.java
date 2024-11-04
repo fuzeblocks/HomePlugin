@@ -22,7 +22,7 @@ public class CacheCommand implements CommandExecutor {
             if (player.hasPermission("HomePlugin.cache")) {
                 CacheManager cacheManager = HomePlugin.getCacheManager();
                 HomeManager homeManager = HomePlugin.getHomeManager();
-                fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
+                fr.fuzeblocks.homeplugin.home.sql.SQLHomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
                 if (args.length >= 1) {
                     switch (args[0].toLowerCase()) {
                         case "clearall":

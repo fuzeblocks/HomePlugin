@@ -22,7 +22,7 @@ public class SpawnCommand implements CommandExecutor {
             Player player = ((Player) sender).getPlayer();
             if (args.length == 0) {
                 SpawnManager spawnManager = HomePlugin.getSpawnManager();
-                fr.fuzeblocks.homeplugin.spawn.sql.SpawnManager spawnSQLManager = HomePlugin.getSpawnSQLManager();
+                fr.fuzeblocks.homeplugin.spawn.sql.SQLSpawnManager spawnSQLManager = HomePlugin.getSpawnSQLManager();
                 if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
                     if (spawnSQLManager.hasSpawn(player.getWorld())) {
                         if (spawnSQLManager.isStatus(player)) {

@@ -21,7 +21,7 @@ public class SetHomeCommand implements CommandExecutor {
             if (args.length == 1) {
                 String home_name = args[0];
                 HomeManager homeManager = HomePlugin.getHomeManager();
-                fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
+                fr.fuzeblocks.homeplugin.home.sql.SQLHomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
                 if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
                     if (homeSQLManager.isStatus(player)) {
                         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.A-teleport-is-already-in-progress")));

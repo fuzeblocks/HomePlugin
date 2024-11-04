@@ -33,7 +33,7 @@ public class HomeCommand implements CommandExecutor {
             if (args.length == 1) {
                 String homeName = args[0];
                 HomeManager homeManager = HomePlugin.getHomeManager();
-                fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
+                fr.fuzeblocks.homeplugin.home.sql.SQLHomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
                 if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
                     if (homeSQLManager.isStatus(player)) {
                         return false;
@@ -103,7 +103,7 @@ public class HomeCommand implements CommandExecutor {
         }
     }
 
-    private boolean verifyInCache(fr.fuzeblocks.homeplugin.home.sql.HomeManager homeManager, Player player, String homeName) {
+    private boolean verifyInCache(fr.fuzeblocks.homeplugin.home.sql.SQLHomeManager homeManager, Player player, String homeName) {
         if (homeManager.getCacheManager().getHomesInCache(player) != null) {
             HashMap<String, Location> homes = homeManager.getCacheManager().getHomesInCache(player);
             return homes.containsKey(homeName);

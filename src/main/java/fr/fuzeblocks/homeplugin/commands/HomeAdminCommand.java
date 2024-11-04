@@ -22,7 +22,7 @@ public class HomeAdminCommand implements CommandExecutor {
                     Player target = Bukkit.getPlayerExact(args[0]);
                     if (target != null) {
                         if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
-                            fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
+                            fr.fuzeblocks.homeplugin.home.sql.SQLHomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
                             player.sendMessage("§eLe joueur : " + target.getName() + "§e a pour home/s :");
                             List<String> homeName = homeSQLManager.getHomesName(player);
                             player.sendMessage("§6" + homeName.size() + "§6 home/s");

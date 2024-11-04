@@ -30,8 +30,8 @@ public final class HomePlugin extends JavaPlugin {
     private static HomeManager homeManager;
     private static SpawnManager spawnManager;
     private static CacheManager cacheManager;
-    private static fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager;
-    private static fr.fuzeblocks.homeplugin.spawn.sql.SpawnManager spawnSQLManager;
+    private static fr.fuzeblocks.homeplugin.home.sql.SQLHomeManager homeSQLManager;
+    private static fr.fuzeblocks.homeplugin.spawn.sql.SQLSpawnManager spawnSQLManager;
     private static ConfigurationSection configurationSection;
     private static JedisPooled jedisPooled;
 
@@ -97,8 +97,8 @@ public final class HomePlugin extends JavaPlugin {
             getLogger().info("Registering Manager");
             new CreateTable(DatabaseConnection.getConnection());
             getLogger().info("Registering Table");
-            homeSQLManager = new fr.fuzeblocks.homeplugin.home.sql.HomeManager();
-            spawnSQLManager = new fr.fuzeblocks.homeplugin.spawn.sql.SpawnManager();
+            homeSQLManager = new fr.fuzeblocks.homeplugin.home.sql.SQLHomeManager();
+            spawnSQLManager = new fr.fuzeblocks.homeplugin.spawn.sql.SQLSpawnManager();
             getLogger().info("Registering More");
         }
     }
@@ -203,11 +203,11 @@ public final class HomePlugin extends JavaPlugin {
         return cacheManager;
     }
 
-    public static fr.fuzeblocks.homeplugin.home.sql.HomeManager getHomeSQLManager() {
+    public static fr.fuzeblocks.homeplugin.home.sql.SQLHomeManager getHomeSQLManager() {
         return homeSQLManager;
     }
 
-    public static fr.fuzeblocks.homeplugin.spawn.sql.SpawnManager getSpawnSQLManager() {
+    public static fr.fuzeblocks.homeplugin.spawn.sql.SQLSpawnManager getSpawnSQLManager() {
         return spawnSQLManager;
     }
 

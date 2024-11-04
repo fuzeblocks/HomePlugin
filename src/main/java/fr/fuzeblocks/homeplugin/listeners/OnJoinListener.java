@@ -15,7 +15,7 @@ public class OnJoinListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
-            fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
+            fr.fuzeblocks.homeplugin.home.sql.SQLHomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
             if (homeSQLManager.getHomeNumber(player) > 0) {
                 CacheManager cacheManager = homeSQLManager.getCacheManager();
                 cacheManager.addAllPlayerHomes(player);
