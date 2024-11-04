@@ -8,7 +8,7 @@ Enhance your players' gaming experience with ease using our Spigot plugin for ho
 
 Key Features:
 
-🔹Multiple synchronization methods (MYSQL and yml).
+🔹Multiple synchronization methods (MYSQL and YML).
 
 🔹An API for developers
 
@@ -42,43 +42,58 @@ Commands: ⚙️ /sethome [name] - Set a home point at the player's current loca
 
 ⚙️ /homeadmin [player] - View a player's homes (admin command).
 
-PlaceHolderAPI:
+# PlaceHolderAPI Tags, for FuzeBlocks HomePlugin 🏡
 
-%homeplugin_homes%
+## %homeplugin_homes% 🏠
 
-Description: This tag is used to get homes for a player.
-Parameters:
+**Description:**  
+This tag is used to get homes for a player.
 
+**Parameters:**  
 No parameters are required.
 
-Usage:%homeplugin_homes% returns the phrase "Get Homes for a player", indicating that homes are being retrieved for a specific player.
+**Usage:**  
+`%homeplugin_homes%` returns the phrase "Get Homes for a player", indicating that homes are being retrieved for a specific player.
 
-%homeplugin_homes_numbers%
+---
 
-Description:This tag is used to get the total number of homes for a player.
-Parameters:
+## %homeplugin_homes_numbers% 📊
 
+**Description:**  
+This tag is used to get the total number of homes for a player.
+
+**Parameters:**  
 No parameters are required.
 
-Usage: %homeplugin_homes_numbers% returns an integer representing the total number of homes for a player.
+**Usage:**  
+`%homeplugin_homes_numbers%` returns an integer representing the total number of homes for a player.
 
-%homeplugin_home_location_<name>%
+---
 
-Description: This tag is used to get the location of a specific home for a player.
-Parameters:
+## %homeplugin_home_location_<home_name>% 📍
 
-<name>: The name of the home whose location you want to retrieve.
-Make sure to replace <name> with the actual name of the home you want to retrieve. This documentation should provide clear information about the different tags available in your FuzeBlocks HomePlugin.
+**Description:**  
+This tag is used to get the location of a specific home for a player.
 
-API:
+**Parameters:**  
+- `<home_name>`: Replace this with the actual name of the home whose location you want to retrieve.
 
-For developers use : [see](https://github.com/fuzeblocks/HomePlugin/wiki)
-Installation: ️ Download the JAR file from the version page and place it in the "plugins" folder of your Spigot server. Restart the server for changes to take effect. Customize the experience in the configuration file (config.yml).
+---
 
-Note: For assistance, bug reports, or contributions, visit our GitHub repository. Your feedback is crucial in continuously improving FuzeBlocks HomePlugin!
+## API Installation Instructions ⚙️
 
-Tested Version :
-1.20.x
-HomePage: [see](https://www.spigotmc.org/resources/homeplugin.113935/)
+For developers:  
+1. Download the JAR file from the version page.
+2. Place it in the "plugins" folder of your Spigot server.
+3. Restart the server for changes to take effect.
+4. Customize the experience in the configuration file (`config.yml`).
 
-NOT AN OFFICIAL MINECRAFT SERVICE. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR .
+**Note:** For assistance, bug reports, or contributions, visit our [GitHub repository](#). Your feedback is crucial in continuously improving FuzeBlocks HomePlugin! 💬
+
+**Tested Version:** 1.20.x  
+**HomePage:** [Link to HomePage](#)
+
+---
+
+**Disclaimer:**  
+NOT AN OFFICIAL MINECRAFT SERVICE. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR ANY OTHER ENTITY.
