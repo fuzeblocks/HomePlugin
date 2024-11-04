@@ -42,7 +42,7 @@ Commands: ⚙️ /sethome [name] - Set a home point at the player's current loca
 
 ⚙️ /homeadmin [player] - View a player's homes (admin command).
 
-# PlaceHolderAPI Tags for FuzeBlocks HomePlugin 🏡
+# PlaceHolderAPI Tags, for FuzeBlocks HomePlugin 🏡
 
 ## %homeplugin_homes% 🏠
 
