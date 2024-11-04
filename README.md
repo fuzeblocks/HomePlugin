@@ -8,7 +8,7 @@ Enhance your players' gaming experience with ease using our Spigot plugin for ho
 
 Key Features:
 
-🔹Multiple synchronization methods (MYSQL and yml).
+🔹Multiple synchronization methods (MYSQL and YML).
 
 🔹An API for developers
 
