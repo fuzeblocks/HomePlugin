@@ -2,7 +2,8 @@ package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.api.event.OnHomeCreatedEvent;
-import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
+import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
+import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -11,7 +12,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class SetHomeCommand implements CommandExecutor {
-    private final String key = "Config.Language.";
     private OnHomeCreatedEvent onHomeCreate;
 
     @Override
@@ -20,11 +20,11 @@ public class SetHomeCommand implements CommandExecutor {
             Player player = ((Player) sender).getPlayer();
             if (args.length == 1) {
                 String home_name = args[0];
-                HomeManager homeManager = HomePlugin.getHomeManager();
-                fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
+                HomeYMLManager homeYMLManager = HomePlugin.getHomeManager();
+                HomeSQLManager homeSQLManager = HomePlugin.getHomeSQLManager();
                 if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
                     if (homeSQLManager.isStatus(player)) {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.A-teleport-is-already-in-progress")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("A-teleport-is-already-in-progress")));
                         return false;
                     }
                     if (havePermsHomes(player, 1)) return false;
@@ -32,23 +32,23 @@ public class SetHomeCommand implements CommandExecutor {
                     Bukkit.getPluginManager().callEvent(onHomeCreate);
                     if (!onHomeCreate.isCancelled()) {
                         if (homeSQLManager.addHome(player, onHomeCreate.getHomeName())) {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-added")));
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home-added")));
                         } else {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-Error")));
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home-Error")));
                         }
                     }
                     return true;
                 }
-                if (homeManager.isStatus(player))
-                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.A-teleport-is-already-in-progress")));
+                if (homeYMLManager.isStatus(player))
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("A-teleport-is-already-in-progress")));
                 if (havePermsHomes(player, 0)) return false;
                 onHomeCreate = new OnHomeCreatedEvent(player, player.getLocation(), SyncMethod.YAML, home_name);
                 Bukkit.getPluginManager().callEvent(onHomeCreate);
                 if (!onHomeCreate.isCancelled()) {
-                    if (homeManager.addHome(player, onHomeCreate.getHomeName())) {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-added")));
+                    if (homeYMLManager.addHome(player, onHomeCreate.getHomeName())) {
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home-added")));
                     } else {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Error")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Error")));
                     }
                 }
                 return true;
@@ -72,7 +72,7 @@ public class SetHomeCommand implements CommandExecutor {
             returnBoolean = HomePlugin.getHomeManager().getHomeNumber(player) == count;
         }
         if (returnBoolean)
-            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Home.Home-limite-message")));
+            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home.Home-limite-message")));
 
         return returnBoolean;
 

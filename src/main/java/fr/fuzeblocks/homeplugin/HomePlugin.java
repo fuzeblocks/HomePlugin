@@ -8,12 +8,18 @@ import fr.fuzeblocks.homeplugin.completers.HomeCompleter;
 import fr.fuzeblocks.homeplugin.database.CreateTable;
 import fr.fuzeblocks.homeplugin.database.DatabaseManager;
 import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
-import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
+import fr.fuzeblocks.homeplugin.debug.DebugManager;
+import fr.fuzeblocks.homeplugin.file.FileManager;
+import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
+import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
+import fr.fuzeblocks.homeplugin.language.Language;
+import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.listeners.OnJoinListener;
 import fr.fuzeblocks.homeplugin.listeners.OnMoveListener;
 import fr.fuzeblocks.homeplugin.placeholder.HomePluginExpansion;
 import fr.fuzeblocks.homeplugin.plugin.PluginManager;
-import fr.fuzeblocks.homeplugin.spawn.yml.SpawnManager;
+import fr.fuzeblocks.homeplugin.spawn.sql.SpawnSQLManager;
+import fr.fuzeblocks.homeplugin.spawn.yml.SpawnYMLManager;
 import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import fr.fuzeblocks.homeplugin.update.UpdateChecker;
 import org.bukkit.Bukkit;
@@ -25,15 +31,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public final class HomePlugin extends JavaPlugin {
-    private static HomeManager homeManager;
-    private static SpawnManager spawnManager;
+    private static HomeYMLManager homeYMLManager;
+    private static SpawnYMLManager spawnYMLManager;
     private static CacheManager cacheManager;
-    private static fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager;
-    private static fr.fuzeblocks.homeplugin.spawn.sql.SpawnManager spawnSQLManager;
+    private static HomeSQLManager homeSQLManager;
+    private static SpawnSQLManager spawnSQLManager;
     private static ConfigurationSection configurationSection;
     private static JedisPooled jedisPooled;
+    private static DebugManager debugManager;
+    private static LanguageManager languageManager;
 
     @Override
     public void onEnable() {
@@ -45,6 +54,8 @@ public final class HomePlugin extends JavaPlugin {
         getLogger().info(getConfig().getString("Config.Connector.TYPE") + " has been selected !");
         loadPlugins();
         saveDefaultConfig();
+        loadLanguage();
+        loadDebugManager();
         redisRegistration();
         databaseRegistration();
         homeRegistration();
@@ -73,6 +84,17 @@ public final class HomePlugin extends JavaPlugin {
         getLogger().info("------------------------------------------------------");
         stopPluginFonc();
     }
+    private void loadLanguage() {
+        Language language = Language.valueOf(getConfig().getString("Config.Language.Type").toUpperCase());
+       if (language != null) {
+           languageManager = new LanguageManager(language);
+        } else {
+           languageManager = new LanguageManager(Language.FRENCH);
+       }
+    }
+    private void loadDebugManager() {
+        debugManager = new DebugManager();
+    }
     private void redisRegistration() {
         if (getConfig().getBoolean("Config.Redis.UseRedis")) {
             JedisClientConfig jedisClientConfig = DefaultJedisClientConfig.builder()
@@ -97,8 +119,8 @@ public final class HomePlugin extends JavaPlugin {
             getLogger().info("Registering Manager");
             new CreateTable(DatabaseConnection.getConnection());
             getLogger().info("Registering Table");
-            homeSQLManager = new fr.fuzeblocks.homeplugin.home.sql.HomeManager();
-            spawnSQLManager = new fr.fuzeblocks.homeplugin.spawn.sql.SpawnManager();
+            homeSQLManager = new HomeSQLManager();
+            spawnSQLManager = new SpawnSQLManager();
             getLogger().info("Registering More");
         }
     }
@@ -107,14 +129,14 @@ public final class HomePlugin extends JavaPlugin {
         getLogger().info("Registering Homes");
         File home = new File(this.getDataFolder(), "homes.yml");
         registration(home);
-        homeManager = new HomeManager(home);
+        homeYMLManager = new HomeYMLManager(home);
     }
 
     private void spawnManager() {
         getLogger().info("Registering Spawns");
         File spawn = new File(this.getDataFolder(), "spawn.yml");
         registration(spawn);
-        spawnManager = new SpawnManager(spawn);
+        spawnYMLManager = new SpawnYMLManager(spawn);
     }
     private void registration(File file) {
         if (!this.getDataFolder().exists()) {
@@ -191,23 +213,23 @@ public final class HomePlugin extends JavaPlugin {
         }
     }
 
-    public static HomeManager getHomeManager() {
-        return homeManager;
+    public static HomeYMLManager getHomeManager() {
+        return homeYMLManager;
     }
 
-    public static SpawnManager getSpawnManager() {
-        return spawnManager;
+    public static SpawnYMLManager getSpawnManager() {
+        return spawnYMLManager;
     }
 
     public static CacheManager getCacheManager() {
         return cacheManager;
     }
 
-    public static fr.fuzeblocks.homeplugin.home.sql.HomeManager getHomeSQLManager() {
+    public static HomeSQLManager getHomeSQLManager() {
         return homeSQLManager;
     }
 
-    public static fr.fuzeblocks.homeplugin.spawn.sql.SpawnManager getSpawnSQLManager() {
+    public static SpawnSQLManager getSpawnSQLManager() {
         return spawnSQLManager;
     }
 
@@ -230,4 +252,13 @@ public final class HomePlugin extends JavaPlugin {
     public static JedisPooled getJedisPooled() {
         return jedisPooled;
     }
+
+    public static DebugManager getDebugManager() {
+        return debugManager;
+    }
+
+    public static LanguageManager getLanguageManager() {
+        return languageManager;
+    }
+
 }

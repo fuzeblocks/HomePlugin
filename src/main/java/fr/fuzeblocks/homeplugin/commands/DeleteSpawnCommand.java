@@ -10,7 +10,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class DeleteSpawnCommand implements CommandExecutor {
-    private final String key = "Config.Language.";
     private OnSpawnDeletedEvent onSpawnDelete;
 
     @Override
@@ -23,14 +22,14 @@ public class DeleteSpawnCommand implements CommandExecutor {
                     Bukkit.getPluginManager().callEvent(onSpawnDelete);
                     if (!onSpawnDelete.isCancelled()) {
                         HomePlugin.getSpawnSQLManager().removeSpawn(player.getWorld());
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Spawn-deleted")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString( "Spawn-deleted")));
                     }
                 } else {
                     onSpawnDelete = new OnSpawnDeletedEvent(player, player.getLocation(), SyncMethod.YAML);
                     Bukkit.getPluginManager().callEvent(onSpawnDelete);
                     if (!onSpawnDelete.isCancelled()) {
                         HomePlugin.getSpawnManager().removeSpawn(onSpawnDelete.getLocation().getWorld());
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Spawn-deleted")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Spawn-deleted")));
                     }
                 }
                 return true;

@@ -1,7 +1,8 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
+import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
+import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import fr.fuzeblocks.homeplugin.task.TaskManager;
@@ -19,7 +20,6 @@ import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance
 public class HomeCommand implements CommandExecutor {
     private static TaskManager taskManager;
     private final HomePlugin instance;
-    private final String key = "Config.Language.";
 
     public HomeCommand(HomePlugin instance) {
         this.instance = instance;
@@ -32,8 +32,8 @@ public class HomeCommand implements CommandExecutor {
             Player player = (Player) sender;
             if (args.length == 1) {
                 String homeName = args[0];
-                HomeManager homeManager = HomePlugin.getHomeManager();
-                fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
+                HomeYMLManager homeYMLManager = HomePlugin.getHomeManager();
+                HomeSQLManager homeSQLManager = HomePlugin.getHomeSQLManager();
                 if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
                     if (homeSQLManager.isStatus(player)) {
                         return false;
@@ -49,31 +49,31 @@ public class HomeCommand implements CommandExecutor {
                             setPlayerTeleportation(player, homeName, homeLocation);
                             return true;
                         } else {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-does-not-exist")));
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home-does-not-exist")));
                         }
                     } else {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Have-no-home")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString( "Have-no-home")));
                     }
                 } else {
-                    if (homeManager.isStatus(player)) {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.A-teleport-is-already-in-progress")));
+                    if (homeYMLManager.isStatus(player)) {
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("A-teleport-is-already-in-progress")));
                         return false;
                     }
-                    if (homeManager.getHomeNumber(player) > 0) {
-                        if (verifyInCache(homeManager, player, homeName)) {
-                            setPlayerTeleportation(player, homeName, homeManager.getCacheManager().getHomesInCache(player).get(homeName));
+                    if (homeYMLManager.getHomeNumber(player) > 0) {
+                        if (verifyInCache(homeYMLManager, player, homeName)) {
+                            setPlayerTeleportation(player, homeName, homeYMLManager.getCacheManager().getHomesInCache(player).get(homeName));
                             return true;
                         }
-                        Location homeLocation = homeManager.getHomeLocation(player, homeName);
+                        Location homeLocation = homeYMLManager.getHomeLocation(player, homeName);
                         if (homeLocation != null) {
-                            homeManager.getCacheManager().addHomeInCache(player, homeName, homeLocation);
+                            homeYMLManager.getCacheManager().addHomeInCache(player, homeName, homeLocation);
                             setPlayerTeleportation(player, homeName, homeLocation);
                             return true;
                         } else {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-does-not-exist")));
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home-does-not-exist")));
                         }
                     } else {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Have-no-home")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Have-no-home")));
                     }
                 }
             } else {
@@ -86,7 +86,7 @@ public class HomeCommand implements CommandExecutor {
     }
 
     private void setPlayerTeleportation(Player player, String homeName, Location location) {
-        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Start-of-teleportation")) + " " + homeName);
+        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Start-of-teleportation")) + " " + homeName);
         StatusManager.setPlayerStatus(player, true);
         taskManager = new TaskManager(instance);
         taskManager.homeTask(homeName, player, location);
@@ -94,18 +94,18 @@ public class HomeCommand implements CommandExecutor {
         setTaskManagerInstance(player, taskManager);
     }
 
-    private boolean verifyInCache(HomeManager homeManager, Player player, String homeName) {
-        if (homeManager.getCacheManager().getHomesInCache(player) != null) {
-            HashMap<String, Location> homes = homeManager.getCacheManager().getHomesInCache(player);
+    private boolean verifyInCache(HomeYMLManager homeYMLManager, Player player, String homeName) {
+        if (homeYMLManager.getCacheManager().getHomesInCache(player) != null) {
+            HashMap<String, Location> homes = homeYMLManager.getCacheManager().getHomesInCache(player);
             return homes.containsKey(homeName);
         } else {
             return false;
         }
     }
 
-    private boolean verifyInCache(fr.fuzeblocks.homeplugin.home.sql.HomeManager homeManager, Player player, String homeName) {
-        if (homeManager.getCacheManager().getHomesInCache(player) != null) {
-            HashMap<String, Location> homes = homeManager.getCacheManager().getHomesInCache(player);
+    private boolean verifyInCache(HomeSQLManager homeSQLManager, Player player, String homeName) {
+        if (homeSQLManager.getCacheManager().getHomesInCache(player) != null) {
+            HashMap<String, Location> homes = homeSQLManager.getCacheManager().getHomesInCache(player);
             return homes.containsKey(homeName);
         } else {
             return false;
