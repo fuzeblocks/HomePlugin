@@ -56,7 +56,7 @@ public class HomeCommand implements CommandExecutor {
                     }
                 } else {
                     if (homeManager.isStatus(player)) {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.A-teleport-is-already-in-progress")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "A-teleport-is-already-in-progress")));
                         return false;
                     }
                     if (homeManager.getHomeNumber(player) > 0) {
@@ -77,10 +77,10 @@ public class HomeCommand implements CommandExecutor {
                     }
                 }
             } else {
-                player.sendMessage("§cUtilisation de la commande : /home <nom-du-home>");
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Home.Home-usage-message")));
             }
         } else {
-            sender.sendMessage("§cSeul un joueur peut executer cette commande !");
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Only-a-player-can-execute")));
         }
         return false;
     }

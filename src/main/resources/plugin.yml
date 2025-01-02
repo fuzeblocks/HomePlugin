@@ -1,5 +1,5 @@
 name: HomePlugin
-version: '0.6.4'
+version: '0.6.5'
 main: fr.fuzeblocks.homeplugin.HomePlugin
 api-version: '1.13'
 load: STARTUP
@@ -24,4 +24,4 @@ commands:
   homeadmin:
     description: Sert a voir les homes de joueur
   plugins:
-    description: Renvoye la liste et le nombre de tous les plugins chargés
+    description: Renvoie la liste et le nombre de tous les plugins chargés

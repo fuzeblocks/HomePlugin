@@ -12,13 +12,16 @@ import org.bukkit.entity.Player;
 
 public class SetSpawnCommand implements CommandExecutor {
     private final String key = "Config.Language.";
+    private final String spawnKey = "Config.Spawn.";
+
     private OnSpawnCreatedEvent onSpawnCreate;
+
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = ((Player) sender).getPlayer();
-            if (player.hasPermission(HomePlugin.getConfigurationSection().getString("Config.Spawn.SetSpawn-permission"))) {
+            if (player.hasPermission(HomePlugin.getConfigurationSection().getString(spawnKey + "SetSpawn-permission"))) {
                 Location location = player.getLocation();
                 if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
                     if (HomePlugin.getSpawnSQLManager().hasSpawn(location.getWorld())) {
@@ -46,10 +49,10 @@ public class SetSpawnCommand implements CommandExecutor {
                     return true;
                 }
             } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Spawn.SetSpawn-permission-deny-message")));
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(spawnKey + "SetSpawn-permission-deny-message")));
             }
         } else {
-            sender.sendMessage("§cSeul un joueur peut executer cette commande !");
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Only-a-player-can-execute")));
         }
         return false;
     }

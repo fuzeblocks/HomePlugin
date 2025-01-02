@@ -14,7 +14,7 @@ import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance
 
 public class SpawnCommand implements CommandExecutor {
     private final String key = "Config.Language.";
-
+    private final String spawnKey = "Config.Spawn.";
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -26,7 +26,7 @@ public class SpawnCommand implements CommandExecutor {
                 if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
                     if (spawnSQLManager.hasSpawn(player.getWorld())) {
                         if (spawnSQLManager.isStatus(player)) {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.A-teleport-is-already-in-progress")));
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "A-teleport-is-already-in-progress")));
                             return false;
                         }
                         addTask(player);
@@ -36,7 +36,7 @@ public class SpawnCommand implements CommandExecutor {
                 } else {
                     if (spawnManager.hasSpawn(player.getWorld())) {
                         if (spawnManager.isStatus(player)) {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.A-teleport-is-already-in-progress")));
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "A-teleport-is-already-in-progress")));
                             return false;
                         }
                         addTask(player);
@@ -46,19 +46,19 @@ public class SpawnCommand implements CommandExecutor {
                 }
 
             } else {
-                player.sendMessage("§cUtilisation de la commande : /spawn");
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString( spawnKey + "Spawn-usage-message")));
             }
 
         } else {
-            sender.sendMessage("§cSeul un joueur peut executer cette commande !");
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Only-a-player-can-execute")));
         }
         return false;
 
     }
 
     private void addTask(Player player) {
-        if (!player.hasPermission(HomePlugin.getConfigurationSection().getString("Config.Spawn.Spawn-teleportation-permission"))) {
-            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Spawn.SetSpawn-permission-deny-message")));
+        if (!player.hasPermission(HomePlugin.getConfigurationSection().getString(spawnKey + "Spawn-teleportation-permission"))) {
+            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(spawnKey + "SetSpawn-permission-deny-message")));
             return;
         }
         TaskManager taskManager = new TaskManager(HomePlugin.getPlugin(HomePlugin.class));

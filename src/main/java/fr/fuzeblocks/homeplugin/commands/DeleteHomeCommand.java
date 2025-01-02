@@ -36,10 +36,10 @@ public  class DeleteHomeCommand implements CommandExecutor {
                     }
                 }
             } else {
-                player.sendMessage("§cUtilisation de la commande : /delhome <nom-du-home>");
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Home.DelHome-usage-message")));
             }
         } else {
-            sender.sendMessage("§cSeul un joueur peut executer cette commande !");
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Only-a-player-can-execute")));
         }
         return false;
     }

@@ -35,10 +35,10 @@ public class DeleteSpawnCommand implements CommandExecutor {
                 }
                 return true;
             } else {
-                player.sendMessage("§cVous n'étes pas op !");
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Player-is-not-OP")));
             }
         } else {
-            sender.sendMessage("§cSeul un joueur peut executer cette commande !");
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Only-a-player-can-execute")));
         }
         return false;
     }

@@ -13,6 +13,8 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 public class HomeAdminCommand implements CommandExecutor {
+    private final String homeAdminKey = "Config.HomeAdmin.";
+    private final String key = "Config.Language.";
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -49,16 +51,16 @@ public class HomeAdminCommand implements CommandExecutor {
                             return true;
                         }
                     } else {
-                        player.sendMessage("§cLe joueur choisi n'existe pas ou n'est pas en ligne !");
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Player-is-not-online")));
                     }
                 } else {
-                    player.sendMessage("§cUtilisation de la commande : /homeadmin joueur");
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(homeAdminKey + "HomeAdmin-usage-message")));
                 }
             } else {
-                player.sendMessage("§cVous n'avez pas la permission pour utiliser cette commande !");
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "No-permission")));
             }
         } else {
-            sender.sendMessage("§cSeul un joueur peut éxecuter cette commande !");
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Only-a-player-can-execute")));
         }
         return false;
     }

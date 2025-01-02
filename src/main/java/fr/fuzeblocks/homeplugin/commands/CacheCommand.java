@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 public class CacheCommand implements CommandExecutor {
     private final String key = "Config.Language.";
+    private final String cacheKey = "Config.Cache.";
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -37,18 +38,17 @@ public class CacheCommand implements CommandExecutor {
                                     HashMap<String, Location> home = cacheManager.getHomesInCache(player);
                                     player.sendMessage("§6" + home.size() + "§6 home/s");
                                     for (String homeName : homeManager.getHomesName(player)) {
-                                        if (home.get(homeName) != null) {
-                                            Location homeLocation = home.get(homeName);
-                                            player.sendMessage("§4Nom du home en cache : " + homeName);
-                                            player.sendMessage("§aLocalisation de " + homeName + " : X : " + homeLocation.getX() + " Y : " + homeLocation.getY() + " Z : " + homeLocation.getZ() + " Monde : " + homeLocation.getWorld().getName());
-                                        }
+                                        sendHomeMessage(home,homeName,player);
+                                    }
+                                    for (String homeName : homeSQLManager.getHomesName(player)) {
+                                        sendHomeMessage(home,homeName,player);
                                     }
                                     return true;
                                 } else {
                                     player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Have-no-cache")));
                                 }
                             } else {
-                                player.sendMessage("§cUtilisation de la commande : /cache <view> joueur");
+                                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(cacheKey + "Cache-view-usage-command")));
                             }
                             break;
                         default:
@@ -62,15 +62,22 @@ public class CacheCommand implements CommandExecutor {
                             }
                     }
                 } else {
-                    player.sendMessage("§cUtilisation de la commande : /cache <clearall> <view>");
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(cacheKey + "Cache-usage-command")));
                 }
             } else {
-                player.sendMessage("§cVous n'avez pas la permission pour utiliser cette commande !");
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "No-permission")));
             }
         } else {
-            sender.sendMessage("§cSeul un joueur peut éxecuter cette commande !");
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Only-a-player-can-execute")));
         }
         return false;
+    }
+    private void sendHomeMessage(HashMap<String, Location> home,String homeName,Player player) {
+        if (home.get(homeName) != null) {
+            Location homeLocation = home.get(homeName);
+            player.sendMessage("§4Nom du home en cache : " + homeName);
+            player.sendMessage("§aLocalisation de " + homeName + " : X : " + homeLocation.getX() + " Y : " + homeLocation.getY() + " Z : " + homeLocation.getZ() + " Monde : " + homeLocation.getWorld().getName());
+        }
     }
 
 }
