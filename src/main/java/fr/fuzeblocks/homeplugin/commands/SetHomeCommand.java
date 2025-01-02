@@ -2,7 +2,8 @@ package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.api.event.OnHomeCreatedEvent;
-import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
+import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
+import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -21,8 +22,8 @@ public class SetHomeCommand implements CommandExecutor {
             Player player = ((Player) sender).getPlayer();
             if (args.length == 1) {
                 String home_name = args[0];
-                HomeManager homeManager = HomePlugin.getHomeManager();
-                fr.fuzeblocks.homeplugin.home.sql.SQLHomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
+                HomeYMLManager homeYMLManager = HomePlugin.getHomeYMLManager();
+                HomeSQLManager homeSQLManager = HomePlugin.getHomeSQLManager();
                 if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
                     if (homeSQLManager.isStatus(player)) {
                         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "A-teleport-is-already-in-progress")));
@@ -40,13 +41,13 @@ public class SetHomeCommand implements CommandExecutor {
                     }
                     return true;
                 }
-                if (homeManager.isStatus(player))
+                if (homeYMLManager.isStatus(player))
                     player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "A-teleport-is-already-in-progress")));
                 if (havePermsHomes(player, 0)) return false;
                 onHomeCreate = new OnHomeCreatedEvent(player, player.getLocation(), SyncMethod.YAML, home_name);
                 Bukkit.getPluginManager().callEvent(onHomeCreate);
                 if (!onHomeCreate.isCancelled()) {
-                    if (homeManager.addHome(player, onHomeCreate.getHomeName())) {
+                    if (homeYMLManager.addHome(player, onHomeCreate.getHomeName())) {
                         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-added")));
                     } else {
                         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Error")));
@@ -70,7 +71,7 @@ public class SetHomeCommand implements CommandExecutor {
         if (i == 1) {
             returnBoolean = HomePlugin.getHomeSQLManager().getHomeNumber(player) == count;
         } else {
-            returnBoolean = HomePlugin.getHomeManager().getHomeNumber(player) == count;
+            returnBoolean = HomePlugin.getHomeYMLManager().getHomeNumber(player) == count;
         }
         if (returnBoolean)
             player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(homeKey + "Home-limite-message")));

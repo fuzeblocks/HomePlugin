@@ -1,7 +1,8 @@
 package fr.fuzeblocks.homeplugin.placeholder;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
+import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
+import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Location;
@@ -69,30 +70,30 @@ public class HomePluginExpansion extends PlaceholderExpansion {
 
     private List<String> getHomesList(Player player) {
         if (HomePlugin.getRegistrationType().equals(SyncMethod.YAML)) {
-            HomeManager homeManager = HomePlugin.getHomeManager();
-            return homeManager.getHomesName(player);
+            HomeYMLManager homeYMLManager = HomePlugin.getHomeYMLManager();
+            return homeYMLManager.getHomesName(player);
         } else {
-            fr.fuzeblocks.homeplugin.home.sql.SQLHomeManager homeManager = HomePlugin.getHomeSQLManager();
+            HomeSQLManager homeManager = HomePlugin.getHomeSQLManager();
             return homeManager.getHomesName(player);
         }
     }
 
     private Location getHomeLocation(Player player, String s) {
         if (HomePlugin.getRegistrationType().equals(SyncMethod.YAML)) {
-            HomeManager homeManager = HomePlugin.getHomeManager();
-            return homeManager.getHomeLocation(player, s);
+            HomeYMLManager homeYMLManager = HomePlugin.getHomeYMLManager();
+            return homeYMLManager.getHomeLocation(player, s);
         } else {
-            fr.fuzeblocks.homeplugin.home.sql.SQLHomeManager homeManager = HomePlugin.getHomeSQLManager();
+            HomeSQLManager homeManager = HomePlugin.getHomeSQLManager();
             return homeManager.getHomeLocation(player, s);
         }
     }
 
     private int getHomes(Player player) {
         if (HomePlugin.getRegistrationType().equals(SyncMethod.YAML)) {
-            HomeManager homeManager = HomePlugin.getHomeManager();
-            return homeManager.getHomeNumber(player);
+            HomeYMLManager homeYMLManager = HomePlugin.getHomeYMLManager();
+            return homeYMLManager.getHomeNumber(player);
         } else {
-            fr.fuzeblocks.homeplugin.home.sql.SQLHomeManager homeManager = HomePlugin.getHomeSQLManager();
+            HomeSQLManager homeManager = HomePlugin.getHomeSQLManager();
             return homeManager.getHomeNumber(player);
         }
     }

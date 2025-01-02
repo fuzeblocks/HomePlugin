@@ -29,7 +29,7 @@ public class DeleteSpawnCommand implements CommandExecutor {
                     onSpawnDelete = new OnSpawnDeletedEvent(player, player.getLocation(), SyncMethod.YAML);
                     Bukkit.getPluginManager().callEvent(onSpawnDelete);
                     if (!onSpawnDelete.isCancelled()) {
-                        HomePlugin.getSpawnManager().removeSpawn(onSpawnDelete.getLocation().getWorld());
+                        HomePlugin.getSpawnYMLManager().removeSpawn(onSpawnDelete.getLocation().getWorld());
                         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Spawn-deleted")));
                     }
                 }

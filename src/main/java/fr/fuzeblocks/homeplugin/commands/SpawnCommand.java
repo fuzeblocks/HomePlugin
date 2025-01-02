@@ -1,7 +1,8 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.spawn.yml.SpawnManager;
+import fr.fuzeblocks.homeplugin.spawn.sql.SpawnSQLManager;
+import fr.fuzeblocks.homeplugin.spawn.yml.SpawnYMLManager;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import fr.fuzeblocks.homeplugin.task.TaskManager;
@@ -21,8 +22,8 @@ public class SpawnCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = ((Player) sender).getPlayer();
             if (args.length == 0) {
-                SpawnManager spawnManager = HomePlugin.getSpawnManager();
-                fr.fuzeblocks.homeplugin.spawn.sql.SQLSpawnManager spawnSQLManager = HomePlugin.getSpawnSQLManager();
+                SpawnYMLManager spawnYMLManager = HomePlugin.getSpawnYMLManager();
+                SpawnSQLManager spawnSQLManager = HomePlugin.getSpawnSQLManager();
                 if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
                     if (spawnSQLManager.hasSpawn(player.getWorld())) {
                         if (spawnSQLManager.isStatus(player)) {
@@ -34,8 +35,8 @@ public class SpawnCommand implements CommandExecutor {
                         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "No-spawn-defined")));
                     }
                 } else {
-                    if (spawnManager.hasSpawn(player.getWorld())) {
-                        if (spawnManager.isStatus(player)) {
+                    if (spawnYMLManager.hasSpawn(player.getWorld())) {
+                        if (spawnYMLManager.isStatus(player)) {
                             player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "A-teleport-is-already-in-progress")));
                             return false;
                         }

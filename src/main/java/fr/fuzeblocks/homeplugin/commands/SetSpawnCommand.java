@@ -36,14 +36,14 @@ public class SetSpawnCommand implements CommandExecutor {
                     }
                     return true;
                 } else {
-                    if (HomePlugin.getSpawnManager().hasSpawn(location.getWorld())) {
+                    if (HomePlugin.getSpawnYMLManager().hasSpawn(location.getWorld())) {
                         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Spawn-already-exists")));
                         return false;
                     }
                     onSpawnCreate = new OnSpawnCreatedEvent(player, location, SyncMethod.YAML);
                     Bukkit.getPluginManager().callEvent(onSpawnCreate);
                     if (!onSpawnCreate.isCancelled()) {
-                        HomePlugin.getSpawnManager().setSpawn(onSpawnCreate.getLocation());
+                        HomePlugin.getSpawnYMLManager().setSpawn(onSpawnCreate.getLocation());
                         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Spawn-has-been-set").replace("%x%", String.valueOf(location.getX())).replace("%y%", String.valueOf(location.getY())).replace("%z%", String.valueOf(location.getZ()))));
                     }
                     return true;

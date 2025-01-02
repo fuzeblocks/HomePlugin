@@ -18,7 +18,7 @@ public class DeleteHomeCompleter implements TabCompleter {
             if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
                 home.addAll(HomePlugin.getHomeSQLManager().getHomesName((Player) sender));
             } else {
-                home.addAll(HomePlugin.getHomeManager().getHomesName((Player) sender));
+                home.addAll(HomePlugin.getHomeYMLManager().getHomesName((Player) sender));
             }
             return home;
         }

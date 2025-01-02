@@ -1,7 +1,8 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
+import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
+import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import fr.fuzeblocks.homeplugin.task.TaskManager;
@@ -32,8 +33,8 @@ public class HomeCommand implements CommandExecutor {
             Player player = (Player) sender;
             if (args.length == 1) {
                 String homeName = args[0];
-                HomeManager homeManager = HomePlugin.getHomeManager();
-                fr.fuzeblocks.homeplugin.home.sql.SQLHomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
+                HomeYMLManager homeYMLManager = HomePlugin.getHomeYMLManager();
+                HomeSQLManager homeSQLManager = HomePlugin.getHomeSQLManager();
                 if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
                     if (homeSQLManager.isStatus(player)) {
                         return false;
@@ -55,18 +56,18 @@ public class HomeCommand implements CommandExecutor {
                         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Have-no-home")));
                     }
                 } else {
-                    if (homeManager.isStatus(player)) {
+                    if (homeYMLManager.isStatus(player)) {
                         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "A-teleport-is-already-in-progress")));
                         return false;
                     }
-                    if (homeManager.getHomeNumber(player) > 0) {
-                        if (verifyInCache(homeManager, player, homeName)) {
-                            setPlayerTeleportation(player, homeName, homeManager.getCacheManager().getHomesInCache(player).get(homeName));
+                    if (homeYMLManager.getHomeNumber(player) > 0) {
+                        if (verifyInCache(homeYMLManager, player, homeName)) {
+                            setPlayerTeleportation(player, homeName, homeYMLManager.getCacheManager().getHomesInCache(player).get(homeName));
                             return true;
                         }
-                        Location homeLocation = homeManager.getHomeLocation(player, homeName);
+                        Location homeLocation = homeYMLManager.getHomeLocation(player, homeName);
                         if (homeLocation != null) {
-                            homeManager.getCacheManager().addHomeInCache(player, homeName, homeLocation);
+                            homeYMLManager.getCacheManager().addHomeInCache(player, homeName, homeLocation);
                             setPlayerTeleportation(player, homeName, homeLocation);
                             return true;
                         } else {
@@ -94,16 +95,16 @@ public class HomeCommand implements CommandExecutor {
         setTaskManagerInstance(player, taskManager);
     }
 
-    private boolean verifyInCache(HomeManager homeManager, Player player, String homeName) {
-        if (homeManager.getCacheManager().getHomesInCache(player) != null) {
-            HashMap<String, Location> homes = homeManager.getCacheManager().getHomesInCache(player);
+    private boolean verifyInCache(HomeYMLManager homeYMLManager, Player player, String homeName) {
+        if (homeYMLManager.getCacheManager().getHomesInCache(player) != null) {
+            HashMap<String, Location> homes = homeYMLManager.getCacheManager().getHomesInCache(player);
             return homes.containsKey(homeName);
         } else {
             return false;
         }
     }
 
-    private boolean verifyInCache(fr.fuzeblocks.homeplugin.home.sql.SQLHomeManager homeManager, Player player, String homeName) {
+    private boolean verifyInCache(HomeSQLManager homeManager, Player player, String homeName) {
         if (homeManager.getCacheManager().getHomesInCache(player) != null) {
             HashMap<String, Location> homes = homeManager.getCacheManager().getHomesInCache(player);
             return homes.containsKey(homeName);

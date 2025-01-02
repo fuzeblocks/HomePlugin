@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLHomeManager {
+public class HomeSQLManager {
     private final Connection connection = DatabaseConnection.getConnection();
 
 
