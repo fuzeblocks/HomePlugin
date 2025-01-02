@@ -8,12 +8,8 @@ import fr.fuzeblocks.homeplugin.completers.HomeCompleter;
 import fr.fuzeblocks.homeplugin.database.CreateTable;
 import fr.fuzeblocks.homeplugin.database.DatabaseManager;
 import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
-import fr.fuzeblocks.homeplugin.debug.DebugManager;
-import fr.fuzeblocks.homeplugin.file.FileManager;
 import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
 import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
-import fr.fuzeblocks.homeplugin.language.Language;
-import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.listeners.OnJoinListener;
 import fr.fuzeblocks.homeplugin.listeners.OnMoveListener;
 import fr.fuzeblocks.homeplugin.placeholder.HomePluginExpansion;
@@ -31,7 +27,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public final class HomePlugin extends JavaPlugin {
     private static HomeYMLManager homeYMLManager;
@@ -41,8 +36,6 @@ public final class HomePlugin extends JavaPlugin {
     private static SpawnSQLManager spawnSQLManager;
     private static ConfigurationSection configurationSection;
     private static JedisPooled jedisPooled;
-    private static DebugManager debugManager;
-    private static LanguageManager languageManager;
 
     @Override
     public void onEnable() {
@@ -54,8 +47,6 @@ public final class HomePlugin extends JavaPlugin {
         getLogger().info(getConfig().getString("Config.Connector.TYPE") + " has been selected !");
         loadPlugins();
         saveDefaultConfig();
-        loadLanguage();
-        loadDebugManager();
         redisRegistration();
         databaseRegistration();
         homeRegistration();
@@ -83,17 +74,6 @@ public final class HomePlugin extends JavaPlugin {
         getLogger().info("----------HomePlugin a été éteint avec succés !----------");
         getLogger().info("------------------------------------------------------");
         stopPluginFonc();
-    }
-    private void loadLanguage() {
-        Language language = Language.valueOf(getConfig().getString("Config.Language.Type").toUpperCase());
-       if (language != null) {
-           languageManager = new LanguageManager(language);
-        } else {
-           languageManager = new LanguageManager(Language.FRENCH);
-       }
-    }
-    private void loadDebugManager() {
-        debugManager = new DebugManager();
     }
     private void redisRegistration() {
         if (getConfig().getBoolean("Config.Redis.UseRedis")) {
@@ -213,11 +193,11 @@ public final class HomePlugin extends JavaPlugin {
         }
     }
 
-    public static HomeYMLManager getHomeManager() {
+    public static HomeYMLManager getHomeYMLManager() {
         return homeYMLManager;
     }
 
-    public static SpawnYMLManager getSpawnManager() {
+    public static SpawnYMLManager getSpawnYMLManager() {
         return spawnYMLManager;
     }
 
@@ -252,13 +232,4 @@ public final class HomePlugin extends JavaPlugin {
     public static JedisPooled getJedisPooled() {
         return jedisPooled;
     }
-
-    public static DebugManager getDebugManager() {
-        return debugManager;
-    }
-
-    public static LanguageManager getLanguageManager() {
-        return languageManager;
-    }
-
 }

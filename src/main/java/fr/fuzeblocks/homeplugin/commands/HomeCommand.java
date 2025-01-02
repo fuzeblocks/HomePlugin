@@ -20,6 +20,7 @@ import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance
 public class HomeCommand implements CommandExecutor {
     private static TaskManager taskManager;
     private final HomePlugin instance;
+    private final String key = "Config.Language.";
 
     public HomeCommand(HomePlugin instance) {
         this.instance = instance;
@@ -32,7 +33,7 @@ public class HomeCommand implements CommandExecutor {
             Player player = (Player) sender;
             if (args.length == 1) {
                 String homeName = args[0];
-                HomeYMLManager homeYMLManager = HomePlugin.getHomeManager();
+                HomeYMLManager homeYMLManager = HomePlugin.getHomeYMLManager();
                 HomeSQLManager homeSQLManager = HomePlugin.getHomeSQLManager();
                 if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
                     if (homeSQLManager.isStatus(player)) {
@@ -49,14 +50,14 @@ public class HomeCommand implements CommandExecutor {
                             setPlayerTeleportation(player, homeName, homeLocation);
                             return true;
                         } else {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home-does-not-exist")));
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-does-not-exist")));
                         }
                     } else {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString( "Have-no-home")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Have-no-home")));
                     }
                 } else {
                     if (homeYMLManager.isStatus(player)) {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("A-teleport-is-already-in-progress")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "A-teleport-is-already-in-progress")));
                         return false;
                     }
                     if (homeYMLManager.getHomeNumber(player) > 0) {
@@ -70,23 +71,23 @@ public class HomeCommand implements CommandExecutor {
                             setPlayerTeleportation(player, homeName, homeLocation);
                             return true;
                         } else {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home-does-not-exist")));
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-does-not-exist")));
                         }
                     } else {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Have-no-home")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Have-no-home")));
                     }
                 }
             } else {
-                player.sendMessage("§cUtilisation de la commande : /home <nom-du-home>");
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Home.Home-usage-message")));
             }
         } else {
-            sender.sendMessage("§cSeul un joueur peut executer cette commande !");
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Only-a-player-can-execute")));
         }
         return false;
     }
 
     private void setPlayerTeleportation(Player player, String homeName, Location location) {
-        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Start-of-teleportation")) + " " + homeName);
+        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Start-of-teleportation")) + " " + homeName);
         StatusManager.setPlayerStatus(player, true);
         taskManager = new TaskManager(instance);
         taskManager.homeTask(homeName, player, location);
@@ -103,9 +104,9 @@ public class HomeCommand implements CommandExecutor {
         }
     }
 
-    private boolean verifyInCache(HomeSQLManager homeSQLManager, Player player, String homeName) {
-        if (homeSQLManager.getCacheManager().getHomesInCache(player) != null) {
-            HashMap<String, Location> homes = homeSQLManager.getCacheManager().getHomesInCache(player);
+    private boolean verifyInCache(HomeSQLManager homeManager, Player player, String homeName) {
+        if (homeManager.getCacheManager().getHomesInCache(player) != null) {
+            HashMap<String, Location> homes = homeManager.getCacheManager().getHomesInCache(player);
             return homes.containsKey(homeName);
         } else {
             return false;

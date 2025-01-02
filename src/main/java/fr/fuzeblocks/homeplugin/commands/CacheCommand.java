@@ -2,8 +2,7 @@ package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.cache.CacheManager;
-import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
-import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
+import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -14,6 +13,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 
 public class CacheCommand implements CommandExecutor {
+    private final String key = "Config.Language.";
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -21,13 +21,13 @@ public class CacheCommand implements CommandExecutor {
             Player player = ((Player) sender).getPlayer();
             if (player.hasPermission("HomePlugin.cache")) {
                 CacheManager cacheManager = HomePlugin.getCacheManager();
-                HomeYMLManager homeYMLManager = HomePlugin.getHomeManager();
-                HomeSQLManager homeSQLManager = HomePlugin.getHomeSQLManager();
+                HomeManager homeManager = HomePlugin.getHomeManager();
+                fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
                 if (args.length >= 1) {
                     switch (args[0].toLowerCase()) {
                         case "clearall":
                             cacheManager.clear();
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Cache-cleared")));
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Cache-cleared")));
                             return true;
                         case "view":
                             if (args.length >= 2) {
@@ -36,7 +36,7 @@ public class CacheCommand implements CommandExecutor {
                                     player.sendMessage("§eLe joueur : " + target.getName() + "§e a en cache :");
                                     HashMap<String, Location> home = cacheManager.getHomesInCache(player);
                                     player.sendMessage("§6" + home.size() + "§6 home/s");
-                                    for (String homeName : homeYMLManager.getHomesName(player)) {
+                                    for (String homeName : homeManager.getHomesName(player)) {
                                         if (home.get(homeName) != null) {
                                             Location homeLocation = home.get(homeName);
                                             player.sendMessage("§4Nom du home en cache : " + homeName);
@@ -45,7 +45,7 @@ public class CacheCommand implements CommandExecutor {
                                     }
                                     return true;
                                 } else {
-                                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Have-no-cache")));
+                                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Have-no-cache")));
                                 }
                             } else {
                                 player.sendMessage("§cUtilisation de la commande : /cache <view> joueur");
@@ -55,10 +55,10 @@ public class CacheCommand implements CommandExecutor {
                             Player target = Bukkit.getPlayerExact(args[0]);
                             if (target != null) {
                                 cacheManager.clearPlayer(player);
-                                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Cache-player-cleared").replace("%player%", player.getName())));
+                                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Cache-player-cleared").replace("%player%", player.getName())));
                                 return true;
                             } else {
-                                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Player-is-not-online")));
+                                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Player-is-not-online")));
                             }
                     }
                 } else {

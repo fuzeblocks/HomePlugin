@@ -15,11 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class HomeManager {
+public class HomeYMLManager {
     private final File file;
     private final YamlConfiguration yaml;
 
-    public HomeManager(File file) {
+    public HomeYMLManager(File file) {
         this.file = file;
         this.yaml = YamlConfiguration.loadConfiguration(file);
     }

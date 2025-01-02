@@ -12,11 +12,11 @@ import java.io.IOException;
 import java.util.Objects;
 
 
-public class SpawnManager {
+public class SpawnYMLManager {
     private final YamlConfiguration yaml;
     private final File file;
 
-    public SpawnManager(File file) {
+    public SpawnYMLManager(File file) {
         this.file = file;
         yaml = YamlConfiguration.loadConfiguration(file);
     }

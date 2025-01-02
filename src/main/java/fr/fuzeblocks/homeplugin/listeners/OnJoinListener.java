@@ -2,8 +2,9 @@ package fr.fuzeblocks.homeplugin.listeners;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.cache.CacheManager;
-import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
-import fr.fuzeblocks.homeplugin.spawn.yml.SpawnManager;
+import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
+import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
+import fr.fuzeblocks.homeplugin.spawn.yml.SpawnYMLManager;
 import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,22 +16,22 @@ public class OnJoinListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
-            fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
+            HomeSQLManager homeSQLManager = HomePlugin.getHomeSQLManager();
             if (homeSQLManager.getHomeNumber(player) > 0) {
                 CacheManager cacheManager = homeSQLManager.getCacheManager();
                 cacheManager.addAllPlayerHomes(player);
             }
         } else {
-            HomeManager homeManager = HomePlugin.getHomeManager();
-            if (homeManager.getHomeNumber(player) > 0) {
-                CacheManager cacheManager = homeManager.getCacheManager();
+            HomeYMLManager homeYMLManager = HomePlugin.getHomeYMLManager();
+            if (homeYMLManager.getHomeNumber(player) > 0) {
+                CacheManager cacheManager = homeYMLManager.getCacheManager();
                 cacheManager.addAllPlayerHomes(player);
             }
         }
         if (!player.hasPlayedBefore()) {
-            SpawnManager spawnManager = HomePlugin.getSpawnManager();
-            if (spawnManager.hasSpawn(player.getWorld())) {
-                player.teleport(spawnManager.getSpawn(player.getWorld()));
+            SpawnYMLManager spawnYMLManager = HomePlugin.getSpawnYMLManager();
+            if (spawnYMLManager.hasSpawn(player.getWorld())) {
+                player.teleport(spawnYMLManager.getSpawn(player.getWorld()));
             }
         }
 

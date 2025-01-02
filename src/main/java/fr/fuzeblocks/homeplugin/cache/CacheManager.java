@@ -1,7 +1,7 @@
 package fr.fuzeblocks.homeplugin.cache;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
+import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -81,9 +81,9 @@ public class CacheManager {
     }
 
     public void addAllPlayerHomes(Player player) {
-        HomeManager homeManager = HomePlugin.getHomeManager();
-        for (String homeName : homeManager.getHomesName(player)) {
-            Location homeLocation = homeManager.getHomeLocation(player, homeName);
+        HomeYMLManager homeYMLManager = HomePlugin.getHomeYMLManager();
+        for (String homeName : homeYMLManager.getHomesName(player)) {
+            Location homeLocation = homeYMLManager.getHomeLocation(player, homeName);
             addHomeInCache(player, homeName, homeLocation);
         }
     }

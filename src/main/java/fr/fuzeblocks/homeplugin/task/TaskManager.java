@@ -13,8 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import static fr.fuzeblocks.homeplugin.HomePlugin.getSpawnManager;
 import static fr.fuzeblocks.homeplugin.HomePlugin.getSpawnSQLManager;
+import static fr.fuzeblocks.homeplugin.HomePlugin.getSpawnYMLManager;
 
 public class TaskManager extends BukkitRunnable {
     private Task task;
@@ -64,7 +64,7 @@ public class TaskManager extends BukkitRunnable {
         if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
             onSpawnTeleport = new OnSpawnTeleportEvent(player, getSpawnSQLManager().getSpawn(player.getWorld()));
         } else {
-            onSpawnTeleport = new OnSpawnTeleportEvent(player, getSpawnManager().getSpawn(player.getWorld()));
+            onSpawnTeleport = new OnSpawnTeleportEvent(player, getSpawnYMLManager().getSpawn(player.getWorld()));
         }
         Bukkit.getServer().getPluginManager().callEvent(onSpawnTeleport);
         if (!onSpawnTeleport.isCancelled()) {

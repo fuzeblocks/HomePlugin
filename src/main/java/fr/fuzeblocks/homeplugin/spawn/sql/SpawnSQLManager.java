@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class SpawnManager {
+public class SpawnSQLManager {
     private final Connection connection = DatabaseConnection.getConnection();
 
     public boolean setSpawn(Location location) {
