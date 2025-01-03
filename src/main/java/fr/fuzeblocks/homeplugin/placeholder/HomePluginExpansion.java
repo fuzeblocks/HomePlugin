@@ -64,7 +64,6 @@ public class HomePluginExpansion extends PlaceholderExpansion {
                 return "Unknown";
             }
         }
-        System.out.println("Return null");
         return null;
     }
 
