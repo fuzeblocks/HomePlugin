@@ -20,7 +20,22 @@ Language:
   Start-of-teleportation-for-spawn: "&6Début de la téléportation pour le spawn"
   A-teleport-is-already-in-progress: "&cUne téléportation est déja en cours !"
   Only-a-player-can-execute: "&cSeul un joueur peut executer cette commande !"
-  Spawn:
-    SetSpawn-permission-deny-message: "&l&cVous n'avez pas la permission pour vous téléporter au spawn !"
-  Home:
-    Home-limite-message: "&l&cVous n'avez pas la permission pour poser un autre home !"
+  Player-is-not-OP: "&cVous n'étes pas op !"
+  No-permission: "&cVous n'avez pas la permission pour utiliser cette commande !"
+Spawn:
+  Spawn-teleportation-permission: "HomePlugin.spawn.teleportation"
+  SetSpawn-permission: "HomePlugin.spawn.setspawn"
+  SetSpawn-permission-deny-message: "&l&cVous n'avez pas la permission pour vous téléporter au spawn !"
+  Spawn-usage-message: "&cUtilisation de la commande : /spawn"
+Home:
+  Home-limite-for-player: 3
+  Home-limite-permission-for-bypass: "HomePlugin.home.bypass"
+  Home-limite-message: "&l&cVous n'avez pas la permission pour poser un autre home !"
+  Home-usage-message: "&cUtilisation de la commande : /home <nom-du-home>"
+  SetHome-usage-message: "&cUtilisation de la commande : /sethome <nom-du-home>"
+  DelHome-usage-message: "&cUtilisation de la commande : /delhome <nom-du-home>"
+Cache:
+  Cache-view-usage-command: "&cUtilisation de la commande : /cache <view> <joueur>"
+  Cache-usage-command: "&cUtilisation de la commande : /cache <clearall> <view>"
+HomeAdmin:
+  HomeAdmin-usage-message: "&cUtilisation de la commande : /homeadmin <joueur>"
