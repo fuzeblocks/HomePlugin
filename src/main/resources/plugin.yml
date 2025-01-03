@@ -9,6 +9,8 @@ softdepend: [PlaceholderAPI]
 commands:
   home:
     description: Se tp a un de ses homes
+  listhome:
+    description: Liste les homes
   sethome:
     description: Sert a poser un home
   spawn:

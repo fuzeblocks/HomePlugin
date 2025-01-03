@@ -1,14 +1,9 @@
 package fr.fuzeblocks.homeplugin.debug;
 
-import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.file.FileManager;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Optional;
 
 public class DebugManager {
+    /*
     private boolean active = true;
     private final File file;
 
@@ -63,4 +58,6 @@ public class DebugManager {
     public File getFile() {
         return file;
     }
+
+     */
 }

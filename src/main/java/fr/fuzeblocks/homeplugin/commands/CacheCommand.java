@@ -2,7 +2,9 @@ package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.cache.CacheManager;
-import fr.fuzeblocks.homeplugin.home.yml.HomeManager;
+import fr.fuzeblocks.homeplugin.home.HomeManager;
+import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
+import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -22,7 +24,6 @@ public class CacheCommand implements CommandExecutor {
             if (player.hasPermission("HomePlugin.cache")) {
                 CacheManager cacheManager = HomePlugin.getCacheManager();
                 HomeManager homeManager = HomePlugin.getHomeManager();
-                fr.fuzeblocks.homeplugin.home.sql.HomeManager homeSQLManager = HomePlugin.getHomeSQLManager();
                 if (args.length >= 1) {
                     switch (args[0].toLowerCase()) {
                         case "clearall":

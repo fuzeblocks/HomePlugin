@@ -8,12 +8,14 @@ import fr.fuzeblocks.homeplugin.completers.HomeCompleter;
 import fr.fuzeblocks.homeplugin.database.CreateTable;
 import fr.fuzeblocks.homeplugin.database.DatabaseManager;
 import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
+import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
 import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import fr.fuzeblocks.homeplugin.listeners.OnJoinListener;
 import fr.fuzeblocks.homeplugin.listeners.OnMoveListener;
 import fr.fuzeblocks.homeplugin.placeholder.HomePluginExpansion;
 import fr.fuzeblocks.homeplugin.plugin.PluginManager;
+import fr.fuzeblocks.homeplugin.spawn.SpawnManager;
 import fr.fuzeblocks.homeplugin.spawn.sql.SpawnSQLManager;
 import fr.fuzeblocks.homeplugin.spawn.yml.SpawnYMLManager;
 import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
@@ -36,6 +38,8 @@ public final class HomePlugin extends JavaPlugin {
     private static SpawnSQLManager spawnSQLManager;
     private static ConfigurationSection configurationSection;
     private static JedisPooled jedisPooled;
+    private static final HomeManager homeManager = HomeManager.getInstance();
+    private static final SpawnManager spawnManager = SpawnManager.getInstance();
 
     @Override
     public void onEnable() {
@@ -143,6 +147,7 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("cache").setExecutor(new CacheCommand());
         getCommand("homeadmin").setExecutor(new HomeAdminCommand());
         getCommand("plugins").setExecutor(new PluginCommand());
+        getCommand("listhome").setExecutor(new ListHomeCommand());
     }
 
     private void eventRegistration() {
@@ -231,5 +236,12 @@ public final class HomePlugin extends JavaPlugin {
 
     public static JedisPooled getJedisPooled() {
         return jedisPooled;
+    }
+
+    public static HomeManager getHomeManager() {
+        return homeManager;
+    }
+    public static SpawnManager getSpawnManager() {
+        return spawnManager;
     }
 }
