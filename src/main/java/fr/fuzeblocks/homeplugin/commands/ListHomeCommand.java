@@ -27,37 +27,66 @@ public class ListHomeCommand implements CommandExecutor {
         return false;
     }
     private void sendHomeMessage(Player player, String homeName, Location homeLocation) {
+
         player.sendMessage(ChatColor.GREEN + "View details for your home, " + ChatColor.BOLD + homeName);
 
-        BaseComponent[] locationComponent = new ComponentBuilder("Location: ")
+        player.spigot().sendMessage(new ComponentBuilder("Location: ")
                 .color(ChatColor.BLUE)
                 .append("x: " + homeLocation.getBlockX() + " y: " + homeLocation.getBlockY() + " z: " + homeLocation.getBlockZ())
                 .color(ChatColor.GOLD)
-                .create();
-        player.spigot().sendMessage(locationComponent);
-        TextComponent teleportTextComponent = new TextComponent("Teleport:");
-        teleportTextComponent.setColor(ChatColor.GRAY);
-        TextComponent teleportationTextComponent = new TextComponent(" [Click]");
-        teleportationTextComponent.setColor(ChatColor.YELLOW);
-        teleportationTextComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to teleport at your home").create()));
-        teleportationTextComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/home " + homeName));
-        player.spigot().sendMessage(teleportTextComponent,teleportationTextComponent);
+                .create());
 
-        TextComponent manageTextComponent = new TextComponent("Manage home:");
-        manageTextComponent.setColor(ChatColor.GRAY);
+        TextComponent teleportComponent = createInteractiveComponent(
+                "Teleport:",
+                ChatColor.GRAY,
+                " [Click]",
+                ChatColor.YELLOW,
+                "Click to teleport to your home",
+                "/home " + homeName
+        );
 
-        TextComponent relocateTextComponent = new TextComponent(" [Relocate home]");
-        relocateTextComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to relocate your home").create()));
-        relocateTextComponent.setColor(ChatColor.GOLD);
-        relocateTextComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/homerelocate"));
+        TextComponent manageComponent = new TextComponent("Manage home:");
+        manageComponent.setColor(ChatColor.GRAY);
 
-        TextComponent deleteTextComponent = new TextComponent(" [Delete home]");
-        deleteTextComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to delete your home").create()));
-        deleteTextComponent.setColor(ChatColor.YELLOW);
-        deleteTextComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/delhome " + homeName));
+        TextComponent relocateComponent = createInteractiveComponent(
+                " [Relocate home]",
+                ChatColor.GOLD,
+                "Click to relocate your home",
+                "/homerelocate"
+        );
 
-        player.spigot().sendMessage(manageTextComponent, relocateTextComponent, deleteTextComponent);
+        TextComponent deleteComponent = createInteractiveComponent(
+                " [Delete home]",
+                ChatColor.YELLOW,
+                "Click to delete your home",
+                "/delhome " + homeName
+        );
 
+        player.spigot().sendMessage(teleportComponent);
+        player.spigot().sendMessage(manageComponent, relocateComponent, deleteComponent);
     }
+
+
+    private TextComponent createInteractiveComponent(String label, ChatColor labelColor, String clickableText,
+                                                     ChatColor clickableColor, String hoverText, String command) {
+        TextComponent labelComponent = new TextComponent(label);
+        labelComponent.setColor(labelColor);
+
+        TextComponent clickableComponent = new TextComponent(clickableText);
+        clickableComponent.setColor(clickableColor);
+        clickableComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                new ComponentBuilder(hoverText).color(ChatColor.GRAY).create()));
+        clickableComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command));
+
+        labelComponent.addExtra(clickableComponent);
+        return labelComponent;
+    }
+
+
+    private TextComponent createInteractiveComponent(String clickableText, ChatColor clickableColor,
+                                                     String hoverText, String command) {
+        return createInteractiveComponent("", ChatColor.RESET, clickableText, clickableColor, hoverText, command);
+    }
+
 
 }
