@@ -50,6 +50,7 @@
                     <include>english.yml</include>
                     <include>config.yml</include>
                     <include>plugin.yml</include>
+                    <include>custom.yml</include>
                 </includes>
             </resource>
         </resources>
