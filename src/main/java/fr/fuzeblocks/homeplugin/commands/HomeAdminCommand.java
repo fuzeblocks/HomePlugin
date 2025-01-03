@@ -1,7 +1,7 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
+import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import org.bukkit.Bukkit;
@@ -24,33 +24,18 @@ public class HomeAdminCommand implements CommandExecutor {
                 if (args.length >= 1) {
                     Player target = Bukkit.getPlayerExact(args[0]);
                     if (target != null) {
-                        if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
-                            HomeSQLManager homeSQLManager = HomePlugin.getHomeSQLManager();
+                        HomeManager homeManager = HomePlugin.getHomeManager();
                             player.sendMessage("§eLe joueur : " + target.getName() + "§e a pour home/s :");
-                            List<String> homeName = homeSQLManager.getHomesName(player);
+                            List<String> homeName = homeManager.getHomesName(player);
                             player.sendMessage("§6" + homeName.size() + "§6 home/s");
                             for (String home : homeName) {
                                 if (home != null) {
-                                    Location homeLocation = homeSQLManager.getHomeLocation(player, home);
+                                    Location homeLocation = homeManager.getHomeLocation(player, home);
                                     player.sendMessage("§4Nom du home en : " + homeName);
                                     player.sendMessage("§aLocalisation de " + homeName + " : X : " + homeLocation.getX() + " Y : " + homeLocation.getY() + " Z : " + homeLocation.getZ() + " Monde : " + homeLocation.getWorld().getName());
                                 }
                             }
                             return true;
-                        } else {
-                            HomeYMLManager homeYMLManager = HomePlugin.getHomeYMLManager();
-                            player.sendMessage("§eLe joueur : " + target.getName() + "§e a pour home/s :");
-                            List<String> homeName = homeYMLManager.getHomesName(player);
-                            player.sendMessage("§6" + homeName.size() + "§6 home/s");
-                            for (String home : homeName) {
-                                if (home != null) {
-                                    Location homeLocation = homeYMLManager.getHomeLocation(player, home);
-                                    player.sendMessage("§4Nom du home en : " + homeName);
-                                    player.sendMessage("§aLocalisation de " + homeName + " : X : " + homeLocation.getX() + " Y : " + homeLocation.getY() + " Z : " + homeLocation.getZ() + " Monde : " + homeLocation.getWorld().getName());
-                                }
-                            }
-                            return true;
-                        }
                     } else {
                         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Player-is-not-online")));
                     }

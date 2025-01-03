@@ -1,6 +1,7 @@
 package fr.fuzeblocks.homeplugin.placeholder;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
 import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
@@ -68,32 +69,14 @@ public class HomePluginExpansion extends PlaceholderExpansion {
     }
 
     private List<String> getHomesList(Player player) {
-        if (HomePlugin.getRegistrationType().equals(SyncMethod.YAML)) {
-            HomeYMLManager homeYMLManager = HomePlugin.getHomeYMLManager();
-            return homeYMLManager.getHomesName(player);
-        } else {
-            HomeSQLManager homeManager = HomePlugin.getHomeSQLManager();
-            return homeManager.getHomesName(player);
-        }
+            return HomePlugin.getHomeManager().getHomesName(player);
     }
 
     private Location getHomeLocation(Player player, String s) {
-        if (HomePlugin.getRegistrationType().equals(SyncMethod.YAML)) {
-            HomeYMLManager homeYMLManager = HomePlugin.getHomeYMLManager();
-            return homeYMLManager.getHomeLocation(player, s);
-        } else {
-            HomeSQLManager homeManager = HomePlugin.getHomeSQLManager();
-            return homeManager.getHomeLocation(player, s);
-        }
+        return HomePlugin.getHomeManager().getHomeLocation(player, s);
     }
 
     private int getHomes(Player player) {
-        if (HomePlugin.getRegistrationType().equals(SyncMethod.YAML)) {
-            HomeYMLManager homeYMLManager = HomePlugin.getHomeYMLManager();
-            return homeYMLManager.getHomeNumber(player);
-        } else {
-            HomeSQLManager homeManager = HomePlugin.getHomeSQLManager();
-            return homeManager.getHomeNumber(player);
-        }
+        return HomePlugin.getHomeManager().getHomeNumber(player);
     }
 }

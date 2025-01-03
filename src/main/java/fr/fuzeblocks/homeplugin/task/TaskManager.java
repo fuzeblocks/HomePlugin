@@ -4,7 +4,6 @@ import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.api.event.OnHomeTeleportEvent;
 import fr.fuzeblocks.homeplugin.api.event.OnSpawnTeleportEvent;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
-import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import fr.fuzeblocks.homeplugin.task.exception.TeleportTaskException;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
@@ -12,9 +11,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-
-import static fr.fuzeblocks.homeplugin.HomePlugin.getSpawnSQLManager;
-import static fr.fuzeblocks.homeplugin.HomePlugin.getSpawnYMLManager;
 
 public class TaskManager extends BukkitRunnable {
     private Task task;
@@ -40,12 +36,7 @@ public class TaskManager extends BukkitRunnable {
     }
 
     private void teleportHome() {
-        OnHomeTeleportEvent onHomeTeleport;
-        if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
-            onHomeTeleport = new OnHomeTeleportEvent(player, homeLocation);
-        } else {
-            onHomeTeleport = new OnHomeTeleportEvent(player, homeLocation);
-        }
+        OnHomeTeleportEvent onHomeTeleport = new OnHomeTeleportEvent(player, homeLocation);
         Bukkit.getServer().getPluginManager().callEvent(onHomeTeleport);
         if (!onHomeTeleport.isCancelled()) {
             player.teleport(onHomeTeleport.getLocation());
@@ -60,12 +51,7 @@ public class TaskManager extends BukkitRunnable {
     }
 
     private void teleportSpawn() {
-        OnSpawnTeleportEvent onSpawnTeleport;
-        if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
-            onSpawnTeleport = new OnSpawnTeleportEvent(player, getSpawnSQLManager().getSpawn(player.getWorld()));
-        } else {
-            onSpawnTeleport = new OnSpawnTeleportEvent(player, getSpawnYMLManager().getSpawn(player.getWorld()));
-        }
+        OnSpawnTeleportEvent onSpawnTeleport = new OnSpawnTeleportEvent(player, HomePlugin.getSpawnManager().getSpawn(player.getWorld()));
         Bukkit.getServer().getPluginManager().callEvent(onSpawnTeleport);
         if (!onSpawnTeleport.isCancelled()) {
             player.teleport(onSpawnTeleport.getLocation());

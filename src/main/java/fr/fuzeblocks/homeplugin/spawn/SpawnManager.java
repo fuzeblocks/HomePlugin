@@ -12,8 +12,8 @@ import org.bukkit.entity.Player;
 
 public class SpawnManager {
 
-    private SpawnYMLManager spawnYMLManager = HomePlugin.getSpawnYMLManager();
-    private SpawnSQLManager spawnSQLManager = HomePlugin.getSpawnSQLManager();
+    private final SpawnYMLManager spawnYMLManager = HomePlugin.getSpawnYMLManager();
+    private final SpawnSQLManager spawnSQLManager = HomePlugin.getSpawnSQLManager();
     private static SpawnManager instance = null;
 
     private SpawnManager() {

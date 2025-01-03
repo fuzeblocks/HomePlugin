@@ -3,8 +3,10 @@ package fr.fuzeblocks.homeplugin.commands;
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.*;
-import net.md_5.bungee.api.chat.hover.content.Content;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -67,8 +69,7 @@ public class ListHomeCommand implements CommandExecutor {
     }
 
 
-    private TextComponent createInteractiveComponent(String label, ChatColor labelColor, String clickableText,
-                                                     ChatColor clickableColor, String hoverText, String command) {
+    private TextComponent createInteractiveComponent(String label, ChatColor labelColor, String clickableText, ChatColor clickableColor, String hoverText, String command) {
         TextComponent labelComponent = new TextComponent(label);
         labelComponent.setColor(labelColor);
 
@@ -83,9 +84,8 @@ public class ListHomeCommand implements CommandExecutor {
     }
 
 
-    private TextComponent createInteractiveComponent(String clickableText, ChatColor clickableColor,
-                                                     String hoverText, String command) {
-        return createInteractiveComponent("", ChatColor.RESET, clickableText, clickableColor, hoverText, command);
+    private TextComponent createInteractiveComponent(String clickableText, ChatColor clickableColor, String hoverText, String command) {
+        return createInteractiveComponent("", clickableColor , clickableText, clickableColor, hoverText, command);
     }
 
 
