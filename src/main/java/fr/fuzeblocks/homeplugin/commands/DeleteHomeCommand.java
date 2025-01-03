@@ -27,19 +27,19 @@ public  class DeleteHomeCommand implements CommandExecutor {
                         }
                     }
                 } else {
-                    onHomeDelete = new OnHomeDeletedEvent(player, HomePlugin.getHomeManager().getHomeLocation(player, home_name), SyncMethod.YAML, home_name);
+                    onHomeDelete = new OnHomeDeletedEvent(player, HomePlugin.getHomeYMLManager().getHomeLocation(player, home_name), SyncMethod.YAML, home_name);
                     if (!onHomeDelete.isCancelled()) {
-                        if (HomePlugin.getHomeManager().deleteHome(player, onHomeDelete.getHomeName()) && HomePlugin.getCacheManager().delHomeInCache(player, onHomeDelete.getHomeName())) {
+                        if (HomePlugin.getHomeYMLManager().deleteHome(player, onHomeDelete.getHomeName()) && HomePlugin.getCacheManager().delHomeInCache(player, onHomeDelete.getHomeName())) {
                             player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-deleted")));
                             return true;
                         }
                     }
                 }
             } else {
-                player.sendMessage("§cUtilisation de la commande : /delhome <nom-du-home>");
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Home.DelHome-usage-message")));
             }
         } else {
-            sender.sendMessage("§cSeul un joueur peut executer cette commande !");
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Only-a-player-can-execute")));
         }
         return false;
     }

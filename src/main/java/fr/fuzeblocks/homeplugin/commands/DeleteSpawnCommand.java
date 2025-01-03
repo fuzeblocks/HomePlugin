@@ -29,16 +29,16 @@ public class DeleteSpawnCommand implements CommandExecutor {
                     onSpawnDelete = new OnSpawnDeletedEvent(player, player.getLocation(), SyncMethod.YAML);
                     Bukkit.getPluginManager().callEvent(onSpawnDelete);
                     if (!onSpawnDelete.isCancelled()) {
-                        HomePlugin.getSpawnManager().removeSpawn(onSpawnDelete.getLocation().getWorld());
+                        HomePlugin.getSpawnYMLManager().removeSpawn(onSpawnDelete.getLocation().getWorld());
                         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Spawn-deleted")));
                     }
                 }
                 return true;
             } else {
-                player.sendMessage("§cVous n'étes pas op !");
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Player-is-not-OP")));
             }
         } else {
-            sender.sendMessage("§cSeul un joueur peut executer cette commande !");
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Only-a-player-can-execute")));
         }
         return false;
     }

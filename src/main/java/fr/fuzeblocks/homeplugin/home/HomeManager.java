@@ -13,8 +13,8 @@ import java.util.List;
 
 public class HomeManager {
 
-        private HomeYMLManager homeYMLManager = HomePlugin.getHomeYMLManager();
-        private HomeSQLManager homeSQLManager = HomePlugin.getHomeSQLManager();
+        private final HomeYMLManager homeYMLManager = HomePlugin.getHomeYMLManager();
+        private final HomeSQLManager homeSQLManager = HomePlugin.getHomeSQLManager();
         private static HomeManager instance = null;
 
     private HomeManager() {
