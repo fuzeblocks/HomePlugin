@@ -3,8 +3,6 @@ package fr.fuzeblocks.homeplugin.commands;
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
-import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
-import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;

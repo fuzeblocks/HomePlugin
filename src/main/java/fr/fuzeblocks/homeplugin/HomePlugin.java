@@ -38,8 +38,8 @@ public final class HomePlugin extends JavaPlugin {
     private static SpawnSQLManager spawnSQLManager;
     private static ConfigurationSection configurationSection;
     private static JedisPooled jedisPooled;
-    private static final HomeManager homeManager = HomeManager.getInstance();
-    private static final SpawnManager spawnManager = SpawnManager.getInstance();
+    private static HomeManager homeManager;
+    private static SpawnManager spawnManager;
 
     @Override
     public void onEnable() {
@@ -114,6 +114,7 @@ public final class HomePlugin extends JavaPlugin {
         File home = new File(this.getDataFolder(), "homes.yml");
         registration(home);
         homeYMLManager = new HomeYMLManager(home);
+        homeManager = HomeManager.getInstance();
     }
 
     private void spawnManager() {
@@ -121,6 +122,7 @@ public final class HomePlugin extends JavaPlugin {
         File spawn = new File(this.getDataFolder(), "spawn.yml");
         registration(spawn);
         spawnYMLManager = new SpawnYMLManager(spawn);
+        spawnManager = SpawnManager.getInstance();
     }
     private void registration(File file) {
         if (!this.getDataFolder().exists()) {
