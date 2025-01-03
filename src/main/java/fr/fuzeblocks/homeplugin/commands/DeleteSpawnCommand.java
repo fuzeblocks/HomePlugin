@@ -23,22 +23,22 @@ public class DeleteSpawnCommand implements CommandExecutor {
                     Bukkit.getPluginManager().callEvent(onSpawnDelete);
                     if (!onSpawnDelete.isCancelled()) {
                         HomePlugin.getSpawnSQLManager().removeSpawn(player.getWorld());
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Spawn-deleted")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Spawn-deleted")));
                     }
                 } else {
                     onSpawnDelete = new OnSpawnDeletedEvent(player, player.getLocation(), SyncMethod.YAML);
                     Bukkit.getPluginManager().callEvent(onSpawnDelete);
                     if (!onSpawnDelete.isCancelled()) {
                         HomePlugin.getSpawnYMLManager().removeSpawn(onSpawnDelete.getLocation().getWorld());
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Spawn-deleted")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Spawn-deleted")));
                     }
                 }
                 return true;
             } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Player-is-not-OP")));
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Player-is-not-OP")));
             }
         } else {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Only-a-player-can-execute")));
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
         }
         return false;
     }

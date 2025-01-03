@@ -11,6 +11,8 @@ import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
 import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
+import fr.fuzeblocks.homeplugin.language.Language;
+import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.listeners.OnJoinListener;
 import fr.fuzeblocks.homeplugin.listeners.OnMoveListener;
 import fr.fuzeblocks.homeplugin.placeholder.HomePluginExpansion;
@@ -40,17 +42,14 @@ public final class HomePlugin extends JavaPlugin {
     private static JedisPooled jedisPooled;
     private static HomeManager homeManager;
     private static SpawnManager spawnManager;
+    private static LanguageManager languageManager;
 
     @Override
     public void onEnable() {
-        configurationSection = getConfig();
-        if (Objects.requireNonNull(getConfig().getString("Config.Connector.TYPE")).isEmpty()) {
-            getConfig().set("Config.Connector.TYPE", "YAML");
-            saveConfig();
-        }
-        getLogger().info(getConfig().getString("Config.Connector.TYPE") + " has been selected !");
-        loadPlugins();
         saveDefaultConfig();
+        configurationSection = getConfig();
+        checkConfig();
+        loadPlugins();
         redisRegistration();
         databaseRegistration();
         homeRegistration();
@@ -59,11 +58,8 @@ public final class HomePlugin extends JavaPlugin {
         completerManager();
         spawnManager();
         cacheManager = CacheManager.getInstance();
-        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            new HomePluginExpansion(this).register();
-        } else {
-            getLogger().warning("PlaceholderAPI is not installed. Placeholders will not be available.");
-        }
+        checkDepend();
+        loadLanguage();
         checkUpdate(113935);
         getLogger().info("----------------------HomePlugin----------------------");
         getLogger().info("----------HomePlugin a démmaré avec succés !----------");
@@ -74,10 +70,37 @@ public final class HomePlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        stopPluginFonc();
         getLogger().info("----------------------HomePlugin----------------------");
         getLogger().info("----------HomePlugin a été éteint avec succés !----------");
         getLogger().info("------------------------------------------------------");
-        stopPluginFonc();
+    }
+    private void checkConfig() {
+        String key = "Config.";
+        if (Objects.requireNonNull(getConfig().getString(key + "Connector.TYPE")).isEmpty()) {
+            getConfig().set(key + "Connector.TYPE", "YAML");
+        }
+        if (Objects.requireNonNull(getConfig().getString(key + "Language")).isEmpty()) {
+            getConfig().set(key + "Language", "FRENCH");
+        }
+        saveConfig();
+        getLogger().info(getConfig().getString(key + "Language") + " has been selected !");
+        getLogger().info(getConfig().getString(key + "Connector.TYPE") + " has been selected !");
+    }
+    private void checkDepend() {
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new HomePluginExpansion(this).register();
+        } else {
+            getLogger().warning("PlaceholderAPI is not installed. Placeholders will not be available.");
+        }
+    }
+    private void loadLanguage() {
+            String languageString = getConfig().getString("Config.Language");
+            Language language = Language.valueOf(languageString.toUpperCase());
+            if (language == null) {
+                language = Language.FRENCH;
+            }
+            languageManager = new LanguageManager(language);
     }
     private void redisRegistration() {
         if (getConfig().getBoolean("Config.Redis.UseRedis")) {
@@ -245,5 +268,9 @@ public final class HomePlugin extends JavaPlugin {
     }
     public static SpawnManager getSpawnManager() {
         return spawnManager;
+    }
+
+    public static LanguageManager getLanguageManager() {
+        return languageManager;
     }
 }

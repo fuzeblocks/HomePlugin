@@ -45,7 +45,12 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <filtering>true</filtering>
+                <includes>
+                    <include>french.yml</include>
+                    <include>english.yml</include>
+                    <include>config.yml</include>
+                    <include>plugin.yml</include>
+                </includes>
             </resource>
         </resources>
     </build>

@@ -3,8 +3,6 @@ package fr.fuzeblocks.homeplugin.commands;
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
-import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
-import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -15,8 +13,8 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 
 public class CacheCommand implements CommandExecutor {
-    private final String key = "Config.Language.";
-    private final String cacheKey = "Config.Cache.";
+    private final String key = "Language.";
+    private final String cacheKey = "Cache.";
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -29,7 +27,7 @@ public class CacheCommand implements CommandExecutor {
                     switch (args[0].toLowerCase()) {
                         case "clearall":
                             cacheManager.clear();
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Cache-cleared")));
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Cache-cleared")));
                             return true;
                         case "view":
                             if (args.length >= 2) {
@@ -43,30 +41,30 @@ public class CacheCommand implements CommandExecutor {
                                     }
                                     return true;
                                 } else {
-                                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Have-no-cache")));
+                                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Have-no-cache")));
                                 }
                             } else {
-                                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(cacheKey + "Cache-view-usage-command")));
+                                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(cacheKey + "Cache-view-usage-command")));
                             }
                             break;
                         default:
                             Player target = Bukkit.getPlayerExact(args[0]);
                             if (target != null) {
                                 cacheManager.clearPlayer(player);
-                                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Cache-player-cleared").replace("%player%", player.getName())));
+                                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Cache-player-cleared").replace("%player%", player.getName())));
                                 return true;
                             } else {
-                                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Player-is-not-online")));
+                                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Player-is-not-online")));
                             }
                     }
                 } else {
-                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(cacheKey + "Cache-usage-command")));
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(cacheKey + "Cache-usage-command")));
                 }
             } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "No-permission")));
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "No-permission")));
             }
         } else {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Only-a-player-can-execute")));
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
         }
         return false;
     }

@@ -14,8 +14,8 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 public class HomeAdminCommand implements CommandExecutor {
-    private final String homeAdminKey = "Config.HomeAdmin.";
-    private final String key = "Config.Language.";
+    private final String homeAdminKey = "HomeAdmin.";
+    private final String key = "Language.";
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -52,16 +52,16 @@ public class HomeAdminCommand implements CommandExecutor {
                             return true;
                         }
                     } else {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Player-is-not-online")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Player-is-not-online")));
                     }
                 } else {
-                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(homeAdminKey + "HomeAdmin-usage-message")));
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(homeAdminKey + "HomeAdmin-usage-message")));
                 }
             } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "No-permission")));
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "No-permission")));
             }
         } else {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Only-a-player-can-execute")));
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
         }
         return false;
     }

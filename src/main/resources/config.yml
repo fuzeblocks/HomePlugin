@@ -1,4 +1,5 @@
 Config:
+  Language: FRENCH
   Connector:
     TYPE: "YAML" #MYSQL ou YAML
     #Optional

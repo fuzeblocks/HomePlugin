@@ -20,7 +20,7 @@ import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance
 public class HomeCommand implements CommandExecutor {
     private static TaskManager taskManager;
     private final HomePlugin instance;
-    private final String key = "Config.Language.";
+    private final String key = "Language.";
 
     public HomeCommand(HomePlugin instance) {
         this.instance = instance;
@@ -50,14 +50,14 @@ public class HomeCommand implements CommandExecutor {
                             setPlayerTeleportation(player, homeName, homeLocation);
                             return true;
                         } else {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-does-not-exist")));
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Home-does-not-exist")));
                         }
                     } else {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Have-no-home")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Have-no-home")));
                     }
                 } else {
                     if (homeYMLManager.isStatus(player)) {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "A-teleport-is-already-in-progress")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "A-teleport-is-already-in-progress")));
                         return false;
                     }
                     if (homeYMLManager.getHomeNumber(player) > 0) {
@@ -71,23 +71,23 @@ public class HomeCommand implements CommandExecutor {
                             setPlayerTeleportation(player, homeName, homeLocation);
                             return true;
                         } else {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Home-does-not-exist")));
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Home-does-not-exist")));
                         }
                     } else {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Have-no-home")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Have-no-home")));
                     }
                 }
             } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Home.Home-usage-message")));
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home.Home-usage-message")));
             }
         } else {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Only-a-player-can-execute")));
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
         }
         return false;
     }
 
     private void setPlayerTeleportation(Player player, String homeName, Location location) {
-        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key + "Start-of-teleportation")) + " " + homeName);
+        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Start-of-teleportation")) + " " + homeName);
         StatusManager.setPlayerStatus(player, true);
         taskManager = new TaskManager(instance);
         taskManager.homeTask(homeName, player, location);
