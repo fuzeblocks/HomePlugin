@@ -2,19 +2,17 @@ package fr.fuzeblocks.homeplugin.cache;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
-import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import redis.clients.jedis.JedisPooled;
-
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CacheManager {
     private static CacheManager instance;
-    private final HashMap<Player, HashMap<String, Location>> playerHomes = new HashMap();
+    private final HashMap<Player, HashMap<String, Location>> playerHomes = new HashMap<>();
     private JedisPooled jedisPooled;
     private final boolean useRedis = HomePlugin.getConfigurationSection().getBoolean("Config.Connector.Redis.UseRedis");
 
@@ -40,7 +38,7 @@ public class CacheManager {
         }
     }
 
-    public HashMap<String, Location> getHomesInCache(Player player) {
+    public Map<String, Location> getHomesInCache(Player player) {
         if (useRedis) {
             Map<String, String> redisData = jedisPooled.hgetAll(player.getUniqueId().toString());
             return deserializeLocationMap(redisData);

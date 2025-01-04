@@ -4,12 +4,11 @@ import fr.fuzeblocks.homeplugin.HomePlugin;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.io.IOException;
 
 public class LanguageManager {
 
     private final Language language;
-    public YamlConfiguration yamlConfiguration;
+    private final YamlConfiguration yamlConfiguration;
 
     public LanguageManager(Language type) {
         this.language = type;

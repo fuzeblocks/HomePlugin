@@ -4,7 +4,7 @@ import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.spawn.sql.SpawnSQLManager;
 import fr.fuzeblocks.homeplugin.spawn.yml.SpawnYMLManager;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
-import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
+import fr.fuzeblocks.homeplugin.sync.SyncMethod;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;

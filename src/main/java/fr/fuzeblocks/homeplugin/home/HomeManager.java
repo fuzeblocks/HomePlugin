@@ -5,7 +5,7 @@ import fr.fuzeblocks.homeplugin.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
 import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
-import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
+import fr.fuzeblocks.homeplugin.sync.SyncMethod;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 

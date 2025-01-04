@@ -1,7 +1,6 @@
 package fr.fuzeblocks.homeplugin.completers;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;

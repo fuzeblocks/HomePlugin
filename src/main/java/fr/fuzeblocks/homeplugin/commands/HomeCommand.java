@@ -10,7 +10,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance;
 
@@ -72,7 +72,7 @@ public class HomeCommand implements CommandExecutor {
 
     private boolean verifyInCache(HomeManager homeManager, Player player, String homeName) {
         if (homeManager.getCacheManager().getHomesInCache(player) != null) {
-            HashMap<String, Location> homes = homeManager.getCacheManager().getHomesInCache(player);
+            Map<String, Location> homes = homeManager.getCacheManager().getHomesInCache(player);
             return homes.containsKey(homeName);
         } else {
             return false;

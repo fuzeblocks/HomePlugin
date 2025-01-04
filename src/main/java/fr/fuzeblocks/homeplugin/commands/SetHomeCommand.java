@@ -3,7 +3,6 @@ package fr.fuzeblocks.homeplugin.commands;
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.api.event.OnHomeCreatedEvent;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
-import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,9 +10,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class SetHomeCommand implements CommandExecutor {
-    private final String key = "Language.";
     private final String homeKey = "Home.";
-
+    private final  String key = "Language.";
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {

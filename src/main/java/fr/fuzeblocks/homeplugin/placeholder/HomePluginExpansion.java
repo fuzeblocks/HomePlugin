@@ -1,10 +1,6 @@
 package fr.fuzeblocks.homeplugin.placeholder;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.home.HomeManager;
-import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
-import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
-import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;

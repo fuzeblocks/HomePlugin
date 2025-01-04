@@ -20,7 +20,7 @@ import fr.fuzeblocks.homeplugin.plugin.PluginManager;
 import fr.fuzeblocks.homeplugin.spawn.SpawnManager;
 import fr.fuzeblocks.homeplugin.spawn.sql.SpawnSQLManager;
 import fr.fuzeblocks.homeplugin.spawn.yml.SpawnYMLManager;
-import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
+import fr.fuzeblocks.homeplugin.sync.SyncMethod;
 import fr.fuzeblocks.homeplugin.update.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;

@@ -2,7 +2,6 @@ package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.api.event.OnSpawnDeletedEvent;
-import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

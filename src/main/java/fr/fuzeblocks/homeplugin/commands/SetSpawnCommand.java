@@ -3,7 +3,6 @@ package fr.fuzeblocks.homeplugin.commands;
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.api.event.OnSpawnCreatedEvent;
 import fr.fuzeblocks.homeplugin.spawn.SpawnManager;
-import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -12,16 +11,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class SetSpawnCommand implements CommandExecutor {
-    private final String key = "Language.";
-    private final String spawnKey = "Spawn.";
-
-    private OnSpawnCreatedEvent onSpawnCreate;
 
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        OnSpawnCreatedEvent onSpawnCreate;
+        String key = "Language.";
         if (sender instanceof Player) {
             Player player = ((Player) sender).getPlayer();
+            String spawnKey = "Spawn.";
             if (player.hasPermission(HomePlugin.getLanguageManager().getString(spawnKey + "SetSpawn-permission"))) {
                 Location location = player.getLocation();
                 SpawnManager spawnManager = HomePlugin.getSpawnManager();
