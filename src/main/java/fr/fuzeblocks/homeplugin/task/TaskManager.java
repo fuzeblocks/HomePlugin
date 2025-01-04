@@ -4,7 +4,6 @@ import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.api.event.OnHomeTeleportEvent;
 import fr.fuzeblocks.homeplugin.api.event.OnSpawnTeleportEvent;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
-import fr.fuzeblocks.homeplugin.sync.type.SyncMethod;
 import fr.fuzeblocks.homeplugin.task.exception.TeleportTaskException;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
@@ -12,9 +11,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-
-import static fr.fuzeblocks.homeplugin.HomePlugin.getSpawnSQLManager;
-import static fr.fuzeblocks.homeplugin.HomePlugin.getSpawnYMLManager;
 
 public class TaskManager extends BukkitRunnable {
     private Task task;
@@ -40,16 +36,11 @@ public class TaskManager extends BukkitRunnable {
     }
 
     private void teleportHome() {
-        OnHomeTeleportEvent onHomeTeleport;
-        if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
-            onHomeTeleport = new OnHomeTeleportEvent(player, homeLocation);
-        } else {
-            onHomeTeleport = new OnHomeTeleportEvent(player, homeLocation);
-        }
+        OnHomeTeleportEvent onHomeTeleport = new OnHomeTeleportEvent(player, homeLocation);
         Bukkit.getServer().getPluginManager().callEvent(onHomeTeleport);
         if (!onHomeTeleport.isCancelled()) {
             player.teleport(onHomeTeleport.getLocation());
-            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.Teleport-to-home")) + " " + homeName);
+            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Language.Teleport-to-home")) + " " + homeName);
             player.resetTitle();
             if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.Add-particles-after-teleport")) {
                 player.playEffect(homeLocation, Effect.MOBSPAWNER_FLAMES, 5000);
@@ -60,16 +51,11 @@ public class TaskManager extends BukkitRunnable {
     }
 
     private void teleportSpawn() {
-        OnSpawnTeleportEvent onSpawnTeleport;
-        if (HomePlugin.getRegistrationType().equals(SyncMethod.MYSQL)) {
-            onSpawnTeleport = new OnSpawnTeleportEvent(player, getSpawnSQLManager().getSpawn(player.getWorld()));
-        } else {
-            onSpawnTeleport = new OnSpawnTeleportEvent(player, getSpawnYMLManager().getSpawn(player.getWorld()));
-        }
+        OnSpawnTeleportEvent onSpawnTeleport = new OnSpawnTeleportEvent(player, HomePlugin.getSpawnManager().getSpawn(player.getWorld()));
         Bukkit.getServer().getPluginManager().callEvent(onSpawnTeleport);
         if (!onSpawnTeleport.isCancelled()) {
             player.teleport(onSpawnTeleport.getLocation());
-            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.Teleport-to-spawn")));
+            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Language.Teleport-to-spawn")));
             player.resetTitle();
         }
         StatusManager.setPlayerStatus(player, false);
@@ -88,7 +74,7 @@ public class TaskManager extends BukkitRunnable {
             teleportTask.cancel();
             titleTask.cancel();
             player.resetTitle();
-            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString("Config.Language.Teleport-canceled")));
+            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Language.Teleport-canceled")));
             StatusManager.setPlayerStatus(player, false);
         } else {
             throw new TeleportTaskException();
@@ -114,12 +100,12 @@ public class TaskManager extends BukkitRunnable {
 
             @Override
             public void run() {
-                String key = "Config.Language.Teleportation-in-progress";
+                String key = "Language.Teleportation-in-progress";
                 if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.UseTitle")) {
-                    player.sendTitle(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key)) + " ", String.valueOf(time), 0, 1000, 0);
+                    player.sendTitle(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key)) + " ", String.valueOf(time), 0, 1000, 0);
                 }
                 if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.UseMessage")) {
-                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getConfigurationSection().getString(key)) + " ", String.valueOf(time));
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key)) + " ", String.valueOf(time));
                 }
                 time--;
                 if (time <= 0) {

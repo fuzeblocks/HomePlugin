@@ -18,8 +18,7 @@ public class TaskSaveUtils {
         if (!taskManagerHashMap.containsKey(player)) {
             taskManagerHashMap.put(player, taskManager);
         } else {
-            taskManagerHashMap.remove(player);
-            taskManagerHashMap.put(player, taskManager);
+            taskManagerHashMap.replace(player,taskManager);
         }
     }
 }
