@@ -17,28 +17,22 @@ public class SpawnCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            Player player = ((Player) sender).getPlayer();
-            if (args.length == 0) {
-                SpawnManager spawnManager = HomePlugin.getSpawnManager();
-                    if (spawnManager.hasSpawn(player.getWorld())) {
-                        if (spawnManager.isStatus(player)) {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "A-teleport-is-already-in-progress")));
-                            return false;
-                        }
-                        addTask(player);
-                    } else {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "No-spawn-defined")));
-                    }
-            } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString( spawnKey + "Spawn-usage-message")));
-            }
-
-        } else {
+        if (!(sender instanceof Player)) {
             sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
         }
-        return false;
-
+        Player player = ((Player) sender).getPlayer();
+        if (args.length != 0) {
+            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString( spawnKey + "Spawn-usage-message")));
+        }
+            SpawnManager spawnManager = HomePlugin.getSpawnManager();
+        if (!spawnManager.hasSpawn(player.getWorld())) {
+            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "No-spawn-defined")));
+        }
+        if (!spawnManager.isStatus(player)) {
+            addTask(player);
+        }
+            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "A-teleport-is-already-in-progress")));
+            return true;
     }
 
     private void addTask(Player player) {

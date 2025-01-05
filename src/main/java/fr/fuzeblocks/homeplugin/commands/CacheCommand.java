@@ -18,10 +18,10 @@ public class CacheCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String key = "Language.";
-        if (!(sender instanceof Player)) {
+          if (!(sender instanceof Player)) {
             sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
             return false;
-        }
+          }
             Player player = ((Player) sender).getPlayer();
             if (!player.hasPermission("HomePlugin.cache")) {
                 player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "No-permission")));

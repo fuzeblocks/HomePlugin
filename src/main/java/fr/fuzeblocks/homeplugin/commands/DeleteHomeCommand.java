@@ -13,10 +13,16 @@ public  class DeleteHomeCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String key = "Language.";
-        if (sender instanceof Player) {
-            Player player = ((Player) sender).getPlayer();
-            if (args.length == 1) {
-                String home_name = args[0];
+        if (!(sender instanceof Player)) {
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
+        }
+
+        Player player = ((Player) sender).getPlayer();
+            if (args.length != 1) {
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home.DelHome-usage-message")));
+            }
+
+            String home_name = args[0];
                 HomeManager homeManager = HomePlugin.getHomeManager();
                 OnHomeDeletedEvent onHomeDelete = new OnHomeDeletedEvent(player, homeManager.getHomeLocation(player, home_name), HomePlugin.getRegistrationType(), home_name);
                     if (!onHomeDelete.isCancelled() && homeManager.deleteHome(player, onHomeDelete.getHomeName())) {
@@ -25,12 +31,6 @@ public  class DeleteHomeCommand implements CommandExecutor {
                             return true;
                         }
 
-            } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home.DelHome-usage-message")));
-            }
-        } else {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
-        }
         return false;
     }
 }

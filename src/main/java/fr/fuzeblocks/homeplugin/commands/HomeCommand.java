@@ -27,38 +27,36 @@ public class HomeCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            if (args.length == 1) {
-                String homeName = args[0];
-                HomeManager homeManager = HomePlugin.getHomeManager();
-                    if (homeManager.isStatus(player)) {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "A-teleport-is-already-in-progress")));
-                        return false;
-                    }
-                    if (homeManager.getHomeNumber(player) > 0) {
-                        if (verifyInCache(homeManager, player, homeName)) {
-                            setPlayerTeleportation(player, homeName, homeManager.getCacheManager().getHomesInCache(player).get(homeName));
-                            return true;
-                        }
-                        Location homeLocation = homeManager.getHomeLocation(player, homeName);
-                        if (homeLocation != null) {
-                            homeManager.getCacheManager().addHomeInCache(player, homeName, homeLocation);
-                            setPlayerTeleportation(player, homeName, homeLocation);
-                            return true;
-                        } else {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Home-does-not-exist")));
-                        }
-                    } else {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Have-no-home")));
-                    }
-                } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home.Home-usage-message")));
-                }
-            } else {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
+        if (!(sender instanceof Player)) {
+        sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
+    }
+        Player player = (Player) sender;
+        if (args.length != 1) {
+        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home.Home-usage-message")));
         }
-        return false;
+            String homeName = args[0];
+            HomeManager homeManager = HomePlugin.getHomeManager();
+        if (!homeManager.isStatus(player)) {
+            if (homeManager.getHomeNumber(player) <= 0) {
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Have-no-home")));
+            }
+            if (!verifyInCache(homeManager, player, homeName)) {
+                Location homeLocation = homeManager.getHomeLocation(player, homeName);
+                if (homeLocation == null) {
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Home-does-not-exist")));
+                }
+                    homeManager.getCacheManager().addHomeInCache(player, homeName, homeLocation);
+                    setPlayerTeleportation(player, homeName, homeLocation);
+                    return true;
+
+            } else {
+                setPlayerTeleportation(player, homeName, homeManager.getCacheManager().getHomesInCache(player).get(homeName));
+                return true;
+            }
+        } else {
+            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "A-teleport-is-already-in-progress")));
+            return true;
+        }
     }
 
     private void setPlayerTeleportation(Player player, String homeName, Location location) {
