@@ -2,14 +2,11 @@ package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.spawn.SpawnManager;
-import fr.fuzeblocks.homeplugin.status.StatusManager;
 import fr.fuzeblocks.homeplugin.task.TaskManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance;
 
 public class SpawnCommand implements CommandExecutor {
     private final String key = "Language.";
@@ -43,8 +40,6 @@ public class SpawnCommand implements CommandExecutor {
         TaskManager taskManager = new TaskManager(HomePlugin.getPlugin(HomePlugin.class));
         taskManager.spawnTask(player);
         taskManager.startTeleportTask();
-        setTaskManagerInstance(player, taskManager);
-        StatusManager.setPlayerStatus(player, true);
         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Start-of-teleportation-for-spawn")));
     }
 }

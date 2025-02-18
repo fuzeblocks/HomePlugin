@@ -8,6 +8,7 @@ import fr.fuzeblocks.homeplugin.completers.HomeCompleter;
 import fr.fuzeblocks.homeplugin.database.CreateTable;
 import fr.fuzeblocks.homeplugin.database.DatabaseManager;
 import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
+import fr.fuzeblocks.homeplugin.gui.HomeGUI;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
 import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
@@ -173,12 +174,14 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("homeadmin").setExecutor(new HomeAdminCommand());
         getCommand("plugins").setExecutor(new PluginCommand());
         getCommand("listhome").setExecutor(new ListHomeCommand());
+        getCommand("homegui").setExecutor(new HomeGuiCommand());
     }
 
     private void eventRegistration() {
         getLogger().info("Registering Events");
         Bukkit.getPluginManager().registerEvents(new OnJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new OnMoveListener(), this);
+        Bukkit.getPluginManager().registerEvents(new HomeGUI(),this);
     }
 
     private void completerManager() {

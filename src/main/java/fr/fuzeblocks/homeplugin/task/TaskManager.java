@@ -63,6 +63,8 @@ public class TaskManager extends BukkitRunnable {
     }
 
     public void startTeleportTask() {
+        StatusManager.setPlayerStatus(player, true);
+        TaskSaveUtils.setTaskManagerInstance(player,this);
         addTimeTitle();
         titleTask.runTaskTimer(plugin, 0L, 20L);
         teleportTask = runTaskLater(plugin, 20L * 3L);
@@ -80,6 +82,7 @@ public class TaskManager extends BukkitRunnable {
             throw new TeleportTaskException();
         }
     }
+
 
 
     public void homeTask(String homeName, Player player, Location location) {

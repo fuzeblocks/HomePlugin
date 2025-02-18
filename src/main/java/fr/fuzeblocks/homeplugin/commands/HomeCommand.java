@@ -2,7 +2,6 @@ package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
-import fr.fuzeblocks.homeplugin.status.StatusManager;
 import fr.fuzeblocks.homeplugin.task.TaskManager;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -11,8 +10,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
-
-import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance;
 
 
 public class HomeCommand implements CommandExecutor {
@@ -61,11 +58,9 @@ public class HomeCommand implements CommandExecutor {
 
     private void setPlayerTeleportation(Player player, String homeName, Location location) {
         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Start-of-teleportation")) + " " + homeName);
-        StatusManager.setPlayerStatus(player, true);
         taskManager = new TaskManager(instance);
         taskManager.homeTask(homeName, player, location);
         taskManager.startTeleportTask();
-        setTaskManagerInstance(player, taskManager);
     }
 
     private boolean verifyInCache(HomeManager homeManager, Player player, String homeName) {
