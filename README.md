@@ -1,99 +1,113 @@
-[![Dependency review](https://github.com/fuzeblocks/HomePlugin/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/fuzeblocks/HomePlugin/actions/workflows/dependency-review.yml) [![CodeQL](https://github.com/fuzeblocks/HomePlugin/actions/workflows/codeql.yml/badge.svg)](https://github.com/fuzeblocks/HomePlugin/actions/workflows/codeql.yml)
+# 🏠 Welcome to FuzeBlocks HomePlugin! 🏠  
+**A powerful and flexible home management system for Spigot servers, developed by FuzeBlocks.**
 
-
-
-🏠 Welcome to FuzeBlocks HomePlugin! 🏠
-
-Enhance your players' gaming experience with ease using our Spigot plugin for home management created by fuzeblocks.
-
-Key Features:
-
-🔹Multiple synchronization methods (MYSQL and YML).
-
-🔹An API for developers
-
-🔹 PlaceHolderAPI
-
-🔹 Easy Home Setting: Use the /sethome command to define a home point at the player's current location.
-
-🔹 Intuitive Management: Access a list of all defined homes with the /homes command, allowing players to view, rename, and delete their home points.
-
-🔹 Configurable Limits: Customize settings in the configuration file to adjust the number of homes per player.
-
-🔹 Powerful Commands: Enjoy a rich and personalized gaming experience with commands like /home, /spawn, /setspawn, /delspawn, /delhome.
-
-🔹 Player Cache: Easily clear the cache with the /cache command, either for all players or for a specific player. 🔹 Home Administration: Manage player homes effortlessly with the /homeadmin command.
-
-Installation: 🛠️ Download the JAR file from the version page and place it in the "plugins" folder of your Spigot server. Restart the server for changes to take effect. Customize the experience in the configuration file (config.yml).
-
-Commands: ⚙️ /sethome [name] - Set a home point at the player's current location.
-
-⚙️ /home [name] - Teleport to a home point.
-
-⚙️ /spawn - Teleport to the spawn.
-
-⚙️ /setspawn - Set the spawn point.
-
-⚙️/delspawn - Delete the spawn point.
-
-⚙️ /delhome [name] - Delete a home point.
-
-⚙️ /cache [player,clearall,view player] - Clear the cache for players or specific ones.
-
-⚙️ /homeadmin [player] - View a player's homes (admin command).
-
-# PlaceHolderAPI Tags, for FuzeBlocks HomePlugin 🏡
-
-## %homeplugin_homes% 🏠
-
-**Description:**  
-This tag is used to get homes for a player.
-
-**Parameters:**  
-No parameters are required.
-
-**Usage:**  
-`%homeplugin_homes%` returns the phrase "Get Homes for a player", indicating that homes are being retrieved for a specific player.
+Simplify and enhance your players' experience with intuitive home commands, developer-friendly APIs, and seamless performance features.
 
 ---
 
-## %homeplugin_homes_numbers% 📊
+## ✨ Key Features
 
-**Description:**  
-This tag is used to get the total number of homes for a player.
+- 🔹 **Multiple Storage Options**  
+  Support for both **MySQL** and **YAML**, offering flexibility depending on your server needs.
 
-**Parameters:**  
-No parameters are required.
+- 🔹 **Redis Caching (Optional)**  
+  Boost performance with Redis, or stick to the default caching method.
 
-**Usage:**  
-`%homeplugin_homes_numbers%` returns an integer representing the total number of homes for a player.
+- 🔹 **Developer API**  
+  Easily extend functionality with our **public API**. Full documentation available.
 
----
+- 🔹 **Spawn Management**  
+  Set, delete, and teleport to spawn points using simple commands.
 
-## %homeplugin_home_location_<home_name>% 📍
+- 🔹 **Plugin Loader for Devs**  
+  Includes a modular plugin loader to streamline development and integration.
 
-**Description:**  
-This tag is used to get the location of a specific home for a player.
+- 🔹 **PlaceholderAPI Support**  
+  Display home data in chat, GUIs, and more with custom placeholders.
 
-**Parameters:**  
-- `<home_name>`: Replace this with the actual name of the home whose location you want to retrieve.
+- 🔹 **Simple Home Management**  
+  - `/sethome [name]` — Define homes with ease.  
+  - `/homes` — View, rename, or delete saved homes.
 
----
+- 🔹 **Custom Home Limits**  
+  Set limits via the configuration file.
 
-## API Installation Instructions ⚙️
+- 🔹 **Comprehensive Commands**  
+  Includes:  
+  `/home`, `/spawn`, `/setspawn`, `/delspawn`, `/delhome`, `/listhome`, `/cache`, `/homeadmin`.
 
-For developers:  
-1. Download the JAR file from the version page.
-2. Place it in the "plugins" folder of your Spigot server.
-3. Restart the server for changes to take effect.
-4. Customize the experience in the configuration file (`config.yml`).
-
-**Note:** For assistance, bug reports, or contributions, visit our [GitHub repository](#). Your feedback is crucial in continuously improving FuzeBlocks HomePlugin! 💬
-
-**Tested Version:** 1.20.x  
-**HomePage:** [Link to HomePage](#)
+- 🔹 **Admin Tools**  
+  Use `/homeadmin [player]` to view and manage homes for any player.
 
 ---
 
-**Disclaimer:**  
-NOT AN OFFICIAL MINECRAFT SERVICE. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR ANY OTHER ENTITY.
+## ⚙️ Commands Overview
+
+| Command | Description |
+|--------|-------------|
+| `/sethome [name]` | Set a home at your current location. |
+| `/home [name]` | Teleport to a saved home. |
+| `/homes` | List, rename, or delete your homes. |
+| `/delhome [name]` | Remove a specific home. |
+| `/spawn` | Teleport to the spawn point. |
+| `/setspawn` | Define the world’s spawn location. |
+| `/delspawn` | Remove the current spawn. |
+| `/cache [player,clearall,view]` | Manage player cache. |
+| `/homeadmin [player]` | Admin command to view a player's homes. |
+| `/listhome` | View all your homes. |
+
+---
+
+## 🔧 Installation
+
+1. Download the JAR from the [plugin page](https://modrinth.com/plugin/homeplugin/versions).  
+2. Place it in your server's `plugins` folder.  
+3. Restart your server.  
+4. Customize the configuration via `config.yml`.
+
+---
+
+## 📦 PlaceholderAPI Integration
+
+Use these placeholders with PlaceholderAPI:
+
+| Placeholder | Description |
+|------------|-------------|
+| `%homeplugin_homes%` | Retrieves the list of a player's homes. |
+| `%homeplugin_homes_numbers%` | Returns the total number of homes a player has. |
+| `%homeplugin_home_location_<name>%` | Returns the location of the home with the specified name. |
+
+> 🔁 Replace `<name>` with the actual home name.
+
+---
+
+## 🧑‍💻 Developer Resources
+
+- **API Documentation**: [GitHub Wiki - API](https://github.com/fuzeblocks/HomePlugin/wiki)
+- **Plugin Loader Guide**: [GitHub Wiki - Plugin API](https://github.com/fuzeblocks/HomePlugin/wiki/Plugin-API)
+
+---
+
+## 🧪 Compatibility
+
+- ✅ Minecraft version **1.20.x** and earlier versions  
+- 📦 Requires: [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)
+
+---
+
+## 🤝 Support & Contributions
+
+For support, bug reports, feature suggestions, or to contribute, visit the official GitHub:  
+🔗 [HomePlugin GitHub Repository](https://github.com/fuzeblocks/HomePlugin)
+
+Your feedback helps us keep FuzeBlocks HomePlugin powerful, stable, and enjoyable!
+
+## 🚧 Update Coming Soon!
+
+We're currently working on something new and exciting.  
+Stay tuned — fresh updates are on the way! 🔥
+
+📅 Estimated Release: _Coming Soon_
+
+Thanks for your patience 🙏  
+— The Team
