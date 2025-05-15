@@ -92,6 +92,7 @@ Use these placeholders with PlaceholderAPI:
 
 - ✅ Minecraft version **1.20.x** and earlier versions  
 - 📦 Requires: [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)
+- API version : [![](https://jitpack.io/v/fuzeblocks/HomePlugin.svg)](https://jitpack.io/#fuzeblocks/HomePlugin)
 
 ---
 
