@@ -46,7 +46,7 @@ Simplify and enhance your players' experience with intuitive home commands, deve
 | Command | Description |
 |--------|-------------|
 | `/sethome [name]` | Set a home at your current location. |
-| `/home [name]` | Teleport to a saved home. |
+| `/home [name]` | Teleport to a saved home. Or to open a gui with your homes|
 | `/homes` | List, rename, or delete your homes. |
 | `/delhome [name]` | Remove a specific home. |
 | `/spawn` | Teleport to the spawn point. |
