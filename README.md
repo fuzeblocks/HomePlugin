@@ -69,15 +69,19 @@ Simplify and enhance your players' experience with intuitive home commands, deve
 
 ## 📦 PlaceholderAPI Integration
 
-Use these placeholders with PlaceholderAPI:
+Use these placeholders with [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/):
 
 | Placeholder | Description |
 |------------|-------------|
-| `%homeplugin_homes%` | Retrieves the list of a player's homes. |
-| `%homeplugin_homes_numbers%` | Returns the total number of homes a player has. |
-| `%homeplugin_home_location_<name>%` | Returns the location of the home with the specified name. |
+| `%homeplugin_homes%` | List of all the player's home names, comma-separated. |
+| `%homeplugin_homes_numbers%` | Total number of homes the player has. |
+| `%homeplugin_has_homes%` | Returns `true` if the player has at least one home, otherwise `false`. |
+| `%homeplugin_home_location_<name>%` | Formatted location (X, Y, Z, World) of the home `<name>`. |
+| `%homeplugin_home_exists_<name>%` | Returns `true` if the home `<name>` exists. |
+| `%homeplugin_home_world_<name>%` | Returns the world name of the home `<name>`. |
+| `%homeplugin_home_coordinates_<name>%` | Returns the coordinates `X Y Z` of the home `<name>`. |
 
-> 🔁 Replace `<name>` with the actual home name.
+> 🔁 Replace `<name>` with the actual name of the home (case-insensitive).
 
 ---
 
@@ -91,7 +95,7 @@ Use these placeholders with PlaceholderAPI:
 ## 🧪 Compatibility
 
 - ✅ Minecraft version **1.20.x** and earlier versions  
-- 📦 Requires: [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)
+- 📦 Requires: [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)  
 - API version : [![](https://jitpack.io/v/fuzeblocks/HomePlugin.svg)](https://jitpack.io/#fuzeblocks/HomePlugin)
 
 ---
@@ -102,6 +106,8 @@ For support, bug reports, feature suggestions, or to contribute, visit the offic
 🔗 [HomePlugin GitHub Repository](https://github.com/fuzeblocks/HomePlugin)
 
 Your feedback helps us keep FuzeBlocks HomePlugin powerful, stable, and enjoyable!
+
+---
 
 ## 🚧 Update Coming Soon!
 
