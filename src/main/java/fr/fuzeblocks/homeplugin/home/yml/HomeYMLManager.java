@@ -2,6 +2,7 @@ package fr.fuzeblocks.homeplugin.home.yml;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.cache.CacheManager;
+import fr.fuzeblocks.homeplugin.home.Home;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class HomeYMLManager {
+public class HomeYMLManager implements Home {
     private final File file;
     private final YamlConfiguration yaml;
 

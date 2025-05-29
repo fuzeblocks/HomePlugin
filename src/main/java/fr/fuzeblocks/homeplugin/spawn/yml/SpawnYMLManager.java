@@ -1,5 +1,6 @@
 package fr.fuzeblocks.homeplugin.spawn.yml;
 
+import fr.fuzeblocks.homeplugin.spawn.Spawn;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 
-public class SpawnYMLManager {
+public class SpawnYMLManager implements Spawn {
     private final YamlConfiguration yaml;
     private final File file;
 

@@ -2,23 +2,29 @@ package fr.fuzeblocks.homeplugin.task;
 
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TaskSaveUtils {
-    private static final HashMap<Player, TaskManager> taskManagerHashMap = new HashMap<>();
+
+    private static final ConcurrentHashMap<Player, TaskManager> taskManagers = new ConcurrentHashMap<>();
 
     private TaskSaveUtils() {
+
     }
 
     public static TaskManager getTaskManagerInstance(Player player) {
-        return taskManagerHashMap.get(player);
+        return taskManagers.get(player);
     }
 
     public static void setTaskManagerInstance(Player player, TaskManager taskManager) {
-        if (!taskManagerHashMap.containsKey(player)) {
-            taskManagerHashMap.put(player, taskManager);
-        } else {
-            taskManagerHashMap.replace(player,taskManager);
-        }
+        taskManagers.put(player, taskManager);
+    }
+
+    public static void removeTaskManagerInstance(Player player) {
+        taskManagers.remove(player);
+    }
+
+    public static boolean hasTaskManager(Player player) {
+        return taskManagers.containsKey(player);
     }
 }

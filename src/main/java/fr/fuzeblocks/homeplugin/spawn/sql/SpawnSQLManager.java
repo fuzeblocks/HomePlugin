@@ -1,6 +1,7 @@
 package fr.fuzeblocks.homeplugin.spawn.sql;
 
 import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
+import fr.fuzeblocks.homeplugin.spawn.Spawn;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -13,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class SpawnSQLManager {
+public class SpawnSQLManager implements Spawn {
     private final Connection connection = DatabaseConnection.getConnection();
 
     public boolean setSpawn(Location location) {

@@ -9,8 +9,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-
 public class HomePluginExpansion extends PlaceholderExpansion {
+
     private final HomePlugin homePlugin;
 
     public HomePluginExpansion(HomePlugin homePlugin) {
@@ -19,7 +19,7 @@ public class HomePluginExpansion extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getIdentifier() {
-        return homePlugin.getDescription().getName();
+        return "homeplugin";
     }
 
     @Override
@@ -33,46 +33,77 @@ public class HomePluginExpansion extends PlaceholderExpansion {
     }
 
     @Override
-    public String onRequest(OfflinePlayer player, @NotNull String params) {
-        if (player == null) {
-            return "";
+    public String onRequest(OfflinePlayer offlinePlayer, @NotNull String params) {
+        if (!offlinePlayer.isOnline()) {
+            return translate("Messages.player-offline", "Joueur hors-ligne");
+        }
+        Player player = offlinePlayer.getPlayer();
+        if (player == null) return "";
+
+        String lowerParams = params.toLowerCase();
+
+        switch (lowerParams) {
+            case "homes":
+                List<String> homeNames = HomePlugin.getHomeManager().getHomesName(player);
+                if (homeNames != null && !homeNames.isEmpty()) {
+                    return String.join(", ", homeNames);
+                } else {
+                    return translate("Messages.no-homes", "Aucun home");
+                }
+
+            case "homes_numbers":
+                return String.valueOf(HomePlugin.getHomeManager().getHomeNumber(player));
+
+            case "has_homes":
+                return HomePlugin.getHomeManager().getHomeNumber(player) > 0
+                        ? "true" : "false";
         }
 
-
-        if (params.equalsIgnoreCase("homes")) {
-            List<String> homesList = getHomesList(player.getPlayer());
-            if (homesList != null && !homesList.isEmpty()) {
-                return String.join(", ", homesList);
+        if (lowerParams.startsWith("home_location_")) {
+            String name = params.substring("home_location_".length());
+            Location loc = HomePlugin.getHomeManager().getHomeLocation(player, name);
+            if (loc != null) {
+                String format = translate("Messages.home-location-format", "X: %.1f, Y: %.1f, Z: %.1f, Monde: %s");
+                return String.format(format, loc.getX(), loc.getY(), loc.getZ(), loc.getWorld().getName());
             } else {
-                return "No homes";
+                return translate("Messages.unknown", "Inconnu");
             }
         }
 
-        if (params.equalsIgnoreCase("homes_numbers")) {
-            return String.valueOf(getHomes((Player) player));
+        if (lowerParams.startsWith("home_exists_")) {
+            String name = params.substring("home_exists_".length());
+            boolean exists = HomePlugin.getHomeManager().exist(player, name);
+            return exists ? "true" : "false";
         }
 
-        if (params.toLowerCase().startsWith("home_location_")) {
-            String homeName = params.substring("home_location_".length());
-            Location homeLocation = getHomeLocation(player.getPlayer(), homeName);
-            if (homeLocation != null) {
-                return homeLocation.toString();
+        if (lowerParams.startsWith("home_world_")) {
+            String name = params.substring("home_world_".length());
+            Location loc = HomePlugin.getHomeManager().getHomeLocation(player, name);
+            if (loc != null) {
+                return loc.getWorld().getName();
             } else {
-                return "Unknown";
+                return translate("Messages.unknown", "Inconnu");
             }
         }
+
+        if (lowerParams.startsWith("home_coordinates_")) {
+            String name = params.substring("home_coordinates_".length());
+            Location loc = HomePlugin.getHomeManager().getHomeLocation(player, name);
+            if (loc != null) {
+                return String.format("%.1f %.1f %.1f", loc.getX(), loc.getY(), loc.getZ());
+            } else {
+                return translate("Messages.unknown", "Inconnu");
+            }
+        }
+
         return null;
     }
 
-    private List<String> getHomesList(Player player) {
-            return HomePlugin.getHomeManager().getHomesName(player);
-    }
-
-    private Location getHomeLocation(Player player, String s) {
-        return HomePlugin.getHomeManager().getHomeLocation(player, s);
-    }
-
-    private int getHomes(Player player) {
-        return HomePlugin.getHomeManager().getHomeNumber(player);
+    private String translate(String path, String defaultValue) {
+        String value = HomePlugin.getLanguageManager().getString(path);
+        if (value == null || value.isEmpty()) {
+            value = defaultValue;
+        }
+        return HomePlugin.translateAlternateColorCodes(value);
     }
 }
