@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>fr.fuzeblocks</groupId>
     <artifactId>HomePlugin</artifactId>
-    <version>0.6.8</version>
+    <version>0.7</version>
     <packaging>jar</packaging>
 
     <name>HomePlugin</name>
-
     <description>[Created by fuzeblocks]</description>
+
     <properties>
-        <java.version>1.13</java.version>
+        <java.version>1.16</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-         <distributionManagement>
-             <repository>
-                 <id>github</id>
-                 <url>https://maven.pkg.github.com/fuzeblocks/HomePlugin</url>
-             </repository>
-         </distributionManagement>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/fuzeblocks/HomePlugin</url>
+        </repository>
+    </distributionManagement>
 
     <build>
         <plugins>
@@ -65,9 +66,13 @@
 
     <repositories>
         <repository>
-        <id>placeholderapi</id>
-        <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
-    </repository>
+            <id>xenondevs</id>
+            <url>https://repo.xenondevs.xyz/releases</url>
+        </repository>
+        <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
         <repository>
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
@@ -76,10 +81,6 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
-        <repository>
-            <id>xenondevs</id>
-            <url>https://repo.xenondevs.xyz/releases</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -87,7 +88,6 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>5.1.2</version>
-            <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -116,9 +116,9 @@
         </dependency>
         <dependency>
             <groupId>xyz.xenondevs.invui</groupId>
-            <artifactId>invui</artifactId>
+            <artifactId>invui-core</artifactId>
             <version>1.45</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
-
 </project>

@@ -1,5 +1,5 @@
 name: HomePlugin
-version: '0.6.8'
+version: '0.7'
 main: fr.fuzeblocks.homeplugin.HomePlugin
 api-version: '1.13'
 load: STARTUP
@@ -9,8 +9,6 @@ softdepend: [PlaceholderAPI]
 commands:
   home:
     description: Se tp a un de ses homes
-  homegui:
-    description: Ouvre un gui montrant les homes
   listhome:
     description: Liste les homes
   sethome:

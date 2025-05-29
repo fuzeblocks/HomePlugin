@@ -28,9 +28,9 @@ public class TaskManager extends BukkitRunnable {
 
     @Override
     public void run() {
-        if (task.equals(Task.Home)) {
+        if (task.equals(Task.HOME)) {
             teleportHome();
-        } else if (task.equals(Task.Spawn)) {
+        } else if (task.equals(Task.SPAWN)) {
             teleportSpawn();
         }
     }
@@ -89,12 +89,12 @@ public class TaskManager extends BukkitRunnable {
         this.player = player;
         this.homeName = homeName;
         this.homeLocation = location;
-        task = Task.Home;
+        task = Task.HOME;
     }
 
     public void spawnTask(Player player) {
         this.player = player;
-        task = Task.Spawn;
+        task = Task.SPAWN;
     }
 
     private void addTimeTitle() {
