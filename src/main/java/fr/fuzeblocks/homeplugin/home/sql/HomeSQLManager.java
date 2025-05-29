@@ -3,6 +3,7 @@ package fr.fuzeblocks.homeplugin.home.sql;
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
+import fr.fuzeblocks.homeplugin.home.Home;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -15,7 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeSQLManager {
+public class HomeSQLManager implements Home {
     private final Connection connection = DatabaseConnection.getConnection();
 
 

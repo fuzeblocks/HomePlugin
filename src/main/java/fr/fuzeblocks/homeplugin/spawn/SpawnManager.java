@@ -10,7 +10,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 
-public class SpawnManager {
+public class SpawnManager implements Spawn {
 
     private final SpawnYMLManager spawnYMLManager = HomePlugin.getSpawnYMLManager();
     private final SpawnSQLManager spawnSQLManager = HomePlugin.getSpawnSQLManager();
@@ -61,7 +61,4 @@ public class SpawnManager {
         return StatusManager.getPlayerStatus(player);
     }
 
-    private boolean isYAML() {
-        return HomePlugin.getRegistrationType().equals(SyncMethod.YAML);
-    }
 }

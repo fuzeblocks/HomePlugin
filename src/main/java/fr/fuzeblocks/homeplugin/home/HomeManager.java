@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class HomeManager {
+public class HomeManager implements Home {
 
         private final HomeYMLManager homeYMLManager = HomePlugin.getHomeYMLManager();
         private final HomeSQLManager homeSQLManager = HomePlugin.getHomeSQLManager();
@@ -90,9 +90,6 @@ public class HomeManager {
             } else {
                 return homeSQLManager.exist(player,homeName);
             }
-        }
-        private boolean isYAML() {
-            return HomePlugin.getRegistrationType().equals(SyncMethod.YAML);
         }
     }
 

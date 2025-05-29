@@ -10,69 +10,107 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class CacheCommand implements CommandExecutor {
 
+    private static final String LANG = "Language.";
+    private static final String CACHE = "Cache.";
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String key = "Language.";
-          if (!(sender instanceof Player)) {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
+
+        if (!(sender instanceof Player player)) {
+            sendMsg(sender, LANG + "Only-a-player-can-execute");
             return false;
-          }
-            Player player = ((Player) sender).getPlayer();
-            if (!player.hasPermission("HomePlugin.cache")) {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "No-permission")));
-                return false;
+        }
+
+        if (!player.hasPermission("HomePlugin.cache")) {
+            sendMsg(player, LANG + "No-permission");
+            return false;
+        }
+
+        CacheManager cacheManager = HomePlugin.getCacheManager();
+        HomeManager homeManager = HomePlugin.getHomeManager();
+
+        if (args.length < 1) {
+            sendMsg(player, CACHE + "Cache-usage-command");
+            return false;
+        }
+
+        String subCommand = args[0].toLowerCase();
+
+        switch (subCommand) {
+            case "clearall" -> {
+                cacheManager.clear();
+                sendMsg(player, LANG + "Cache-cleared");
             }
-                CacheManager cacheManager = HomePlugin.getCacheManager();
-                HomeManager homeManager = HomePlugin.getHomeManager();
-                String cacheKey = "Cache.";
-                if (args.length < 1) {
-                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(cacheKey + "Cache-usage-command")));
+
+            case "view" -> {
+                if (args.length < 2) {
+                    sendMsg(player, CACHE + "Cache-view-usage-command");
                     return false;
-                 }
-                    switch (args[0].toLowerCase()) {
-                        case "clearall":
-                            cacheManager.clear();
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Cache-cleared")));
-                           break;
-                        case "view":
-                            if (args.length < 2) {
-                                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(cacheKey + "Cache-view-usage-command")));
-                                return false;
-                            }
-                                Player target = Bukkit.getPlayer(args[1]);
-                                if (cacheManager.getHomesInCache(player) == null) {
-                                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Have-no-cache")));
-                                    return false;
-                                }
-                                    player.sendMessage("§eLe joueur : " + target.getName() + "§e a en cache :");
-                                    Map<String, Location> home = cacheManager.getHomesInCache(player);
-                                    player.sendMessage("§6" + home.size() + "§6 home/s");
-                                    for (String homeName : homeManager.getHomesName(player)) {
-                                        sendHomeMessage((HashMap<String, Location>) home,homeName,player);
-                                    }
-                            break;
-                        default:
-                            Player playertarget = Bukkit.getPlayerExact(args[0]);
-                            if (playertarget == null) {
-                                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Player-is-not-online")));
-                                return false;
-                            }
-                            cacheManager.clearPlayer(player);
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Cache-player-cleared").replace("%player%", player.getName())));
-                        }
-        return false;
+                }
+
+                Player target = Bukkit.getPlayer(args[1]);
+                if (target == null) {
+                    sendMsg(player, LANG + "Player-is-not-online");
+                    return false;
+                }
+
+                Map<String, Location> homes = cacheManager.getHomesInCache(target);
+                if (homes == null || homes.isEmpty()) {
+                    sendMsg(player, LANG + "Have-no-cache");
+                    return false;
+                }
+
+                sendMsg(player, CACHE + "Cache-view-header", "%player%", target.getName());
+                sendMsg(player, CACHE + "Cache-home-count", "%count%", String.valueOf(homes.size()));
+
+                for (String homeName : homeManager.getHomesName(target)) {
+                    sendHomeMessage(homes, homeName, player);
+                }
+            }
+
+            default -> {
+                Player targetToClear = Bukkit.getPlayerExact(args[0]);
+                if (targetToClear == null) {
+                    sendMsg(player, LANG + "Player-is-not-online");
+                    return false;
+                }
+
+                cacheManager.clearPlayer(targetToClear);
+                sendMsg(player, LANG + "Cache-player-cleared", "%player%", targetToClear.getName());
+            }
+        }
+
+        return true;
     }
-    private void sendHomeMessage(HashMap<String, Location> home,String homeName,Player player) {
-        if (home.get(homeName) != null) {
-            Location homeLocation = home.get(homeName);
+
+    private void sendHomeMessage(Map<String, Location> homes, String homeName, Player player) {
+        Location homeLocation = homes.get(homeName);
+        if (homeLocation != null) {
             player.sendMessage("§4Nom du home en cache : " + homeName);
-            player.sendMessage("§aLocalisation de " + homeName + " : X : " + homeLocation.getX() + " Y : " + homeLocation.getY() + " Z : " + homeLocation.getZ() + " Monde : " + homeLocation.getWorld().getName());
+            player.sendMessage(String.format(
+                    "§aLocalisation de %s : X: %.1f Y: %.1f Z: %.1f Monde: %s",
+                    homeName,
+                    homeLocation.getX(),
+                    homeLocation.getY(),
+                    homeLocation.getZ(),
+                    homeLocation.getWorld().getName()
+            ));
         }
     }
 
+    private void sendMsg(CommandSender sender, String path) {
+        sender.sendMessage(translate(path));
+    }
+
+    private void sendMsg(CommandSender sender, String path, String placeholder, String replacement) {
+        sender.sendMessage(translate(path).replace(placeholder, replacement));
+    }
+
+    private String translate(String path) {
+        return HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(path));
+    }
 }

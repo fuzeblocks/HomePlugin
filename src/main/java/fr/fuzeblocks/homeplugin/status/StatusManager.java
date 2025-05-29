@@ -2,10 +2,10 @@ package fr.fuzeblocks.homeplugin.status;
 
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class StatusManager {
-    private static final HashMap<Player, Boolean> player_status = new HashMap<>();
+    private static final ConcurrentHashMap<Player,Boolean> player_status = new ConcurrentHashMap<>();
 
     public static void setPlayerStatus(Player player, boolean status) {
         if (player_status.containsKey(player)) {
@@ -18,7 +18,7 @@ public class StatusManager {
 
     public static boolean getPlayerStatus(Player player) {
         if (player_status.containsKey(player)) {
-            return player_status.get(player);
+            return  player_status.get(player);
         }
         return false;
     }
