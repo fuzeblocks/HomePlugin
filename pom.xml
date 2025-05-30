@@ -7,7 +7,7 @@
 
     <groupId>fr.fuzeblocks</groupId>
     <artifactId>HomePlugin</artifactId>
-    <version>0.7.1</version>
+    <version>0.7.2</version>
     <packaging>jar</packaging>
 
     <name>HomePlugin</name>
@@ -49,6 +49,27 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-jar-to-server</id>
+                        <phase>package</phase>
+                        <configuration>
+                            <target>
+                                <copy file="${project.build.directory}/${project.build.finalName}.jar"
+                                      todir="H:\Minecraft server\server_minecraft\plugins"
+                                      overwrite="true"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <resources>
             <resource>
@@ -80,6 +101,10 @@
         <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>codemc-repo</id>
+            <url>https://repo.codemc.io/repository/maven-public/</url>
         </repository>
     </repositories>
 
@@ -119,6 +144,11 @@
             <artifactId>invui</artifactId>
             <version>1.45</version>
             <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>net.wesjd</groupId>
+            <artifactId>anvilgui</artifactId>
+            <version>1.10.5-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

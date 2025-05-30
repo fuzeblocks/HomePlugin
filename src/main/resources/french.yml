@@ -25,6 +25,10 @@ Language:
   player-offline: "&cJoueur hors-ligne"
   unknown: "&cInconnu"
   Home-deleted-with-name: "&aLe home {homeName} a été supprimé avec succès !"
+  Home-renamed: "&aLe home a été renommé en {newName} !"
+  Home-rename: "Choisissez un nouveau nom pour le home :"
+  Home-invalid-name: "&cLe nom du home est invalide !"
+  Home-already-exists: "&cUn home avec ce nom existe déjà !"
 
 Spawn:
   Spawn-teleportation-permission: "HomePlugin.spawn.teleportation"
@@ -40,16 +44,19 @@ Home:
   SetHome-usage-message: "&cUtilisation de la commande : /sethome <nom-du-home>"
   DelHome-usage-message: "&cUtilisation de la commande : /delhome <nom-du-home>"
   no-homes: "&cAucun home"
-  home-location-format: "&6X: %.1f, Y: %.1f, Z: %.1f, Monde: %s"
-  Home-item-displayname: "({homeName}) Home"
-  Home-item-lore-teleport: "§aCliquez pour vous téléporter à votre home !"
-  Home-item-lore-delete: "§cClic droit pour supprimer ce home."
-
 Cache:
   Cache-view-usage-command: "&cUtilisation de la commande : /cache <view> <joueur>"
   Cache-usage-command: "&cUtilisation de la commande : /cache <clearall> <view>"
   Cache-view-header: "&eLe joueur : %player% &a les homes suivants en cache :"
   Cache-home-count: "&6%count%&6 home(s)"
-
 HomeAdmin:
   HomeAdmin-usage-message: "&cUtilisation de la commande : /homeadmin <joueur>"
+HomeGui:
+  home-location-format: "&6X: %.1f, Y: %.1f, Z: %.1f, Monde: %s"
+  Home-item-displayname: "({homeName}) Home"
+  Home-item-lore-teleport: "§aCliquez pour vous téléporter à votre home !"
+  Home-item-lore-delete: "§cClic droit pour supprimer ce home."
+  Home-world-name: "Monde : %world%"
+  Home-item-lore-rename: "§6Shift + Clic pour renommer ce home."
+
+

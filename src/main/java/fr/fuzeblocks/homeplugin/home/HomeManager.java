@@ -91,7 +91,16 @@ public class HomeManager implements Home {
                 return homeSQLManager.exist(player,homeName);
             }
         }
-    }
+
+
+        public boolean renameHome(Player player, String oldName, String newName) {
+            if (isYAML()) {
+               return homeYMLManager.renameHome(player, oldName, newName);
+            } else {
+                return homeSQLManager.renameHome(player, oldName, newName);
+            }
+        }
+}
 
 
 

@@ -41,39 +41,84 @@ public class HomeCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
+            HomeManager homeManager = HomePlugin.getHomeManager();
+
+            if (args.length == 0) {
+                openHomeGui(player);
+                return true;
+            }
+
+            if (args.length == 3 && args[0].equalsIgnoreCase("rename")) {
+                String oldName = args[1];
+                String newName = args[2];
+
+                if (!homeManager.exist(player, oldName)) {
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(
+                            HomePlugin.getLanguageManager().getString("Language.Home-does-not-exist")));
+                    return true;
+                }
+
+                if (homeManager.exist(player, newName)) {
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(
+                            HomePlugin.getLanguageManager().getString("Language.Home-already-exists")));
+                    return true;
+                }
+
+                if (newName == null || newName.isEmpty() || newName.length() > 16 || !newName.matches("^[a-zA-Z0-9_-]+$")) {
+
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(
+                            HomePlugin.getLanguageManager().getString("Language.Home-invalid-name")));
+                    return true;
+                }
+
+                homeManager.renameHome(player, oldName, newName);
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(
+                        HomePlugin.getLanguageManager().getString("Language.Home-renamed").replace("{newName}", newName)));
+                return true;
+            }
+
             if (args.length == 1) {
                 String homeName = args[0];
-                HomeManager homeManager = HomePlugin.getHomeManager();
-                    if (homeManager.isStatus(player)) {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "A-teleport-is-already-in-progress")));
-                        return false;
+
+                if (homeManager.isStatus(player)) {
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(
+                            HomePlugin.getLanguageManager().getString("Language.A-teleport-is-already-in-progress")));
+                    return true;
+                }
+
+                if (homeManager.getHomeNumber(player) > 0) {
+                    if (verifyInCache(homeManager, player, homeName)) {
+                        setPlayerTeleportation(player, homeName, homeManager.getCacheManager().getHomesInCache(player).get(homeName));
+                        return true;
                     }
-                    if (homeManager.getHomeNumber(player) > 0) {
-                        if (verifyInCache(homeManager, player, homeName)) {
-                            setPlayerTeleportation(player, homeName, homeManager.getCacheManager().getHomesInCache(player).get(homeName));
-                            return true;
-                        }
-                        Location homeLocation = homeManager.getHomeLocation(player, homeName);
-                        if (homeLocation != null) {
-                            homeManager.getCacheManager().addHomeInCache(player, homeName, homeLocation);
-                            setPlayerTeleportation(player, homeName, homeLocation);
-                            return true;
-                        } else {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Home-does-not-exist")));
-                        }
+
+                    Location homeLocation = homeManager.getHomeLocation(player, homeName);
+                    if (homeLocation != null) {
+                        homeManager.getCacheManager().addHomeInCache(player, homeName, homeLocation);
+                        setPlayerTeleportation(player, homeName, homeLocation);
+                        return true;
                     } else {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Have-no-home")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(
+                                HomePlugin.getLanguageManager().getString("Language.Home-does-not-exist")));
                     }
-                } else if (args.length == 0) {
-                        openHomeGui(player);
                 } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home.Home-usage-message")));
-              }
-            } else {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(
+                            HomePlugin.getLanguageManager().getString("Language.Have-no-home")));
+                }
+                return true;
+            }
+
+            // Message d’usage
+            player.sendMessage(HomePlugin.translateAlternateColorCodes(
+                    HomePlugin.getLanguageManager().getString("Home.Home-usage-message")));
+        } else {
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(
+                    HomePlugin.getLanguageManager().getString("Language.Only-a-player-can-execute")));
         }
+
         return false;
     }
+
 
     private void setPlayerTeleportation(Player player, String homeName, Location location) {
         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Start-of-teleportation")) + " " + homeName);
@@ -119,7 +164,7 @@ public class HomeCommand implements CommandExecutor {
     private List<Item> getHomeItems(Player player) {
         HomeManager homeManager = HomePlugin.getHomeManager();
         return homeManager.getHomesName(player).stream()
-                .map(homeName -> new HomeItem(homeName,instance)
+                .map(homeName -> new HomeItem(homeName,player,instance)
                 ).collect(Collectors.toList());
     }
 

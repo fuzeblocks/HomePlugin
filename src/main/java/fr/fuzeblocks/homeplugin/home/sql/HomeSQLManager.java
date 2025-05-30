@@ -145,4 +145,21 @@ public class HomeSQLManager implements Home {
             return false;
         }
     }
+    public boolean renameHome(Player player, String oldName, String newName) {
+        if (exist(player, newName)) {
+            return false;
+        }
+        String sql = "UPDATE HomePlugin SET HOME_NAME = ? WHERE player_uuid = ? AND HOME_NAME = ?";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, newName);
+            pstmt.setString(2, player.getUniqueId().toString());
+            pstmt.setString(3, oldName);
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -21,6 +21,9 @@ public class LanguageManager {
     public String getString(String key) {
         return yamlConfiguration.getString(key);
     }
+    public String getStringWithColor(String key) {
+        return HomePlugin.translateAlternateColorCodes(getString(key));
+    }
     public int getInt(String key) {
         return yamlConfiguration.getInt(key);
     }
@@ -28,5 +31,4 @@ public class LanguageManager {
     public Language getLanguage() {
         return language;
     }
-
 }

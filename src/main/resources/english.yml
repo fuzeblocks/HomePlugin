@@ -25,6 +25,10 @@ Language:
   player-offline: "&cPlayer offline"
   unknown: "&cUnknown"
   Home-deleted-with-name: "&aThe home {homeName} has been successfully deleted!"
+  Home-renamed: "&aThe home has been renamed to {newName}!"
+  Home-rename: "Choose a new name for the home:"
+  Home-invalid-name: "&cThe home name is invalid!"
+  Home-already-exists: "&cA home with this name already exists!"
 
 Spawn:
   Spawn-teleportation-permission: "HomePlugin.spawn.teleportation"
@@ -40,10 +44,6 @@ Home:
   SetHome-usage-message: "&cUsage of the command: /sethome <home-name>"
   DelHome-usage-message: "&cUsage of the command: /delhome <home-name>"
   no-homes: "&cNo homes"
-  home-location-format: "&6X: %.1f, Y: %.1f, Z: %.1f, World: %s"
-  Home-item-displayname: "({homeName}) Home"
-  Home-item-lore-teleport: "§aClick to teleport to your home!"
-  Home-item-lore-delete: "§cRight-click to delete this home."
 
 Cache:
   Cache-view-usage-command: "&cUsage of the command: /cache <view> <player>"
@@ -53,3 +53,12 @@ Cache:
 
 HomeAdmin:
   HomeAdmin-usage-message: "&cUsage of the command: /homeadmin <player>"
+
+HomeGui:
+  home-location-format: "&6X: %.1f, Y: %.1f, Z: %.1f, World: %s"
+  Home-item-displayname: "({homeName}) Home"
+  Home-item-lore-teleport: "§aClick to teleport to your home!"
+  Home-item-lore-delete: "§cRight-click to delete this home."
+  Home-world-name: "World: %world%"
+  Home-item-lore-rename: "§6Shift + Click to rename this home."
+

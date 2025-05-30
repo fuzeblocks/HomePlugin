@@ -121,4 +121,25 @@ public class HomeYMLManager implements Home {
         String key = player.getUniqueId() + ".Home." + homeName;
         return yaml.contains(key);
     }
+    public boolean renameHome(Player player, String oldName, String newName) {
+        if (exist(player, oldName) && !exist(player, newName)) {
+            Location location = getHomeLocation(player, oldName);
+            if (location != null) {
+                deleteHome(player, oldName);
+                yaml.set(player.getUniqueId() + ".Home." + newName + ".X", location.getX());
+                yaml.set(player.getUniqueId() + ".Home." + newName + ".Y", location.getY());
+                yaml.set(player.getUniqueId() + ".Home." + newName + ".Z", location.getZ());
+                yaml.set(player.getUniqueId() + ".Home." + newName + ".PITCH", location.getPitch());
+                yaml.set(player.getUniqueId() + ".Home." + newName + ".YAW", location.getYaw());
+                yaml.set(player.getUniqueId() + ".Home." + newName + ".World", location.getWorld().getName());
+                try {
+                    yaml.save(file);
+                    return true;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return false;
+    }
 }
