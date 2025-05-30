@@ -48,7 +48,6 @@ Simplify and enhance your players' experience with intuitive home commands, deve
 | `/sethome [name]` | Set a home at your current location. |
 | `/home [name]` | Teleport to a saved home. |
 | `/home` | Open a gui with your homes. |
-| `/homes` | List, rename, or delete your homes. |
 | `/delhome [name]` | Remove a specific home. |
 | `/spawn` | Teleport to the spawn point. |
 | `/setspawn` | Define the world’s spawn location. |
