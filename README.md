@@ -27,7 +27,6 @@ Simplify and enhance your players' experience with intuitive home commands, deve
 
 - 🔹 **Simple Home Management**  
   - `/sethome [name]` — Define homes with ease.  
-  - `/homes` — View, rename, or delete saved homes.
 
 - 🔹 **Custom Home Limits**  
   Set limits via the configuration file.
