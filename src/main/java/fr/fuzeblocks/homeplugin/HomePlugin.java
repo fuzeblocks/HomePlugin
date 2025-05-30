@@ -173,6 +173,7 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("homeadmin").setExecutor(new HomeAdminCommand());
         getCommand("plugins").setExecutor(new PluginCommand());
         getCommand("listhome").setExecutor(new ListHomeCommand());
+        getCommand("publichome").setExecutor(new PublicHomeCommand());
     }
 
     private void eventRegistration() {

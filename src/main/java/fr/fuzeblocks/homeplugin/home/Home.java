@@ -7,9 +7,9 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 public interface Home {
+
 
     public boolean addHome(Player player, String name);
     public List<Location> getHomesLocation(Player player);
@@ -30,7 +30,6 @@ public interface Home {
 
     public boolean renameHome(Player player, String oldName, String newName);
 
-    public ConcurrentHashMap<Player,Boolean> homeRenameStatus = new ConcurrentHashMap<>();
     default boolean isYAML() {
         return HomePlugin.getRegistrationType().equals(SyncMethod.YAML);
     }

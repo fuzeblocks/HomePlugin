@@ -7,6 +7,8 @@ authors: [fuzeblocks]
 description: [Created by fuzeblocks]
 softdepend: [PlaceholderAPI]
 commands:
+  publichome:
+    description: Sert a se tp a un home public ou a le gerer
   home:
     description: Se tp a un de ses homes
   listhome:

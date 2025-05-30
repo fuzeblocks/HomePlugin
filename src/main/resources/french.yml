@@ -58,5 +58,24 @@ HomeGui:
   Home-item-lore-delete: "§cClic droit pour supprimer ce home."
   Home-world-name: "Monde : %world%"
   Home-item-lore-rename: "§6Shift + Clic pour renommer ce home."
+PublicHome:
+  Usage: "&cUsage: /publichome <add|list|delete|rename|tp> [homeName]"
+  AddUsage: "&cUsage: /publichome add <homeName>"
+  AddSuccess: "&aLe home public '{homeName}' a été ajouté avec succès."
+  AddFail: "&cÉchec lors de l'ajout du home public '{homeName}'."
+  List: "&aVos homes publics : {homes}"
+  NoHomes: "&cVous n'avez aucun home public."
+  DeleteUsage: "&cUsage: /publichome delete <homeName>"
+  DeleteSuccess: "&aLe home public '{homeName}' a été supprimé avec succès."
+  DeleteFail: "&cÉchec lors de la suppression du home public '{homeName}'."
+  RenameUsage: "&cUsage: /publichome rename <ancienNom> <nouveauNom>"
+  RenameSuccess: "&aLe home public '{oldName}' a été renommé en '{newName}'."
+  RenameFail: "&cÉchec lors du renommage du home public '{oldName}'."
+  UnknownAction: "&cAction inconnue. Utilisez add, list, delete ou rename."
+  TpUsage: "&cUsage : /publichome tp <nomDuHome>"
+  TpSuccess: "&aVous avez été téléporté au home public '{homeName}'."
+  TpFail: "&cÉchec de la téléportation vers le home public '{homeName}'."
+
+
 
 
