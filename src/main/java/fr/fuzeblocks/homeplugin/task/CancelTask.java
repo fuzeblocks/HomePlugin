@@ -14,7 +14,7 @@ public class CancelTask {
                 Bukkit.getPluginManager().callEvent(onTeleportTaskCancelled);
                 if (!onTeleportTaskCancelled.isCancelled()) {
                     taskManager.cancelTeleportTask();
-                    TaskSaveUtils.setTaskManagerInstance(player, null);
+                    TaskSaveUtils.removeTaskManagerInstance(player);
                 }
             }
         } catch (TeleportTaskException e) {

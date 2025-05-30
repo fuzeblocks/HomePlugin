@@ -7,7 +7,7 @@
 
     <groupId>fr.fuzeblocks</groupId>
     <artifactId>HomePlugin</artifactId>
-    <version>0.7</version>
+    <version>0.7.1</version>
     <packaging>jar</packaging>
 
     <name>HomePlugin</name>
@@ -116,9 +116,9 @@
         </dependency>
         <dependency>
             <groupId>xyz.xenondevs.invui</groupId>
-            <artifactId>invui-core</artifactId>
+            <artifactId>invui</artifactId>
             <version>1.45</version>
-            <scope>compile</scope>
+            <type>pom</type>
         </dependency>
     </dependencies>
 </project>

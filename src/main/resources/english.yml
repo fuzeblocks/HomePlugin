@@ -24,6 +24,7 @@ Language:
   No-permission: "&cYou do not have permission to use this command!"
   player-offline: "&cPlayer offline"
   unknown: "&cUnknown"
+  Home-deleted-with-name: "&aThe home {homeName} has been successfully deleted!"
 
 Spawn:
   Spawn-teleportation-permission: "HomePlugin.spawn.teleportation"
@@ -40,6 +41,9 @@ Home:
   DelHome-usage-message: "&cUsage of the command: /delhome <home-name>"
   no-homes: "&cNo homes"
   home-location-format: "&6X: %.1f, Y: %.1f, Z: %.1f, World: %s"
+  Home-item-displayname: "({homeName}) Home"
+  Home-item-lore-teleport: "§aClick to teleport to your home!"
+  Home-item-lore-delete: "§cRight-click to delete this home."
 
 Cache:
   Cache-view-usage-command: "&cUsage of the command: /cache <view> <player>"

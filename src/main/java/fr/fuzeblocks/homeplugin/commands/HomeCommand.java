@@ -3,6 +3,7 @@ package fr.fuzeblocks.homeplugin.commands;
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.gui.BackItem;
 import fr.fuzeblocks.homeplugin.gui.ForwardItem;
+import fr.fuzeblocks.homeplugin.gui.HomeItem;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import fr.fuzeblocks.homeplugin.task.TaskManager;
@@ -118,13 +119,10 @@ public class HomeCommand implements CommandExecutor {
     private List<Item> getHomeItems(Player player) {
         HomeManager homeManager = HomePlugin.getHomeManager();
         return homeManager.getHomesName(player).stream()
-                .map(homeName -> new SimpleItem(
-                        new ItemBuilder(Material.BOOK)
-                                .setDisplayName(homeName)
-                                .get()
-                ))
-                .collect(Collectors.toList());
+                .map(homeName -> new HomeItem(homeName,instance)
+                ).collect(Collectors.toList());
     }
+
 
 
 
