@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 public class HomeYMLManager implements Home {
     private final File file;
@@ -25,10 +26,9 @@ public class HomeYMLManager implements Home {
         this.yaml = YamlConfiguration.loadConfiguration(file);
     }
 
-    public boolean addHome(Player player, String name) {
-        String key = player.getUniqueId() + ".Home";
+    public boolean addHome(UUID uuid, Location location ,String name) {
+        String key = uuid + ".Home";
         if (!yaml.contains(key + "." + name)) {
-            Location location = player.getLocation();
             yaml.set(key + "." + name + ".X", location.getX());
             yaml.set(key + "." + name + ".Y", location.getY());
             yaml.set(key + "." + name + ".Z", location.getZ());
@@ -46,13 +46,13 @@ public class HomeYMLManager implements Home {
         }
     }
 
-    public List<Location> getHomesLocation(Player player) {
+    public List<Location> getHomesLocation(UUID uuid) {
         List<Location> homes = new ArrayList<>();
-        if (getHomeNumber(player) > 0) {
-            String key = player.getUniqueId() + ".Home.";
+        if (getHomeNumber(uuid) > 0) {
+            String key = uuid + ".Home.";
             Set<String> homeNames = yaml.getConfigurationSection(key).getKeys(false);
             for (String homeName : homeNames) {
-                Location homeLocation = getHomeLocation(player, homeName);
+                Location homeLocation = getHomeLocation(uuid, homeName);
                 if (homeLocation != null) {
                     homes.add(homeLocation);
                 }
@@ -61,8 +61,8 @@ public class HomeYMLManager implements Home {
         return homes;
     }
 
-    public int getHomeNumber(Player player) {
-        String key = player.getUniqueId() + ".Home.";
+    public int getHomeNumber(UUID uuid) {
+        String key = uuid + ".Home.";
         try {
             ConfigurationSection configurationSection = yaml.getConfigurationSection(key);
 
@@ -76,9 +76,9 @@ public class HomeYMLManager implements Home {
         }
     }
 
-    public List<String> getHomesName(Player player) {
+    public List<String> getHomesName(UUID uuid) {
         List<String> home_names = new ArrayList<>();
-        ConfigurationSection homesSection = yaml.getConfigurationSection(player.getUniqueId() + ".Home");
+        ConfigurationSection homesSection = yaml.getConfigurationSection(uuid + ".Home");
         if (homesSection != null) {
             Set<String> homeNames = homesSection.getKeys(false);
             home_names.addAll(homeNames);
@@ -90,16 +90,16 @@ public class HomeYMLManager implements Home {
         return HomePlugin.getCacheManager();
     }
 
-    public Location getHomeLocation(Player player, String homeName) {
-        String key = player.getUniqueId() + ".Home." + homeName + ".";
+    public Location getHomeLocation(UUID uuid, String homeName) {
+        String key = uuid + ".Home." + homeName + ".";
         if (yaml.contains(key)) {
             return new Location(Bukkit.getWorld(yaml.getString(key + "World")), yaml.getDouble(key + "X"), yaml.getDouble(key + "Y"), yaml.getDouble(key + "Z"), (float) yaml.getDouble(key + "YAW"), (float) yaml.getDouble(key + "PITCH"));
         }
         return null;
     }
 
-    public boolean deleteHome(Player player, String homeName) {
-        String key = player.getUniqueId() + ".Home." + homeName;
+    public boolean deleteHome(UUID uuid, String homeName) {
+        String key = uuid + ".Home." + homeName;
         if (yaml.contains(key)) {
             yaml.set(key, null);
             try {
@@ -117,21 +117,21 @@ public class HomeYMLManager implements Home {
         return StatusManager.getPlayerStatus(player);
     }
 
-    public boolean exist(Player player, String homeName) {
-        String key = player.getUniqueId() + ".Home." + homeName;
+    public boolean exist(UUID uuid, String homeName) {
+        String key = uuid + ".Home." + homeName;
         return yaml.contains(key);
     }
-    public boolean renameHome(Player player, String oldName, String newName) {
-        if (exist(player, oldName) && !exist(player, newName)) {
-            Location location = getHomeLocation(player, oldName);
+    public boolean renameHome(UUID uuid, String oldName, String newName) {
+        if (exist(uuid, oldName) && !exist(uuid, newName)) {
+            Location location = getHomeLocation(uuid, oldName);
             if (location != null) {
-                deleteHome(player, oldName);
-                yaml.set(player.getUniqueId() + ".Home." + newName + ".X", location.getX());
-                yaml.set(player.getUniqueId() + ".Home." + newName + ".Y", location.getY());
-                yaml.set(player.getUniqueId() + ".Home." + newName + ".Z", location.getZ());
-                yaml.set(player.getUniqueId() + ".Home." + newName + ".PITCH", location.getPitch());
-                yaml.set(player.getUniqueId() + ".Home." + newName + ".YAW", location.getYaw());
-                yaml.set(player.getUniqueId() + ".Home." + newName + ".World", location.getWorld().getName());
+                deleteHome(uuid, oldName);
+                yaml.set(uuid + ".Home." + newName + ".X", location.getX());
+                yaml.set(uuid + ".Home." + newName + ".Y", location.getY());
+                yaml.set(uuid + ".Home." + newName + ".Z", location.getZ());
+                yaml.set(uuid + ".Home." + newName + ".PITCH", location.getPitch());
+                yaml.set(uuid + ".Home." + newName + ".YAW", location.getYaw());
+                yaml.set(uuid + ".Home." + newName + ".World", location.getWorld().getName());
                 try {
                     yaml.save(file);
                     return true;

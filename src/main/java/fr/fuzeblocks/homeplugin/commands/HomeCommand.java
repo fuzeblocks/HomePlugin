@@ -52,13 +52,13 @@ public class HomeCommand implements CommandExecutor {
                 String oldName = args[1];
                 String newName = args[2];
 
-                if (!homeManager.exist(player, oldName)) {
+                if (!homeManager.exist(player.getUniqueId(), oldName)) {
                     player.sendMessage(HomePlugin.translateAlternateColorCodes(
                             HomePlugin.getLanguageManager().getString("Language.Home-does-not-exist")));
                     return true;
                 }
 
-                if (homeManager.exist(player, newName)) {
+                if (homeManager.exist(player.getUniqueId(), newName)) {
                     player.sendMessage(HomePlugin.translateAlternateColorCodes(
                             HomePlugin.getLanguageManager().getString("Language.Home-already-exists")));
                     return true;
@@ -71,7 +71,7 @@ public class HomeCommand implements CommandExecutor {
                     return true;
                 }
 
-                homeManager.renameHome(player, oldName, newName);
+                homeManager.renameHome(player.getUniqueId(), oldName, newName);
                 player.sendMessage(HomePlugin.translateAlternateColorCodes(
                         HomePlugin.getLanguageManager().getString("Language.Home-renamed").replace("{newName}", newName)));
                 return true;
@@ -86,13 +86,13 @@ public class HomeCommand implements CommandExecutor {
                     return true;
                 }
 
-                if (homeManager.getHomeNumber(player) > 0) {
+                if (homeManager.getHomeNumber(player.getUniqueId()) > 0) {
                     if (verifyInCache(homeManager, player, homeName)) {
                         setPlayerTeleportation(player, homeName, homeManager.getCacheManager().getHomesInCache(player).get(homeName));
                         return true;
                     }
 
-                    Location homeLocation = homeManager.getHomeLocation(player, homeName);
+                    Location homeLocation = homeManager.getHomeLocation(player.getUniqueId(), homeName);
                     if (homeLocation != null) {
                         homeManager.getCacheManager().addHomeInCache(player, homeName, homeLocation);
                         setPlayerTeleportation(player, homeName, homeLocation);
@@ -163,7 +163,7 @@ public class HomeCommand implements CommandExecutor {
     }
     private List<Item> getHomeItems(Player player) {
         HomeManager homeManager = HomePlugin.getHomeManager();
-        return homeManager.getHomesName(player).stream()
+        return homeManager.getHomesName(player.getUniqueId()).stream()
                 .map(homeName -> new HomeItem(homeName,player,instance)
                 ).collect(Collectors.toList());
     }

@@ -23,11 +23,11 @@ public class HomeAdminCommand implements CommandExecutor {
                     if (target != null) {
                         HomeManager homeManager = HomePlugin.getHomeManager();
                             player.sendMessage("§eLe joueur : " + target.getName() + "§e a pour home/s :");
-                            List<String> homeName = homeManager.getHomesName(player);
+                            List<String> homeName = homeManager.getHomesName(player.getUniqueId());
                             player.sendMessage("§6" + homeName.size() + "§6 home/s");
                             for (String home : homeName) {
                                 if (home != null) {
-                                    Location homeLocation = homeManager.getHomeLocation(player, home);
+                                    Location homeLocation = homeManager.getHomeLocation(player.getUniqueId(), home);
                                     player.sendMessage("§4Nom du home : " + homeName);
                                     player.sendMessage("§aLocalisation de " + homeName + " : X : " + homeLocation.getX() + " Y : " + homeLocation.getY() + " Z : " + homeLocation.getZ() + " Monde : " + homeLocation.getWorld().getName());
                                 }

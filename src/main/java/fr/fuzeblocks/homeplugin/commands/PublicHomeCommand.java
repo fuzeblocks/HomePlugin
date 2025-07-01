@@ -49,7 +49,7 @@ public class PublicHomeCommand implements CommandExecutor {
                     return true;
                 }
                 String homeName = args[1];
-                if (publicHomeManager.addHome(player, homeName)) {
+                if (publicHomeManager.addHome(player.getLocation() ,homeName)) {
                     player.sendMessage(tr("PublicHome.AddSuccess").replace("{homeName}", homeName));
                 } else {
                     player.sendMessage(tr("PublicHome.AddFail").replace("{homeName}", homeName));
@@ -57,7 +57,7 @@ public class PublicHomeCommand implements CommandExecutor {
                 break;
 
             case "list":
-                String homesList = String.join(", ", publicHomeManager.getHomesName(player));
+                String homesList = String.join(", ", publicHomeManager.getHomesName());
                 if (homesList.isEmpty()) {
                     player.sendMessage(tr("PublicHome.NoHomes"));
                 } else {
@@ -71,7 +71,7 @@ public class PublicHomeCommand implements CommandExecutor {
                     return true;
                 }
                 String deleteHomeName = args[1];
-                if (publicHomeManager.deleteHome(player, deleteHomeName)) {
+                if (publicHomeManager.deleteHome(deleteHomeName)) {
                     player.sendMessage(tr("PublicHome.DeleteSuccess").replace("{homeName}", deleteHomeName));
                 } else {
                     player.sendMessage(tr("PublicHome.DeleteFail").replace("{homeName}", deleteHomeName));
@@ -85,7 +85,7 @@ public class PublicHomeCommand implements CommandExecutor {
                 }
                 String oldName = args[1];
                 String newName = args[2];
-                if (publicHomeManager.renameHome(player, oldName, newName)) {
+                if (publicHomeManager.renameHome(oldName, newName)) {
                     player.sendMessage(tr("PublicHome.RenameSuccess")
                             .replace("{oldName}", oldName)
                             .replace("{newName}", newName));
@@ -99,8 +99,8 @@ public class PublicHomeCommand implements CommandExecutor {
                     return true;
                 }
                 String tpHomeName = args[1];
-                if (publicHomeManager.exist(player, tpHomeName)) {
-                    setPlayerTeleportation(player,tpHomeName, publicHomeManager.getHomeLocation(player, tpHomeName));
+                if (publicHomeManager.exist(tpHomeName)) {
+                    setPlayerTeleportation(player,tpHomeName, publicHomeManager.getHomeLocation(tpHomeName));
                     player.sendMessage(tr("PublicHome.TpSuccess").replace("{homeName}", tpHomeName));
                 } else {
                     player.sendMessage(tr("PublicHome.TpFail").replace("{homeName}", tpHomeName));

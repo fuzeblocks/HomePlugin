@@ -20,9 +20,9 @@ public class ListHomeCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = ((Player) sender).getPlayer();
             HomeManager homeManager = HomePlugin.getHomeManager();
-            player.sendMessage("§bHome number : " + homeManager.getHomeNumber(player));
-            for (String name : homeManager.getHomesName(player)) {
-                Location homeLocation = HomePlugin.getHomeManager().getHomeLocation(player,name);
+            player.sendMessage("§bHome number : " + homeManager.getHomeNumber(player.getUniqueId()));
+            for (String name : homeManager.getHomesName(player.getUniqueId())) {
+                Location homeLocation = HomePlugin.getHomeManager().getHomeLocation(player.getUniqueId(),name);
                sendHomeMessage(player,name,homeLocation);
             }
         }

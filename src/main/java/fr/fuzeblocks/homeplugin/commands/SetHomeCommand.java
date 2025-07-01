@@ -25,7 +25,7 @@ public class SetHomeCommand implements CommandExecutor {
                 OnHomeCreatedEvent onHomeCreate = new OnHomeCreatedEvent(player, player.getLocation(), HomePlugin.getRegistrationType(), home_name);
                     Bukkit.getPluginManager().callEvent(onHomeCreate);
                     if (!onHomeCreate.isCancelled()) {
-                        if (homeManager.addHome(player, onHomeCreate.getHomeName())) {
+                        if (homeManager.addHome(player.getUniqueId(), player.getLocation() ,onHomeCreate.getHomeName())) {
                             player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Home-added")));
                         } else {
                             player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Error")));
@@ -44,7 +44,7 @@ public class SetHomeCommand implements CommandExecutor {
     private boolean havePermsHomes(Player player,HomeManager homeManager) {
         int count = HomePlugin.getLanguageManager().getInt(homeKey + "Home-limite-for-player");
         if (player.hasPermission(HomePlugin.getLanguageManager().getString( homeKey + "Home-limite-permission-for-bypass"))) return false;
-        boolean returnBoolean = homeManager.getHomeNumber(player) == count;
+        boolean returnBoolean = homeManager.getHomeNumber(player.getUniqueId()) == count;
         if (returnBoolean) player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(homeKey + "Home-limite-message")));
 
         return returnBoolean;

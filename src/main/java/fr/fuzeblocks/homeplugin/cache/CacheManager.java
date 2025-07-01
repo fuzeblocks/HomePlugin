@@ -81,8 +81,8 @@ public class CacheManager {
 
     public void addAllPlayerHomes(Player player) {
         HomeManager homeManager = HomePlugin.getHomeManager();
-        for (String homeName : homeManager.getHomesName(player)) {
-            Location homeLocation = homeManager.getHomeLocation(player, homeName);
+        for (String homeName : homeManager.getHomesName(player.getUniqueId())) {
+            Location homeLocation = homeManager.getHomeLocation(player.getUniqueId(), homeName);
             addHomeInCache(player, homeName, homeLocation);
         }
     }

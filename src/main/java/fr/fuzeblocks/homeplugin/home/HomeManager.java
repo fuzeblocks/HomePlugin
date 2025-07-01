@@ -5,11 +5,11 @@ import fr.fuzeblocks.homeplugin.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
 import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
-import fr.fuzeblocks.homeplugin.sync.SyncMethod;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.UUID;
 
 public class HomeManager implements Home {
 
@@ -28,35 +28,35 @@ public class HomeManager implements Home {
     }
 
 
-    public boolean addHome(Player player, String name) {
+    public boolean addHome(UUID uuid, Location location ,String name) {
             if (isYAML()) {
-                return homeYMLManager.addHome(player,name);
+                return homeYMLManager.addHome(uuid,location,name);
             } else {
-                return homeSQLManager.addHome(player,name);
+                return homeSQLManager.addHome(uuid,location,name);
             }
         }
 
-        public List<Location> getHomesLocation(Player player) {
+        public List<Location> getHomesLocation(UUID uuid) {
             if (isYAML()) {
-                return homeYMLManager.getHomesLocation(player);
+                return homeYMLManager.getHomesLocation(uuid);
             } else {
-                return homeSQLManager.getHomesLocation(player);
+                return homeSQLManager.getHomesLocation(uuid);
             }
         }
 
-        public int getHomeNumber(Player player) {
+        public int getHomeNumber(UUID uuid) {
             if (isYAML()) {
-                return homeYMLManager.getHomeNumber(player);
+                return homeYMLManager.getHomeNumber(uuid);
             } else {
-                return homeSQLManager.getHomeNumber(player);
+                return homeSQLManager.getHomeNumber(uuid);
             }
         }
 
-        public List<String> getHomesName(Player player) {
+        public List<String> getHomesName(UUID uuid) {
            if (isYAML()) {
-               return homeYMLManager.getHomesName(player);
+               return homeYMLManager.getHomesName(uuid);
            } else {
-               return homeSQLManager.getHomesName(player);
+               return homeSQLManager.getHomesName(uuid);
            }
         }
 
@@ -64,19 +64,19 @@ public class HomeManager implements Home {
             return HomePlugin.getCacheManager();
         }
 
-        public Location getHomeLocation(Player player, String homeName) {
+        public Location getHomeLocation(UUID uuid, String homeName) {
            if (isYAML()) {
-               return homeYMLManager.getHomeLocation(player,homeName);
+               return homeYMLManager.getHomeLocation(uuid,homeName);
            } else {
-               return homeSQLManager.getHomeLocation(player,homeName);
+               return homeSQLManager.getHomeLocation(uuid,homeName);
            }
         }
 
-        public boolean deleteHome(Player player, String homeName) {
+        public boolean deleteHome(UUID uuid, String homeName) {
             if (isYAML()) {
-                return homeYMLManager.deleteHome(player,homeName);
+                return homeYMLManager.deleteHome(uuid,homeName);
             } else {
-                return homeSQLManager.deleteHome(player,homeName);
+                return homeSQLManager.deleteHome(uuid,homeName);
             }
         }
 
@@ -84,20 +84,20 @@ public class HomeManager implements Home {
             return StatusManager.getPlayerStatus(player);
         }
 
-        public boolean exist(Player player, String homeName) {
+        public boolean exist(UUID uuid, String homeName) {
             if (isYAML()) {
-                return homeYMLManager.exist(player,homeName);
+                return homeYMLManager.exist(uuid,homeName);
             } else {
-                return homeSQLManager.exist(player,homeName);
+                return homeSQLManager.exist(uuid,homeName);
             }
         }
 
 
-        public boolean renameHome(Player player, String oldName, String newName) {
+        public boolean renameHome(UUID uuid, String oldName, String newName) {
             if (isYAML()) {
-               return homeYMLManager.renameHome(player, oldName, newName);
+               return homeYMLManager.renameHome(uuid, oldName, newName);
             } else {
-                return homeSQLManager.renameHome(player, oldName, newName);
+                return homeSQLManager.renameHome(uuid, oldName, newName);
             }
         }
 }

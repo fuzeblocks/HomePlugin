@@ -22,6 +22,7 @@ import fr.fuzeblocks.homeplugin.spawn.sql.SpawnSQLManager;
 import fr.fuzeblocks.homeplugin.spawn.yml.SpawnYMLManager;
 import fr.fuzeblocks.homeplugin.sync.SyncMethod;
 import fr.fuzeblocks.homeplugin.update.UpdateChecker;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,6 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public final class HomePlugin extends JavaPlugin {
     private static HomeYMLManager homeYMLManager;
@@ -43,11 +45,14 @@ public final class HomePlugin extends JavaPlugin {
     private static HomeManager homeManager;
     private static SpawnManager spawnManager;
     private static LanguageManager languageManager;
+    private static BukkitAudiences adventure;
+    private static Logger logger;
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
         configurationSection = getConfig();
+        logger = getLogger();
         checkConfig();
         loadPlugins();
         redisRegistration();
@@ -163,6 +168,7 @@ public final class HomePlugin extends JavaPlugin {
 
     private void commandRegistration() {
         getLogger().info("Registering Commands");
+        adventure = BukkitAudiences.create(this);
         getCommand("home").setExecutor(new HomeCommand(this));
         getCommand("sethome").setExecutor(new SetHomeCommand());
         getCommand("delhome").setExecutor(new DeleteHomeCommand());
@@ -173,7 +179,7 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("homeadmin").setExecutor(new HomeAdminCommand());
         getCommand("plugins").setExecutor(new PluginCommand());
         getCommand("listhome").setExecutor(new ListHomeCommand());
-        getCommand("publichome").setExecutor(new PublicHomeCommand());
+        getCommand("publichome").setExecutor(new PublicHomeCommand(this));
     }
 
     private void eventRegistration() {
@@ -273,5 +279,12 @@ public final class HomePlugin extends JavaPlugin {
 
     public static LanguageManager getLanguageManager() {
         return languageManager;
+    }
+    public static BukkitAudiences adventure() {
+        return adventure;
+    }
+
+    public static Logger getLogger() {
+        return logger;
     }
 }

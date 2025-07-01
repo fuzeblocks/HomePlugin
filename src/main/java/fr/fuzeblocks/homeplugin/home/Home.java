@@ -7,28 +7,29 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface Home {
 
 
-    public boolean addHome(Player player, String name);
-    public List<Location> getHomesLocation(Player player);
+    public boolean addHome(UUID uuid, Location location ,String name);
+    public List<Location> getHomesLocation(UUID uuid);
 
-    public int getHomeNumber(Player player);
+    public int getHomeNumber(UUID uuid);
 
-    public List<String> getHomesName(Player player);
+    public List<String> getHomesName(UUID uuid);
 
     public CacheManager getCacheManager();
 
-    public Location getHomeLocation(Player player, String homeName);
+    public Location getHomeLocation(UUID uuid, String homeName);
 
-    public boolean deleteHome(Player player, String homeName);
+    public boolean deleteHome(UUID uuid, String homeName);
 
     public boolean isStatus(Player player);
 
-    public boolean exist(Player player, String homeName);
+    public boolean exist(UUID uuid, String homeName);
 
-    public boolean renameHome(Player player, String oldName, String newName);
+    public boolean renameHome(UUID uuid, String oldName, String newName);
 
     default boolean isYAML() {
         return HomePlugin.getRegistrationType().equals(SyncMethod.YAML);

@@ -3,6 +3,12 @@ package fr.fuzeblocks.homeplugin.commands;
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -67,7 +73,7 @@ public class CacheCommand implements CommandExecutor {
                 sendMsg(player, CACHE + "Cache-view-header", "%player%", target.getName());
                 sendMsg(player, CACHE + "Cache-home-count", "%count%", String.valueOf(homes.size()));
 
-                for (String homeName : homeManager.getHomesName(target)) {
+                for (String homeName : homeManager.getHomesName(target.getUniqueId())) {
                     sendHomeMessage(homes, homeName, player);
                 }
             }
@@ -90,6 +96,7 @@ public class CacheCommand implements CommandExecutor {
     private void sendHomeMessage(Map<String, Location> homes, String homeName, Player player) {
         Location homeLocation = homes.get(homeName);
         if (homeLocation != null) {
+
             player.sendMessage("§4Nom du home en cache : " + homeName);
             player.sendMessage(String.format(
                     "§aLocalisation de %s : X: %.1f Y: %.1f Z: %.1f Monde: %s",
@@ -99,6 +106,30 @@ public class CacheCommand implements CommandExecutor {
                     homeLocation.getZ(),
                     homeLocation.getWorld().getName()
             ));
+
+
+            TextComponent message = Component.text("► ")
+                    .color(NamedTextColor.GRAY)
+                    .append(Component.text("Se téléporter à ").color(NamedTextColor.GREEN))
+                    .append(Component.text(homeName).color(NamedTextColor.AQUA).decorate(TextDecoration.BOLD))
+                    .clickEvent(ClickEvent.callback(home -> {
+                        if (homeLocation != null) {
+                            player.teleport(homeLocation);
+                            home.sendMessage(Component.text("§aVous avez été téléporté au home : " + homeName));
+                        } else {
+                            home.sendMessage(Component.text("§cErreur : Le home n'existe pas dans le cache."));
+                        }
+                    }))
+                    .hoverEvent(HoverEvent.showText(Component.text("Cliquez pour vous téléporter")))
+                    .append(Component.text(" ⬅").color(NamedTextColor.GRAY));
+
+            player.sendMessage("");
+            player.sendMessage("");
+            player.sendMessage("§7Cliquez ci-dessous :");
+            player.sendMessage("");
+
+            HomePlugin.adventure().player(player).sendMessage(message);
+
         }
     }
 

@@ -41,10 +41,9 @@ public class HomeItem extends AbstractItem {
 
         HomeManager homeManager = HomePlugin.getHomeManager();
 
-        if (homeManager.exist(player, homeName)) {
+        if (homeManager.exist(player.getUniqueId(), homeName)) {
 
             if (clickType.isShiftClick()) {
-                HomeManager.homeRenameStatus.put(player, true);
                 player.closeInventory();
 
                 new AnvilGUI.Builder()
@@ -58,12 +57,12 @@ public class HomeItem extends AbstractItem {
                                         HomePlugin.getLanguageManager().getStringWithColor(key + "Home-invalid-name")));
                             }
 
-                            if (HomePlugin.getHomeManager().exist(player, text)) {
+                            if (HomePlugin.getHomeManager().exist(player.getUniqueId(), text)) {
                                 return Arrays.asList(AnvilGUI.ResponseAction.replaceInputText(
                                         HomePlugin.getLanguageManager().getStringWithColor(key + "Home-already-exists")));
                             }
 
-                            HomePlugin.getHomeManager().renameHome(player, homeName, text);
+                            HomePlugin.getHomeManager().renameHome(player.getUniqueId(), homeName, text);
                             player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(key + "Home-renamed").replace("{newName}", text));
                             this.deleted = true;
                             notifyWindows();
@@ -82,7 +81,7 @@ public class HomeItem extends AbstractItem {
                                 .replace("{homeName}", homeName)
                 );
 
-                homeManager.deleteHome(player, homeName);
+                homeManager.deleteHome(player.getUniqueId(), homeName);
                 this.deleted = true;
                 notifyWindows();
 
@@ -95,7 +94,7 @@ public class HomeItem extends AbstractItem {
                 StatusManager.setPlayerStatus(player, true);
 
                 TaskManager taskManager = new TaskManager(homePlugin);
-                taskManager.homeTask(homeName, player, homeManager.getHomeLocation(player, homeName));
+                taskManager.homeTask(homeName, player, homeManager.getHomeLocation(player.getUniqueId(), homeName));
                 taskManager.startTeleportTask();
 
                 setTaskManagerInstance(player, taskManager);
@@ -123,7 +122,7 @@ public class HomeItem extends AbstractItem {
         String loreDelete = "§c" + langManager.getStringWithColor(keyPrefix + "Home-item-lore-delete") + "§r";
         String loreRename = langManager.getStringWithColor(keyPrefix + "Home-item-lore-rename");
 
-        Location location = HomePlugin.getHomeManager().getHomeLocation(player, homeName);
+        Location location = HomePlugin.getHomeManager().getHomeLocation(player.getUniqueId(), homeName);
         String worldName = location.getWorld().getName();
 
         String coordinates = "§e" + langManager.getStringWithColor(keyPrefix + "Home-world-name")

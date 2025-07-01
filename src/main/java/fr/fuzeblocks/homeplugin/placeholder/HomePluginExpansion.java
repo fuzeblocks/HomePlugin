@@ -44,7 +44,7 @@ public class HomePluginExpansion extends PlaceholderExpansion {
 
         switch (lowerParams) {
             case "homes":
-                List<String> homeNames = HomePlugin.getHomeManager().getHomesName(player);
+                List<String> homeNames = HomePlugin.getHomeManager().getHomesName(player.getUniqueId());
                 if (homeNames != null && !homeNames.isEmpty()) {
                     return String.join(", ", homeNames);
                 } else {
@@ -52,16 +52,16 @@ public class HomePluginExpansion extends PlaceholderExpansion {
                 }
 
             case "homes_numbers":
-                return String.valueOf(HomePlugin.getHomeManager().getHomeNumber(player));
+                return String.valueOf(HomePlugin.getHomeManager().getHomeNumber(player.getUniqueId()));
 
             case "has_homes":
-                return HomePlugin.getHomeManager().getHomeNumber(player) > 0
+                return HomePlugin.getHomeManager().getHomeNumber(player.getUniqueId()) > 0
                         ? "true" : "false";
         }
 
         if (lowerParams.startsWith("home_location_")) {
             String name = params.substring("home_location_".length());
-            Location loc = HomePlugin.getHomeManager().getHomeLocation(player, name);
+            Location loc = HomePlugin.getHomeManager().getHomeLocation(player.getUniqueId(), name);
             if (loc != null) {
                 String format = translate("Messages.home-location-format", "X: %.1f, Y: %.1f, Z: %.1f, Monde: %s");
                 return String.format(format, loc.getX(), loc.getY(), loc.getZ(), loc.getWorld().getName());
@@ -72,13 +72,13 @@ public class HomePluginExpansion extends PlaceholderExpansion {
 
         if (lowerParams.startsWith("home_exists_")) {
             String name = params.substring("home_exists_".length());
-            boolean exists = HomePlugin.getHomeManager().exist(player, name);
+            boolean exists = HomePlugin.getHomeManager().exist(player.getUniqueId(), name);
             return exists ? "true" : "false";
         }
 
         if (lowerParams.startsWith("home_world_")) {
             String name = params.substring("home_world_".length());
-            Location loc = HomePlugin.getHomeManager().getHomeLocation(player, name);
+            Location loc = HomePlugin.getHomeManager().getHomeLocation(player.getUniqueId(), name);
             if (loc != null) {
                 return loc.getWorld().getName();
             } else {
@@ -88,7 +88,7 @@ public class HomePluginExpansion extends PlaceholderExpansion {
 
         if (lowerParams.startsWith("home_coordinates_")) {
             String name = params.substring("home_coordinates_".length());
-            Location loc = HomePlugin.getHomeManager().getHomeLocation(player, name);
+            Location loc = HomePlugin.getHomeManager().getHomeLocation(player.getUniqueId(), name);
             if (loc != null) {
                 return String.format("%.1f %.1f %.1f", loc.getX(), loc.getY(), loc.getZ());
             } else {

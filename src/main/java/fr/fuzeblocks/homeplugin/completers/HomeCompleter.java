@@ -13,7 +13,7 @@ public class HomeCompleter implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1) {
-            return new ArrayList<>(HomePlugin.getHomeManager().getHomesName((Player) sender));
+            return new ArrayList<>(HomePlugin.getHomeManager().getHomesName(((Player) sender).getUniqueId()));
         }
         return null;
     }

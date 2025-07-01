@@ -14,7 +14,7 @@ public class OnJoinListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         HomeManager homeManager = HomePlugin.getHomeManager();
-            if (homeManager.getHomeNumber(player) > 0) {
+            if (homeManager.getHomeNumber(player.getUniqueId()) > 0) {
                 CacheManager cacheManager = homeManager.getCacheManager();
                 cacheManager.addAllPlayerHomes(player);
             }
