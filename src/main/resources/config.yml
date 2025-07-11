@@ -17,8 +17,8 @@ Config:
     PASSWORD: ""
   Home:
     DefaultHomeLimit: 3
-    Teleportation:
-      Task-duration: 3 #second
-      UseTitle: true
-      UseMessage: false
-      Add-particles-after-teleport: true
+  Task:
+    Task-duration: 3 #second
+    UseTitle: true
+    UseMessage: false
+    Add-particles-after-teleport: true

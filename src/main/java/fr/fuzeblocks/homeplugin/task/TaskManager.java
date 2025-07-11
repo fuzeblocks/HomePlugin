@@ -17,14 +17,10 @@ public class TaskManager extends BukkitRunnable {
     private Player player;
     private BukkitTask teleportTask;
     private BukkitRunnable titleTask;
-    private final HomePlugin plugin;
+    private final HomePlugin plugin = HomePlugin.getPlugin(HomePlugin.class);
     private String homeName;
     private Location homeLocation;
 
-
-    public TaskManager(HomePlugin plugin) {
-        this.plugin = plugin;
-    }
 
     @Override
     public void run() {
@@ -112,6 +108,7 @@ public class TaskManager extends BukkitRunnable {
                 }
                 time--;
                 if (time <= 0) {
+                    player.resetTitle();
                     cancel();
                 }
             }

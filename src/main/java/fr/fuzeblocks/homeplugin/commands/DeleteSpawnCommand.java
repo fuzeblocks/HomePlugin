@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class DeleteSpawnCommand implements CommandExecutor {
-    private final String key = "Config.Language.";
+    private final String key = "Language.";
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

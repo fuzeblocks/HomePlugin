@@ -4,6 +4,7 @@ import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import fr.fuzeblocks.homeplugin.task.TaskManager;
+import fr.fuzeblocks.homeplugin.task.TeleportationManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -43,12 +44,7 @@ public class HomeItem extends AbstractItem {
                 } else {
                     // Logic to teleport the player to the home goes here
                     player.closeInventory();
-                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Start-of-teleportation")) + " " + homeName));
-                    StatusManager.setPlayerStatus(player, true);
-                    TaskManager taskManager = new TaskManager(homePlugin);
-                    taskManager.homeTask(homeName, player, homeManager.getHomeLocation(player, homeName));
-                    taskManager.startTeleportTask();
-                    setTaskManagerInstance(player, taskManager);
+                    TeleportationManager.teleportPlayerToHome(player, homeName);
 
 
                 }

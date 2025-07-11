@@ -12,40 +12,73 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 public class HomeAdminCommand implements CommandExecutor {
+
+    private static final String LANG = "Language.";
+    private static final String ADMIN = "HomeAdmin.";
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String key = "Language.";
-        if (sender instanceof Player) {
-            Player player = ((Player) sender).getPlayer();
-            if (player.hasPermission("HomePlugin.admin")) {
-                if (args.length >= 1) {
-                    Player target = Bukkit.getPlayerExact(args[0]);
-                    if (target != null) {
-                        HomeManager homeManager = HomePlugin.getHomeManager();
-                            player.sendMessage("§eLe joueur : " + target.getName() + "§e a pour home/s :");
-                            List<String> homeName = homeManager.getHomesName(player);
-                            player.sendMessage("§6" + homeName.size() + "§6 home/s");
-                            for (String home : homeName) {
-                                if (home != null) {
-                                    Location homeLocation = homeManager.getHomeLocation(player, home);
-                                    player.sendMessage("§4Nom du home : " + homeName);
-                                    player.sendMessage("§aLocalisation de " + homeName + " : X : " + homeLocation.getX() + " Y : " + homeLocation.getY() + " Z : " + homeLocation.getZ() + " Monde : " + homeLocation.getWorld().getName());
-                                }
-                            }
-                            return true;
-                    } else {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Player-is-not-online")));
-                    }
-                } else {
-                    String homeAdminKey = "HomeAdmin.";
-                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(homeAdminKey + "HomeAdmin-usage-message")));
-                }
-            } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "No-permission")));
-            }
-        } else {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
+
+        if (!(sender instanceof Player)) {
+            sendMsg(sender, LANG + "Only-a-player-can-execute");
+            return false;
         }
-        return false;
+
+        Player player = (Player) sender;
+
+        if (!player.hasPermission("HomePlugin.admin")) {
+            sendMsg(player, LANG + "No-permission");
+            return false;
+        }
+
+        if (args.length < 1) {
+            sendMsg(player, ADMIN + "HomeAdmin-usage-message");
+            return false;
+        }
+
+        Player target = Bukkit.getPlayerExact(args[0]);
+
+        if (target == null) {
+            sendMsg(player, LANG + "Player-is-not-online");
+            return false;
+        }
+
+        HomeManager homeManager = HomePlugin.getHomeManager();
+        List<String> homeNames = homeManager.getHomesName(target);
+
+        sendMsg(player, ADMIN + "Home-list-header", "%player%", target.getName());
+        sendMsg(player, ADMIN + "Home-count", "%count%", String.valueOf(homeNames.size()));
+
+        for (String home : homeNames) {
+            if (home != null) {
+                Location loc = homeManager.getHomeLocation(target, home);
+                if (loc != null) {
+                    sendMsg(player, ADMIN + "Home-name", "%home%", home);
+
+                    String locationMsg = translate(ADMIN + "Home-location")
+                            .replace("%home%", home)
+                            .replace("%x%", String.format("%.1f", loc.getX()))
+                            .replace("%y%", String.format("%.1f", loc.getY()))
+                            .replace("%z%", String.format("%.1f", loc.getZ()))
+                            .replace("%world%", loc.getWorld().getName());
+
+                    player.sendMessage(locationMsg);
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private void sendMsg(CommandSender sender, String path) {
+        sender.sendMessage(translate(path));
+    }
+
+    private void sendMsg(CommandSender sender, String path, String placeholder, String replacement) {
+        sender.sendMessage(translate(path).replace(placeholder, replacement));
+    }
+
+    private String translate(String path) {
+        return HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(path));
     }
 }

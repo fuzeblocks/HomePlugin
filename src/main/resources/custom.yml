@@ -22,8 +22,7 @@ Language:
   Only-a-player-can-execute: "&cOnly a player can execute this command!"
   Player-is-not-OP: "&cYou are not OP!"
   No-permission: "&cYou do not have permission to use this command!"
-  player-offline: "&cPlayer offline"
-  unknown: "&cUnknown"
+  Unknown: "&cUnknown"
   Home-deleted-with-name: "&aThe home {homeName} has been successfully deleted!"
 
 Spawn:
@@ -33,19 +32,33 @@ Spawn:
   Spawn-usage-message: "&cUsage of the command: /spawn"
 
 Home:
-  Home-limite-permission-for-bypass: "HomePlugin.home.bypass"
-  Home-limite-message: "&l&cYou do not have permission to set another home!"
-  Home-usage-message: "&cUsage of the command: /home <home-name>"
-  SetHome-usage-message: "&cUsage of the command: /sethome <home-name>"
-  DelHome-usage-message: "&cUsage of the command: /delhome <home-name>"
+  Home-limit-permission-for-bypass: "HomePlugin.home.bypass"
+  Home-limit-message: "&l&cYou do not have permission to set another home!"
+  Home-usage-message: "&cCommand usage: /home <home-name>"
+  SetHome-usage-message: "&cCommand usage: /sethome <home-name>"
+  DelHome-usage-message: "&cCommand usage: /delhome <home-name>"
   no-homes: "&cNo homes"
   home-location-format: "&6X: %.1f, Y: %.1f, Z: %.1f, World: %s"
   Home-item-displayname: "({homeName}) Home"
   Home-item-lore-teleport: "§aClick to teleport to your home!"
-  Home-item-lore-delete: "§cRight-click to delete this home."
-  Home-info-count: "&eVous avez &6%used%&e home(s), limite: &6%max%, restant: &6%remaining%"
+  Home-item-lore-delete: "§cRight click to delete this home."
+  Home-info-count: "&eYou have &6%used%&e home(s), allowed limit: &6%max%, remaining: &6%remaining%"
+  List:
+    Home-count: "&bYou have &6%count%&b registered home(s)."
+    Home-detail-header: "&aDetails for home: &l%home%"
+    Home-location: "&9Position: &6X: %x% Y: %y% Z: %z% World: %world%"
+    Teleport-label: "&7Teleportation:"
+    Teleport-click: " [Click here]"
+    Teleport-hover: "&eClick to teleport to this home."
+    Manage-label: "&7Manage this home:"
+    Relocate-click: " [Move]"
+    Relocate-hover: "&eClick to reset the position of this home."
+    Delete-click: " [Delete]"
+    Delete-hover: "&cClick to delete this home."
 
 Cache:
+  Cache-home-name: "§4Cached home name: %home%"
+  Cache-home-location: "§aLocation of %home%: X: %x% Y: %y% Z: %z% World: %world%"
   Cache-view-usage-command: "&cUsage of the command: /cache <view> <player>"
   Cache-usage-command: "&cUsage of the command: /cache <clearall> <view>"
   Cache-view-header: "&ePlayer: %player% &ahas the following homes in cache:"
@@ -53,3 +66,7 @@ Cache:
 
 HomeAdmin:
   HomeAdmin-usage-message: "&cUsage of the command: /homeadmin <player>"
+  Home-list-header: "§eHomes of player: %player%"
+  Home-count: "§6%count% home(s)"
+  Home-name: "§4Home name: %home%"
+  Home-location: "§aLocation of %home%: X: %x% Y: %y% Z: %z% World: %world%"

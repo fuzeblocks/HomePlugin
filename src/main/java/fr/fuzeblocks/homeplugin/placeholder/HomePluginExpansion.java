@@ -35,7 +35,7 @@ public class HomePluginExpansion extends PlaceholderExpansion {
     @Override
     public String onRequest(OfflinePlayer offlinePlayer, @NotNull String params) {
         if (!offlinePlayer.isOnline()) {
-            return translate("Messages.player-offline", "Joueur hors-ligne");
+            return translate("Messages.Player-is-not-online", "Joueur hors-ligne");
         }
         Player player = offlinePlayer.getPlayer();
         if (player == null) return "";
@@ -66,7 +66,7 @@ public class HomePluginExpansion extends PlaceholderExpansion {
                 String format = translate("Messages.home-location-format", "X: %.1f, Y: %.1f, Z: %.1f, Monde: %s");
                 return String.format(format, loc.getX(), loc.getY(), loc.getZ(), loc.getWorld().getName());
             } else {
-                return translate("Messages.unknown", "Inconnu");
+                return translate("Messages.Unknown", "Inconnu");
             }
         }
 
@@ -82,7 +82,7 @@ public class HomePluginExpansion extends PlaceholderExpansion {
             if (loc != null) {
                 return loc.getWorld().getName();
             } else {
-                return translate("Messages.unknown", "Inconnu");
+                return translate("Messages.Unknown", "Inconnu");
             }
         }
 
@@ -92,7 +92,7 @@ public class HomePluginExpansion extends PlaceholderExpansion {
             if (loc != null) {
                 return String.format("%.1f %.1f %.1f", loc.getX(), loc.getY(), loc.getZ());
             } else {
-                return translate("Messages.unknown", "Inconnu");
+                return translate("Messages.Unknown", "Inconnu");
             }
         }
 

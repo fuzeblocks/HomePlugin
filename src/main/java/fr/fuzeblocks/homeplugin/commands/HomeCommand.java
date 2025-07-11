@@ -7,6 +7,7 @@ import fr.fuzeblocks.homeplugin.gui.HomeItem;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import fr.fuzeblocks.homeplugin.task.TaskManager;
+import fr.fuzeblocks.homeplugin.task.TeleportationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance;
+
 
 public class HomeCommand implements CommandExecutor {
 
@@ -57,14 +58,14 @@ public class HomeCommand implements CommandExecutor {
 
             if (homeManager.getHomeNumber(player) > 0) {
                 if (isInCache(homeManager, player, homeName)) {
-                    setPlayerTeleportation(player, homeName, homeManager.getCacheManager().getHomesInCache(player).get(homeName));
+                    TeleportationManager.teleportPlayerToHome(player,homeName);
                     return true;
                 }
 
                 Location homeLocation = homeManager.getHomeLocation(player, homeName);
                 if (homeLocation != null) {
                     homeManager.getCacheManager().addHomeInCache(player, homeName, homeLocation);
-                    setPlayerTeleportation(player, homeName, homeLocation);
+                    TeleportationManager.teleportPlayerToHome(player, homeName);
                     return true;
                 } else {
                     player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Home-does-not-exist")));
@@ -87,15 +88,6 @@ public class HomeCommand implements CommandExecutor {
 
         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home.Home-usage-message")));
         return false;
-    }
-
-    private void setPlayerTeleportation(Player player, String homeName, Location location) {
-        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Start-of-teleportation")) + " " + homeName);
-        StatusManager.setPlayerStatus(player, true);
-        TaskManager taskManager = new TaskManager(instance);
-        taskManager.homeTask(homeName, player, location);
-        taskManager.startTeleportTask();
-        setTaskManagerInstance(player, taskManager);
     }
 
     private boolean isInCache(HomeManager homeManager, Player player, String homeName) {
