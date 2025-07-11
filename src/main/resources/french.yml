@@ -22,8 +22,7 @@ Language:
   Only-a-player-can-execute: "&cSeul un joueur peut exécuter cette commande !"
   Player-is-not-OP: "&cVous n'êtes pas OP !"
   No-permission: "&cVous n'avez pas la permission d'utiliser cette commande !"
-  player-offline: "&cJoueur hors-ligne"
-  unknown: "&cInconnu"
+  Unknown: "&cInconnu"
   Home-deleted-with-name: "&aLe home {homeName} a été supprimé avec succès !"
 
 Spawn:
@@ -44,8 +43,23 @@ Home:
   Home-item-lore-teleport: "§aCliquez pour vous téléporter à votre home !"
   Home-item-lore-delete: "§cClic droit pour supprimer ce home."
   Home-info-count: "&eVous avez &6%used%&e home(s), limite autorisée : &6%max%, restant : &6%remaining%"
+  List:
+    Home-count: "&bVous avez &6%count%&b home(s) enregistré(s)."
+    Home-detail-header: "&aDétails pour le home: &l%home%"
+    Home-location: "&9Position : &6X: %x% Y: %y% Z: %z% Monde: %world%"
+    Teleport-label: "&7Téléportation :"
+    Teleport-click: " [Clique ici]"
+    Teleport-hover: "&eClique pour te téléporter à ce home."
+    Manage-label: "&7Gérer ce home :"
+    Relocate-click: " [Déplacer]"
+    Relocate-hover: "&eClique pour redéfinir la position de ce home."
+    Delete-click: " [Supprimer]"
+    Delete-hover: "&cClique pour supprimer ce home."
+
 
 Cache:
+  Cache-home-name: "§4Nom du home en cache : %home%"
+  Cache-home-location: "§aLocalisation de %home% : X: %x% Y: %y% Z: %z% Monde: %world%"
   Cache-view-usage-command: "&cUtilisation de la commande : /cache <view> <joueur>"
   Cache-usage-command: "&cUtilisation de la commande : /cache <clearall> <view>"
   Cache-view-header: "&eLe joueur : %player% &a les homes suivants en cache :"
@@ -53,3 +67,8 @@ Cache:
 
 HomeAdmin:
   HomeAdmin-usage-message: "&cUtilisation de la commande : /homeadmin <joueur>"
+  Home-list-header: "§eHomes du joueur : %player%"
+  Home-count: "§6%count% home(s)"
+  Home-name: "§4Nom du home : %home%"
+  Home-location: "§aLocalisation de %home% : X : %x% Y : %y% Z : %z% Monde : %world%"
+

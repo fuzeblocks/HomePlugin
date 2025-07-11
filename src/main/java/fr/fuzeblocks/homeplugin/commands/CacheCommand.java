@@ -90,17 +90,19 @@ public class CacheCommand implements CommandExecutor {
     private void sendHomeMessage(Map<String, Location> homes, String homeName, Player player) {
         Location homeLocation = homes.get(homeName);
         if (homeLocation != null) {
-            player.sendMessage("§4Nom du home en cache : " + homeName);
-            player.sendMessage(String.format(
-                    "§aLocalisation de %s : X: %.1f Y: %.1f Z: %.1f Monde: %s",
-                    homeName,
-                    homeLocation.getX(),
-                    homeLocation.getY(),
-                    homeLocation.getZ(),
-                    homeLocation.getWorld().getName()
-            ));
+            sendMsg(player, CACHE + "Cache-home-name", "%home%", homeName);
+
+            String locationMessage = translate(CACHE + "Cache-home-location")
+                    .replace("%home%", homeName)
+                    .replace("%x%", String.format("%.1f", homeLocation.getX()))
+                    .replace("%y%", String.format("%.1f", homeLocation.getY()))
+                    .replace("%z%", String.format("%.1f", homeLocation.getZ()))
+                    .replace("%world%", homeLocation.getWorld().getName());
+
+            player.sendMessage(locationMessage);
         }
     }
+
 
     private void sendMsg(CommandSender sender, String path) {
         sender.sendMessage(translate(path));
