@@ -56,7 +56,6 @@ Home:
     Delete-click: " [Delete]"
     Delete-hover: "&cClick to delete this home."
 
-
 Cache:
   Cache-home-name: "§4Cached home name: %home%"
   Cache-home-location: "§aLocation of %home%: X: %x% Y: %y% Z: %z% World: %world%"

@@ -56,7 +56,6 @@ Home:
     Delete-click: " [Supprimer]"
     Delete-hover: "&cClique pour supprimer ce home."
 
-
 Cache:
   Cache-home-name: "§4Nom du home en cache : %home%"
   Cache-home-location: "§aLocalisation de %home% : X: %x% Y: %y% Z: %z% Monde: %world%"

@@ -108,6 +108,7 @@ public class TaskManager extends BukkitRunnable {
                 }
                 time--;
                 if (time <= 0) {
+                    player.resetTitle();
                     cancel();
                 }
             }
