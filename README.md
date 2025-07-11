@@ -1,110 +1,104 @@
-# 🏠 Welcome to FuzeBlocks HomePlugin! 🏠  
-**A powerful and flexible home management system for Spigot servers, developed by FuzeBlocks.**
+# 🏡 fuzeblocks HomePlugin
 
-Simplify and enhance your players' experience with intuitive home commands, developer-friendly APIs, and seamless performance features.
+> 🧩 *A simple plugin to manage homes and spawn with cache and a multitude of synchronization options.*
 
----
-
-## ✨ Key Features
-
-- 🔹 **Multiple Storage Options**  
-  Support for both **MySQL** and **YAML**, offering flexibility depending on your server needs.
-
-- 🔹 **Redis Caching (Optional)**  
-  Boost performance with Redis, or stick to the default caching method.
-
-- 🔹 **Developer API**  
-  Easily extend functionality with our **public API**. Full documentation available.
-
-- 🔹 **Spawn Management**  
-  Set, delete, and teleport to spawn points using simple commands.
-
-- 🔹 **Plugin Loader for Devs**  
-  Includes a modular plugin loader to streamline development and integration.
-
-- 🔹 **PlaceholderAPI Support**  
-  Display home data in chat, GUIs, and more with custom placeholders.
-
-- 🔹 **Simple Home Management**  
-  - `/sethome [name]` — Define homes with ease.  
-  - `/homes` — View, rename, or delete saved homes.
-
-- 🔹 **Custom Home Limits**  
-  Set limits via the configuration file.
-
-- 🔹 **Comprehensive Commands**  
-  Includes:  
-  `/home`, `/spawn`, `/setspawn`, `/delspawn`, `/delhome`, `/listhome`, `/cache`, `/homeadmin`.
-
-- 🔹 **Admin Tools**  
-  Use `/homeadmin [player]` to view and manage homes for any player.
+<div align="center">
+  <img src="https://img.icons8.com/fluency/96/home.png" width="80" />
+</div>
 
 ---
 
-## ⚙️ Commands Overview
+## 📚 Table of Contents
 
-| Command | Description |
-|--------|-------------|
+- [✨ Features](#-features)
+- [🧾 Commands](#-commands)
+- [🧩 PlaceholderAPI Integration](#-placeholderapi-integration)
+- [📥 Installation](#-installation)
+- [🧑‍💻 Developer Resources](#-developer-resources)
+- [✅ Compatibility](#-compatibility)
+- [🤝 Support & Contributions](#-support--contributions)
+
+---
+
+## ✨ Features
+
+- 🔧 **Flexible Storage** – MySQL & YAML support  
+- ⚡ **Optional Redis Caching** – Boost performance  
+- 📦 **Public API** – Fully documented and easy to use  
+- 🏠 **Simple Home System** – Set, teleport, delete, and list homes  
+- 🧭 **Spawn Management** – Set/delete world spawn locations  
+- 🧩 **Plugin Loader** – Modular integration for developers  
+- 🎛️ **Custom Home Limits** – Configure max homes per player  
+- 💬 **PlaceholderAPI Support** – Custom placeholders in GUIs/chat  
+- 🛠️ **Admin Tools** – Manage other players’ homes easily
+
+---
+
+## 🧾 Commands
+
+| ⚙️ Command | 📝 Description |
+|------------|----------------|
 | `/sethome [name]` | Set a home at your current location. |
-| `/home [name]` | Teleport to a saved home. |
-| `/home` | Open a gui with your homes. |
-| `/delhome [name]` | Remove a specific home. |
-| `/spawn` | Teleport to the spawn point. |
-| `/setspawn` | Define the world’s spawn location. |
+| `/home [name]` | Teleport to a specific home. |
+| `/home` | Open the GUI listing all your homes. |
+| `/delhome [name]` | Delete a home by name. |
+| `/listhome` | View a list of your homes. |
+| `/spawn` | Teleport to the global spawn. |
+| `/setspawn` | Define the spawn location. |
 | `/delspawn` | Remove the current spawn. |
-| `/cache [player,clearall,view]` | Manage player cache. |
-| `/homeadmin [player]` | Admin command to view a player's homes. |
-| `/listhome` | View all your homes. |
+| `/cache [player, clearall, view]` | Manage internal cache. |
+| `/homeadmin [player]` | Admin view of another player's homes. |
 
 ---
 
-## 🔧 Installation
-
-1. Download the JAR from the [plugin page](https://modrinth.com/plugin/homeplugin/versions).  
-2. Place it in your server's `plugins` folder.  
-3. Restart your server.  
-4. Customize the configuration via `config.yml`.
-
----
-
-## 📦 PlaceholderAPI Integration
+## 🧩 PlaceholderAPI Integration
 
 Use these placeholders with [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/):
 
-| Placeholder | Description |
-|------------|-------------|
-| `%homeplugin_homes%` | List of all the player's home names, comma-separated. |
-| `%homeplugin_homes_numbers%` | Total number of homes the player has. |
-| `%homeplugin_has_homes%` | Returns `true` if the player has at least one home, otherwise `false`. |
-| `%homeplugin_home_location_<name>%` | Formatted location (X, Y, Z, World) of the home `<name>`. |
-| `%homeplugin_home_exists_<name>%` | Returns `true` if the home `<name>` exists. |
-| `%homeplugin_home_world_<name>%` | Returns the world name of the home `<name>`. |
-| `%homeplugin_home_coordinates_<name>%` | Returns the coordinates `X Y Z` of the home `<name>`. |
+| 🔤 Placeholder | 📋 Description |
+|---------------|----------------|
+| `%homeplugin_homes%` | Comma-separated list of home names. |
+| `%homeplugin_homes_numbers%` | Total number of homes. |
+| `%homeplugin_has_homes%` | `true` if player has at least one home. |
+| `%homeplugin_home_location_<name>%` | Location of the home. |
+| `%homeplugin_home_exists_<name>%` | `true` if the home exists. |
+| `%homeplugin_home_world_<name>%` | World name of the home. |
+| `%homeplugin_home_coordinates_<name>%` | Coordinates: `X Y Z`. |
 
-> 🔁 Replace `<name>` with the actual name of the home (case-insensitive).
+> Replace `<name>` with the home name (case-insensitive).
+
+---
+
+## 📥 Installation
+
+1. ⬇️ Download from [Modrinth](https://modrinth.com/plugin/homeplugin/versions)  
+2. 📁 Place the `.jar` in the `plugins/` folder  
+3. 🔁 Restart your server  
+4. ⚙️ Edit the config in `config.yml` as needed
 
 ---
 
 ## 🧑‍💻 Developer Resources
 
-- **API Documentation**: [GitHub Wiki - API](https://github.com/fuzeblocks/HomePlugin/wiki)
-- **Plugin Loader Guide**: [GitHub Wiki - Plugin API](https://github.com/fuzeblocks/HomePlugin/wiki/Plugin-API)
+- 📘 API Docs: [GitHub Wiki - API](https://github.com/fuzeblocks/HomePlugin/wiki)  
+- 🔌 Plugin Loader Guide: [GitHub Wiki - Plugin API](https://github.com/fuzeblocks/HomePlugin/wiki/Plugin-API)
 
 ---
 
-## 🧪 Compatibility
+## ✅ Compatibility
 
-- ✅ Minecraft version **1.20.x** and earlier versions  
-- 📦 Requires: [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)  
-- API version : [![](https://jitpack.io/v/fuzeblocks/HomePlugin.svg)](https://jitpack.io/#fuzeblocks/HomePlugin)
+- 🧩 Minecraft **1.20.x** to **1.13.x**
+- Requires: [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)  
+- API versions: [GitHub Releases](https://github.com/fuzeblocks/HomePlugin/releases)
 
 ---
 
 ## 🤝 Support & Contributions
 
-For support, bug reports, feature suggestions, or to contribute, visit the official GitHub:  
-🔗 [HomePlugin GitHub Repository](https://github.com/fuzeblocks/HomePlugin)
-
-Your feedback helps us keep FuzeBlocks HomePlugin powerful, stable, and enjoyable!
+Found a bug? Have a suggestion? Want to contribute?  
+Join the GitHub repository:  
+[🔗 HomePlugin Repository](https://github.com/fuzeblocks/HomePlugin)
 
 ---
+
+> 🛠️ **FuzeBlocks HomePlugin** — Stable, fast, and extensible home/spawn management.
