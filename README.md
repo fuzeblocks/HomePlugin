@@ -87,7 +87,7 @@ Use these placeholders with [PlaceholderAPI](https://www.spigotmc.org/resources/
 
 ## ✅ Compatibility
 
-- 🧩 Minecraft **1.20.x** to **1.14.x**
+- 🧩 Minecraft **1.21.6** to **1.14.x**
 - Requires: [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)  
 - API versions: [GitHub Releases](https://github.com/fuzeblocks/HomePlugin/releases)
 
