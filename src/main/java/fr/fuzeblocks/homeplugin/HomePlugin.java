@@ -5,6 +5,7 @@ import fr.fuzeblocks.homeplugin.commands.*;
 import fr.fuzeblocks.homeplugin.completers.CacheCompleter;
 import fr.fuzeblocks.homeplugin.completers.DeleteHomeCompleter;
 import fr.fuzeblocks.homeplugin.completers.HomeCompleter;
+import fr.fuzeblocks.homeplugin.completers.SetHomeCompleter;
 import fr.fuzeblocks.homeplugin.database.CreateTable;
 import fr.fuzeblocks.homeplugin.database.DatabaseManager;
 import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
@@ -186,6 +187,7 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("home").setTabCompleter(new HomeCompleter());
         getCommand("delhome").setTabCompleter(new DeleteHomeCompleter());
         getCommand("cache").setTabCompleter(new CacheCompleter());
+        getCommand("sethome").setTabCompleter(new SetHomeCompleter());
     }
 
     private void checkUpdate(int id) {

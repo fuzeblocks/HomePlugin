@@ -7,6 +7,7 @@ import fr.fuzeblocks.homeplugin.gui.HomeItem;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import fr.fuzeblocks.homeplugin.task.TaskManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -27,8 +28,8 @@ import java.util.stream.Collectors;
 
 import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance;
 
-
 public class HomeCommand implements CommandExecutor {
+
     private final HomePlugin instance;
     private final String key = "Language.";
 
@@ -36,42 +37,53 @@ public class HomeCommand implements CommandExecutor {
         this.instance = instance;
     }
 
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            if (args.length == 1) {
-                String homeName = args[0];
-                HomeManager homeManager = HomePlugin.getHomeManager();
-                    if (homeManager.isStatus(player)) {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "A-teleport-is-already-in-progress")));
-                        return false;
-                    }
-                    if (homeManager.getHomeNumber(player) > 0) {
-                        if (verifyInCache(homeManager, player, homeName)) {
-                            setPlayerTeleportation(player, homeName, homeManager.getCacheManager().getHomesInCache(player).get(homeName));
-                            return true;
-                        }
-                        Location homeLocation = homeManager.getHomeLocation(player, homeName);
-                        if (homeLocation != null) {
-                            homeManager.getCacheManager().addHomeInCache(player, homeName, homeLocation);
-                            setPlayerTeleportation(player, homeName, homeLocation);
-                            return true;
-                        } else {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Home-does-not-exist")));
-                        }
-                    } else {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Have-no-home")));
-                    }
-                } else if (args.length == 0) {
-                        openHomeGui(player);
-                } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home.Home-usage-message")));
-              }
-            } else {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
+            return false;
         }
+
+        HomeManager homeManager = HomePlugin.getHomeManager();
+
+        if (args.length == 1) {
+            String homeName = args[0];
+            if (homeManager.isStatus(player)) {
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "A-teleport-is-already-in-progress")));
+                return false;
+            }
+
+            if (homeManager.getHomeNumber(player) > 0) {
+                if (isInCache(homeManager, player, homeName)) {
+                    setPlayerTeleportation(player, homeName, homeManager.getCacheManager().getHomesInCache(player).get(homeName));
+                    return true;
+                }
+
+                Location homeLocation = homeManager.getHomeLocation(player, homeName);
+                if (homeLocation != null) {
+                    homeManager.getCacheManager().addHomeInCache(player, homeName, homeLocation);
+                    setPlayerTeleportation(player, homeName, homeLocation);
+                    return true;
+                } else {
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Home-does-not-exist")));
+                    return false;
+                }
+            } else {
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Have-no-home")));
+                return false;
+            }
+        }
+
+        if (args.length == 0) {
+            if (isGuiSupported()) {
+                openHomeGui(player);
+            } else {
+                player.sendMessage("The graphical interface is not yet compatible with this version of Minecraft.");
+            }
+            return true;
+        }
+
+        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home.Home-usage-message")));
         return false;
     }
 
@@ -84,16 +96,14 @@ public class HomeCommand implements CommandExecutor {
         setTaskManagerInstance(player, taskManager);
     }
 
-    private boolean verifyInCache(HomeManager homeManager, Player player, String homeName) {
-        if (homeManager.getCacheManager().getHomesInCache(player) != null) {
-            Map<String, Location> homes = homeManager.getCacheManager().getHomesInCache(player);
-            return homes.containsKey(homeName);
-        } else {
-            return false;
-        }
+    private boolean isInCache(HomeManager homeManager, Player player, String homeName) {
+        Map<String, Location> homes = homeManager.getCacheManager().getHomesInCache(player);
+        return homes != null && homes.containsKey(homeName);
     }
+
     private void openHomeGui(Player player) {
         Item border = new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(""));
+
         Gui gui = PagedGui.items()
                 .setStructure(
                         "# # # # # # # # #",
@@ -114,16 +124,23 @@ public class HomeCommand implements CommandExecutor {
                 .build();
 
         window.open();
-
     }
+
     private List<Item> getHomeItems(Player player) {
         HomeManager homeManager = HomePlugin.getHomeManager();
         return homeManager.getHomesName(player).stream()
-                .map(homeName -> new HomeItem(homeName,instance)
-                ).collect(Collectors.toList());
+                .map(homeName -> new HomeItem(homeName, instance))
+                .collect(Collectors.toList());
     }
 
-
-
-
+    private boolean isGuiSupported() {
+        String version = Bukkit.getBukkitVersion().split("-")[0]; // e.g. "1.20.4"
+        try {
+            String[] parts = version.split("\\.");
+            int major = Integer.parseInt(parts[1]);
+            return major <= 20;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
