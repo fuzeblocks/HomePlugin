@@ -20,11 +20,11 @@ public class CacheCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             sendMsg(sender, LANG + "Only-a-player-can-execute");
             return false;
         }
-
+        Player player = (Player) sender;
         if (!player.hasPermission("HomePlugin.cache")) {
             sendMsg(player, LANG + "No-permission");
             return false;
@@ -41,12 +41,12 @@ public class CacheCommand implements CommandExecutor {
         String subCommand = args[0].toLowerCase();
 
         switch (subCommand) {
-            case "clearall" -> {
+            case "clearall":
                 cacheManager.clear();
                 sendMsg(player, LANG + "Cache-cleared");
-            }
+                break;
 
-            case "view" -> {
+            case "view":
                 if (args.length < 2) {
                     sendMsg(player, CACHE + "Cache-view-usage-command");
                     return false;
@@ -70,9 +70,9 @@ public class CacheCommand implements CommandExecutor {
                 for (String homeName : homeManager.getHomesName(target)) {
                     sendHomeMessage(homes, homeName, player);
                 }
-            }
+                break;
 
-            default -> {
+            default:
                 Player targetToClear = Bukkit.getPlayerExact(args[0]);
                 if (targetToClear == null) {
                     sendMsg(player, LANG + "Player-is-not-online");
@@ -81,7 +81,7 @@ public class CacheCommand implements CommandExecutor {
 
                 cacheManager.clearPlayer(targetToClear);
                 sendMsg(player, LANG + "Cache-player-cleared", "%player%", targetToClear.getName());
-            }
+                break;
         }
 
         return true;

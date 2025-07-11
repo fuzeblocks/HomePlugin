@@ -15,8 +15,10 @@ Config:
     PORT: 6379
     SSL: false
     PASSWORD: ""
-  Task:
-    Task-duration: 3 #second
-    UseTitle: true
-    UseMessage: false
-    Add-particles-after-teleport: true
+  Home:
+    DefaultHomeLimit: 3
+    Teleportation:
+      Task-duration: 3 #second
+      UseTitle: true
+      UseMessage: false
+      Add-particles-after-teleport: true

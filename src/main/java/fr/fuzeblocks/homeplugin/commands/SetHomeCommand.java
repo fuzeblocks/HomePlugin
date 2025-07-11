@@ -3,6 +3,7 @@ package fr.fuzeblocks.homeplugin.commands;
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.api.event.OnHomeCreatedEvent;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
+import fr.fuzeblocks.homeplugin.home.HomePermissionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,44 +12,72 @@ import org.bukkit.entity.Player;
 
 public class SetHomeCommand implements CommandExecutor {
     private final String homeKey = "Home.";
-    private final  String key = "Language.";
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            Player player = ((Player) sender).getPlayer();
-            if (args.length == 1) {
-                String home_name = args[0];
-                HomeManager homeManager = HomePlugin.getHomeManager();
-                    if (homeManager.isStatus(player))
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "A-teleport-is-already-in-progress")));
-                    if (havePermsHomes(player,homeManager)) return false;
-                OnHomeCreatedEvent onHomeCreate = new OnHomeCreatedEvent(player, player.getLocation(), HomePlugin.getRegistrationType(), home_name);
-                    Bukkit.getPluginManager().callEvent(onHomeCreate);
-                    if (!onHomeCreate.isCancelled()) {
-                        if (homeManager.addHome(player, onHomeCreate.getHomeName())) {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Home-added")));
-                        } else {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Error")));
-                        }
-                    }
-                    return true;
-            } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(homeKey + "SetHome-usage-message")));
-            }
-        } else {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
+        String key = "Language.";
+        if (!(sender instanceof Player)) {
+            sender.sendMessage(translate(key + "Only-a-player-can-execute"));
+            return false;
         }
+
+        Player player = (Player) sender;
+        HomeManager homeManager = HomePlugin.getHomeManager();
+
+        // /sethome info
+        if (args.length == 1 && args[0].equalsIgnoreCase("info")) {
+            int used = homeManager.getHomeNumber(player);
+            int max = HomePermissionManager.getMaxHomes(player);
+            int remaining = max - used;
+
+            player.sendMessage(translate(homeKey + "Home-info-count")
+                    .replace("%used%", String.valueOf(used))
+                    .replace("%max%", String.valueOf(max))
+                    .replace("%remaining%", String.valueOf(Math.max(0, remaining))));
+            return true;
+        }
+
+        // /sethome <name>
+        if (args.length == 1) {
+            if (homeManager.isStatus(player)) {
+                player.sendMessage(translate(key + "A-teleport-is-already-in-progress"));
+                return false;
+            }
+
+            if (!canSetHome(player)) return false;
+
+            String homeName = args[0];
+            OnHomeCreatedEvent event = new OnHomeCreatedEvent(player, player.getLocation(), HomePlugin.getRegistrationType(), homeName);
+            Bukkit.getPluginManager().callEvent(event);
+
+            if (!event.isCancelled()) {
+                boolean success = homeManager.addHome(player, event.getHomeName());
+                if (success) {
+                    player.sendMessage(translate(key + "Home-added"));
+                } else {
+                    player.sendMessage(translate(key + "Error"));
+                }
+            }
+
+            return true;
+        }
+        player.sendMessage(translate(homeKey + "SetHome-usage-message"));
         return false;
     }
 
-    private boolean havePermsHomes(Player player,HomeManager homeManager) {
-        int count = HomePlugin.getLanguageManager().getInt(homeKey + "Home-limite-for-player");
-        if (player.hasPermission(HomePlugin.getLanguageManager().getString( homeKey + "Home-limite-permission-for-bypass"))) return false;
-        boolean returnBoolean = homeManager.getHomeNumber(player) == count;
-        if (returnBoolean) player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(homeKey + "Home-limite-message")));
+    private boolean canSetHome(Player player) {
+        String bypassPerm = HomePlugin.getLanguageManager().getString(homeKey + "Home-limite-permission-for-bypass");
+        if (player.hasPermission(bypassPerm)) return true;
 
-        return returnBoolean;
+        boolean allowed = HomePermissionManager.canSetHome(player);
+        if (!allowed) {
+            player.sendMessage(translate(homeKey + "Home-limite-message"));
+        }
 
+        return allowed;
     }
 
+    private String translate(String key) {
+        return HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key));
+    }
 }

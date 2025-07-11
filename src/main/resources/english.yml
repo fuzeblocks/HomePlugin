@@ -33,7 +33,6 @@ Spawn:
   Spawn-usage-message: "&cUsage of the command: /spawn"
 
 Home:
-  Home-limite-for-player: 3
   Home-limite-permission-for-bypass: "HomePlugin.home.bypass"
   Home-limite-message: "&l&cYou do not have permission to set another home!"
   Home-usage-message: "&cUsage of the command: /home <home-name>"
@@ -44,6 +43,7 @@ Home:
   Home-item-displayname: "({homeName}) Home"
   Home-item-lore-teleport: "§aClick to teleport to your home!"
   Home-item-lore-delete: "§cRight-click to delete this home."
+  Home-info-count: "&eVous avez &6%used%&e home(s), limite: &6%max%, restant: &6%remaining%"
 
 Cache:
   Cache-view-usage-command: "&cUsage of the command: /cache <view> <player>"
