@@ -38,7 +38,7 @@
 
 | ⚙️ Command | 📝 Description |
 |------------|----------------|
-| `/sethome [name]` | Set a home at your current location. |
+| `/sethome [name, info]` | Set a home at your current location. |
 | `/home [name]` | Teleport to a specific home. |
 | `/home` | Open the GUI listing all your homes. |
 | `/delhome [name]` | Delete a home by name. |
