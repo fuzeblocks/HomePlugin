@@ -1,4 +1,4 @@
-# 🏡 fuzeblocks HomePlugin
+# 🏡 fuzeblocks HomePlugin [![wakatime](https://wakatime.com/badge/user/d9b73520-93d2-4dc7-91b6-1ff3d66bd0ec/project/018c3577-83a6-4b99-9ba5-4a8b4709921e.svg)](https://wakatime.com/badge/user/d9b73520-93d2-4dc7-91b6-1ff3d66bd0ec/project/018c3577-83a6-4b99-9ba5-4a8b4709921e)
 
 > 🧩 *A simple plugin to manage homes and spawn with cache and a multitude of synchronization options.*
 
