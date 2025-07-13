@@ -1,4 +1,4 @@
-# 🏡 fuzeblocks HomePlugin [![wakatime](https://wakatime.com/badge/user/d9b73520-93d2-4dc7-91b6-1ff3d66bd0ec/project/018c3577-83a6-4b99-9ba5-4a8b4709921e.svg)](https://wakatime.com/badge/user/d9b73520-93d2-4dc7-91b6-1ff3d66bd0ec/project/018c3577-83a6-4b99-9ba5-4a8b4709921e)
+# 🏡 fuzeblocks HomePlugin
 
 > 🧩 *A simple plugin to manage homes and spawn with cache and a multitude of synchronization options.*
 
@@ -48,6 +48,7 @@
 | `/delspawn` | Remove the current spawn. |
 | `/cache [player, clearall, view]` | Manage internal cache. |
 | `/homeadmin [player]` | Admin view of another player's homes. |
+| `/plugins` | Admin view plugin enable. |
 
 ---
 
