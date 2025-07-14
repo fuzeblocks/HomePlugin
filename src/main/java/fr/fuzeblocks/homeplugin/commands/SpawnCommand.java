@@ -13,34 +13,34 @@ import org.bukkit.entity.Player;
 import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance;
 
 public class SpawnCommand implements CommandExecutor {
-    private final String key = "Language.";
+    private final String LANG = "Language.";
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = ((Player) sender).getPlayer();
-            String spawnKey = "Spawn.";
+            String SPAWN = "Spawn.";
             if (args.length == 0) {
                 SpawnManager spawnManager = HomePlugin.getSpawnManager();
                     if (spawnManager.hasSpawn(player.getWorld())) {
                         if (spawnManager.isStatus(player)) {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "A-teleport-is-already-in-progress")));
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "A-teleport-is-already-in-progress")));
                             return false;
                         }
-                        if (!player.hasPermission(HomePlugin.getLanguageManager().getString(spawnKey + "Spawn-teleportation-permission"))) {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(spawnKey + "SetSpawn-permission-deny-message")));
+                        if (!player.hasPermission("homeplugin.command.spawn")) {
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(SPAWN + "SetSpawn-permission-deny-message")));
                             return false;
                         }
                         TeleportationManager.teleportPlayerToSpawn(player);
                     } else {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "No-spawn-defined")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(SPAWN + "No-spawn-defined")));
                     }
             } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString( spawnKey + "Spawn-usage-message")));
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString( SPAWN + "Spawn-usage-message")));
             }
 
         } else {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "Only-a-player-can-execute")));
         }
         return false;
 

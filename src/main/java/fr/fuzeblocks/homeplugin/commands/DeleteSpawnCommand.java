@@ -9,25 +9,26 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class DeleteSpawnCommand implements CommandExecutor {
-    private final String key = "Language.";
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        String SPAWN = "Spawn.";
+        String LANG = "Language.";
         if (sender instanceof Player) {
             Player player = ((Player) sender).getPlayer();
-            if (player.isOp()) {
+            if (player.hasPermission("homeplugin.admin")) {
                 OnSpawnDeletedEvent onSpawnDelete = new OnSpawnDeletedEvent(player, player.getLocation(), HomePlugin.getRegistrationType());
                     Bukkit.getPluginManager().callEvent(onSpawnDelete);
                     if (!onSpawnDelete.isCancelled()) {
                         HomePlugin.getSpawnManager().removeSpawn(onSpawnDelete.getLocation().getWorld());
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Spawn-deleted")));
+                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(SPAWN + "Spawn-deleted")));
                     }
                 } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Player-is-not-OP")));
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "Player-is-not-OP")));
                 }
                 return true;
             } else {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "Only-a-player-can-execute")));
             }
         return false;
     }

@@ -46,6 +46,27 @@ public class HomeYMLManager implements Home {
         }
     }
 
+    @Override
+    public boolean setHome(Player player, String name, Location location) {
+        String key = player.getUniqueId() + ".Home";
+        if (!yaml.contains(key + "." + name)) {
+            yaml.set(key + "." + name + ".X", location.getX());
+            yaml.set(key + "." + name + ".Y", location.getY());
+            yaml.set(key + "." + name + ".Z", location.getZ());
+            yaml.set(key + "." + name + ".PITCH", location.getPitch());
+            yaml.set(key + "." + name + ".YAW", location.getYaw());
+            yaml.set(key + "." + name + ".World", location.getWorld().getName());
+            try {
+                yaml.save(file);
+                return true;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            return false;
+        }
+    }
+
     public List<Location> getHomesLocation(Player player) {
         List<Location> homes = new ArrayList<>();
         if (getHomeNumber(player) > 0) {

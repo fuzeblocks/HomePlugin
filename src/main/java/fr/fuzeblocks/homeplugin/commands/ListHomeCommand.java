@@ -16,12 +16,18 @@ import org.jetbrains.annotations.NotNull;
 
 public class ListHomeCommand implements CommandExecutor {
 
+    private final String HOME = "Home.";
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-
+        String LANG = "Language.";
         if (!(sender instanceof Player)) {
             sender.sendMessage(HomePlugin.translateAlternateColorCodes(
-                    HomePlugin.getLanguageManager().getString("Language.Only-a-player-can-execute")));
+                    HomePlugin.getLanguageManager().getString(LANG + "Only-a-player-can-execute")));
+            return false;
+        }
+        if (!sender.hasPermission("homeplugin.command.listhome")) {
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG +"No-permission")));
             return false;
         }
 
@@ -29,7 +35,7 @@ public class ListHomeCommand implements CommandExecutor {
         HomeManager homeManager = HomePlugin.getHomeManager();
         int homeCount = homeManager.getHomeNumber(player);
 
-        String countMessage = HomePlugin.getLanguageManager().getString("Home.List.Home-count")
+        String countMessage = HomePlugin.getLanguageManager().getString(HOME + "List.Home-count")
                 .replace("%count%", String.valueOf(homeCount));
         player.sendMessage(HomePlugin.translateAlternateColorCodes(countMessage));
 
@@ -42,11 +48,11 @@ public class ListHomeCommand implements CommandExecutor {
     }
 
     private void sendHomeMessage(Player player, String homeName, Location location) {
-        String detailHeader = HomePlugin.getLanguageManager().getString("Home.List.Home-detail-header")
+        String detailHeader = HomePlugin.getLanguageManager().getString(HOME + "List.Home-detail-header")
                 .replace("%home%", homeName);
         player.sendMessage(HomePlugin.translateAlternateColorCodes(detailHeader));
 
-        String locationLine = HomePlugin.getLanguageManager().getString("Home.List.Home-location")
+        String locationLine = HomePlugin.getLanguageManager().getString(HOME + "List.Home-location")
                 .replace("%x%", String.valueOf(location.getBlockX()))
                 .replace("%y%", String.valueOf(location.getBlockY()))
                 .replace("%z%", String.valueOf(location.getBlockZ()))
@@ -55,30 +61,30 @@ public class ListHomeCommand implements CommandExecutor {
 
         // Composants interactifs
         TextComponent teleportComponent = createInteractiveComponent(
-                HomePlugin.getLanguageManager().getString("Home.List.Teleport-label"),
+                HomePlugin.getLanguageManager().getString(HOME + "List.Teleport-label"),
                 ChatColor.GRAY,
-                HomePlugin.getLanguageManager().getString("Home.List.Teleport-click"),
+                HomePlugin.getLanguageManager().getString(HOME + "List.Teleport-click"),
                 ChatColor.YELLOW,
-                HomePlugin.getLanguageManager().getString("Home.List.Teleport-hover"),
+                HomePlugin.getLanguageManager().getString(HOME + "List.Teleport-hover"),
                 "/home " + homeName
         );
 
         TextComponent manageComponent = new TextComponent(
-                HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home.List.Manage-label"))
+                HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(HOME + "List.Manage-label"))
         );
         manageComponent.setColor(ChatColor.GRAY);
 
         TextComponent relocateComponent = createInteractiveComponent(
-                HomePlugin.getLanguageManager().getString("Home.List.Relocate-click"),
+                HomePlugin.getLanguageManager().getString(HOME + "List.Relocate-click"),
                 ChatColor.GOLD,
-                HomePlugin.getLanguageManager().getString("Home.List.Relocate-hover"),
+                HomePlugin.getLanguageManager().getString(HOME + "List.Relocate-hover"),
                 "/homerelocate"
         );
 
         TextComponent deleteComponent = createInteractiveComponent(
-                HomePlugin.getLanguageManager().getString("Home.List.Delete-click"),
+                HomePlugin.getLanguageManager().getString(HOME + "List.Delete-click"),
                 ChatColor.RED,
-                HomePlugin.getLanguageManager().getString("Home.List.Delete-hover"),
+                HomePlugin.getLanguageManager().getString(HOME + "List.Delete-hover"),
                 "/delhome " + homeName
         );
 

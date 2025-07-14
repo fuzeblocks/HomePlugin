@@ -113,3 +113,7 @@ buildNumber.properties
 run/
 .github/
 .gitignore
+
+deploy.ps1
+psftp.exe
+sftp_script.txt

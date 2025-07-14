@@ -11,6 +11,7 @@ import java.util.List;
 public interface Home {
 
     public boolean addHome(Player player, String name);
+    public boolean setHome(Player player, String name,Location location);
     public List<Location> getHomesLocation(Player player);
 
     public int getHomeNumber(Player player);

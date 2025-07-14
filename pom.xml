@@ -7,16 +7,19 @@
 
     <groupId>fr.fuzeblocks</groupId>
     <artifactId>HomePlugin</artifactId>
-    <version>0.7.4</version>
+    <version>${revision}</version>
+
+    <properties>
+        <revision>0.0.0</revision>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
     <packaging>jar</packaging>
 
     <name>HomePlugin</name>
     <description>[Created by fuzeblocks]</description>
 
-    <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-    </properties>
 
 
     <distributionManagement>
@@ -27,6 +30,20 @@
     </distributionManagement>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>plugin.yml.in</include>
+                    <include>french.yml</include>
+                    <include>english.yml</include>
+                    <include>config.yml</include>
+                    <include>custom.yml</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -37,6 +54,27 @@
                     <target>11</target>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <move file="${project.build.outputDirectory}/plugin.yml.in"
+                                      tofile="${project.build.outputDirectory}/plugin.yml" />
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -51,19 +89,8 @@
                 </executions>
             </plugin>
         </plugins>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>french.yml</include>
-                    <include>english.yml</include>
-                    <include>config.yml</include>
-                    <include>plugin.yml</include>
-                    <include>custom.yml</include>
-                </includes>
-            </resource>
-        </resources>
     </build>
+
 
     <repositories>
         <repository>

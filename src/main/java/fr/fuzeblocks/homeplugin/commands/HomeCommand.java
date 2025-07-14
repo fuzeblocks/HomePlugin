@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 public class HomeCommand implements CommandExecutor {
 
     private final HomePlugin instance;
-    private final String key = "Language.";
+    private final String HOME = "Home.";
 
     public HomeCommand(HomePlugin instance) {
         this.instance = instance;
@@ -40,8 +40,15 @@ public class HomeCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        String LANG = "Language.";
+
         if (!(sender instanceof Player)) {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "Only-a-player-can-execute")));
+            return false;
+        }
+
+        if (!sender.hasPermission("homeplugin.command.home")) {
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "No-permission")));
             return false;
         }
 
@@ -52,7 +59,7 @@ public class HomeCommand implements CommandExecutor {
         if (args.length == 1) {
             String homeName = args[0];
             if (homeManager.isStatus(player)) {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "A-teleport-is-already-in-progress")));
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "A-teleport-is-already-in-progress")));
                 return false;
             }
 
@@ -68,11 +75,11 @@ public class HomeCommand implements CommandExecutor {
                     TeleportationManager.teleportPlayerToHome(player, homeName);
                     return true;
                 } else {
-                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Home-does-not-exist")));
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(HOME + "Home-does-not-exist")));
                     return false;
                 }
             } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Have-no-home")));
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(HOME + "Have-no-home")));
                 return false;
             }
         }
@@ -86,7 +93,7 @@ public class HomeCommand implements CommandExecutor {
             return true;
         }
 
-        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home.Home-usage-message")));
+        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(HOME +"Home-usage-message")));
         return false;
     }
 
@@ -113,7 +120,7 @@ public class HomeCommand implements CommandExecutor {
 
         Window window = Window.single()
                 .setViewer(player)
-                .setTitle("Home List")
+                .setTitle(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(HOME + "Home-gui-title").replace("%player%", player.getName())))
                 .setGui(gui)
                 .build();
 
@@ -123,7 +130,7 @@ public class HomeCommand implements CommandExecutor {
     private List<Item> getHomeItems(Player player) {
         HomeManager homeManager = HomePlugin.getHomeManager();
         return homeManager.getHomesName(player).stream()
-                .map(homeName -> new HomeItem(homeName, instance))
+                .map(HomeItem::new)
                 .collect(Collectors.toList());
     }
 
