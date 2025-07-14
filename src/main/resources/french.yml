@@ -1,5 +1,5 @@
 Language:
-  # ────── Téléportation ──────
+
   Teleportation-in-progress: "&e&lTéléportation dans :"
   Start-of-teleportation: "&6Début de la téléportation vers le home :"
   Start-of-teleportation-for-spawn: "&6Début de la téléportation vers le spawn."
@@ -8,7 +8,6 @@ Language:
   Teleport-canceled: "&cTéléportation annulée car vous avez bougé."
   A-teleport-is-already-in-progress: "&cUne téléportation est déjà en cours !"
 
-  # ────── Erreurs générales ──────
   Error: "&cUne erreur est survenue !"
   Unknown: "&cInconnu"
   No-permission: "&cVous n'avez pas la permission d'utiliser cette commande !"
@@ -38,14 +37,12 @@ Home:
   home-location-format: "&6X: %.1f, Y: %.1f, Z: %.1f, Monde: %s"
   SetHome-permission-deny-message: "&cVous n'avez pas la permission de poser un home !"
 
-  # GUI / Item
   Home-item-displayname: "({homeName}) Home"
   Home-item-lore-teleport: "&aCliquez pour vous téléporter à ce home."
   Home-item-lore-delete: "&cClic droit pour supprimer ce home."
   Home-info-count: "&eVous avez &6%used%&e home(s), limite : &6%max%, restant : &6%remaining%"
   Home-gui-title: "&eHomes de %player%"
 
-  # /listhome
   List:
     Home-count: "&bVous avez &6%count%&b home(s) enregistré(s)."
     Home-detail-header: "&aDétails du home : &l%home%"
@@ -71,11 +68,20 @@ Cache:
   Cache-usage-command: "&cUtilisation : /cache <clearall|view> <joueur>"
 
 HomeAdmin:
-  HomeAdmin-usage-message: "&cUtilisation : /homeadmin <joueur>"
+  HomeAdmin-usage-message: "&cUtilisation : /homeadmin <list|addhome|deletehome|tphome> <joueur> [home]"
+  List-usage: "&cUtilisation : /homeadmin list <joueur>"
+  DeleteHome-usage: "&cUtilisation : /homeadmin deletehome <joueur> <home>"
+  AddHome-usage: "&cUtilisation : /homeadmin addhome <joueur> <home>"
+  TpHome-usage: "&cUtilisation : /homeadmin tphome <joueur> <home>"
   Home-list-header: "&eHomes du joueur : %player%"
   Home-count: "&6%count% home(s)"
   Home-name: "&4Nom du home : %home%"
   Home-location: "&aLocalisation : X : %x% Y : %y% Z : %z% Monde : %world%"
+  Home-deleted: "&aLe home &b%home% &aa été supprimé pour &e%player%&a."
+  Home-not-found: "&cLe joueur &e%player% &cn'a pas de home nommé &b%home%&c."
+  Home-added: "&aLe home &b%home% &aa été ajouté pour &e%player%&a."
+  Home-already-exists: "&cLe joueur &e%player% &ca déjà un home nommé &b%home%&c."
+
 
 PluginCommand:
   Plugin-list-header: "&l§aListe des plugins chargés :"
@@ -83,4 +89,3 @@ PluginCommand:
   Plugin-list-total: "&l&aTotal : %count% plugin(s) chargé(s)"
   No-plugins-loaded: "&cAucun plugin n'est chargé pour le moment."
   Only-players-can-use: "&cSeul un joueur peut utiliser cette commande."
-

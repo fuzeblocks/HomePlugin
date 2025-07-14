@@ -25,6 +25,11 @@ public class HomeSQLManager implements Home {
         return addHome(player.getUniqueId().toString(), name, location);
     }
 
+    @Override
+    public boolean setHome(Player player, String name, Location location) {
+        return addHome(player.getUniqueId().toString(), name, location);
+    }
+
     public List<Location> getHomesLocation(Player player) {
         List<Location> homes = new ArrayList<>();
         List<String> homeNames = getHomesName(player);

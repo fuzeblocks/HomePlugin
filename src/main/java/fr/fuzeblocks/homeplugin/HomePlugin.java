@@ -2,10 +2,7 @@ package fr.fuzeblocks.homeplugin;
 
 import fr.fuzeblocks.homeplugin.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.commands.*;
-import fr.fuzeblocks.homeplugin.completers.CacheCompleter;
-import fr.fuzeblocks.homeplugin.completers.DeleteHomeCompleter;
-import fr.fuzeblocks.homeplugin.completers.HomeCompleter;
-import fr.fuzeblocks.homeplugin.completers.SetHomeCompleter;
+import fr.fuzeblocks.homeplugin.completers.*;
 import fr.fuzeblocks.homeplugin.database.CreateTable;
 import fr.fuzeblocks.homeplugin.database.DatabaseManager;
 import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
@@ -26,6 +23,8 @@ import fr.fuzeblocks.homeplugin.update.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import redis.clients.jedis.*;
 
 import java.io.File;
@@ -188,6 +187,7 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("delhome").setTabCompleter(new DeleteHomeCompleter());
         getCommand("cache").setTabCompleter(new CacheCompleter());
         getCommand("sethome").setTabCompleter(new SetHomeCompleter());
+        getCommand("homeadmin").setTabCompleter(new HomeAdminCompleter());
     }
 
     private void checkUpdate(int id) {
@@ -257,9 +257,13 @@ public final class HomePlugin extends JavaPlugin {
         return configurationSection;
     }
 
-    public static String translateAlternateColorCodes(String s) {
+    public static @NotNull String translateAlternateColorCodes(@Nullable String s) {
+        if (s == null) {
+            return "§c[Traduction manquante]";
+        }
         return s.replace('&', '§');
     }
+
 
     public static JedisPooled getJedisPooled() {
         return jedisPooled;

@@ -36,7 +36,16 @@ public class HomeManager implements Home {
             }
         }
 
-        public List<Location> getHomesLocation(Player player) {
+    @Override
+    public boolean setHome(Player player, String name, Location location) {
+        if (isYAML()) {
+            return homeYMLManager.setHome(player, name, location);
+        } else {
+            return homeSQLManager.setHome(player, name, location);
+        }
+    }
+
+    public List<Location> getHomesLocation(Player player) {
             if (isYAML()) {
                 return homeYMLManager.getHomesLocation(player);
             } else {

@@ -95,11 +95,11 @@ public class CacheCommand implements CommandExecutor {
             player.sendMessage(nameLine);
 
             String locationLine = translate(CACHE + "Cache-home-location")
-                    .replace("%home%", "&b" + homeName)
-                    .replace("%x%", "&a" + String.format("%.1f", homeLocation.getX()))
-                    .replace("%y%", "&a" + String.format("%.1f", homeLocation.getY()))
-                    .replace("%z%", "&a" + String.format("%.1f", homeLocation.getZ()))
-                    .replace("%world%", "&e" + homeLocation.getWorld().getName());
+                    .replace("%home%", "§b" + homeName)
+                .replace("%x%", "§a" + String.format("%.1f", homeLocation.getX()))
+                    .replace("%y%", "§a" + String.format("%.1f", homeLocation.getY()))
+                    .replace("%z%", "§a" + String.format("%.1f", homeLocation.getZ()))
+                    .replace("%world%", "§e" + homeLocation.getWorld().getName());
 
             player.sendMessage(locationLine);
         }
@@ -115,6 +115,6 @@ public class CacheCommand implements CommandExecutor {
     }
 
     private String translate(String path) {
-        return HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(path));
+        return HomePlugin.getLanguageManager().getStringWithColor(path);
     }
 }
