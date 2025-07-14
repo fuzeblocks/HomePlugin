@@ -25,7 +25,7 @@ public class CacheCommand implements CommandExecutor {
             return false;
         }
         Player player = (Player) sender;
-        if (!player.hasPermission("HomePlugin.cache")) {
+        if (!player.hasPermission("homeplugin.admin")) {
             sendMsg(player, LANG + "No-permission");
             return false;
         }
@@ -43,7 +43,7 @@ public class CacheCommand implements CommandExecutor {
         switch (subCommand) {
             case "clearall":
                 cacheManager.clear();
-                sendMsg(player, LANG + "Cache-cleared");
+                sendMsg(player, CACHE + "Cache-cleared");
                 break;
 
             case "view":
@@ -60,7 +60,7 @@ public class CacheCommand implements CommandExecutor {
 
                 Map<String, Location> homes = cacheManager.getHomesInCache(target);
                 if (homes == null || homes.isEmpty()) {
-                    sendMsg(player, LANG + "Have-no-cache");
+                    sendMsg(player, CACHE + "Have-no-cache");
                     return false;
                 }
 
@@ -80,7 +80,7 @@ public class CacheCommand implements CommandExecutor {
                 }
 
                 cacheManager.clearPlayer(targetToClear);
-                sendMsg(player, LANG + "Cache-player-cleared", "%player%", targetToClear.getName());
+                sendMsg(player, CACHE + "Cache-player-cleared", "%player%", targetToClear.getName());
                 break;
         }
 
@@ -90,16 +90,18 @@ public class CacheCommand implements CommandExecutor {
     private void sendHomeMessage(Map<String, Location> homes, String homeName, Player player) {
         Location homeLocation = homes.get(homeName);
         if (homeLocation != null) {
-            sendMsg(player, CACHE + "Cache-home-name", "%home%", homeName);
+            String nameLine = translate(CACHE + "Cache-home-name")
+                    .replace("%home%", "&b" + homeName);
+            player.sendMessage(nameLine);
 
-            String locationMessage = translate(CACHE + "Cache-home-location")
-                    .replace("%home%", homeName)
-                    .replace("%x%", String.format("%.1f", homeLocation.getX()))
-                    .replace("%y%", String.format("%.1f", homeLocation.getY()))
-                    .replace("%z%", String.format("%.1f", homeLocation.getZ()))
-                    .replace("%world%", homeLocation.getWorld().getName());
+            String locationLine = translate(CACHE + "Cache-home-location")
+                    .replace("%home%", "&b" + homeName)
+                    .replace("%x%", "&a" + String.format("%.1f", homeLocation.getX()))
+                    .replace("%y%", "&a" + String.format("%.1f", homeLocation.getY()))
+                    .replace("%z%", "&a" + String.format("%.1f", homeLocation.getZ()))
+                    .replace("%world%", "&e" + homeLocation.getWorld().getName());
 
-            player.sendMessage(locationMessage);
+            player.sendMessage(locationLine);
         }
     }
 

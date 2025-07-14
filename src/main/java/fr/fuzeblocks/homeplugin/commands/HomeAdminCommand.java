@@ -53,6 +53,7 @@ public class HomeAdminCommand implements CommandExecutor {
             if (home != null) {
                 Location loc = homeManager.getHomeLocation(target, home);
                 if (loc != null) {
+
                     sendMsg(player, ADMIN + "Home-name", "%home%", home);
 
                     String locationMsg = translate(ADMIN + "Home-location")
@@ -62,7 +63,7 @@ public class HomeAdminCommand implements CommandExecutor {
                             .replace("%z%", String.format("%.1f", loc.getZ()))
                             .replace("%world%", loc.getWorld().getName());
 
-                    player.sendMessage(locationMsg);
+                    player.sendMessage("  " + HomePlugin.translateAlternateColorCodes(locationMsg));
                 }
             }
         }

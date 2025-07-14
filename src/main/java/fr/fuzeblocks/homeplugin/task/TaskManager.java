@@ -60,10 +60,10 @@ public class TaskManager extends BukkitRunnable {
 
     public void startTeleportTask() {
         StatusManager.setPlayerStatus(player, true);
-        TaskSaveUtils.setTaskManagerInstance(player,this);
-        addTimeTitle();
-        titleTask.runTaskTimer(plugin, 0L, 20L);
-        teleportTask = runTaskLater(plugin, 20L * 3L);
+        TaskSaveUtils.setTaskManagerInstance(player, this);
+        addTimeTitle(player);
+        int duration = HomePlugin.getConfigurationSection().getInt("Config.Task.Task-duration");
+        teleportTask = runTaskLater(plugin, 20L * duration);
     }
 
 
@@ -93,19 +93,25 @@ public class TaskManager extends BukkitRunnable {
         task = Task.SPAWN;
     }
 
-    private void addTimeTitle() {
+    private void addTimeTitle(Player player) {
+        int duration = HomePlugin.getConfigurationSection().getInt("Config.Task.Task-duration");
+
         titleTask = new BukkitRunnable() {
-            int time = HomePlugin.getConfigurationSection().getInt("Config.Task.Task-duration");
+            int time = duration;
 
             @Override
             public void run() {
                 String key = "Language.Teleportation-in-progress";
+                String message = HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key)) + " ";
+
                 if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.UseTitle")) {
-                    player.sendTitle(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key)) + " ", String.valueOf(time), 0, 1000, 0);
+                    player.sendTitle(message, String.valueOf(time), 0, 20, 0);
                 }
+
                 if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.UseMessage")) {
-                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key)) + " ", String.valueOf(time));
+                    player.sendMessage(message + time);
                 }
+
                 time--;
                 if (time <= 0) {
                     player.resetTitle();
@@ -114,7 +120,9 @@ public class TaskManager extends BukkitRunnable {
             }
         };
 
+        titleTask.runTaskTimer(plugin, 0L, 20L);
     }
+
 
 
     public Player getPlayer() {

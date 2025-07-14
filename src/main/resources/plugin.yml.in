@@ -1,0 +1,53 @@
+name: HomePlugin
+version: ${project.version}
+main: fr.fuzeblocks.homeplugin.HomePlugin
+api-version: '1.14'
+load: STARTUP
+author: fuzeblocks
+description: A lightweight and flexible home/spawn management plugin with admin tools and PlaceholderAPI support.
+website: https://modrinth.com/plugin/homeplugin
+softdepend:
+  - PlaceholderAPI
+
+commands:
+  sethome:
+    description: Set a home at your current location.
+  home:
+    description: Teleport to a specific home or open the home GUI.
+  delhome:
+    description: Delete a home by name.
+  listhome:
+    description: View a list of your homes.
+  spawn:
+    description: Teleport to the global spawn.
+  setspawn:
+    description: Define the global spawn location.
+  delspawn:
+    description: Remove the current spawn point.
+  cache:
+    description: Manage internal cache.
+  homeadmin:
+    description: View homes of another player.
+  plugins:
+    description: List all loaded plugins.
+
+
+permissions:
+  homeplugin.command.home:
+    description: Allows use of /home.
+    default: true
+  homeplugin.command.sethome:
+    description: Allows setting a home.
+    default: true
+  homeplugin.command.delhome:
+    description: Allows deleting a home.
+    default: true
+  homeplugin.command.listhome:
+    description: Allows listing homes.
+    default: true
+  homeplugin.command.spawn:
+    description: Allows teleporting to spawn.
+    default: true
+  homeplugin.admin:
+    description: Allows managing the internal cache and viewing homes of other players and add/deleting spawns.
+    default: op

@@ -101,7 +101,7 @@ public final class HomePlugin extends JavaPlugin {
             if (language == null) {
                 language = Language.FRENCH;
             }
-            languageManager = new LanguageManager(language);
+            languageManager = new LanguageManager(language,this);
     }
     private void redisRegistration() {
         if (getConfig().getBoolean("Config.Redis.UseRedis")) {

@@ -12,24 +12,29 @@ public  class DeleteHomeCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String key = "Language.";
+        String LANG = "Language.";
+        String HOME = "Home.";
         if (sender instanceof Player) {
             Player player = ((Player) sender).getPlayer();
+            if (!sender.hasPermission("homeplugin.command.delhome")) {
+                sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "No-permission")));
+                return false;
+            }
             if (args.length == 1) {
                 String home_name = args[0];
                 HomeManager homeManager = HomePlugin.getHomeManager();
                 OnHomeDeletedEvent onHomeDelete = new OnHomeDeletedEvent(player, homeManager.getHomeLocation(player, home_name), HomePlugin.getRegistrationType(), home_name);
                     if (!onHomeDelete.isCancelled() && homeManager.deleteHome(player, onHomeDelete.getHomeName())) {
                             HomePlugin.getCacheManager().delHomeInCache(player, onHomeDelete.getHomeName());
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Home-deleted")));
+                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(HOME + "Home-deleted")));
                             return true;
                         }
 
             } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home.DelHome-usage-message")));
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(HOME +"DelHome-usage-message")));
             }
         } else {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Only-a-player-can-execute")));
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "Only-a-player-can-execute")));
         }
         return false;
     }

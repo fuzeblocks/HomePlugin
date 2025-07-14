@@ -21,22 +21,21 @@ import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance
 public class HomeItem extends AbstractItem {
 
     private final String homeName;
-    private final HomePlugin homePlugin;
-    private final String key = "Language.";
+    private final String HOME = "Home.";
     private boolean deleted = false;
 
 
-    public HomeItem(String homeName,HomePlugin homePlugin) {
+    public HomeItem(String homeName) {
         this.homeName = homeName;
-        this.homePlugin = homePlugin;
     }
 
     @Override
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent inventoryClickEvent) {
             HomeManager homeManager = HomePlugin.getHomeManager();
+
             if (homeManager.exist(player,homeName)) {
                 if (clickType.isRightClick()) {
-                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Home-deleted-with-name").replace("{homeName}", homeName)));
+                    player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(HOME + "Home-deleted-with-name").replace("{homeName}", homeName));
                     // Logic to delete the home goes here
                     homeManager.deleteHome(player, homeName);
                     this.deleted = true;
@@ -49,7 +48,7 @@ public class HomeItem extends AbstractItem {
 
                 }
             } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key + "Home-does-not-exist")));
+                player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(HOME + "Home-does-not-exist"));
                 player.closeInventory();
             }
     }
@@ -60,11 +59,11 @@ public class HomeItem extends AbstractItem {
         if (deleted) {
             return new ItemBuilder(Material.AIR);
         } else {
-            String displayNameTemplate = HomePlugin.getLanguageManager().getString("Home.Home-item-displayname");
+            String displayNameTemplate = HomePlugin.getLanguageManager().getStringWithColor(HOME + "Home-item-displayname");
             String displayName = displayNameTemplate.replace("{homeName}", homeName);
 
-            String loreTeleport = HomePlugin.getLanguageManager().getString("Home.Home-item-lore-teleport");
-            String loreDelete = HomePlugin.getLanguageManager().getString("Home.Home-item-lore-delete");
+            String loreTeleport = HomePlugin.getLanguageManager().getStringWithColor(HOME + "Home-item-lore-teleport");
+            String loreDelete = HomePlugin.getLanguageManager().getStringWithColor(HOME + "Home-item-lore-delete");
 
             return new ItemBuilder(getRandomBedColor())
                     .setDisplayName(displayName)
