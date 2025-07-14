@@ -81,6 +81,7 @@ HomeAdmin:
   Home-not-found: "&cPlayer &e%player% &cdoes not have a home named &b%home%&c."
   Home-added: "&aHome &b%home% &ahas been added for &e%player%&a."
   Home-already-exists: "&cPlayer &e%player% &calready has a home named &b%home%&c."
+  Teleported-to-home: "&aYou have been teleported to &b%home%&a of player &e%player%&a."
 
 PluginCommand:
   Plugin-list-header: "&l§aLoaded plugin list:"

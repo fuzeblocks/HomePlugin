@@ -134,7 +134,7 @@ public class HomeAdminCommand implements CommandExecutor {
             return false;
         }
         player.teleport(loc);
-        sendMsg(player, ADMIN + "Teleported-to-home", "%home%", homeName);
+        sendMsg(player, ADMIN + "Teleported-to-home", "%home%", homeName, "%player%", target.getName());
         return true;
     }
 

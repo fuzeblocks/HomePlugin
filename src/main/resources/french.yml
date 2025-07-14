@@ -81,6 +81,7 @@ HomeAdmin:
   Home-not-found: "&cLe joueur &e%player% &cn'a pas de home nommé &b%home%&c."
   Home-added: "&aLe home &b%home% &aa été ajouté pour &e%player%&a."
   Home-already-exists: "&cLe joueur &e%player% &ca déjà un home nommé &b%home%&c."
+  Teleported-to-home: "&aVous avez été téléporté au home &b%home% &a appartenant au joueur &e%player%&a."
 
 
 PluginCommand:
