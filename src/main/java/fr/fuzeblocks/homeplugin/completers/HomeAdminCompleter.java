@@ -1,11 +1,13 @@
 package fr.fuzeblocks.homeplugin.completers;
 
+import fr.fuzeblocks.homeplugin.HomePlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +32,12 @@ public class HomeAdminCompleter implements TabCompleter {
                     .collect(Collectors.toList());
         }
 
+        if (args.length == 3 && "tphome".equalsIgnoreCase(args[0]) || "deletehome".equalsIgnoreCase(args[0])) {
+            Player player = Bukkit.getPlayer(args[1]);
+            if (player != null) {
+                return new ArrayList<>(HomePlugin.getHomeManager().getHomesName(player));
+            }
+        }
         return Collections.emptyList();
     }
 }

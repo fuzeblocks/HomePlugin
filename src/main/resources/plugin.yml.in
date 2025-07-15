@@ -30,6 +30,8 @@ commands:
     description: View homes of another player.
   plugins:
     description: List all loaded plugins.
+  lang:
+    description: Update or change the plugin language.
 
 
 permissions:
@@ -50,4 +52,7 @@ permissions:
     default: true
   homeplugin.admin:
     description: Allows managing the internal cache and viewing homes of other players and add/deleting spawns.
+    default: op
+  homeplugin.lang.update:
+    description: Allows updating the plugin language.
     default: op

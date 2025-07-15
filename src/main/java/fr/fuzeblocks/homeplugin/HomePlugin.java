@@ -65,12 +65,12 @@ public final class HomePlugin extends JavaPlugin {
         getLogger().info("----------HomePlugin a démmaré avec succés !----------");
         getLogger().info("------------------------------------------------------");
         countPlugins();
-        initPluginFonc();
+        initPluginFunc();
     }
 
     @Override
     public void onDisable() {
-        stopPluginFonc();
+        stopPluginFunc();
         getLogger().info("----------------------HomePlugin----------------------");
         getLogger().info("----------HomePlugin a été éteint avec succés !----------");
         getLogger().info("------------------------------------------------------");
@@ -173,6 +173,7 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("homeadmin").setExecutor(new HomeAdminCommand());
         getCommand("plugins").setExecutor(new PluginCommand());
         getCommand("listhome").setExecutor(new ListHomeCommand());
+        getCommand("lang").setExecutor(new LangCommand(this));
     }
 
     private void eventRegistration() {
@@ -188,26 +189,32 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("cache").setTabCompleter(new CacheCompleter());
         getCommand("sethome").setTabCompleter(new SetHomeCompleter());
         getCommand("homeadmin").setTabCompleter(new HomeAdminCompleter());
+        getCommand("lang").setTabCompleter(new LangTabCompleter(this));
     }
 
     private void checkUpdate(int id) {
         new UpdateChecker(this, id).getVersion(version -> {
-            if (this.getDescription().getVersion().equals(version)) {
-                getLogger().info("There is not a new update available.");
-            } else {
+            String local = this.getDescription().getVersion().replaceAll("[^0-9.]", "");
+            String remote = version.replaceAll("[^0-9.]", "");
+
+            int localVersion = Integer.parseInt(local.replace(".", ""));
+            int remoteVersion = Integer.parseInt(remote.replace(".", ""));
+
+            if (remoteVersion > localVersion) {
                 getLogger().warning("There is a new update available.");
             }
         });
     }
+
     private void loadPlugins() {
         if (checkPlugin() != null) {
             getLogger().info(checkPlugin().getName() + "." + "loaded plugin !");
         }
     }
-    private void initPluginFonc() {
+    private void initPluginFunc() {
         if (Objects.nonNull(checkPlugin())) checkPlugin().initialize();
     }
-    private void stopPluginFonc() {
+    private void stopPluginFunc() {
        if (Objects.nonNull(checkPlugin())) checkPlugin().stop();
     }
     private fr.fuzeblocks.homeplugin.plugin.HomePlugin checkPlugin() {
