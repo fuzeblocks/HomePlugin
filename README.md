@@ -49,6 +49,7 @@
 | `/cache [player, clearall, view]` | Manage internal cache. |
 | `/homeadmin [player]` | Admin view of another player's homes. |
 | `/plugins` | Admin view plugin enable. |
+| `/lang [update, merge, set]` | Manage languages files. |
 
 ---
 
