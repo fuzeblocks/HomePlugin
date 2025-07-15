@@ -9,30 +9,68 @@ import java.io.File;
 public class LanguageManager {
 
     private final Language language;
-    private final YamlConfiguration yamlConfiguration;
+    private YamlConfiguration yamlConfiguration;
+    private final File file;
+    private final HomePlugin plugin;
 
-    public LanguageManager(Language type,HomePlugin plugin) {
+    public LanguageManager(Language type, HomePlugin plugin) {
         this.language = type;
+        this.plugin = plugin;
+
         String fileName = type.toString().toLowerCase() + ".yml";
-        File file = new File(plugin.getDataFolder(), fileName);
-        plugin.saveResource(fileName, false);
-        yamlConfiguration = YamlConfiguration.loadConfiguration(file);
+        this.file = new File(plugin.getDataFolder(), fileName);
+
+        if (!file.exists()) {
+            plugin.saveResource(fileName, false);
+        }
+
+        this.yamlConfiguration = YamlConfiguration.loadConfiguration(file);
     }
+
     @Nullable
     public String getString(String key) {
         return yamlConfiguration.getString(key);
     }
+
     @Nullable
     public String getString(String key, String defaultValue) {
         return yamlConfiguration.getString(key, defaultValue);
     }
+
     @Nullable
     public String getStringWithColor(String key) {
         return HomePlugin.translateAlternateColorCodes(yamlConfiguration.getString(key));
     }
 
+    @Nullable
+    public String getStringWithColor(String key, String defaultValue) {
+        return HomePlugin.translateAlternateColorCodes(yamlConfiguration.getString(key, defaultValue));
+    }
+
+    /**
+     * Regenerates the language file from the internal resource and reloads it.
+     * Warning: this will overwrite the current file.
+     *
+     * @return true if the operation succeeded, false otherwise.
+     */
+    public boolean regenerate() {
+        try {
+            if (file.exists()) {
+                if (!file.delete()) {
+                    return false;
+                }
+            }
+            plugin.saveResource(file.getName(), true);
+            this.yamlConfiguration = YamlConfiguration.loadConfiguration(file);
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public Language getLanguage() {
         return language;
     }
-
 }

@@ -45,14 +45,13 @@ public class CacheCommand implements CommandExecutor {
                 cacheManager.clear();
                 sendMsg(player, CACHE + "Cache-cleared");
                 break;
-
             case "view":
                 if (args.length < 2) {
                     sendMsg(player, CACHE + "Cache-view-usage-command");
                     return false;
                 }
 
-                Player target = Bukkit.getPlayer(args[1]);
+               Player target = Bukkit.getPlayer(args[1]);
                 if (target == null) {
                     sendMsg(player, LANG + "Player-is-not-online");
                     return false;

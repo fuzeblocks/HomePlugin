@@ -10,7 +10,7 @@ public class SetHomeCompleter implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1) {
-            return List.of("info");
+            return List.of("INFO");
         }
         return null;
     }
