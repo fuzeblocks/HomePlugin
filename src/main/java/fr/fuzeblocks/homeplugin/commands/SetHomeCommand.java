@@ -134,18 +134,28 @@ public class SetHomeCommand implements CommandExecutor {
 
     private boolean isOnFloatingPlatform(Location loc) {
         World world = loc.getWorld();
-        int airCount = 0;
-        int solidCount = 0;
 
         for (int i = 1; i <= 10; i++) {
             Block b = world.getBlockAt(loc.getBlockX(), loc.getBlockY() - i, loc.getBlockZ());
-            if (b.getType() == Material.AIR) {
-                airCount++;
-            } else {
-                solidCount++;
+            if (b.getType() != Material.AIR) {
+                return false;
             }
         }
 
-        return airCount >= 8;
+        if (loc.getY() >= 100) {
+            return false; // Too high to be a cave
+        }
+
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dz = -1; dz <= 1; dz++) {
+                if (dx == 0 && dz == 0) continue;
+                Block nearby = world.getBlockAt(loc.getBlockX() + dx, loc.getBlockY(), loc.getBlockZ() + dz);
+                if (nearby.getType() != Material.AIR) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
