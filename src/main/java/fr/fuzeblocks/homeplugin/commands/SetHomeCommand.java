@@ -79,7 +79,7 @@ public class SetHomeCommand implements CommandExecutor {
         return false;
     }
 
-        private boolean canSetHome(Player player) {
+    private boolean canSetHome(Player player) {
         String bypassPerm = HomePlugin.getLanguageManager().getString(HOME + "Home-limite-permission-for-bypass");
         if (player.hasPermission(bypassPerm)) return true;
 
@@ -94,11 +94,11 @@ public class SetHomeCommand implements CommandExecutor {
     private String translate(String key) {
         return HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key));
     }
+
     private boolean isFair(Player player) {
         Location loc = player.getLocation();
         World world = loc.getWorld();
         if (world == null) return false;
-
 
 
         if (loc.getY() >= world.getMaxHeight() - 2 || loc.getY() <= 5) {
@@ -125,13 +125,13 @@ public class SetHomeCommand implements CommandExecutor {
         }
 
 
-
         if (isOnFloatingPlatform(loc)) {
             player.sendMessage(translate(HOME + "Floating-platform"));
             return false;
         }
         return true;
     }
+
     private boolean isOnFloatingPlatform(Location loc) {
         World world = loc.getWorld();
         int airCount = 0;
@@ -139,7 +139,7 @@ public class SetHomeCommand implements CommandExecutor {
 
         for (int i = 1; i <= 10; i++) {
             Block b = world.getBlockAt(loc.getBlockX(), loc.getBlockY() - i, loc.getBlockZ());
-            if (b.getType().isAir()) {
+            if (b.getType() == Material.AIR) {
                 airCount++;
             } else {
                 solidCount++;
@@ -148,5 +148,4 @@ public class SetHomeCommand implements CommandExecutor {
 
         return airCount >= 8;
     }
-
 }
