@@ -12,7 +12,7 @@ import java.util.UUID;
 public class TpaManager {
 
     private static final HashMap<UUID, BukkitRunnable> timeoutTasks = new HashMap<>();
-    private static final int TIMEOUT_SECONDS = 30;
+    private static final int TIMEOUT_SECONDS = HomePlugin.getConfigurationSection().getInt("Config.Tpa.Tpa-duration", 30);
 
     public static void sendTpaRequest(Player sender, Player target) {
         CacheManager cacheManager = CacheManager.getInstance();

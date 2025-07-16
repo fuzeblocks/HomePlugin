@@ -112,8 +112,8 @@ public final class HomePlugin extends JavaPlugin {
             jedisPooled = new JedisPooled(hostAndPort, jedisClientConfig);
         } else {
                 getLogger().info("Skipping Redis...");
-            }
-            if (jedisPooled != null) {
+                return;
+            } if (jedisPooled != null) {
                 getLogger().info("Redis registered successfully !");
             } else {
                 getLogger().info("Cannot connect to Redis... use default cache!");

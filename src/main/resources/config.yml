@@ -22,3 +22,6 @@ Config:
     UseTitle: true
     UseMessage: false
     Add-particles-after-teleport: true
+  Tpa:
+    Tpa-duration: 30 #second
+
