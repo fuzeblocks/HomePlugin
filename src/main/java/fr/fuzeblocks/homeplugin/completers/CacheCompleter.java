@@ -14,7 +14,6 @@ public class CacheCompleter implements TabCompleter {
         if (args.length == 1) {
             completer.add("clearall");
             completer.add("view");
-            completer.add("clear");
             return completer;
         }
 

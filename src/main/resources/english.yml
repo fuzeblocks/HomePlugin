@@ -110,3 +110,23 @@ LangCommand:
   Lang-config-save-fail: "&cFailed to save the config.yml file"
   Lang-unknown-subcommand: "&cUnknown subcommand. Usage: /lang <update|merge|set> <source file> [target file]"
 
+TpaCommand:
+  Tpa-usage-message: "&cUsage: /tpa <player>"
+  Tpa-request-sent: "&aTeleport request sent to %player%."
+  Tpa-request-received: "&e%player% has requested to teleport to you. Type &6/tpaccept&e to accept."
+  Tpa-request-accepted: "&aYou have accepted the teleport request from %player%."
+  Tpa-request-declined: "&cYou have declined the teleport request from %player%."
+  Tpa-request-expired: "&cThe teleport request has expired."
+  Tpa-no-request: "&cNo pending teleport request."
+  Tpa-player-not-found: "&cPlayer %player% is not online or does not exist."
+  Tpa-accept-usage: "&cUsage: /tpaccept <player>"
+  Tpa-deny-usage: "&cUsage: /tpdeny <player>"
+  Tpa-no-request-from-player: "&cYou have no teleport request from %player%."
+  Tpa-accepted: "&aYou accepted the teleport request from %player%."
+  Tpa-denied: "&cYou declined the teleport request from %player%."
+  Tpa-accepted-by-target: "&a%player% accepted your teleport request."
+  Tpa-denied-by-target: "&c%player% declined your teleport request."
+  Tpa-request-exists: "&eA teleport request already exists. Please wait for it to expire or for the player to accept/decline it."
+
+
+

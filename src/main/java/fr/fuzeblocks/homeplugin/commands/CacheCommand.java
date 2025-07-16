@@ -42,7 +42,7 @@ public class CacheCommand implements CommandExecutor {
 
         switch (subCommand) {
             case "clearall":
-                cacheManager.clear();
+                cacheManager.clearAllHomes();
                 sendMsg(player, CACHE + "Cache-cleared");
                 break;
             case "view":
@@ -57,7 +57,7 @@ public class CacheCommand implements CommandExecutor {
                     return false;
                 }
 
-                Map<String, Location> homes = cacheManager.getHomesInCache(target);
+                Map<String, Location> homes = cacheManager.getHomes(target.getUniqueId());
                 if (homes == null || homes.isEmpty()) {
                     sendMsg(player, CACHE + "Have-no-cache");
                     return false;
@@ -78,7 +78,7 @@ public class CacheCommand implements CommandExecutor {
                     return false;
                 }
 
-                cacheManager.clearPlayer(targetToClear);
+                cacheManager.clearHomes(targetToClear.getUniqueId());
                 sendMsg(player, CACHE + "Cache-player-cleared", "%player%", targetToClear.getName());
                 break;
         }

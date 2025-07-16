@@ -32,6 +32,13 @@ commands:
     description: List all loaded plugins.
   lang:
     description: Update or change the plugin language.
+  tpa:
+    description: Request teleportation to another player.
+  tpaccept:
+    description: Accept a teleportation request.
+  tpdeny:
+    description: Deny a teleportation request.
+
 
 
 permissions:
@@ -56,3 +63,7 @@ permissions:
   homeplugin.lang.update:
     description: Allows updating the plugin language.
     default: op
+  homeplugin.comand.tpa:
+    description: Allows sending/accept/deny teleport requests to other players.
+    default: true
+
