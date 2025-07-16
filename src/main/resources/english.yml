@@ -40,7 +40,7 @@ Home:
   Portal-location: "&cYou cannot set a home on a portal."
   End-disabled: "&cYou cannot set a home in the End."
   Floating-platform: "&cYou cannot set a home on a floating platform."
-
+  Water-location: "&cYou cannot set a home in water."
 
   Home-item-displayname: "({homeName}) Home"
   Home-item-lore-teleport: "&aClick to teleport to this home."

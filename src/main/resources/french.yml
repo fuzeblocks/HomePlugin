@@ -39,6 +39,7 @@ Home:
   Portal-location: "&cTu ne peux pas poser de home sur un portail."
   End-disabled: "&cTu ne peux pas poser de home dans l'End."
   Floating-platform: "&cTu ne peux pas poser de home sur une plateforme flottante."
+  Water-location: "&cTu ne peux pas poser de home dans l'eau."
 
   Home-item-displayname: "({homeName}) Home"
   Home-item-lore-teleport: "&aCliquez pour vous téléporter à ce home."

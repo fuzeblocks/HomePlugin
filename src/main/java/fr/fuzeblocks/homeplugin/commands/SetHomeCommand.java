@@ -107,9 +107,16 @@ public class SetHomeCommand implements CommandExecutor {
         }
 
 
+
         Material mat = loc.getBlock().getType();
         if (mat == Material.NETHER_PORTAL || mat == Material.END_PORTAL || mat == Material.END_GATEWAY) {
             player.sendMessage(translate(HOME + "Portal-location"));
+            return false;
+        }
+
+
+        if (mat == Material.WATER || mat == Material.BUBBLE_COLUMN) {
+            player.sendMessage(translate(HOME + "Water-location"));
             return false;
         }
 
