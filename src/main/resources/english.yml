@@ -36,6 +36,11 @@ Home:
   DelHome-usage-message: "&cUsage: /delhome <home-name>"
   home-location-format: "&6X: %.1f, Y: %.1f, Z: %.1f, World: %s"
   SetHome-permission-deny-message: "&cYou do not have permission to set a home!"
+  Invalid-height: "&cYou cannot set a home at this height."
+  Portal-location: "&cYou cannot set a home on a portal."
+  End-disabled: "&cYou cannot set a home in the End."
+  Floating-platform: "&cYou cannot set a home on a floating platform."
+
 
   Home-item-displayname: "({homeName}) Home"
   Home-item-lore-teleport: "&aClick to teleport to this home."
