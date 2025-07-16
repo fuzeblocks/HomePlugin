@@ -98,8 +98,8 @@ Use these placeholders with [PlaceholderAPI](https://www.spigotmc.org/resources/
 ## 🤝 Support & Contributions
 
 Found a bug? Have a suggestion? Want to contribute?  
-Join the GitHub repository:  
-[🔗 HomePlugin Repository](https://github.com/fuzeblocks/HomePlugin)
+Join the Discord server:  
+[🔗 Discord server](https://discord.gg/5zJyKz6Nfm)
 
 ---
 
