@@ -71,7 +71,7 @@ public class HomeCommand implements CommandExecutor {
 
                 Location homeLocation = homeManager.getHomeLocation(player, homeName);
                 if (homeLocation != null) {
-                    homeManager.getCacheManager().addHomeInCache(player, homeName, homeLocation);
+                    homeManager.getCacheManager().addHome(player.getUniqueId(), homeName, homeLocation);
                     TeleportationManager.teleportPlayerToHome(player, homeName);
                     return true;
                 } else {
@@ -98,7 +98,7 @@ public class HomeCommand implements CommandExecutor {
     }
 
     private boolean isInCache(HomeManager homeManager, Player player, String homeName) {
-        Map<String, Location> homes = homeManager.getCacheManager().getHomesInCache(player);
+        Map<String, Location> homes = homeManager.getCacheManager().getHomes(player.getUniqueId());
         return homes != null && homes.containsKey(homeName);
     }
 

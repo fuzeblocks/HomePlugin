@@ -1,5 +1,6 @@
 package fr.fuzeblocks.homeplugin.plugin;
 
+
 public interface HomePlugin {
     String getName();
     String getVersion();
@@ -8,15 +9,16 @@ public interface HomePlugin {
 
     /**
      * Initialize the plugin.
-     *
-     * @return true if initialization is successful, false otherwise
      */
-    boolean initialize();
+    void initialize();
 
     /**
      * Stop the plugin and perform any necessary cleanup.
-     *
-     * @return true if the plugin was successfully stopped, false otherwise
      */
-    boolean stop();
+     void stop();
+
+    boolean isSqlStorageEnabled();
+    boolean isPlaceholderApiHooked();
+    boolean isCacheEnabled();
+
 }

@@ -2,113 +2,127 @@ package fr.fuzeblocks.homeplugin.cache;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
+import fr.fuzeblocks.homeplugin.home.HomeStore;
+import fr.fuzeblocks.homeplugin.home.LocalHomeStore;
+import fr.fuzeblocks.homeplugin.home.RedisHomeStore;
+import fr.fuzeblocks.homeplugin.spawn.LocalSpawnStore;
+import fr.fuzeblocks.homeplugin.spawn.RedisSpawnStore;
+import fr.fuzeblocks.homeplugin.spawn.SpawnStore;
+import fr.fuzeblocks.homeplugin.tpa.LocalTpaRequestStore;
+import fr.fuzeblocks.homeplugin.tpa.RedisTpaRequestStore;
+import fr.fuzeblocks.homeplugin.tpa.TpaRequestStore;
 import org.bukkit.Location;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import redis.clients.jedis.JedisPooled;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 public class CacheManager {
+
     private static CacheManager instance;
-    private final HashMap<Player, HashMap<String, Location>> playerHomes = new HashMap<>();
-    private JedisPooled jedisPooled;
-    private final boolean useRedis = HomePlugin.getConfigurationSection().getBoolean("Config.Connector.Redis.UseRedis");
+
+    private final boolean useRedis;
+    private final JedisPooled jedis;
+
+    private final TpaRequestStore tpaRequestStore;
+    private final HomeStore homeStore;
+    private final SpawnStore spawnStore;
 
     private CacheManager() {
-        if (useRedis && jedisPooled == null) {
-            jedisPooled = HomePlugin.getJedisPooled();
+        this.useRedis = HomePlugin.getConfigurationSection().getBoolean("Config.Connector.Redis.UseRedis");
+        this.jedis = useRedis ? HomePlugin.getJedisPooled() : null;
+
+        if (useRedis) {
+            this.tpaRequestStore = new RedisTpaRequestStore(jedis);
+            this.homeStore = new RedisHomeStore(jedis);
+            this.spawnStore = new RedisSpawnStore(jedis);
+        } else {
+            this.tpaRequestStore = new LocalTpaRequestStore();
+            this.homeStore = new LocalHomeStore();
+            this.spawnStore = new LocalSpawnStore();
         }
     }
 
     public static synchronized CacheManager getInstance() {
-        if (instance == null) {
-            instance = new CacheManager();
-        }
+        if (instance == null) instance = new CacheManager();
         return instance;
     }
 
-    public void addHomeInCache(Player player, String homeName, Location location) {
-        if (useRedis) {
-            String serializedLocation = getStringFromLocation(location);
-            jedisPooled.hset(player.getUniqueId().toString(), homeName, serializedLocation);
-        } else {
-            playerHomes.computeIfAbsent(player, k -> new HashMap<>()).put(homeName, location);
-        }
+    // --- TPA REQUESTS ---
+
+    public void addTpaRequest(UUID sender, UUID target) {
+        tpaRequestStore.addTpaRequest(sender, target);
     }
 
-    public Map<String, Location> getHomesInCache(Player player) {
-        if (useRedis) {
-            Map<String, String> redisData = jedisPooled.hgetAll(player.getUniqueId().toString());
-            return deserializeLocationMap(redisData);
-        } else {
-            return playerHomes.get(player);
-        }
+    public UUID getTpaRequest(UUID sender) {
+        return tpaRequestStore.getTpaRequest(sender);
     }
 
-    public boolean delHomeInCache(Player player, String homeName) {
-        if (useRedis) {
-            jedisPooled.hdel(player.getUniqueId().toString(), homeName);
-            return true;
-        } else {
-            HashMap<String, Location> homes = playerHomes.get(player);
-            if (homes != null) {
-                homes.remove(homeName);
-                return true;
-            }
-            return false;
-        }
+    public boolean hasTpaRequest(UUID sender) {
+        return tpaRequestStore.hasTpaRequest(sender);
     }
 
-    public void clear() {
-        playerHomes.clear();
-        if (useRedis) {
-            jedisPooled.flushDB();
-        }
+    public void removeTpaRequest(UUID sender) {
+        tpaRequestStore.removeTpaRequest(sender);
     }
 
-    public void clearPlayer(Player player) {
-        if (useRedis) {
-            jedisPooled.del(player.getUniqueId().toString());
-        } else {
-            HashMap<String, Location> homes = playerHomes.get(player);
-            if (homes != null) {
-                homes.clear();
-            }
-        }
+    public Set<UUID> getAllTpaSenders() {
+        return tpaRequestStore.getAllSenders();
     }
 
-    public void addAllPlayerHomes(Player player) {
+    // --- HOMES ---
+
+    public void addHome(UUID playerId, String homeName, Location location) {
+        homeStore.addHome(playerId, homeName, location);
+    }
+
+    public void removeHome(UUID playerId, String homeName) {
+        homeStore.removeHome(playerId, homeName);
+    }
+
+    public Map<String, Location> getHomes(UUID playerId) {
+        return homeStore.getHomes(playerId);
+    }
+
+    public void clearHomes(UUID playerId) {
+        homeStore.clearHomes(playerId);
+    }
+
+    public void clearAllHomes() {
+        homeStore.clearAllHomes();
+    }
+
+    /**
+     * Charge toutes les homes du joueur depuis HomeManager et les ajoute au cache.
+     * @param player Joueur concerné
+     */
+    public void loadAllHomesToCache(Player player) {
         HomeManager homeManager = HomePlugin.getHomeManager();
         for (String homeName : homeManager.getHomesName(player)) {
-            Location homeLocation = homeManager.getHomeLocation(player, homeName);
-            addHomeInCache(player, homeName, homeLocation);
+            Location location = homeManager.getHomeLocation(player, homeName);
+            addHome(player.getUniqueId(), homeName, location);
         }
     }
 
-    private String getStringFromLocation(Location location) {
-        YamlConfiguration yamlConfiguration = new YamlConfiguration();
-        yamlConfiguration.set("location", location);
-        return yamlConfiguration.saveToString();
+    // --- SPAWN ---
+
+    public void setSpawn(Location location) {
+        spawnStore.setSpawn(location);
     }
 
-    private Location getLocationFromString(String serializedLocation) {
-        YamlConfiguration yamlConfiguration = new YamlConfiguration();
-        try {
-            yamlConfiguration.loadFromString(serializedLocation);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return (Location) yamlConfiguration.get("location");
+    public Location getSpawn() {
+        return spawnStore.getSpawn();
     }
 
-    private HashMap<String, Location> deserializeLocationMap(Map<String, String> map) {
-        HashMap<String, Location> locationMap = new HashMap<>();
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            Location location = getLocationFromString(entry.getValue());
-            locationMap.put(entry.getKey(), location);
-        }
-        return locationMap;
+    public void clearSpawn() {
+        spawnStore.clearSpawn();
+    }
+
+    // --- UTIL ---
+
+    public boolean isUsingRedis() {
+        return useRedis;
     }
 }

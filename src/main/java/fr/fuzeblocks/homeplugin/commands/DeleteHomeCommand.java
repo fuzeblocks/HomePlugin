@@ -25,7 +25,7 @@ public  class DeleteHomeCommand implements CommandExecutor {
                 HomeManager homeManager = HomePlugin.getHomeManager();
                 OnHomeDeletedEvent onHomeDelete = new OnHomeDeletedEvent(player, homeManager.getHomeLocation(player, home_name), HomePlugin.getRegistrationType(), home_name);
                     if (!onHomeDelete.isCancelled() && homeManager.deleteHome(player, onHomeDelete.getHomeName())) {
-                            HomePlugin.getCacheManager().delHomeInCache(player, onHomeDelete.getHomeName());
+                            HomePlugin.getCacheManager().removeHome(player.getUniqueId(), onHomeDelete.getHomeName());
                             player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(HOME + "Home-deleted")));
                             return true;
                         }

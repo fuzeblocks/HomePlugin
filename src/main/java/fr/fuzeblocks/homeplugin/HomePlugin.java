@@ -174,6 +174,9 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("plugins").setExecutor(new PluginCommand());
         getCommand("listhome").setExecutor(new ListHomeCommand());
         getCommand("lang").setExecutor(new LangCommand(this));
+        getCommand("tpa").setExecutor(new TpaCommand());
+        getCommand("tpaccept").setExecutor(new TpAcceptCommand());
+        getCommand("tpdeny").setExecutor(new TpDenyCommand());
     }
 
     private void eventRegistration() {
@@ -190,6 +193,9 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("sethome").setTabCompleter(new SetHomeCompleter());
         getCommand("homeadmin").setTabCompleter(new HomeAdminCompleter());
         getCommand("lang").setTabCompleter(new LangTabCompleter(this));
+        getCommand("tpa").setTabCompleter(new TpaCompleter());
+        getCommand("tpaccept").setTabCompleter(new TpAcceptCompleter());
+        getCommand("tpdeny").setTabCompleter(new TpDenyCompleter());
     }
 
     private void checkUpdate(int id) {
