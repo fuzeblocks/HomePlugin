@@ -132,7 +132,7 @@ public class SetHomeCommand implements CommandExecutor {
         }
 
 
-        if (isOnFloatingPlatform(loc)) {
+        if (isOnFloatingPlatform(loc) || mat == Material.AIR) {
             player.sendMessage(translate(HOME + "Floating-platform"));
             return false;
         }
