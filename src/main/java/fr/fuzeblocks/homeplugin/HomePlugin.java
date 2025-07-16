@@ -11,6 +11,7 @@ import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
 import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import fr.fuzeblocks.homeplugin.language.Language;
 import fr.fuzeblocks.homeplugin.language.LanguageManager;
+import fr.fuzeblocks.homeplugin.language.LanguageMerge;
 import fr.fuzeblocks.homeplugin.listeners.OnJoinListener;
 import fr.fuzeblocks.homeplugin.listeners.OnMoveListener;
 import fr.fuzeblocks.homeplugin.placeholder.HomePluginExpansion;
@@ -101,6 +102,7 @@ public final class HomePlugin extends JavaPlugin {
                 language = Language.FRENCH;
             }
             languageManager = new LanguageManager(language,this);
+            updateLanguage();
     }
     private void redisRegistration() {
         if (getConfig().getBoolean("Config.Redis.UseRedis")) {
@@ -237,6 +239,49 @@ public final class HomePlugin extends JavaPlugin {
             getLogger().warning("No plugins to load skipping...");
         }
     }
+    private void updateLanguage() {
+        String langName = HomePlugin.getLanguageManager().getLanguage().name().toLowerCase();
+        File oldFile = new File(getDataFolder(), langName + ".yml");
+
+        if (!oldFile.exists()) {
+            getLogger().warning(HomePlugin.getLanguageManager().getStringWithColor("LANG.Lang-file-not-exist")
+                    .replace("%file%", oldFile.getName()));
+            return;
+        }
+
+        File backupFile = new File(getDataFolder(), langName + "_backup.yml");
+        if (!oldFile.renameTo(backupFile)) {
+            getLogger().warning(HomePlugin.getLanguageManager().getStringWithColor("LANG.Lang-backup-fail"));
+            return;
+        }
+
+        if (!HomePlugin.getLanguageManager().regenerate()) {
+            getLogger().warning(HomePlugin.getLanguageManager().getStringWithColor("LANG.Lang-regeneration-fail"));
+            backupFile.renameTo(oldFile);
+            return;
+        }
+
+        File newFile = new File(getDataFolder(), langName + ".yml");
+
+        if (!newFile.exists()) {
+            getLogger().warning(HomePlugin.getLanguageManager().getStringWithColor("LANG.Lang-new-file-missing")
+                    .replace("%file%", newFile.getName()));
+            backupFile.renameTo(oldFile);
+            return;
+        }
+
+        LanguageMerge merger = new LanguageMerge(backupFile, newFile);
+        merger.mergeAddOnly();
+
+        if (!merger.pushTo(newFile)) {
+            getLogger().warning(HomePlugin.getLanguageManager().getStringWithColor("LANG.Lang-merge-error"));
+            return;
+        }
+
+        getLogger().info(HomePlugin.getLanguageManager().getStringWithColor("LANG.Lang-merge-success"));
+        Bukkit.getServer().shutdown();
+    }
+
 
     public static HomeYMLManager getHomeYMLManager() {
         return homeYMLManager;
