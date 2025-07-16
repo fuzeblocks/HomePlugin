@@ -18,22 +18,19 @@
 - [✅ Compatibility](#-compatibility)
 - [🤝 Support & Contributions](#-support--contributions)
 
----
-
 ## ✨ Features
 
 - 🔧 **Flexible Storage** – MySQL & YAML support  
 - ⚡ **Optional Redis Caching** – Boost performance  
 - 📦 **Public API** – Fully documented and easy to use  
 - 🏠 **Simple Home System** – Set, teleport, delete, and list homes  
-- 🧭 **Spawn Management** – Set/delete world spawn locations
-- ✨ **Tpa Management** - Send/manage tp request.
+- 🧭 **Spawn Management** – Set/delete world spawn locations  
+- ✨ **Tpa Management** – Send/manage tp request  
 - 🧩 **Plugin Loader** – Modular integration for developers  
 - 🎛️ **Custom Home Limits** – Configure max homes per player  
 - 💬 **PlaceholderAPI Support** – Custom placeholders in GUIs/chat  
-- 🛠️ **Admin Tools** – Manage other players’ homes easily
-
----
+- 🛠️ **Admin Tools** – Manage other players’ homes easily  
+- 🚫 **Home Validation System** – Prevent unfair home placements
 
 ## 🧾 Commands
 
@@ -94,7 +91,7 @@ Use these placeholders with [PlaceholderAPI](https://www.spigotmc.org/resources/
 
 ## ✅ Compatibility
 
-- 🧩 Minecraft **1.21.6** to **1.14.x**
+- 🧩 Minecraft **1.21.7** to **1.14.x**
 - Requires: [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)  
 - API versions: [GitHub Releases](https://github.com/fuzeblocks/HomePlugin/releases)
 
