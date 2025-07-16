@@ -5,10 +5,16 @@ import fr.fuzeblocks.homeplugin.api.event.OnHomeCreatedEvent;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.home.HomePermissionManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 public class SetHomeCommand implements CommandExecutor {
     private final String HOME = "Home.";
@@ -51,26 +57,29 @@ public class SetHomeCommand implements CommandExecutor {
 
             if (!canSetHome(player)) return false;
 
+            if (HomePlugin.getConfigurationSection().getBoolean("Config.Home.PreventUnfairLocation", true)) {
+                if (!isFair(player)) return false;
+            }
+
+            Location loc = player.getLocation();
+
             String homeName = args[0];
-            OnHomeCreatedEvent event = new OnHomeCreatedEvent(player, player.getLocation(), HomePlugin.getRegistrationType(), homeName);
+            OnHomeCreatedEvent event = new OnHomeCreatedEvent(player, loc, HomePlugin.getRegistrationType(), homeName);
             Bukkit.getPluginManager().callEvent(event);
 
             if (!event.isCancelled()) {
                 boolean success = homeManager.addHome(player, event.getHomeName());
-                if (success) {
-                    player.sendMessage(translate(HOME + "Home-added"));
-                } else {
-                    player.sendMessage(translate(LANG + "Error"));
-                }
+                player.sendMessage(translate(success ? HOME + "Home-added" : LANG + "Error"));
             }
 
             return true;
         }
+
         player.sendMessage(translate(HOME + "SetHome-usage-message"));
         return false;
     }
 
-    private boolean canSetHome(Player player) {
+        private boolean canSetHome(Player player) {
         String bypassPerm = HomePlugin.getLanguageManager().getString(HOME + "Home-limite-permission-for-bypass");
         if (player.hasPermission(bypassPerm)) return true;
 
@@ -85,4 +94,59 @@ public class SetHomeCommand implements CommandExecutor {
     private String translate(String key) {
         return HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key));
     }
+    private boolean isFair(Player player) {
+        Location loc = player.getLocation();
+        World world = loc.getWorld();
+        if (world == null) return false;
+
+
+
+        if (loc.getY() >= world.getMaxHeight() - 2 || loc.getY() <= 5) {
+            player.sendMessage(translate(HOME + "Invalid-height"));
+            return false;
+        }
+
+
+        Material mat = loc.getBlock().getType();
+        if (mat == Material.NETHER_PORTAL || mat == Material.END_PORTAL || mat == Material.END_GATEWAY) {
+            player.sendMessage(translate(HOME + "Portal-location"));
+            return false;
+        }
+
+
+        List<String> disabledWorlds = HomePlugin.getConfigurationSection()
+                .getStringList("Config.Home.DisabledWorlds");
+
+        if (disabledWorlds.stream()
+                .map(String::toLowerCase)
+                .anyMatch(name -> name.equals(world.getName().toLowerCase()))) {
+            player.sendMessage(translate(HOME + "End-disabled"));
+            return false;
+        }
+
+
+
+        if (isOnFloatingPlatform(loc)) {
+            player.sendMessage(translate(HOME + "Floating-platform"));
+            return false;
+        }
+        return true;
+    }
+    private boolean isOnFloatingPlatform(Location loc) {
+        World world = loc.getWorld();
+        int airCount = 0;
+        int solidCount = 0;
+
+        for (int i = 1; i <= 10; i++) {
+            Block b = world.getBlockAt(loc.getBlockX(), loc.getBlockY() - i, loc.getBlockZ());
+            if (b.getType().isAir()) {
+                airCount++;
+            } else {
+                solidCount++;
+            }
+        }
+
+        return airCount >= 8;
+    }
+
 }

@@ -1,5 +1,4 @@
 Language:
-
   Teleportation-in-progress: "&e&lTéléportation dans :"
   Start-of-teleportation: "&6Début de la téléportation vers le home :"
   Start-of-teleportation-for-spawn: "&6Début de la téléportation vers le spawn."
@@ -36,6 +35,10 @@ Home:
   DelHome-usage-message: "&cUtilisation : /delhome <nom-du-home>"
   home-location-format: "&6X: %.1f, Y: %.1f, Z: %.1f, Monde: %s"
   SetHome-permission-deny-message: "&cVous n'avez pas la permission de poser un home !"
+  Invalid-height: "&cTu ne peux pas poser de home à cette hauteur."
+  Portal-location: "&cTu ne peux pas poser de home sur un portail."
+  End-disabled: "&cTu ne peux pas poser de home dans l'End."
+  Floating-platform: "&cTu ne peux pas poser de home sur une plateforme flottante."
 
   Home-item-displayname: "({homeName}) Home"
   Home-item-lore-teleport: "&aCliquez pour vous téléporter à ce home."

@@ -17,6 +17,10 @@ Config:
     PASSWORD: ""
   Home:
     DefaultHomeLimit: 3
+    PreventUnfairLocation: true
+    DisabledWorlds:
+      - "world_nether"
+      - "world_the_end"
   Task:
     Task-duration: 3 #second
     UseTitle: true
