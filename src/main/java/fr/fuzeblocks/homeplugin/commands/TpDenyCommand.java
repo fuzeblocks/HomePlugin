@@ -21,6 +21,14 @@ public class TpDenyCommand implements CommandExecutor {
             return true;
         }
 
+        if (!sender.hasPermission("homeplugin.command.tpa")) {
+            sender.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(
+                    "No-permission",
+                    "&cVous n'avez pas la permission d'exécuter cette commande."
+            ));
+            return true;
+        }
+
         Player target = (Player) sender;
 
         if (args.length != 1) {

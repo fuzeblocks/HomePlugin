@@ -19,12 +19,20 @@ public class TpaCommand implements CommandExecutor {
             return true;
         }
 
+        if (!sender.hasPermission("homeplugin.command.tpa")) {
+            sender.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(
+                    "No-permission",
+                    "&cVous n'avez pas la permission d'exécuter cette commande."
+            ));
+            return true;
+        }
+
         Player player = (Player) sender;
 
         if (args.length == 1) {
             Player target = Bukkit.getPlayer(args[0]);
 
-            if (target != null && target.isOnline()) {
+            if (target != null && target.isOnline() && !target.equals(player)) {
                 TpaManager.sendTpaRequest(player, target);
             } else {
                 player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(
