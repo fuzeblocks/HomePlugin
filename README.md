@@ -26,7 +26,8 @@
 - ⚡ **Optional Redis Caching** – Boost performance  
 - 📦 **Public API** – Fully documented and easy to use  
 - 🏠 **Simple Home System** – Set, teleport, delete, and list homes  
-- 🧭 **Spawn Management** – Set/delete world spawn locations  
+- 🧭 **Spawn Management** – Set/delete world spawn locations
+- ✨ **Tpa Management** - Send/manage tp request.
 - 🧩 **Plugin Loader** – Modular integration for developers  
 - 🎛️ **Custom Home Limits** – Configure max homes per player  
 - 💬 **PlaceholderAPI Support** – Custom placeholders in GUIs/chat  
@@ -50,6 +51,10 @@
 | `/homeadmin [player]` | Admin view of another player's homes. |
 | `/plugins` | Admin view plugin enable. |
 | `/lang [update, merge, set]` | Manage languages files. |
+| `/tpa` | Send a tp request. |
+| `/tpaccept [player]` | Accept a tp request. |
+| `/tpdeny [player]` | Deny a tp request. |
+
 
 ---
 
