@@ -63,7 +63,7 @@ permissions:
   homeplugin.lang.update:
     description: Allows updating the plugin language.
     default: op
-  homeplugin.comand.tpa:
+  homeplugin.command.tpa:
     description: Allows sending/accept/deny teleport requests to other players.
     default: true
 
