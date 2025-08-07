@@ -114,6 +114,4 @@ run/
 .github/
 .gitignore
 
-deploy.ps1
-psftp.exe
-mdp.txt
+
