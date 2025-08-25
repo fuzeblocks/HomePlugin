@@ -73,6 +73,13 @@ Use these placeholders with [PlaceholderAPI](https://www.spigotmc.org/resources/
 
 ---
 
+## 🗒️ Supported languages
+
+1. French 
+2. English
+3. Spanish
+4. Made by you (custom.yml)
+
 ## 📥 Installation
 
 1. ⬇️ Download from [Modrinth](https://modrinth.com/plugin/homeplugin/versions)  
@@ -91,7 +98,7 @@ Use these placeholders with [PlaceholderAPI](https://www.spigotmc.org/resources/
 
 ## ✅ Compatibility
 
-- 🧩 Minecraft **1.21.7** to **1.14.x**
+- 🧩 Minecraft **1.21.8** to **1.14.x**
 - Requires: [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)  
 - API versions: [GitHub Releases](https://github.com/fuzeblocks/HomePlugin/releases)
 
