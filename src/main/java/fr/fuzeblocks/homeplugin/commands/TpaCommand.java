@@ -10,7 +10,9 @@ import org.jetbrains.annotations.NotNull;
 public class TpaCommand implements CommandExecutor {
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
+                             @NotNull String label, @NotNull String[] args) {
+
         if (!(sender instanceof Player)) {
             sender.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(
                     "Only-a-player-can-execute",
@@ -32,22 +34,32 @@ public class TpaCommand implements CommandExecutor {
         if (args.length == 1) {
             Player target = Bukkit.getPlayer(args[0]);
 
-            if (target != null && target.isOnline() && !target.equals(player)) {
-                TpaManager.sendTpaRequest(player, target);
-            } else {
+            if (target == null || !target.isOnline()) {
                 player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(
-                        "TpaCommand.Tpa-player-not-found"
+                        "TpaCommand.Tpa-player-not-found",
+                        "&cLe joueur %player% n'est pas en ligne ou n'existe pas."
                 ).replace("%player%", args[0]));
+                return true;
             }
 
+            if (target.equals(player)) {
+                player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(
+                        "TpaCommand.Tpa-cannot-request-yourself",
+                        "&cVous ne pouvez pas vous envoyer une demande de téléportation à vous-même."
+                ));
+                return true;
+            }
+
+
+            TpaManager.sendTpaRequest(player, target);
             return true;
+
         } else {
             player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(
                     "TpaCommand.Tpa-usage-message",
                     "&cUtilisation : /tpa <joueur>"
             ));
+            return true;
         }
-
-        return true;
     }
 }

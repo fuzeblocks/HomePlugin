@@ -2,9 +2,9 @@ package fr.fuzeblocks.homeplugin.tpa;
 
 import redis.clients.jedis.JedisPooled;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class RedisTpaRequestStore implements TpaRequestStore {
 
@@ -21,7 +21,21 @@ public class RedisTpaRequestStore implements TpaRequestStore {
     }
 
     @Override
-    public UUID getTpaRequest(UUID sender) {
+    public boolean hasTpaRequest(UUID sender, UUID target) {
+        String stored = jedis.hget(sender.toString(), FIELD_TPA_TARGET);
+        return target.toString().equals(stored);
+    }
+
+    @Override
+    public void removeTpaRequest(UUID sender, UUID target) {
+        String stored = jedis.hget(sender.toString(), FIELD_TPA_TARGET);
+        if (target.toString().equals(stored)) {
+            jedis.hdel(sender.toString(), FIELD_TPA_TARGET);
+        }
+    }
+
+    @Override
+    public UUID getTargetWithSender(UUID sender) {
         String targetUuid = jedis.hget(sender.toString(), FIELD_TPA_TARGET);
         if (targetUuid == null) return null;
         try {
@@ -32,26 +46,28 @@ public class RedisTpaRequestStore implements TpaRequestStore {
     }
 
     @Override
-    public boolean hasTpaRequest(UUID sender) {
-        return jedis.hexists(sender.toString(), FIELD_TPA_TARGET);
-    }
-
-    @Override
-    public void removeTpaRequest(UUID sender) {
-        jedis.hdel(sender.toString(), FIELD_TPA_TARGET);
-    }
-
-    @Override
-    public Set<UUID> getAllSenders() {
-        Set<UUID> senders = new HashSet<>();
+    public boolean hasIncomingTpa(UUID target) {
         Set<String> keys = jedis.keys("*");
         for (String key : keys) {
-            if (jedis.hexists(key, FIELD_TPA_TARGET)) {
+            String stored = jedis.hget(key, FIELD_TPA_TARGET);
+            if (target.toString().equals(stored)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public UUID getSenderForTarget(UUID target) {
+        Set<String> keys = jedis.keys("*");
+        for (String key : keys) {
+            String stored = jedis.hget(key, FIELD_TPA_TARGET);
+            if (target.toString().equals(stored)) {
                 try {
-                    senders.add(UUID.fromString(key));
+                    return UUID.fromString(key);
                 } catch (IllegalArgumentException ignored) {}
             }
         }
-        return senders;
+        return null;
     }
 }

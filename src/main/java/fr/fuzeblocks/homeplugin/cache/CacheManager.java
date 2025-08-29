@@ -56,21 +56,29 @@ public class CacheManager {
         tpaRequestStore.addTpaRequest(sender, target);
     }
 
-    public UUID getTpaRequest(UUID sender) {
-        return tpaRequestStore.getTpaRequest(sender);
+
+    public boolean hasTpaRequest(UUID sender,UUID target) {
+        return tpaRequestStore.hasTpaRequest(sender,target);
     }
 
-    public boolean hasTpaRequest(UUID sender) {
-        return tpaRequestStore.hasTpaRequest(sender);
+    public void removeTpaRequest(UUID sender,UUID target) {
+        tpaRequestStore.removeTpaRequest(sender, target);
     }
 
-    public void removeTpaRequest(UUID sender) {
-        tpaRequestStore.removeTpaRequest(sender);
+    public UUID getTargetWithSender(UUID sender) {
+       return tpaRequestStore.getTargetWithSender(sender);
     }
 
-    public Set<UUID> getAllTpaSenders() {
-        return tpaRequestStore.getAllSenders();
+    public boolean hasIncomingTpa(UUID target) {
+        return tpaRequestStore.hasIncomingTpa(target);
     }
+
+    public UUID getSenderForTarget(UUID target) {
+        return tpaRequestStore.getSenderForTarget(target);
+    }
+
+
+
 
     // --- HOMES ---
 

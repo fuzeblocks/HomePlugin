@@ -1,9 +1,11 @@
 package fr.fuzeblocks.homeplugin.tpa;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class LocalTpaRequestStore implements TpaRequestStore {
-    private final Map<UUID, UUID> tpaRequests = new HashMap<>();
+    private final Map<UUID, UUID> tpaRequests = new HashMap<>(); // sender -> target
 
     @Override
     public void addTpaRequest(UUID sender, UUID target) {
@@ -11,22 +13,33 @@ public class LocalTpaRequestStore implements TpaRequestStore {
     }
 
     @Override
-    public UUID getTpaRequest(UUID sender) {
+    public boolean hasTpaRequest(UUID sender, UUID target) {
+        return target.equals(tpaRequests.get(sender));
+    }
+
+    @Override
+    public void removeTpaRequest(UUID sender, UUID target) {
+        if (target.equals(tpaRequests.get(sender))) {
+            tpaRequests.remove(sender);
+        }
+    }
+
+    @Override
+    public UUID getTargetWithSender(UUID sender) {
         return tpaRequests.get(sender);
     }
 
     @Override
-    public boolean hasTpaRequest(UUID sender) {
-        return tpaRequests.containsKey(sender);
+    public boolean hasIncomingTpa(UUID target) {
+        return tpaRequests.containsValue(target);
     }
 
     @Override
-    public void removeTpaRequest(UUID sender) {
-        tpaRequests.remove(sender);
-    }
-
-    @Override
-    public Set<UUID> getAllSenders() {
-        return new HashSet<>(tpaRequests.keySet());
+    public UUID getSenderForTarget(UUID target) {
+        return tpaRequests.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(target))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(null);
     }
 }

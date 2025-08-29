@@ -48,14 +48,16 @@ public class TpDenyCommand implements CommandExecutor {
             return true;
         }
 
-        TpaRequest request = TpaManager.getRequest(senderPlayer.getUniqueId());
-        if (request == null || !request.target.getUniqueId().equals(target.getUniqueId())) {
+
+        TpaRequest request = TpaManager.getRequest(target.getUniqueId());
+        if (request == null || !request.sender.getUniqueId().equals(senderPlayer.getUniqueId())) {
             target.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(
                     "TpaCommand.Tpa-no-request-from-player",
                     "&cVous n'avez pas de demande de téléportation de %player%."
             ).replace("%player%", senderPlayer.getName()));
             return true;
         }
+
 
         senderPlayer.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(
                 "TpaCommand.Tpa-denied-by-target",

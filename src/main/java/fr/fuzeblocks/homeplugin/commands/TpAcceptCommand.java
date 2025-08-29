@@ -31,7 +31,6 @@ public class TpAcceptCommand implements CommandExecutor {
         }
 
         Player target = (Player) sender;
-
         if (args.length != 1) {
             target.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(
                     "TpaCommand.Tpa-accept-usage",
@@ -40,7 +39,7 @@ public class TpAcceptCommand implements CommandExecutor {
             return true;
         }
 
-        Player senderPlayer = Bukkit.getPlayer(args[0]);
+        Player senderPlayer = Bukkit.getPlayer(args[0]); // celui qui a fait /tpa
         if (senderPlayer == null || !senderPlayer.isOnline()) {
             target.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(
                     "TpaCommand.Tpa-player-not-found",
@@ -49,14 +48,16 @@ public class TpAcceptCommand implements CommandExecutor {
             return true;
         }
 
-        TpaRequest request = TpaManager.getRequest(senderPlayer.getUniqueId());
-        if (request == null || !request.target.getUniqueId().equals(target.getUniqueId())) {
+
+        TpaRequest request = TpaManager.getRequest(target.getUniqueId());
+        if (request == null || !request.sender.getUniqueId().equals(senderPlayer.getUniqueId())) {
             target.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(
                     "TpaCommand.Tpa-no-request-from-player",
                     "&cVous n'avez pas de demande de téléportation de %player%."
             ).replace("%player%", senderPlayer.getName()));
             return true;
         }
+
 
         Location loc = target.getLocation();
         senderPlayer.teleport(loc);
