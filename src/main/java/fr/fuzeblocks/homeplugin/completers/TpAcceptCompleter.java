@@ -23,7 +23,7 @@ public class TpAcceptCompleter implements TabCompleter {
         CacheManager cacheManager = CacheManager.getInstance();
 
         for (UUID senderUUID : cacheManager.getAllTpaSenders()) {
-            UUID tpaTargetUUID = cacheManager.getTpaRequest(senderUUID);
+            UUID tpaTargetUUID = cacheManager.getTpaTarget(senderUUID);
             if (tpaTargetUUID != null && tpaTargetUUID.equals(target.getUniqueId())) {
                 Player requester = Bukkit.getPlayer(senderUUID);
                 if (requester != null && requester.isOnline()) {

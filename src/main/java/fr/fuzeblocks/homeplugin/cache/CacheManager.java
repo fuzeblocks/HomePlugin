@@ -77,6 +77,14 @@ public class CacheManager {
         return tpaRequestStore.getSenderForTarget(target);
     }
 
+    public UUID getTpaTarget(UUID senderId) {
+        return tpaRequestStore.getTpaTarget(senderId); // tpaRequests : Map<UUID, UUID>
+    }
+    public  Set<UUID> getAllTpaSenders() {
+        return tpaRequestStore.getAllTpaSenders();
+    }
+
+
 
 
 

@@ -23,8 +23,9 @@ public class TpDenyCompleter implements TabCompleter {
         Player player = (Player) sender;
         CacheManager cacheManager = CacheManager.getInstance();
 
+
         for (UUID senderUUID : cacheManager.getAllTpaSenders()) {
-            UUID targetUUID = cacheManager.getTpaRequest(senderUUID);
+            UUID targetUUID = cacheManager.getTpaTarget(senderUUID);
             if (targetUUID != null && targetUUID.equals(player.getUniqueId())) {
                 Player requester = Bukkit.getPlayer(senderUUID);
                 if (requester != null && requester.isOnline()) {

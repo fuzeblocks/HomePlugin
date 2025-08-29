@@ -70,4 +70,30 @@ public class RedisTpaRequestStore implements TpaRequestStore {
         }
         return null;
     }
+
+    @Override
+    public UUID getTpaTarget(UUID senderId) {
+        String targetUuid = jedis.hget(senderId.toString(), FIELD_TPA_TARGET);
+        if (targetUuid == null) return null;
+        try {
+            return UUID.fromString(targetUuid);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
+    public Set<UUID> getAllTpaSenders() {
+        Set<String> keys = jedis.keys("*");
+        return keys.stream()
+                .map(key -> {
+                    try {
+                        return UUID.fromString(key);
+                    } catch (IllegalArgumentException e) {
+                        return null;
+                    }
+                })
+                .filter(uuid -> uuid != null)
+                .collect(Collectors.toSet());
+    }
+
+
 }

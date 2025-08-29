@@ -2,6 +2,7 @@ package fr.fuzeblocks.homeplugin.tpa;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public class LocalTpaRequestStore implements TpaRequestStore {
@@ -41,5 +42,12 @@ public class LocalTpaRequestStore implements TpaRequestStore {
                 .map(Map.Entry::getKey)
                 .findFirst()
                 .orElse(null);
+    }
+    @Override
+    public UUID getTpaTarget(UUID senderId) {
+        return tpaRequests.get(senderId); // tpaRequests : Map<UUID, UUID>
+    }
+    public Set<UUID> getAllTpaSenders() {
+        return tpaRequests.keySet();
     }
 }
