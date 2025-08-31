@@ -37,6 +37,7 @@
                     <include>plugin.yml.in</include>
                     <include>french.yml</include>
                     <include>english.yml</include>
+                    <include>spanish.yml</include>
                     <include>config.yml</include>
                     <include>custom.yml</include>
                 </includes>
