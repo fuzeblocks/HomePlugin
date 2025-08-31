@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class RedisHomeStore implements HomeStore {
+public class RedisHomeStore implements HomeRequestStore {
 
     private final JedisPooled jedis;
 

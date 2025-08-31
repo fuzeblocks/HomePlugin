@@ -27,5 +27,8 @@ Config:
     UseMessage: false
     Add-particles-after-teleport: true
   Tpa:
-    Tpa-duration: 30 #second
+    Tpa-duration: 30 #seconds
+  Rtp:
+    cooldown-seconds: 1000 #seconds
+    max-radius: 200
 

@@ -131,3 +131,10 @@ TpaCommand:
   Tpa-accepted-by-target: "&a%player% ha aceptado tu solicitud de teletransportación."
   Tpa-denied-by-target: "&c%player% ha rechazado tu solicitud de teletransportación."
   Tpa-request-exists: "&eYa existe una solicitud de teletransportación. Espera a que expire o que el jugador la acepte/rechace."
+
+Rtp:
+  Teleportation-in-progress: "&eTeletransportación aleatoria en curso..."
+  Teleport-success: "&a¡Teletransportación aleatoria exitosa!"
+  Teleport-failed: "&cNo se pudo encontrar un lugar seguro para teletransportarse."
+  Cooldown-message: "&cDebes esperar %seconds% segundos antes de volver a usar RTP."
+

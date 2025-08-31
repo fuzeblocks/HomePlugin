@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class LocalHomeStore implements HomeStore {
+public class LocalHomeStore implements HomeRequestStore {
     private final Map<UUID, Map<String, Location>> playerHomes = new HashMap<>();
 
     @Override

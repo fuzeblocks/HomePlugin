@@ -38,6 +38,8 @@ commands:
     description: Accept a teleportation request.
   tpdeny:
     description: Deny a teleportation request.
+  rtp:
+    description: Teleport to a random location within a specified radius.
 
 
 
