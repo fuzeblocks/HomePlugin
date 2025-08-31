@@ -51,6 +51,7 @@
 | `/tpa` | Send a tp request. |
 | `/tpaccept [player]` | Accept a tp request. |
 | `/tpdeny [player]` | Deny a tp request. |
+| `/rtp` | Deny a tp request. |
 
 
 ---
