@@ -2,7 +2,7 @@ package fr.fuzeblocks.homeplugin.spawn;
 
 import org.bukkit.Location;
 
-public class LocalSpawnStore implements SpawnStore {
+public class LocalSpawnStore implements SpawnRequestStore {
     private Location spawnLocation;
 
     @Override

@@ -2,12 +2,15 @@ package fr.fuzeblocks.homeplugin.cache;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
-import fr.fuzeblocks.homeplugin.home.HomeStore;
+import fr.fuzeblocks.homeplugin.home.HomeRequestStore;
 import fr.fuzeblocks.homeplugin.home.LocalHomeStore;
 import fr.fuzeblocks.homeplugin.home.RedisHomeStore;
+import fr.fuzeblocks.homeplugin.rtp.LocalRtpRequestStore;
+import fr.fuzeblocks.homeplugin.rtp.RedisRtpRequestStore;
+import fr.fuzeblocks.homeplugin.rtp.RtpRequestStore;
 import fr.fuzeblocks.homeplugin.spawn.LocalSpawnStore;
 import fr.fuzeblocks.homeplugin.spawn.RedisSpawnStore;
-import fr.fuzeblocks.homeplugin.spawn.SpawnStore;
+import fr.fuzeblocks.homeplugin.spawn.SpawnRequestStore;
 import fr.fuzeblocks.homeplugin.tpa.LocalTpaRequestStore;
 import fr.fuzeblocks.homeplugin.tpa.RedisTpaRequestStore;
 import fr.fuzeblocks.homeplugin.tpa.TpaRequestStore;
@@ -18,6 +21,7 @@ import redis.clients.jedis.JedisPooled;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CacheManager {
 
@@ -27,8 +31,9 @@ public class CacheManager {
     private final JedisPooled jedis;
 
     private final TpaRequestStore tpaRequestStore;
-    private final HomeStore homeStore;
-    private final SpawnStore spawnStore;
+    private final HomeRequestStore homeStore;
+    private final SpawnRequestStore spawnStore;
+    private final RtpRequestStore rtpRequestStore;
 
     private CacheManager() {
         this.useRedis = HomePlugin.getConfigurationSection().getBoolean("Config.Connector.Redis.UseRedis");
@@ -38,10 +43,12 @@ public class CacheManager {
             this.tpaRequestStore = new RedisTpaRequestStore(jedis);
             this.homeStore = new RedisHomeStore(jedis);
             this.spawnStore = new RedisSpawnStore(jedis);
+            this.rtpRequestStore = new RedisRtpRequestStore(jedis);
         } else {
             this.tpaRequestStore = new LocalTpaRequestStore();
             this.homeStore = new LocalHomeStore();
             this.spawnStore = new LocalSpawnStore();
+            this.rtpRequestStore = new LocalRtpRequestStore();
         }
     }
 
@@ -83,8 +90,6 @@ public class CacheManager {
     public  Set<UUID> getAllTpaSenders() {
         return tpaRequestStore.getAllTpaSenders();
     }
-
-
 
 
 
@@ -135,6 +140,35 @@ public class CacheManager {
     public void clearSpawn() {
         spawnStore.clearSpawn();
     }
+
+    // --- RTP ---
+
+
+
+        public void addRtpRequest(UUID playerId, Long timestamp) {
+            rtpRequestStore.addRtpRequest(playerId, timestamp);
+        }
+
+        public Long getRtpRequest(UUID playerId) {
+            return rtpRequestStore.getRtpRequest(playerId);
+        }
+
+
+        public void removeRtpRequest(UUID playerId) {
+            rtpRequestStore.removeRtpRequest(playerId);
+        }
+
+
+        public boolean hasRtpRequest(UUID playerId) {
+            return rtpRequestStore.hasRtpRequest(playerId);
+        }
+
+
+        public Map<UUID, Long> getAllRtpRequests() {
+            return rtpRequestStore.getAllRtpRequests();
+        }
+
+
 
     // --- UTIL ---
 

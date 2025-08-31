@@ -133,4 +133,11 @@ TpaCommand:
   Tpa-denied-by-target: "&c%player% declined your teleport request."
   Tpa-request-exists: "&eA teleport request already exists. Please wait for it to expire or for the player to accept/decline it."
 
+Rtp:
+  Teleportation-in-progress: "&eRandom teleportation in progress..."
+  Teleport-success: "&aRandom teleportation successful!"
+  Teleport-failed: "&cUnable to find a safe location to teleport."
+  Cooldown-message: "&cYou must wait %seconds% seconds before using RTP again."
+
+
 

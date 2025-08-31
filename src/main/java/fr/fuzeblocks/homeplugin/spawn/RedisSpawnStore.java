@@ -4,7 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import redis.clients.jedis.JedisPooled;
 
-public class RedisSpawnStore implements SpawnStore {
+public class RedisSpawnStore implements SpawnRequestStore {
 
     private final JedisPooled jedis;
     private static final String SPAWN_KEY = "global_spawn";
