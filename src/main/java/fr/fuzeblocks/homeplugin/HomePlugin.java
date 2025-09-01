@@ -14,6 +14,7 @@ import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.language.LanguageMerge;
 import fr.fuzeblocks.homeplugin.listeners.OnJoinListener;
 import fr.fuzeblocks.homeplugin.listeners.OnMoveListener;
+import fr.fuzeblocks.homeplugin.listeners.OnPlayerTakeDamageByAnotherPlayer;
 import fr.fuzeblocks.homeplugin.placeholder.HomePluginExpansion;
 import fr.fuzeblocks.homeplugin.plugin.PluginManager;
 import fr.fuzeblocks.homeplugin.spawn.SpawnManager;
@@ -185,6 +186,7 @@ public final class HomePlugin extends JavaPlugin {
         getLogger().info("Registering Events");
         Bukkit.getPluginManager().registerEvents(new OnJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new OnMoveListener(), this);
+        Bukkit.getPluginManager().registerEvents(new OnPlayerTakeDamageByAnotherPlayer(),this);
     }
 
     private void completerManager() {

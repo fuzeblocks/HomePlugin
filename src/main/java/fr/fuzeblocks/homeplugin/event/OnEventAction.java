@@ -1,6 +1,7 @@
-package fr.fuzeblocks.homeplugin.api.event;
+package fr.fuzeblocks.homeplugin.event;
 
 import fr.fuzeblocks.homeplugin.sync.SyncMethod;
+import fr.fuzeblocks.homeplugin.tpa.TpaRequest;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -10,9 +11,9 @@ import org.bukkit.event.HandlerList;
 public class OnEventAction extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private String homeName;
-    private Player player;
-    private Location location;
-    private SyncMethod type;
+    private final Player player;
+    private final Location location;
+    private final SyncMethod type;
     private boolean isCancelled = false;
 
     public OnEventAction(Player player, Location location, SyncMethod type) {
@@ -24,8 +25,10 @@ public class OnEventAction extends Event implements Cancellable {
     public OnEventAction(Player player, Location location) {
         this.player = player;
         this.location = location;
+        type = null;
     }
-    public OnEventAction(Player player, Location location,SyncMethod type,String homeName) {
+
+    public OnEventAction(Player player, Location location, SyncMethod type, String homeName) {
         this.player = player;
         this.location = location;
         this.type = type;
@@ -36,9 +39,15 @@ public class OnEventAction extends Event implements Cancellable {
         this.player = player;
         this.location = location;
         this.homeName = homeName;
+        type = null;
+    }
+    public OnEventAction(TpaRequest tpaRequest) {
+        this.player = tpaRequest.sender;
+        this.location = tpaRequest.target.getLocation();
+        this.type = null;
     }
 
-    public static HandlerList getHandlerList() {
+        public static HandlerList getHandlerList() {
         return handlers;
     }
 
@@ -51,16 +60,8 @@ public class OnEventAction extends Event implements Cancellable {
         return player;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
     public Location getLocation() {
         return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
     }
 
     public SyncMethod getType() {

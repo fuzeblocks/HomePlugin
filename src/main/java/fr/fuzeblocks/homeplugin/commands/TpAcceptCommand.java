@@ -1,6 +1,7 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.event.OnTpaAcceptedEvent;
 import fr.fuzeblocks.homeplugin.tpa.TpaManager;
 import fr.fuzeblocks.homeplugin.tpa.TpaRequest;
 import org.bukkit.Bukkit;
@@ -58,6 +59,13 @@ public class TpAcceptCommand implements CommandExecutor {
             return true;
         }
 
+        OnTpaAcceptedEvent onTpaAcceptedEvent = new OnTpaAcceptedEvent(request);
+        Bukkit.getPluginManager().callEvent(onTpaAcceptedEvent);
+        if (!onTpaAcceptedEvent.isCancelled()) {
+            TpaManager.cancelRequest(senderPlayer.getUniqueId());
+        } else {
+            return true;
+        }
 
         Location loc = target.getLocation();
         senderPlayer.teleport(loc);
@@ -72,7 +80,6 @@ public class TpAcceptCommand implements CommandExecutor {
                 "&aVous avez accepté la demande de téléportation de %player%."
         ).replace("%player%", senderPlayer.getName()));
 
-        TpaManager.cancelRequest(senderPlayer.getUniqueId());
 
         return true;
     }

@@ -1,6 +1,6 @@
 package fr.fuzeblocks.homeplugin.task;
 
-import fr.fuzeblocks.homeplugin.api.event.OnTeleportTaskCancelledEvent;
+import fr.fuzeblocks.homeplugin.event.OnTeleportTaskCancelledEvent;
 import fr.fuzeblocks.homeplugin.task.exception.TeleportTaskException;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

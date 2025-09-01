@@ -1,7 +1,10 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.event.OnTeleportTaskCancelledEvent;
+import fr.fuzeblocks.homeplugin.event.OnTpaCreatedEvent;
 import fr.fuzeblocks.homeplugin.tpa.TpaManager;
+import fr.fuzeblocks.homeplugin.tpa.TpaRequest;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -50,8 +53,11 @@ public class TpaCommand implements CommandExecutor {
                 return true;
             }
 
-
-            TpaManager.sendTpaRequest(player, target);
+            OnTpaCreatedEvent onTpaCreatedEvent = new OnTpaCreatedEvent(new TpaRequest(player, target,null));
+            Bukkit.getPluginManager().callEvent(onTpaCreatedEvent);
+            if (!onTpaCreatedEvent.isCancelled()) {
+                TpaManager.sendTpaRequest(player, target);
+            }
             return true;
 
         } else {

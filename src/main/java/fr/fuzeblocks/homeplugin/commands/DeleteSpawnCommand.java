@@ -1,7 +1,7 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.api.event.OnSpawnDeletedEvent;
+import fr.fuzeblocks.homeplugin.event.OnSpawnDeletedEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,7 +17,7 @@ public class DeleteSpawnCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = ((Player) sender).getPlayer();
             if (player.hasPermission("homeplugin.admin")) {
-                OnSpawnDeletedEvent onSpawnDelete = new OnSpawnDeletedEvent(player, player.getLocation(), HomePlugin.getRegistrationType());
+                OnSpawnDeletedEvent onSpawnDelete = new OnSpawnDeletedEvent(player, player.getLocation());
                     Bukkit.getPluginManager().callEvent(onSpawnDelete);
                     if (!onSpawnDelete.isCancelled()) {
                         HomePlugin.getSpawnManager().removeSpawn(onSpawnDelete.getLocation().getWorld());

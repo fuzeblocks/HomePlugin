@@ -4,15 +4,15 @@ public class DatabaseCredentials {
     private final String host;
     private final String user;
     private final String pass;
-    private final String databasename;
+    private final String database;
     private final int port;
 
-    public DatabaseCredentials(String host, String user, String pass, String databasename, int port) {
+    public DatabaseCredentials(String host, String user, String pass, String database, int port) {
         System.out.println("DatabaseCredentials");
         this.host = host;
         this.user = user;
         this.pass = pass;
-        this.databasename = databasename;
+        this.database = database;
         this.port = port;
     }
 
@@ -22,7 +22,7 @@ public class DatabaseCredentials {
                 ":" +
                 port +
                 "/" +
-                databasename +
+                database +
                 "?autoReconnect=true";
 
         return builder;
@@ -40,8 +40,8 @@ public class DatabaseCredentials {
         return pass;
     }
 
-    public String getDatabasename() {
-        return databasename;
+    public String getDatabase() {
+        return database;
     }
 
     public int getPort() {

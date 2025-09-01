@@ -1,6 +1,9 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.event.OnRtpEvent;
+import fr.fuzeblocks.homeplugin.tpa.TpaManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -27,7 +30,7 @@ public class RtpCommand implements CommandExecutor {
         var cooldowns = HomePlugin.getCacheManager();
 
         if (cooldowns.hasRtpRequest(uuid)) {
-            int cooldownSeconds = HomePlugin.getConfigurationSection().getInt("Rtp.cooldown-seconds", 300);
+            int cooldownSeconds = HomePlugin.getConfigurationSection().getInt("Config.Rtp.cooldown-seconds", 300);
             long remaining = (cooldowns.getRtpRequest(uuid) + (cooldownSeconds * 1000L) - now) / 1000;
             if (remaining > 0) {
                 player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor("Rtp.Cooldown-message", "&cVous devez attendre " + remaining + " secondes avant de refaire un RTP.").replace("%seconds%", String.valueOf(remaining)));
@@ -42,16 +45,28 @@ public class RtpCommand implements CommandExecutor {
             return true;
         }
 
-        player.teleport(randomLocation);
+        OnRtpEvent event = new OnRtpEvent(player, randomLocation);
+        Bukkit.getPluginManager().callEvent(event);
+
+        if (event.isCancelled() || event.getPlayer() == null || event.getLocation() == null) {
+            return true;
+        }
+
+        Location destination = event.getLocation();
+
+        if (!player.isOnline()) {
+            return true;
+        }
+        player.teleport(destination);
         player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor("Rtp.Teleport-success", "&aTéléportation aléatoire réussie !"));
-        cooldowns.addRtpRequest(uuid, now);
+        HomePlugin.getCacheManager().addRtpRequest(uuid, System.currentTimeMillis());
         return true;
     }
 
     private Location getRandomHighestLocation(World world) {
         Random random = new Random();
         for (int i = 0; i < 25; i++) {
-            int maxRadius = HomePlugin.getConfigurationSection().getInt("Rtp.max-radius", 200);
+            int maxRadius = HomePlugin.getConfigurationSection().getInt("Config.Rtp.max-radius", 200);
             int x = random.nextInt(maxRadius * 2) - maxRadius;
             int z = random.nextInt(maxRadius * 2) - maxRadius;
             int y = world.getHighestBlockYAt(x, z);

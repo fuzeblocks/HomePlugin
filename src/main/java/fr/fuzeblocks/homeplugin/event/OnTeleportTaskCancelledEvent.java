@@ -1,4 +1,4 @@
-package fr.fuzeblocks.homeplugin.api.event;
+package fr.fuzeblocks.homeplugin.event;
 
 import fr.fuzeblocks.homeplugin.task.Task;
 import org.bukkit.Location;
