@@ -1,7 +1,7 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.api.event.OnHomeCreatedEvent;
+import fr.fuzeblocks.homeplugin.event.OnHomeCreatedEvent;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.home.HomePermissionManager;
 import org.bukkit.Bukkit;
@@ -64,7 +64,7 @@ public class SetHomeCommand implements CommandExecutor {
             Location loc = player.getLocation();
 
             String homeName = args[0];
-            OnHomeCreatedEvent event = new OnHomeCreatedEvent(player, loc, HomePlugin.getRegistrationType(), homeName);
+            OnHomeCreatedEvent event = new OnHomeCreatedEvent(player, loc, homeName);
             Bukkit.getPluginManager().callEvent(event);
 
             if (!event.isCancelled()) {

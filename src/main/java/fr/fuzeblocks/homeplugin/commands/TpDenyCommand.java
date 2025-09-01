@@ -1,6 +1,8 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.event.OnTpaCreatedEvent;
+import fr.fuzeblocks.homeplugin.event.OnTpaDeniedEvent;
 import fr.fuzeblocks.homeplugin.tpa.TpaManager;
 import fr.fuzeblocks.homeplugin.tpa.TpaRequest;
 import org.bukkit.Bukkit;
@@ -58,6 +60,13 @@ public class TpDenyCommand implements CommandExecutor {
             return true;
         }
 
+        OnTpaDeniedEvent onTpaCreatedEvent = new OnTpaDeniedEvent(request);
+        Bukkit.getPluginManager().callEvent(onTpaCreatedEvent);
+        if (!onTpaCreatedEvent.isCancelled()) {
+            TpaManager.cancelRequest(senderPlayer.getUniqueId());
+        } else {
+            return true;
+        }
 
         senderPlayer.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(
                 "TpaCommand.Tpa-denied-by-target",
@@ -69,7 +78,6 @@ public class TpDenyCommand implements CommandExecutor {
                 "&cVous avez refusé la demande de téléportation de %player%."
         ).replace("%player%", senderPlayer.getName()));
 
-        TpaManager.cancelRequest(senderPlayer.getUniqueId());
 
         return true;
     }

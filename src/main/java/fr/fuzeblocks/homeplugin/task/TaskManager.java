@@ -1,8 +1,8 @@
 package fr.fuzeblocks.homeplugin.task;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.api.event.OnHomeTeleportEvent;
-import fr.fuzeblocks.homeplugin.api.event.OnSpawnTeleportEvent;
+import fr.fuzeblocks.homeplugin.event.OnHomeTeleportEvent;
+import fr.fuzeblocks.homeplugin.event.OnSpawnTeleportEvent;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import fr.fuzeblocks.homeplugin.task.exception.TeleportTaskException;
 import org.bukkit.Bukkit;
@@ -32,7 +32,7 @@ public class TaskManager extends BukkitRunnable {
     }
 
     private void teleportHome() {
-        OnHomeTeleportEvent onHomeTeleport = new OnHomeTeleportEvent(player, homeLocation);
+        OnHomeTeleportEvent onHomeTeleport = new OnHomeTeleportEvent(player, homeLocation,homeName);
         Bukkit.getServer().getPluginManager().callEvent(onHomeTeleport);
         if (!onHomeTeleport.isCancelled()) {
             player.teleport(onHomeTeleport.getLocation());
@@ -48,14 +48,15 @@ public class TaskManager extends BukkitRunnable {
 
     private void teleportSpawn() {
         OnSpawnTeleportEvent onSpawnTeleport = new OnSpawnTeleportEvent(player, HomePlugin.getSpawnManager().getSpawn(player.getWorld()));
+        Player target = onSpawnTeleport.getPlayer();
         Bukkit.getServer().getPluginManager().callEvent(onSpawnTeleport);
         if (!onSpawnTeleport.isCancelled()) {
-            player.teleport(onSpawnTeleport.getLocation());
-            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Language.Teleport-to-spawn")));
-            player.resetTitle();
+            target.teleport(onSpawnTeleport.getLocation());
+            target.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Language.Teleport-to-spawn")));
+            target.resetTitle();
         }
         StatusManager.setPlayerStatus(player, false);
-        player.resetTitle();
+        target.resetTitle();
     }
 
     public void startTeleportTask() {

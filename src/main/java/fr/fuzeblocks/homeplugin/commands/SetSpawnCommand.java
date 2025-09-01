@@ -1,7 +1,7 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.api.event.OnSpawnCreatedEvent;
+import fr.fuzeblocks.homeplugin.event.OnSpawnCreatedEvent;
 import fr.fuzeblocks.homeplugin.spawn.SpawnManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -27,7 +27,7 @@ public class SetSpawnCommand implements CommandExecutor {
                         player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(SPAWN + "Spawn-already-exists")));
                         return false;
                     }
-                    onSpawnCreate = new OnSpawnCreatedEvent(player, location, HomePlugin.getRegistrationType());
+                    onSpawnCreate = new OnSpawnCreatedEvent(player, location);
                     Bukkit.getPluginManager().callEvent(onSpawnCreate);
                     if (!onSpawnCreate.isCancelled()) {
                         spawnManager.setSpawn(onSpawnCreate.getLocation());

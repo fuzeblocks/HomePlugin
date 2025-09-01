@@ -1,7 +1,7 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.api.event.OnHomeDeletedEvent;
+import fr.fuzeblocks.homeplugin.event.OnHomeDeletedEvent;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,7 +23,7 @@ public  class DeleteHomeCommand implements CommandExecutor {
             if (args.length == 1) {
                 String home_name = args[0];
                 HomeManager homeManager = HomePlugin.getHomeManager();
-                OnHomeDeletedEvent onHomeDelete = new OnHomeDeletedEvent(player, homeManager.getHomeLocation(player, home_name), HomePlugin.getRegistrationType(), home_name);
+                OnHomeDeletedEvent onHomeDelete = new OnHomeDeletedEvent(player, homeManager.getHomeLocation(player, home_name), home_name);
                     if (!onHomeDelete.isCancelled() && homeManager.deleteHome(player, onHomeDelete.getHomeName())) {
                             HomePlugin.getCacheManager().removeHome(player.getUniqueId(), onHomeDelete.getHomeName());
                             player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(HOME + "Home-deleted")));
