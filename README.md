@@ -231,9 +231,6 @@ int max = HomePermissionManager.getMaxHomes(player);
 boolean canSet = HomePermissionManager.canSetHome(player);
 ```
 
-### Example (Using Placeholders Programmatically)
-Placeholders are processed through PlaceholderAPI once expansion is registered (identifier: `homeplugin`).
-
 ---
 
 ## ✅ Compatibility
