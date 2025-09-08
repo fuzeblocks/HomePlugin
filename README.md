@@ -271,7 +271,7 @@ Suggestions welcomed via Issues or Discord.
 
 ## 📄 License
 
-(Add a LICENSE file if not already present to clarify usage & redistribution rights.)
+[Here](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
 
 ---
 
