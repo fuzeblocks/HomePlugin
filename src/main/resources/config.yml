@@ -29,6 +29,7 @@ Config:
   Tpa:
     Tpa-duration: 30 #seconds
   Rtp:
+    enabled: true
     cooldown-seconds: 1000 #seconds
     max-radius: 200
 
