@@ -179,7 +179,7 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("tpa").setExecutor(new TpaCommand());
         getCommand("tpaccept").setExecutor(new TpAcceptCommand());
         getCommand("tpdeny").setExecutor(new TpDenyCommand());
-        getCommand("rtp").setExecutor(new RtpCommand());
+        if (getConfig().getBoolean("Config.Rtp.enabled")) getCommand("rtp").setExecutor(new RtpCommand());
     }
 
     private void eventRegistration() {

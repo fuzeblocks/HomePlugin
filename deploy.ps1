@@ -5,7 +5,7 @@ param(
 # Chemin vers le fichier de configuration
 $configFile = "C:\Tools\HomePluginPush\$server.txt"
 if (!(Test-Path $configFile)) {
-    Write-Host "Fichier de configuration introuvable : $configFile"
+    Write-Host "[ERREUR] Fichier de configuration introuvable : $configFile"
     exit 1
 }
 
@@ -24,7 +24,7 @@ foreach ($pair in $creds) {
     $dict[$pair.Key] = $pair.Value
 }
 
-# Variables nommées
+# Variables SSH
 $sshHost = $dict["host"]
 $sshPort = $dict["port"]
 $sshUser = $dict["user"]
@@ -45,25 +45,36 @@ if ($dict.ContainsKey("password_file")) {
 
 $sshRemotePath = $dict["remote_path"]
 
-# Debug
-Write-Host "`n[INFO] Déploiement vers : $sshUser@${sshHost}:${sshPort}"
-Write-Host "[INFO] Répertoire distant : $sshRemotePath`n"
+# Vérification des variables
+if (-not $sshHost -or -not $sshPort -or -not $sshUser -or -not $sshPass) {
+    Write-Host "[ERREUR] Une ou plusieurs informations SSH sont manquantes :"
+    Write-Host "Host: $sshHost"
+    Write-Host "Port: $sshPort"
+    Write-Host "User: $sshUser"
+    Write-Host "Pass: $sshPass"
+    exit 1
+}
 
 # Récupération du .jar le plus récent
 $localJar = Get-ChildItem "./target/" -Filter "*.jar" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
-if (-not $localJar) {
-    Write-Host "[ERREUR] Aucun fichier .jar trouvé dans ./target/"
+if (-not $localJar -or -not (Test-Path $localJar.FullName)) {
+    Write-Host "[ERREUR] Aucun fichier .jar trouvé dans ./target/ ou chemin invalide"
     exit 1
 }
 
 # Génération du script PSFTP
 $scriptPath = "./psftp_script.txt"
 @"
-lcd $($localJar.Directory.FullName)
+lcd `"$($localJar.Directory.FullName)`"
 cd $sshRemotePath
 put $($localJar.Name)
 bye
 "@ | Out-File -Encoding ASCII $scriptPath
+
+# Debug
+Write-Host "`n[INFO] Déploiement vers : ${sshUser}@${sshHost}:${sshPort}"
+Write-Host "[INFO] Répertoire distant : ${sshRemotePath}"
+Write-Host "[INFO] Commande PSFTP : .\psftp.exe $sshHost -P $sshPort -l $sshUser -pw **** -b $scriptPath`n"
 
 # Lancement de PSFTP
 $arguments = @(
@@ -73,9 +84,8 @@ $arguments = @(
     "-pw", $sshPass,
     "-b", $scriptPath
 )
-Write-Host "[INFO] Commande PSFTP : .\psftp.exe $arguments`n"
-Start-Process -Wait -NoNewWindow -FilePath "./psftp.exe" -ArgumentList $arguments
 
+Start-Process -Wait -NoNewWindow -FilePath "./psftp.exe" -ArgumentList $arguments
 
 # Nettoyage
 Remove-Item $scriptPath
