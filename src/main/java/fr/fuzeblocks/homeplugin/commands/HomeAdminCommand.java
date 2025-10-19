@@ -2,6 +2,7 @@ package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
+import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -99,7 +100,7 @@ public class HomeAdminCommand implements CommandExecutor {
                             .replace("%z%", String.format("%.1f", loc.getZ()))
                             .replace("%world%", loc.getWorld().getName());
 
-                    player.sendMessage("  " + HomePlugin.translateAlternateColorCodes(locationMsg));
+                    player.sendMessage("  " + LanguageManager.translateAlternateColorCodes(locationMsg));
                 }
             }
         }

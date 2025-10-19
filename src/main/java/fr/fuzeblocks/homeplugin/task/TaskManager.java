@@ -36,7 +36,7 @@ public class TaskManager extends BukkitRunnable {
         Bukkit.getServer().getPluginManager().callEvent(onHomeTeleport);
         if (!onHomeTeleport.isCancelled()) {
             player.teleport(onHomeTeleport.getLocation());
-            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Language.Teleport-to-home")) + " " + homeName);
+            player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor("Language.Teleport-to-home") + " " + homeName);
             player.resetTitle();
             if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.Add-particles-after-teleport")) {
                 player.playEffect(homeLocation, Effect.MOBSPAWNER_FLAMES, 5000);
@@ -52,7 +52,7 @@ public class TaskManager extends BukkitRunnable {
         Bukkit.getServer().getPluginManager().callEvent(onSpawnTeleport);
         if (!onSpawnTeleport.isCancelled()) {
             target.teleport(onSpawnTeleport.getLocation());
-            target.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Language.Teleport-to-spawn")));
+            target.sendMessage(HomePlugin.getLanguageManager().getStringWithColor("Language.Teleport-to-spawn"));
             target.resetTitle();
         }
         StatusManager.setPlayerStatus(player, false);
@@ -73,7 +73,7 @@ public class TaskManager extends BukkitRunnable {
             teleportTask.cancel();
             titleTask.cancel();
             player.resetTitle();
-            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Language.Teleport-canceled")));
+            player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor("Language.Teleport-canceled"));
             StatusManager.setPlayerStatus(player, false);
         } else {
             throw new TeleportTaskException();
@@ -103,7 +103,7 @@ public class TaskManager extends BukkitRunnable {
             @Override
             public void run() {
                 String key = "Language.Teleportation-in-progress";
-                String message = HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key)) + " ";
+                String message = HomePlugin.getLanguageManager().getStringWithColor(key) + " ";
 
                 if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.UseTitle")) {
                     player.sendTitle(message, String.valueOf(time), 0, 20, 0);

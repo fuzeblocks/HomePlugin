@@ -22,8 +22,10 @@ import fr.fuzeblocks.homeplugin.spawn.sql.SpawnSQLManager;
 import fr.fuzeblocks.homeplugin.spawn.yml.SpawnYMLManager;
 import fr.fuzeblocks.homeplugin.sync.SyncMethod;
 import fr.fuzeblocks.homeplugin.update.UpdateChecker;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -45,6 +47,7 @@ public final class HomePlugin extends JavaPlugin {
     private static HomeManager homeManager;
     private static SpawnManager spawnManager;
     private static LanguageManager languageManager;
+    private static Economy economy;
 
     @Override
     public void onEnable() {
@@ -62,6 +65,7 @@ public final class HomePlugin extends JavaPlugin {
         cacheManager = CacheManager.getInstance();
         checkDepend();
         loadLanguage();
+        setupEconomy();
         checkUpdate(113935);
         getLogger().info("----------------------HomePlugin----------------------");
         getLogger().info("----------HomePlugin a démmaré avec succés !----------");
@@ -241,6 +245,17 @@ public final class HomePlugin extends JavaPlugin {
             getLogger().warning("No plugins to load skipping...");
         }
     }
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        economy = rsp.getProvider();
+        return economy != null;
+    }
 
 
 
@@ -276,12 +291,7 @@ public final class HomePlugin extends JavaPlugin {
         return configurationSection;
     }
 
-    public static @NotNull String translateAlternateColorCodes(@Nullable String s) {
-        if (s == null) {
-            return "§c[Traduction manquante]";
-        }
-        return s.replace('&', '§');
-    }
+
 
 
     public static JedisPooled getJedisPooled() {
@@ -297,5 +307,9 @@ public final class HomePlugin extends JavaPlugin {
 
     public static LanguageManager getLanguageManager() {
         return languageManager;
+    }
+
+    public static Economy getEconomy() {
+        return economy;
     }
 }

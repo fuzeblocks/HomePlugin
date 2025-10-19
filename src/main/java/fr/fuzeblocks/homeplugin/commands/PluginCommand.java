@@ -1,5 +1,6 @@
 package fr.fuzeblocks.homeplugin.commands;
 
+import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.plugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.plugin.PluginManager;
 import org.bukkit.command.Command;
@@ -42,7 +43,7 @@ public class PluginCommand implements CommandExecutor {
     }
 
     private String translate(String path) {
-        return fr.fuzeblocks.homeplugin.HomePlugin.translateAlternateColorCodes(
+        return LanguageManager.translateAlternateColorCodes(
                 fr.fuzeblocks.homeplugin.HomePlugin.getLanguageManager().getString(path)
         );
     }

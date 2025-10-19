@@ -1,9 +1,11 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.economy.EconomyManager;
 import fr.fuzeblocks.homeplugin.event.OnHomeCreatedEvent;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.home.HomePermissionManager;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -68,6 +70,9 @@ public class SetHomeCommand implements CommandExecutor {
             Bukkit.getPluginManager().callEvent(event);
 
             if (!event.isCancelled()) {
+                if (EconomyManager.pay(player,EconomyManager.getHomeCreationCost()).equals(EconomyResponse.ResponseType.FAILURE)) {
+                    return true;
+                }
                 boolean success = homeManager.addHome(player, event.getHomeName());
                 player.sendMessage(translate(success ? HOME + "Home-added" : LANG + "Error"));
             }
@@ -92,7 +97,7 @@ public class SetHomeCommand implements CommandExecutor {
     }
 
     private String translate(String key) {
-        return HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key));
+        return HomePlugin.getLanguageManager().getStringWithColor(key);
     }
 
     private boolean isFair(Player player) {
