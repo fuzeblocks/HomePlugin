@@ -2,14 +2,24 @@ package fr.fuzeblocks.homeplugin.rtp;
 
 import redis.clients.jedis.JedisPooled;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * The type Redis rtp request store.
+ */
 public class RedisRtpRequestStore implements RtpRequestStore {
 
-    private final JedisPooled jedis;
     private static final String REDIS_KEY = "rtp_requests";
+    private final JedisPooled jedis;
 
+    /**
+     * Instantiates a new Redis rtp request store.
+     *
+     * @param jedis the jedis
+     */
     public RedisRtpRequestStore(JedisPooled jedis) {
         this.jedis = jedis;
     }

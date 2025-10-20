@@ -4,21 +4,21 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import redis.clients.jedis.JedisPooled;
 
+/**
+ * The type Redis spawn store.
+ */
 public class RedisSpawnStore implements SpawnRequestStore {
 
-    private final JedisPooled jedis;
     private static final String SPAWN_KEY = "global_spawn";
+    private final JedisPooled jedis;
 
+    /**
+     * Instantiates a new Redis spawn store.
+     *
+     * @param jedis the jedis
+     */
     public RedisSpawnStore(JedisPooled jedis) {
         this.jedis = jedis;
-    }
-
-    @Override
-    public void setSpawn(Location location) {
-        YamlConfiguration yaml = new YamlConfiguration();
-        yaml.set("location", location);
-        String data = yaml.saveToString();
-        jedis.set(SPAWN_KEY, data);
     }
 
     @Override
@@ -33,6 +33,14 @@ public class RedisSpawnStore implements SpawnRequestStore {
             return null;
         }
         return (Location) yaml.get("location");
+    }
+
+    @Override
+    public void setSpawn(Location location) {
+        YamlConfiguration yaml = new YamlConfiguration();
+        yaml.set("location", location);
+        String data = yaml.saveToString();
+        jedis.set(SPAWN_KEY, data);
     }
 
     @Override

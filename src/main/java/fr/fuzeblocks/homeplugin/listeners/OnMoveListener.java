@@ -10,7 +10,15 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.getTaskManagerInstance;
 
+/**
+ * The type On move listener.
+ */
 public class OnMoveListener implements Listener {
+    /**
+     * On move.
+     *
+     * @param event the event
+     */
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();

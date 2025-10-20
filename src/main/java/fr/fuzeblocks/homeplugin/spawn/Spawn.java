@@ -6,15 +6,55 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+/**
+ * The interface Spawn.
+ */
 public interface Spawn {
-    public boolean setSpawn(Location location);
-    public Location getSpawn(World world);
-    public boolean hasSpawn(World world);
+    /**
+     * Sets spawn.
+     *
+     * @param location the location
+     * @return the spawn
+     */
+    boolean setSpawn(Location location);
 
-    public boolean removeSpawn(World world);
+    /**
+     * Gets spawn.
+     *
+     * @param world the world
+     * @return the spawn
+     */
+    Location getSpawn(World world);
 
-    public boolean isStatus(Player player);
+    /**
+     * Has spawn boolean.
+     *
+     * @param world the world
+     * @return the boolean
+     */
+    boolean hasSpawn(World world);
 
+    /**
+     * Remove spawn boolean.
+     *
+     * @param world the world
+     * @return the boolean
+     */
+    boolean removeSpawn(World world);
+
+    /**
+     * Is status boolean.
+     *
+     * @param player the player
+     * @return the boolean
+     */
+    boolean isStatus(Player player);
+
+    /**
+     * Is yaml boolean.
+     *
+     * @return the boolean
+     */
     default boolean isYAML() {
         return HomePlugin.getRegistrationType().equals(SyncMethod.YAML);
     }

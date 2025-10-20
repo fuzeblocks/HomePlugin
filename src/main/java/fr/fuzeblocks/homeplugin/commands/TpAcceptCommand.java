@@ -11,6 +11,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+/**
+ * The type Tp accept command.
+ */
 public class TpAcceptCommand implements CommandExecutor {
 
     @Override

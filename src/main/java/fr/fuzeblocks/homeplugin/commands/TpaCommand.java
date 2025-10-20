@@ -1,15 +1,19 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.event.OnTeleportTaskCancelledEvent;
 import fr.fuzeblocks.homeplugin.event.OnTpaCreatedEvent;
 import fr.fuzeblocks.homeplugin.tpa.TpaManager;
 import fr.fuzeblocks.homeplugin.tpa.TpaRequest;
 import org.bukkit.Bukkit;
-import org.bukkit.command.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * The type Tpa command.
+ */
 public class TpaCommand implements CommandExecutor {
 
     @Override
@@ -53,7 +57,7 @@ public class TpaCommand implements CommandExecutor {
                 return true;
             }
 
-            OnTpaCreatedEvent onTpaCreatedEvent = new OnTpaCreatedEvent(new TpaRequest(player, target,null));
+            OnTpaCreatedEvent onTpaCreatedEvent = new OnTpaCreatedEvent(new TpaRequest(player, target, null));
             Bukkit.getPluginManager().callEvent(onTpaCreatedEvent);
             if (!onTpaCreatedEvent.isCancelled()) {
                 TpaManager.sendTpaRequest(player, target);

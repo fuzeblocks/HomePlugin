@@ -4,14 +4,13 @@ import fr.fuzeblocks.homeplugin.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.commands.*;
 import fr.fuzeblocks.homeplugin.completers.*;
 import fr.fuzeblocks.homeplugin.database.CreateTable;
-import fr.fuzeblocks.homeplugin.database.DatabaseManager;
 import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
+import fr.fuzeblocks.homeplugin.database.DatabaseManager;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
 import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import fr.fuzeblocks.homeplugin.language.Language;
 import fr.fuzeblocks.homeplugin.language.LanguageManager;
-import fr.fuzeblocks.homeplugin.language.LanguageMerge;
 import fr.fuzeblocks.homeplugin.listeners.OnJoinListener;
 import fr.fuzeblocks.homeplugin.listeners.OnMoveListener;
 import fr.fuzeblocks.homeplugin.listeners.OnPlayerTakeDamageByAnotherPlayer;
@@ -22,18 +21,26 @@ import fr.fuzeblocks.homeplugin.spawn.sql.SpawnSQLManager;
 import fr.fuzeblocks.homeplugin.spawn.yml.SpawnYMLManager;
 import fr.fuzeblocks.homeplugin.sync.SyncMethod;
 import fr.fuzeblocks.homeplugin.update.UpdateChecker;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import redis.clients.jedis.*;
+import redis.clients.jedis.DefaultJedisClientConfig;
+import redis.clients.jedis.HostAndPort;
+import redis.clients.jedis.JedisClientConfig;
+import redis.clients.jedis.JedisPooled;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * The type Home plugin.
+ */
 public final class HomePlugin extends JavaPlugin {
     private static HomeYMLManager homeYMLManager;
     private static SpawnYMLManager spawnYMLManager;
@@ -45,11 +52,143 @@ public final class HomePlugin extends JavaPlugin {
     private static HomeManager homeManager;
     private static SpawnManager spawnManager;
     private static LanguageManager languageManager;
+    private static BukkitAudiences adventure;
+
+    /**
+     * Gets home yml manager.
+     *
+     * @return the home yml manager
+     */
+    public static HomeYMLManager getHomeYMLManager() {
+        return homeYMLManager;
+    }
+
+    /**
+     * Gets spawn yml manager.
+     *
+     * @return the spawn yml manager
+     */
+    public static SpawnYMLManager getSpawnYMLManager() {
+        return spawnYMLManager;
+    }
+
+    /**
+     * Gets cache manager.
+     *
+     * @return the cache manager
+     */
+    public static CacheManager getCacheManager() {
+        return cacheManager;
+    }
+
+    /**
+     * Gets home sql manager.
+     *
+     * @return the home sql manager
+     */
+    public static HomeSQLManager getHomeSQLManager() {
+        return homeSQLManager;
+    }
+
+    /**
+     * Gets spawn sql manager.
+     *
+     * @return the spawn sql manager
+     */
+    public static SpawnSQLManager getSpawnSQLManager() {
+        return spawnSQLManager;
+    }
+
+    /**
+     * Gets registration type.
+     *
+     * @return the registration type
+     */
+    public static SyncMethod getRegistrationType() {
+        if (configurationSection.getString("Config.Connector.TYPE").equalsIgnoreCase("MYSQL")) {
+            return SyncMethod.MYSQL;
+        } else {
+            return SyncMethod.YAML;
+        }
+    }
+
+    /**
+     * Gets configuration section.
+     *
+     * @return the configuration section
+     */
+    public static ConfigurationSection getConfigurationSection() {
+        return configurationSection;
+    }
+
+    /**
+     * Translate alternate color codes string.
+     *
+     * @param s the s
+     * @return the string
+     */
+    public static @NotNull String translateAlternateColorCodes(@Nullable String s) {
+        if (s == null) {
+            return "§c[Traduction manquante]";
+        }
+        return s.replace('&', '§');
+    }
+
+    /**
+     * Gets jedis pooled.
+     *
+     * @return the jedis pooled
+     */
+    public static JedisPooled getJedisPooled() {
+        return jedisPooled;
+    }
+
+    /**
+     * Gets home manager.
+     *
+     * @return the home manager
+     */
+    public static HomeManager getHomeManager() {
+        return homeManager;
+    }
+
+    /**
+     * Gets spawn manager.
+     *
+     * @return the spawn manager
+     */
+    public static SpawnManager getSpawnManager() {
+        return spawnManager;
+    }
+
+    /**
+     * Gets language manager.
+     *
+     * @return the language manager
+     */
+    public static LanguageManager getLanguageManager() {
+        return languageManager;
+    }
+
+    /**
+     * Gets adventure.
+     *
+     * @return the adventure
+     */
+    @NonNull
+    public static BukkitAudiences getAdventure() {
+        if (adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+        }
+        return adventure;
+    }
+
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
         configurationSection = getConfig();
+        adventure = BukkitAudiences.create(this);
         checkConfig();
         loadPlugins();
         redisRegistration();
@@ -72,11 +211,16 @@ public final class HomePlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (adventure != null) {
+            adventure.close();
+            adventure = null;
+        }
         stopPluginFunc();
         getLogger().info("----------------------HomePlugin----------------------");
         getLogger().info("----------HomePlugin a été éteint avec succés !----------");
         getLogger().info("------------------------------------------------------");
     }
+
     private void checkConfig() {
         String key = "Config.";
         if (Objects.requireNonNull(getConfig().getString(key + "Connector.TYPE")).isEmpty()) {
@@ -89,6 +233,7 @@ public final class HomePlugin extends JavaPlugin {
         getLogger().info(getConfig().getString(key + "Language") + " has been selected !");
         getLogger().info(getConfig().getString(key + "Connector.TYPE") + " has been selected !");
     }
+
     private void checkDepend() {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new HomePluginExpansion(this).register();
@@ -96,14 +241,16 @@ public final class HomePlugin extends JavaPlugin {
             getLogger().warning("PlaceholderAPI is not installed. Placeholders will not be available.");
         }
     }
+
     private void loadLanguage() {
-            String languageString = getConfig().getString("Config.Language");
-            Language language = Language.valueOf(languageString.toUpperCase());
-            if (language == null) {
-                language = Language.FRENCH;
-            }
-            languageManager = new LanguageManager(language,this);
+        String languageString = getConfig().getString("Config.Language");
+        Language language = Language.valueOf(languageString.toUpperCase());
+        if (language == null) {
+            language = Language.FRENCH;
+        }
+        languageManager = new LanguageManager(language, this);
     }
+
     private void redisRegistration() {
         if (getConfig().getBoolean("Config.Redis.UseRedis")) {
             JedisClientConfig jedisClientConfig = DefaultJedisClientConfig.builder()
@@ -112,16 +259,17 @@ public final class HomePlugin extends JavaPlugin {
             HostAndPort hostAndPort = new HostAndPort(getConfig().getString("Config.Redis.HOST"), getConfig().getInt("Config.Redis.PORT"));
             jedisPooled = new JedisPooled(hostAndPort, jedisClientConfig);
         } else {
-                getLogger().info("Skipping Redis...");
-                return;
-            } if (jedisPooled != null) {
-                getLogger().info("Redis registered successfully !");
-            } else {
-                getLogger().info("Cannot connect to Redis... use default cache!");
-            }
+            getLogger().info("Skipping Redis...");
+            return;
         }
+        if (jedisPooled != null) {
+            getLogger().info("Redis registered successfully !");
+        } else {
+            getLogger().info("Cannot connect to Redis... use default cache!");
+        }
+    }
 
-        private void databaseRegistration() {
+    private void databaseRegistration() {
         if (Objects.requireNonNull(getConfig().getString("Config.Connector.TYPE")).equalsIgnoreCase("MYSQL")) {
             getLogger().info("Registering Database");
             new DatabaseManager(this);
@@ -149,6 +297,7 @@ public final class HomePlugin extends JavaPlugin {
         spawnYMLManager = new SpawnYMLManager(spawn);
         spawnManager = SpawnManager.getInstance();
     }
+
     private void registration(File file) {
         if (!this.getDataFolder().exists()) {
             this.getDataFolder().mkdirs();
@@ -165,11 +314,13 @@ public final class HomePlugin extends JavaPlugin {
 
     private void commandRegistration() {
         getLogger().info("Registering Commands");
-        getCommand("home").setExecutor(new HomeCommand(this));
+        getCommand("home").setExecutor(new HomeCommand());
         getCommand("sethome").setExecutor(new SetHomeCommand());
         getCommand("delhome").setExecutor(new DeleteHomeCommand());
         getCommand("setspawn").setExecutor(new SetSpawnCommand());
         getCommand("delspawn").setExecutor(new DeleteSpawnCommand());
+        getCommand("renamehome").setExecutor(new RenameHomeCommand());
+        getCommand("relocatehome").setExecutor(new RelocateHomeCommand());
         getCommand("spawn").setExecutor(new SpawnCommand());
         getCommand("cache").setExecutor(new CacheCommand());
         getCommand("homeadmin").setExecutor(new HomeAdminCommand());
@@ -186,7 +337,7 @@ public final class HomePlugin extends JavaPlugin {
         getLogger().info("Registering Events");
         Bukkit.getPluginManager().registerEvents(new OnJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new OnMoveListener(), this);
-        Bukkit.getPluginManager().registerEvents(new OnPlayerTakeDamageByAnotherPlayer(),this);
+        Bukkit.getPluginManager().registerEvents(new OnPlayerTakeDamageByAnotherPlayer(), this);
     }
 
     private void completerManager() {
@@ -221,12 +372,15 @@ public final class HomePlugin extends JavaPlugin {
             getLogger().info(checkPlugin().getName() + "." + "loaded plugin !");
         }
     }
+
     private void initPluginFunc() {
         if (Objects.nonNull(checkPlugin())) checkPlugin().initialize();
     }
+
     private void stopPluginFunc() {
-       if (Objects.nonNull(checkPlugin())) checkPlugin().stop();
+        if (Objects.nonNull(checkPlugin())) checkPlugin().stop();
     }
+
     private fr.fuzeblocks.homeplugin.plugin.HomePlugin checkPlugin() {
         List<fr.fuzeblocks.homeplugin.plugin.HomePlugin> pluginManager = PluginManager.getInstance().getHomePlugin();
         if (!pluginManager.isEmpty()) {
@@ -236,66 +390,10 @@ public final class HomePlugin extends JavaPlugin {
         }
         return null;
     }
+
     private void countPlugins() {
         if (PluginManager.getInstance().getHomePlugin().isEmpty()) {
             getLogger().warning("No plugins to load skipping...");
         }
-    }
-
-
-
-    public static HomeYMLManager getHomeYMLManager() {
-        return homeYMLManager;
-    }
-
-    public static SpawnYMLManager getSpawnYMLManager() {
-        return spawnYMLManager;
-    }
-
-    public static CacheManager getCacheManager() {
-        return cacheManager;
-    }
-
-    public static HomeSQLManager getHomeSQLManager() {
-        return homeSQLManager;
-    }
-
-    public static SpawnSQLManager getSpawnSQLManager() {
-        return spawnSQLManager;
-    }
-
-    public static SyncMethod getRegistrationType() {
-        if (configurationSection.getString("Config.Connector.TYPE").equalsIgnoreCase("MYSQL")) {
-            return SyncMethod.MYSQL;
-        } else {
-            return SyncMethod.YAML;
-        }
-    }
-
-    public static ConfigurationSection getConfigurationSection() {
-        return configurationSection;
-    }
-
-    public static @NotNull String translateAlternateColorCodes(@Nullable String s) {
-        if (s == null) {
-            return "§c[Traduction manquante]";
-        }
-        return s.replace('&', '§');
-    }
-
-
-    public static JedisPooled getJedisPooled() {
-        return jedisPooled;
-    }
-
-    public static HomeManager getHomeManager() {
-        return homeManager;
-    }
-    public static SpawnManager getSpawnManager() {
-        return spawnManager;
-    }
-
-    public static LanguageManager getLanguageManager() {
-        return languageManager;
     }
 }

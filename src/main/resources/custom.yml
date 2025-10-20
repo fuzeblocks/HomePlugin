@@ -47,6 +47,11 @@ Home:
   Home-item-lore-delete: "&cRight-click to delete this home."
   Home-info-count: "&eYou have &6%used%&e home(s), limit: &6%max%, remaining: &6%remaining%"
   Home-gui-title: "&eHomes of %player%"
+  Home-renamed: "&aHome &e{old_home} &ahas been renamed to &e{new_home}&a!"
+  Usage-edit-home: "&cUsage: /edithome <old_name> <new_name>"
+  Home-relocated: "&aHome &e{home}&a has been relocated to your current position!"
+  Usage-relocate-home: "&cUsage: /relocatehome <homeName>"
+
 
   List:
     Home-count: "&bYou have &6%count%&b registered home(s)."

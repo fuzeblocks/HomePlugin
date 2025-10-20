@@ -6,11 +6,19 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * The type Redis tpa request store.
+ */
 public class RedisTpaRequestStore implements TpaRequestStore {
 
-    private final JedisPooled jedis;
     private static final String FIELD_TPA_TARGET = "tpa_target";
+    private final JedisPooled jedis;
 
+    /**
+     * Instantiates a new Redis tpa request store.
+     *
+     * @param jedis the jedis
+     */
     public RedisTpaRequestStore(JedisPooled jedis) {
         this.jedis = jedis;
     }
@@ -65,7 +73,8 @@ public class RedisTpaRequestStore implements TpaRequestStore {
             if (target.toString().equals(stored)) {
                 try {
                     return UUID.fromString(key);
-                } catch (IllegalArgumentException ignored) {}
+                } catch (IllegalArgumentException ignored) {
+                }
             }
         }
         return null;
@@ -81,6 +90,7 @@ public class RedisTpaRequestStore implements TpaRequestStore {
             return null;
         }
     }
+
     public Set<UUID> getAllTpaSenders() {
         Set<String> keys = jedis.keys("*");
         return keys.stream()

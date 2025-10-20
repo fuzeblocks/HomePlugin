@@ -9,15 +9,23 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+/**
+ * The type On join listener.
+ */
 public class OnJoinListener implements Listener {
+    /**
+     * On join.
+     *
+     * @param event the event
+     */
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         HomeManager homeManager = HomePlugin.getHomeManager();
-            if (homeManager.getHomeNumber(player) > 0) {
-                CacheManager cacheManager = homeManager.getCacheManager();
-                cacheManager.loadAllHomesToCache(player);
-            }
+        if (homeManager.getHomeNumber(player) > 0) {
+            CacheManager cacheManager = homeManager.getCacheManager();
+            cacheManager.loadAllHomesToCache(player);
+        }
         if (!player.hasPlayedBefore()) {
             SpawnManager spawnManager = HomePlugin.getSpawnManager();
             if (spawnManager.hasSpawn(player.getWorld())) {

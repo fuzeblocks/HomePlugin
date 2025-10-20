@@ -2,7 +2,6 @@ package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.event.OnRtpEvent;
-import fr.fuzeblocks.homeplugin.tpa.TpaManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -14,6 +13,9 @@ import org.bukkit.entity.Player;
 import java.util.Random;
 import java.util.UUID;
 
+/**
+ * The type Rtp command.
+ */
 public class RtpCommand implements CommandExecutor {
 
 

@@ -5,8 +5,6 @@ import fr.fuzeblocks.homeplugin.gui.BackItem;
 import fr.fuzeblocks.homeplugin.gui.ForwardItem;
 import fr.fuzeblocks.homeplugin.gui.HomeItem;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
-import fr.fuzeblocks.homeplugin.status.StatusManager;
-import fr.fuzeblocks.homeplugin.task.TaskManager;
 import fr.fuzeblocks.homeplugin.task.TeleportationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -28,27 +26,23 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-
+/**
+ * The type Home command.
+ */
 public class HomeCommand implements CommandExecutor {
 
-    private final HomePlugin instance;
     private final String HOME = "Home.";
-
-    public HomeCommand(HomePlugin instance) {
-        this.instance = instance;
-    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String LANG = "Language.";
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "Only-a-player-can-execute")));
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Only-a-player-can-execute")));
             return false;
         }
 
         if (!sender.hasPermission("homeplugin.command.home")) {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "No-permission")));
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("No-permission")));
             return false;
         }
 
@@ -59,13 +53,13 @@ public class HomeCommand implements CommandExecutor {
         if (args.length == 1) {
             String homeName = args[0];
             if (homeManager.isStatus(player)) {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "A-teleport-is-already-in-progress")));
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("A-teleport-is-already-in-progress")));
                 return false;
             }
 
             if (homeManager.getHomeNumber(player) > 0) {
                 if (isInCache(homeManager, player, homeName)) {
-                    TeleportationManager.teleportPlayerToHome(player,homeName);
+                    TeleportationManager.teleportPlayerToHome(player, homeName);
                     return true;
                 }
 
@@ -75,11 +69,11 @@ public class HomeCommand implements CommandExecutor {
                     TeleportationManager.teleportPlayerToHome(player, homeName);
                     return true;
                 } else {
-                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(HOME + "Home-does-not-exist")));
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home-does-not-exist")));
                     return false;
                 }
             } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(HOME + "Have-no-home")));
+                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Have-no-home")));
                 return false;
             }
         }
@@ -93,7 +87,7 @@ public class HomeCommand implements CommandExecutor {
             return true;
         }
 
-        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(HOME +"Home-usage-message")));
+        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home-usage-message")));
         return false;
     }
 
@@ -120,7 +114,7 @@ public class HomeCommand implements CommandExecutor {
 
         Window window = Window.single()
                 .setViewer(player)
-                .setTitle(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(HOME + "Home-gui-title").replace("%player%", player.getName())))
+                .setTitle(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home-gui-title").replace("%player%", player.getName())))
                 .setGui(gui)
                 .build();
 

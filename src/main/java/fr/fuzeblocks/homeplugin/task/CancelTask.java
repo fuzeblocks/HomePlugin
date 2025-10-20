@@ -5,7 +5,15 @@ import fr.fuzeblocks.homeplugin.task.exception.TeleportTaskException;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+/**
+ * The type Cancel task.
+ */
 public class CancelTask {
+    /**
+     * Cancel teleport task.
+     *
+     * @param taskManager the task manager
+     */
     public static void cancelTeleportTask(TaskManager taskManager) {
         try {
             if (taskManager != null) {

@@ -7,8 +7,14 @@ import xyz.xenondevs.invui.item.ItemProvider;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.controlitem.PageItem;
 
+/**
+ * The type Back item.
+ */
 public class BackItem extends PageItem {
 
+    /**
+     * Instantiates a new Back item.
+     */
     public BackItem() {
         super(false);
     }

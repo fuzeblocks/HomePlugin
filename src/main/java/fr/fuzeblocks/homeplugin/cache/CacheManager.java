@@ -21,8 +21,10 @@ import redis.clients.jedis.JedisPooled;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * The type Cache manager.
+ */
 public class CacheManager {
 
     private static CacheManager instance;
@@ -52,6 +54,11 @@ public class CacheManager {
         }
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static synchronized CacheManager getInstance() {
         if (instance == null) instance = new CacheManager();
         return instance;
@@ -59,64 +66,140 @@ public class CacheManager {
 
     // --- TPA REQUESTS ---
 
+    /**
+     * Add tpa request.
+     *
+     * @param sender the sender
+     * @param target the target
+     */
     public void addTpaRequest(UUID sender, UUID target) {
         tpaRequestStore.addTpaRequest(sender, target);
     }
 
 
-    public boolean hasTpaRequest(UUID sender,UUID target) {
-        return tpaRequestStore.hasTpaRequest(sender,target);
+    /**
+     * Has tpa request boolean.
+     *
+     * @param sender the sender
+     * @param target the target
+     * @return the boolean
+     */
+    public boolean hasTpaRequest(UUID sender, UUID target) {
+        return tpaRequestStore.hasTpaRequest(sender, target);
     }
 
-    public void removeTpaRequest(UUID sender,UUID target) {
+    /**
+     * Remove tpa request.
+     *
+     * @param sender the sender
+     * @param target the target
+     */
+    public void removeTpaRequest(UUID sender, UUID target) {
         tpaRequestStore.removeTpaRequest(sender, target);
     }
 
+    /**
+     * Gets target with sender.
+     *
+     * @param sender the sender
+     * @return the target with sender
+     */
     public UUID getTargetWithSender(UUID sender) {
-       return tpaRequestStore.getTargetWithSender(sender);
+        return tpaRequestStore.getTargetWithSender(sender);
     }
 
+    /**
+     * Has incoming tpa boolean.
+     *
+     * @param target the target
+     * @return the boolean
+     */
     public boolean hasIncomingTpa(UUID target) {
         return tpaRequestStore.hasIncomingTpa(target);
     }
 
+    /**
+     * Gets sender for target.
+     *
+     * @param target the target
+     * @return the sender for target
+     */
     public UUID getSenderForTarget(UUID target) {
         return tpaRequestStore.getSenderForTarget(target);
     }
 
+    /**
+     * Gets tpa target.
+     *
+     * @param senderId the sender id
+     * @return the tpa target
+     */
     public UUID getTpaTarget(UUID senderId) {
         return tpaRequestStore.getTpaTarget(senderId); // tpaRequests : Map<UUID, UUID>
     }
-    public  Set<UUID> getAllTpaSenders() {
+
+    /**
+     * Gets all tpa senders.
+     *
+     * @return the all tpa senders
+     */
+    public Set<UUID> getAllTpaSenders() {
         return tpaRequestStore.getAllTpaSenders();
     }
 
 
-
     // --- HOMES ---
 
+    /**
+     * Add home.
+     *
+     * @param playerId the player id
+     * @param homeName the home name
+     * @param location the location
+     */
     public void addHome(UUID playerId, String homeName, Location location) {
         homeStore.addHome(playerId, homeName, location);
     }
 
+    /**
+     * Remove home.
+     *
+     * @param playerId the player id
+     * @param homeName the home name
+     */
     public void removeHome(UUID playerId, String homeName) {
         homeStore.removeHome(playerId, homeName);
     }
 
+    /**
+     * Gets homes.
+     *
+     * @param playerId the player id
+     * @return the homes
+     */
     public Map<String, Location> getHomes(UUID playerId) {
         return homeStore.getHomes(playerId);
     }
 
+    /**
+     * Clear homes.
+     *
+     * @param playerId the player id
+     */
     public void clearHomes(UUID playerId) {
         homeStore.clearHomes(playerId);
     }
 
+    /**
+     * Clear all homes.
+     */
     public void clearAllHomes() {
         homeStore.clearAllHomes();
     }
 
     /**
      * Charge toutes les homes du joueur depuis HomeManager et les ajoute au cache.
+     *
      * @param player Joueur concerné
      */
     public void loadAllHomesToCache(Player player) {
@@ -129,14 +212,27 @@ public class CacheManager {
 
     // --- SPAWN ---
 
-    public void setSpawn(Location location) {
-        spawnStore.setSpawn(location);
-    }
-
+    /**
+     * Gets spawn.
+     *
+     * @return the spawn
+     */
     public Location getSpawn() {
         return spawnStore.getSpawn();
     }
 
+    /**
+     * Sets spawn.
+     *
+     * @param location the location
+     */
+    public void setSpawn(Location location) {
+        spawnStore.setSpawn(location);
+    }
+
+    /**
+     * Clear spawn.
+     */
     public void clearSpawn() {
         spawnStore.clearSpawn();
     }
@@ -144,34 +240,65 @@ public class CacheManager {
     // --- RTP ---
 
 
+    /**
+     * Add rtp request.
+     *
+     * @param playerId  the player id
+     * @param timestamp the timestamp
+     */
+    public void addRtpRequest(UUID playerId, Long timestamp) {
+        rtpRequestStore.addRtpRequest(playerId, timestamp);
+    }
 
-        public void addRtpRequest(UUID playerId, Long timestamp) {
-            rtpRequestStore.addRtpRequest(playerId, timestamp);
-        }
-
-        public Long getRtpRequest(UUID playerId) {
-            return rtpRequestStore.getRtpRequest(playerId);
-        }
-
-
-        public void removeRtpRequest(UUID playerId) {
-            rtpRequestStore.removeRtpRequest(playerId);
-        }
+    /**
+     * Gets rtp request.
+     *
+     * @param playerId the player id
+     * @return the rtp request
+     */
+    public Long getRtpRequest(UUID playerId) {
+        return rtpRequestStore.getRtpRequest(playerId);
+    }
 
 
-        public boolean hasRtpRequest(UUID playerId) {
-            return rtpRequestStore.hasRtpRequest(playerId);
-        }
+    /**
+     * Remove rtp request.
+     *
+     * @param playerId the player id
+     */
+    public void removeRtpRequest(UUID playerId) {
+        rtpRequestStore.removeRtpRequest(playerId);
+    }
 
 
-        public Map<UUID, Long> getAllRtpRequests() {
-            return rtpRequestStore.getAllRtpRequests();
-        }
+    /**
+     * Has rtp request boolean.
+     *
+     * @param playerId the player id
+     * @return the boolean
+     */
+    public boolean hasRtpRequest(UUID playerId) {
+        return rtpRequestStore.hasRtpRequest(playerId);
+    }
 
+
+    /**
+     * Gets all rtp requests.
+     *
+     * @return the all rtp requests
+     */
+    public Map<UUID, Long> getAllRtpRequests() {
+        return rtpRequestStore.getAllRtpRequests();
+    }
 
 
     // --- UTIL ---
 
+    /**
+     * Is using redis boolean.
+     *
+     * @return the boolean
+     */
     public boolean isUsingRedis() {
         return useRedis;
     }

@@ -8,6 +8,7 @@ import fr.fuzeblocks.homeplugin.status.StatusManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,20 +17,45 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Home sql manager.
+ */
 public class HomeSQLManager implements Home {
     private final Connection connection = DatabaseConnection.getConnection();
 
 
-    public boolean addHome(Player player, String name) {
+    @Override
+    public boolean addHome(@NotNull Player player, String name) {
         Location location = player.getLocation();
         return addHome(player.getUniqueId().toString(), name, location);
     }
 
+
     @Override
-    public boolean setHome(Player player, String name, Location location) {
+    public boolean setHome(@NotNull Player player, String name, Location location) {
         return addHome(player.getUniqueId().toString(), name, location);
     }
 
+    @Override
+    public boolean renameHome(Player player, String oldHomeName, String newHomeName) {
+        Location homeLocation = getHomeLocation(player, oldHomeName);
+        if (homeLocation != null) {
+            if (deleteHome(player, oldHomeName)) {
+                return addHome(player.getUniqueId().toString(), newHomeName, homeLocation);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean relocateHome(Player player, String homeName, Location newLocation) {
+        if (deleteHome(player, homeName)) {
+            return addHome(player.getUniqueId().toString(), homeName, newLocation);
+        }
+        return false;
+    }
+
+    @Override
     public List<Location> getHomesLocation(Player player) {
         List<Location> homes = new ArrayList<>();
         List<String> homeNames = getHomesName(player);
@@ -42,7 +68,8 @@ public class HomeSQLManager implements Home {
         return homes;
     }
 
-    public int getHomeNumber(Player player) {
+    @Override
+    public int getHomeNumber(@NotNull Player player) {
         String request = "SELECT COUNT(*) FROM HomePlugin WHERE player_uuid = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(request);
@@ -58,7 +85,8 @@ public class HomeSQLManager implements Home {
         return 0;
     }
 
-    public List<String> getHomesName(Player player) {
+    @Override
+    public List<String> getHomesName(@NotNull Player player) {
         List<String> homeNames = new ArrayList<>();
         String request = "SELECT HOME_NAME FROM HomePlugin WHERE player_uuid = ?";
         try {
@@ -75,7 +103,7 @@ public class HomeSQLManager implements Home {
         return homeNames;
     }
 
-    private boolean addHome(String playerUUID, String name, Location location) {
+    private boolean addHome(String playerUUID, String name, @NotNull Location location) {
         String request = "INSERT INTO HomePlugin (player_uuid, HOME_NAME, X, Y, Z, PITCH, YAW, WORLD) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(request);
@@ -94,10 +122,12 @@ public class HomeSQLManager implements Home {
         return true;
     }
 
+    @Override
     public CacheManager getCacheManager() {
         return HomePlugin.getCacheManager();
     }
 
+    @Override
     public Location getHomeLocation(Player player, String homeName) {
         String request = "SELECT * FROM HomePlugin WHERE player_uuid = ? AND HOME_NAME = ?";
         try {
@@ -121,6 +151,7 @@ public class HomeSQLManager implements Home {
         return null;
     }
 
+    @Override
     public boolean deleteHome(Player player, String homeName) {
         String request = "DELETE FROM HomePlugin WHERE player_uuid = ? AND HOME_NAME = ?";
         try {
@@ -134,10 +165,12 @@ public class HomeSQLManager implements Home {
         }
     }
 
+    @Override
     public boolean isStatus(Player player) {
         return StatusManager.getPlayerStatus(player);
     }
 
+    @Override
     public boolean exist(Player player, String homeName) {
         String sql = "SELECT * FROM HomePlugin WHERE player_uuid = ? AND HOME_NAME = ?";
         try {

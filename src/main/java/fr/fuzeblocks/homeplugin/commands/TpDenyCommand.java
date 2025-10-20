@@ -1,7 +1,6 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.event.OnTpaCreatedEvent;
 import fr.fuzeblocks.homeplugin.event.OnTpaDeniedEvent;
 import fr.fuzeblocks.homeplugin.tpa.TpaManager;
 import fr.fuzeblocks.homeplugin.tpa.TpaRequest;
@@ -11,6 +10,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+/**
+ * The type Tp deny command.
+ */
 public class TpDenyCommand implements CommandExecutor {
 
     @Override

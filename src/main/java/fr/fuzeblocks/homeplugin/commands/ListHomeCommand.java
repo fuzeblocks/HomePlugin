@@ -2,11 +2,9 @@ package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,6 +12,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * The type List home command.
+ */
 public class ListHomeCommand implements CommandExecutor {
 
     private final String HOME = "Home.";
@@ -27,7 +28,7 @@ public class ListHomeCommand implements CommandExecutor {
             return false;
         }
         if (!sender.hasPermission("homeplugin.command.listhome")) {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG +"No-permission")));
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "No-permission")));
             return false;
         }
 
@@ -47,66 +48,71 @@ public class ListHomeCommand implements CommandExecutor {
         return true;
     }
 
+
     private void sendHomeMessage(Player player, String homeName, Location location) {
-        String detailHeader = HomePlugin.getLanguageManager().getString(HOME + "List.Home-detail-header")
+        String detailHeader = HomePlugin.getLanguageManager()
+                .getString(HOME + "List.Home-detail-header")
                 .replace("%home%", homeName);
         player.sendMessage(HomePlugin.translateAlternateColorCodes(detailHeader));
 
-        String locationLine = HomePlugin.getLanguageManager().getString(HOME + "List.Home-location")
+        String locationLine = HomePlugin.getLanguageManager()
+                .getString(HOME + "List.Home-location")
                 .replace("%x%", String.valueOf(location.getBlockX()))
                 .replace("%y%", String.valueOf(location.getBlockY()))
                 .replace("%z%", String.valueOf(location.getBlockZ()))
                 .replace("%world%", location.getWorld().getName());
         player.sendMessage(HomePlugin.translateAlternateColorCodes(locationLine));
 
-        // Composants interactifs
-        TextComponent teleportComponent = createInteractiveComponent(
-                HomePlugin.getLanguageManager().getString(HOME + "List.Teleport-label"),
-                ChatColor.GRAY,
-                HomePlugin.getLanguageManager().getString(HOME + "List.Teleport-click"),
-                ChatColor.YELLOW,
-                HomePlugin.getLanguageManager().getString(HOME + "List.Teleport-hover"),
-                "/home " + homeName
+        // Composants interactifs (Adventure)
+        Component teleportComponent = Component.text(
+                        HomePlugin.getLanguageManager().getString(HOME + "List.Teleport-label"),
+                        NamedTextColor.GRAY
+                )
+                .append(Component.text(" "))
+                .append(Component.text(
+                                HomePlugin.getLanguageManager().getString(HOME + "List.Teleport-click"),
+                                NamedTextColor.YELLOW,
+                                TextDecoration.BOLD
+                        )
+                        .hoverEvent(net.kyori.adventure.text.event.HoverEvent.showText(
+                                Component.text(
+                                        HomePlugin.getLanguageManager().getString(HOME + "List.Teleport-hover"),
+                                        NamedTextColor.GRAY
+                                )
+                        ))
+                        .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/home " + homeName)));
+
+        Component manageComponent = Component.text(
+                HomePlugin.getLanguageManager().getString(HOME + "List.Manage-label"),
+                NamedTextColor.GRAY
         );
 
-        TextComponent manageComponent = new TextComponent(
-                HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(HOME + "List.Manage-label"))
-        );
-        manageComponent.setColor(ChatColor.GRAY);
+        Component relocateComponent = Component.text(
+                        HomePlugin.getLanguageManager().getString(HOME + "List.Relocate-click"),
+                        NamedTextColor.GOLD
+                )
+                .hoverEvent(net.kyori.adventure.text.event.HoverEvent.showText(
+                        Component.text(
+                                HomePlugin.getLanguageManager().getString(HOME + "List.Relocate-hover"),
+                                NamedTextColor.GRAY
+                        )
+                ))
+                .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/homerelocate " + homeName));
 
-        TextComponent relocateComponent = createInteractiveComponent(
-                HomePlugin.getLanguageManager().getString(HOME + "List.Relocate-click"),
-                ChatColor.GOLD,
-                HomePlugin.getLanguageManager().getString(HOME + "List.Relocate-hover"),
-                "/homerelocate"
-        );
+        Component deleteComponent = Component.text(
+                        HomePlugin.getLanguageManager().getString(HOME + "List.Delete-click"),
+                        NamedTextColor.RED
+                )
+                .hoverEvent(net.kyori.adventure.text.event.HoverEvent.showText(
+                        Component.text(
+                                HomePlugin.getLanguageManager().getString(HOME + "List.Delete-hover"),
+                                NamedTextColor.GRAY
+                        )
+                ))
+                .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/homedelete " + homeName));
 
-        TextComponent deleteComponent = createInteractiveComponent(
-                HomePlugin.getLanguageManager().getString(HOME + "List.Delete-click"),
-                ChatColor.RED,
-                HomePlugin.getLanguageManager().getString(HOME + "List.Delete-hover"),
-                "/delhome " + homeName
-        );
-
-        player.spigot().sendMessage(teleportComponent);
-        player.spigot().sendMessage(manageComponent, relocateComponent, deleteComponent);
+        HomePlugin.getAdventure().player(player).sendMessage(teleportComponent);
+        HomePlugin.getAdventure().player(player).sendMessage(manageComponent.append(Component.text(" ")).append(relocateComponent).append(Component.text(" ")).append(deleteComponent));
     }
 
-    private TextComponent createInteractiveComponent(String label, ChatColor labelColor, String clickableText, ChatColor clickableColor, String hoverText, String command) {
-        TextComponent labelComponent = new TextComponent(HomePlugin.translateAlternateColorCodes(label));
-        labelComponent.setColor(labelColor);
-
-        TextComponent clickableComponent = new TextComponent(HomePlugin.translateAlternateColorCodes(clickableText));
-        clickableComponent.setColor(clickableColor);
-        clickableComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                new ComponentBuilder(HomePlugin.translateAlternateColorCodes(hoverText)).color(ChatColor.GRAY).create()));
-        clickableComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command));
-
-        labelComponent.addExtra(clickableComponent);
-        return labelComponent;
-    }
-
-    private TextComponent createInteractiveComponent(String clickableText, ChatColor clickableColor, String hoverText, String command) {
-        return createInteractiveComponent("", clickableColor, clickableText, clickableColor, hoverText, command);
-    }
 }

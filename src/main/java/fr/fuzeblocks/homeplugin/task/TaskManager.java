@@ -12,12 +12,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+/**
+ * The type Task manager.
+ */
 public class TaskManager extends BukkitRunnable {
+    private final HomePlugin plugin = HomePlugin.getPlugin(HomePlugin.class);
     private Task task;
     private Player player;
     private BukkitTask teleportTask;
     private BukkitRunnable titleTask;
-    private final HomePlugin plugin = HomePlugin.getPlugin(HomePlugin.class);
     private String homeName;
     private Location homeLocation;
 
@@ -32,7 +35,7 @@ public class TaskManager extends BukkitRunnable {
     }
 
     private void teleportHome() {
-        OnHomeTeleportEvent onHomeTeleport = new OnHomeTeleportEvent(player, homeLocation,homeName);
+        OnHomeTeleportEvent onHomeTeleport = new OnHomeTeleportEvent(player, homeLocation, homeName);
         Bukkit.getServer().getPluginManager().callEvent(onHomeTeleport);
         if (!onHomeTeleport.isCancelled()) {
             player.teleport(onHomeTeleport.getLocation());
@@ -59,6 +62,9 @@ public class TaskManager extends BukkitRunnable {
         target.resetTitle();
     }
 
+    /**
+     * Start teleport task.
+     */
     public void startTeleportTask() {
         StatusManager.setPlayerStatus(player, true);
         TaskSaveUtils.setTaskManagerInstance(player, this);
@@ -68,6 +74,11 @@ public class TaskManager extends BukkitRunnable {
     }
 
 
+    /**
+     * Cancel teleport task.
+     *
+     * @throws TeleportTaskException the teleport task exception
+     */
     public void cancelTeleportTask() throws TeleportTaskException {
         if (teleportTask != null && !teleportTask.isCancelled()) {
             teleportTask.cancel();
@@ -81,7 +92,13 @@ public class TaskManager extends BukkitRunnable {
     }
 
 
-
+    /**
+     * Home task.
+     *
+     * @param homeName the home name
+     * @param player   the player
+     * @param location the location
+     */
     public void homeTask(String homeName, Player player, Location location) {
         this.player = player;
         this.homeName = homeName;
@@ -89,6 +106,11 @@ public class TaskManager extends BukkitRunnable {
         task = Task.HOME;
     }
 
+    /**
+     * Spawn task.
+     *
+     * @param player the player
+     */
     public void spawnTask(Player player) {
         this.player = player;
         task = Task.SPAWN;
@@ -125,19 +147,38 @@ public class TaskManager extends BukkitRunnable {
     }
 
 
-
+    /**
+     * Gets player.
+     *
+     * @return the player
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * Gets task.
+     *
+     * @return the task
+     */
     public Task getTask() {
         return task;
     }
 
+    /**
+     * Gets home name.
+     *
+     * @return the home name
+     */
     public String getHomeName() {
         return homeName;
     }
 
+    /**
+     * Gets home location.
+     *
+     * @return the home location
+     */
     public Location getHomeLocation() {
         return homeLocation;
     }

@@ -16,8 +16,11 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
+/**
+ * The type Set home command.
+ */
 public class SetHomeCommand implements CommandExecutor {
-    private final String HOME = "Home.";
+    private static final String HOME = "Home.";
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -91,11 +94,17 @@ public class SetHomeCommand implements CommandExecutor {
         return allowed;
     }
 
-    private String translate(String key) {
+    private static String translate(String key) {
         return HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(key));
     }
 
-    private boolean isFair(Player player) {
+    /**
+     * Is fair boolean.
+     *
+     * @param player the player
+     * @return the boolean
+     */
+    public static boolean isFair(Player player) {
         Location loc = player.getLocation();
         World world = loc.getWorld();
         if (world == null) return false;
@@ -105,7 +114,6 @@ public class SetHomeCommand implements CommandExecutor {
             player.sendMessage(translate(HOME + "Invalid-height"));
             return false;
         }
-
 
 
         Material mat = loc.getBlock().getType();
@@ -139,30 +147,52 @@ public class SetHomeCommand implements CommandExecutor {
         return true;
     }
 
-    private boolean isOnFloatingPlatform(Location loc) {
+    /**
+     * Is on floating platform boolean.
+     *
+     * @param loc the loc
+     * @return the boolean
+     */
+    public static boolean isOnFloatingPlatform(Location loc) {
         World world = loc.getWorld();
+        if (world == null) return false;
 
-        for (int i = 1; i <= 10; i++) {
+        // considérer comme "vraiment flottant" uniquement si il y a une colonne d'air suffisamment profonde
+        final int requiredAirDepth = 20; // augmenter la profondeur réduit les faux positifs
+        for (int i = 1; i <= requiredAirDepth; i++) {
             Block b = world.getBlockAt(loc.getBlockX(), loc.getBlockY() - i, loc.getBlockZ());
-            if (b.getType() != Material.AIR) {
+            Material t = b.getType();
+            if (t != Material.AIR && t != Material.CAVE_AIR) {
+                // on a rencontré un bloc solide assez proche -> pas une plateforme flottante profonde
                 return false;
             }
         }
 
-        if (loc.getY() >= 100) {
-            return false; // Too high to be a cave
+        // ne considérer les très basses altitudes (caves profondes) que si on est en-dessous d'un seuil
+        if (loc.getY() >= 60) {
+            return false; // trop haut -> probablement pas une plateforme flottante problématique
         }
 
+        // vérifier la zone directement sous les pieds (1 bloc en dessous) : si il y a du support, ce n'est pas flottant
+        Block below = world.getBlockAt(loc.getBlockX(), loc.getBlockY() - 1, loc.getBlockZ());
+        Material belowType = below.getType();
+        if (belowType != Material.AIR && belowType != Material.CAVE_AIR) {
+            return false; // soutien direct -> pas flottant
+        }
+
+        // vérifier une petite aire sous les pieds (3x3) au niveau -1 : si un bloc solide y est présent, considérer comme non-flottant
         for (int dx = -1; dx <= 1; dx++) {
             for (int dz = -1; dz <= 1; dz++) {
-                if (dx == 0 && dz == 0) continue;
-                Block nearby = world.getBlockAt(loc.getBlockX() + dx, loc.getBlockY(), loc.getBlockZ() + dz);
-                if (nearby.getType() != Material.AIR) {
+                Block b = world.getBlockAt(loc.getBlockX() + dx, loc.getBlockY() - 1, loc.getBlockZ() + dz);
+                Material t = b.getType();
+                if (t != Material.AIR && t != Material.CAVE_AIR) {
                     return false;
                 }
             }
         }
 
+        // si on arrive ici, il s'agit d'un vide profond sous les pieds à basse altitude -> considérer comme plateforme flottante
         return true;
     }
+
 }
