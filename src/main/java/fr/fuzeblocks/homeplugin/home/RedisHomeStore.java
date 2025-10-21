@@ -8,10 +8,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * The type Redis home store.
+ */
 public class RedisHomeStore implements HomeRequestStore {
 
     private final JedisPooled jedis;
 
+    /**
+     * Instantiates a new Redis home store.
+     *
+     * @param jedis the jedis
+     */
     public RedisHomeStore(JedisPooled jedis) {
         this.jedis = jedis;
     }

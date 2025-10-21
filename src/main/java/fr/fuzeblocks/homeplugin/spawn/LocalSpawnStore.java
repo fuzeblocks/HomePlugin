@@ -2,6 +2,9 @@ package fr.fuzeblocks.homeplugin.spawn;
 
 import org.bukkit.Location;
 
+/**
+ * The type Local spawn store.
+ */
 public class LocalSpawnStore implements SpawnRequestStore {
     private Location spawnLocation;
 

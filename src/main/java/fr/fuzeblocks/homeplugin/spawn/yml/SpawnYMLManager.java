@@ -13,10 +13,18 @@ import java.io.IOException;
 import java.util.Objects;
 
 
+/**
+ * The type Spawn yml manager.
+ */
 public class SpawnYMLManager implements Spawn {
     private final YamlConfiguration yaml;
     private final File file;
 
+    /**
+     * Instantiates a new Spawn yml manager.
+     *
+     * @param file the file
+     */
     public SpawnYMLManager(File file) {
         this.file = file;
         yaml = YamlConfiguration.loadConfiguration(file);

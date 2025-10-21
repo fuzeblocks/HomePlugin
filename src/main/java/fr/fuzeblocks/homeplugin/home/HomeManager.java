@@ -11,6 +11,9 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
+/**
+ * The type Home manager.
+ */
 public class HomeManager implements Home {
 
         private final HomeYMLManager homeYMLManager = HomePlugin.getHomeYMLManager();
@@ -20,6 +23,11 @@ public class HomeManager implements Home {
     private HomeManager() {
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static HomeManager getInstance() {
         if (instance == null) {
             instance = new HomeManager();

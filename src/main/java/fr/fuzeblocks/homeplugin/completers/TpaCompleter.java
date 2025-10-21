@@ -9,6 +9,9 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Tpa completer.
+ */
 public class TpaCompleter implements TabCompleter {
 
     @Override

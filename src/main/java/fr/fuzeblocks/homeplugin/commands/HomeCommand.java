@@ -30,12 +30,19 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-
+/**
+ * The type Home command.
+ */
 public class HomeCommand implements CommandExecutor {
 
     private final HomePlugin instance;
     private final String HOME = "Home.";
 
+    /**
+     * Instantiates a new Home command.
+     *
+     * @param instance the instance
+     */
     public HomeCommand(HomePlugin instance) {
         this.instance = instance;
     }

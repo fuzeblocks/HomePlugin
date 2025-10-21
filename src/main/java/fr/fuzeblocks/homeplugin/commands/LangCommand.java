@@ -13,11 +13,19 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * The type Lang command.
+ */
 public class LangCommand implements CommandExecutor {
 
     private final Plugin plugin;
     private final String LANG = "LangCommand.";
 
+    /**
+     * Instantiates a new Lang command.
+     *
+     * @param plugin the plugin
+     */
     public LangCommand(Plugin plugin) {
         this.plugin = plugin;
     }

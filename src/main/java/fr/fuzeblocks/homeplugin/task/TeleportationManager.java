@@ -6,8 +6,17 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 
+/**
+ * The type Teleportation manager.
+ */
 public class TeleportationManager {
 
+    /**
+     * Teleport player to home.
+     *
+     * @param player   the player
+     * @param homeName the home name
+     */
     public static void teleportPlayerToHome(Player player, String homeName) {
         sendHomeTeleportMessage(player,homeName);
 
@@ -21,6 +30,11 @@ public class TeleportationManager {
         setTaskManagerInstance(player, taskManager);
     }
 
+    /**
+     * Teleport player to spawn.
+     *
+     * @param player the player
+     */
     public static void teleportPlayerToSpawn(Player player) {
         sendSpawnTeleportMessage(player);
         TaskManager taskManager = new TaskManager();

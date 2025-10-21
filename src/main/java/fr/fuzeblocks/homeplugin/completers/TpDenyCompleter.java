@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * The type Tp deny completer.
+ */
 public class TpDenyCompleter implements TabCompleter {
 
     @Override

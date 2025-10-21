@@ -9,7 +9,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+/**
+ * The type On join listener.
+ */
 public class OnJoinListener implements Listener {
+    /**
+     * On join.
+     *
+     * @param event the event
+     */
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();

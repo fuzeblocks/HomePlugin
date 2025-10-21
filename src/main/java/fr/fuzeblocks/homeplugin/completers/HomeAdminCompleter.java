@@ -12,6 +12,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Home admin completer.
+ */
 public class HomeAdminCompleter implements TabCompleter {
 
     private static final List<String> SUBCOMMANDS = List.of("list", "addhome", "deletehome", "tphome");

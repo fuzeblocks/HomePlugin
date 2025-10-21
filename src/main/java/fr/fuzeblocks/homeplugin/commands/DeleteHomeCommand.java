@@ -8,6 +8,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+/**
+ * The type Delete home command.
+ */
 public  class DeleteHomeCommand implements CommandExecutor {
 
     @Override

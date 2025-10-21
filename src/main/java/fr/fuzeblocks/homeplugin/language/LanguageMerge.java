@@ -5,6 +5,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * The type Language merge.
+ */
 public class LanguageMerge {
 
     private final YamlConfiguration editedConfig;
@@ -13,6 +16,12 @@ public class LanguageMerge {
 
     private final File mergedFile;
 
+    /**
+     * Instantiates a new Language merge.
+     *
+     * @param editedFile the edited file
+     * @param latestFile the latest file
+     */
     public LanguageMerge(File editedFile, File latestFile) {
         this.editedConfig = YamlConfiguration.loadConfiguration(editedFile);
         this.latestConfig = YamlConfiguration.loadConfiguration(latestFile);
@@ -74,6 +83,13 @@ public class LanguageMerge {
             return false;
         }
     }
+
+    /**
+     * Push to boolean.
+     *
+     * @param destinationFile the destination file
+     * @return the boolean
+     */
     public boolean pushTo(File destinationFile) {
         if (mergedConfig == null) return false;
 

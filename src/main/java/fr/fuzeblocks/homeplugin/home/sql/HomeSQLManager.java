@@ -16,6 +16,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Home sql manager.
+ */
 public class HomeSQLManager implements Home {
     private final Connection connection = DatabaseConnection.getConnection();
 

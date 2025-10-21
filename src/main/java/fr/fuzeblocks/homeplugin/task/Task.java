@@ -1,5 +1,15 @@
 package fr.fuzeblocks.homeplugin.task;
 
+/**
+ * The enum Task.
+ */
 public enum Task {
-    SPAWN,HOME
+    /**
+     * Spawn task.
+     */
+    SPAWN,
+    /**
+     * Home task.
+     */
+    HOME
 }

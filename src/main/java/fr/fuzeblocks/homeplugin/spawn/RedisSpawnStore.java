@@ -4,11 +4,19 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import redis.clients.jedis.JedisPooled;
 
+/**
+ * The type Redis spawn store.
+ */
 public class RedisSpawnStore implements SpawnRequestStore {
 
     private final JedisPooled jedis;
     private static final String SPAWN_KEY = "global_spawn";
 
+    /**
+     * Instantiates a new Redis spawn store.
+     *
+     * @param jedis the jedis
+     */
     public RedisSpawnStore(JedisPooled jedis) {
         this.jedis = jedis;
     }

@@ -16,10 +16,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Home yml manager.
+ */
 public class HomeYMLManager implements Home {
     private final File file;
     private final YamlConfiguration yaml;
 
+    /**
+     * Instantiates a new Home yml manager.
+     *
+     * @param file the file
+     */
     public HomeYMLManager(File file) {
         this.file = file;
         this.yaml = YamlConfiguration.loadConfiguration(file);

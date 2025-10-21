@@ -14,6 +14,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * The type List home command.
+ */
 public class ListHomeCommand implements CommandExecutor {
 
     private final String HOME = "Home.";
