@@ -15,6 +15,7 @@
 - [🧾 Commands](#-commands)
 - [🔐 Permissions](#-permissions)
 - [🧩 PlaceholderAPI Integration](#-placeholderapi-integration)
+- [🧩 Vault Integration](#-vault-integration)
 - [🌍 Languages](#-languages)
 - [⚙️ Configuration](#️-configuration)
 - [🧱 Architecture & Performance](#-architecture--performance)
@@ -102,7 +103,7 @@ Dynamic limits: The code iterates `homeplugin.limit.1` through `homeplugin.limit
 
 ---
 
-## 🧩 PlaceholderAPI Integration
+## 🧩 PlaceholderAPI Vault Integration
 
 Implemented in `HomePluginExpansion`:
 
@@ -117,6 +118,13 @@ Implemented in `HomePluginExpansion`:
 | `%homeplugin_home_coordinates_<name>%` | Raw coordinates `X Y Z` |
 
 > `<name>` is case-insensitive as passed in.
+
+
+## Vault Integration
+
+Implemented in `EconomyManager`:
+
+See Vault documentation for more information
 
 ---
 
