@@ -2,6 +2,7 @@ package fr.fuzeblocks.homeplugin.language;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -39,12 +40,19 @@ public class LanguageManager {
 
     @Nullable
     public String getStringWithColor(String key) {
-        return HomePlugin.translateAlternateColorCodes(yamlConfiguration.getString(key));
+        return translateAlternateColorCodes(yamlConfiguration.getString(key));
     }
 
     @Nullable
     public String getStringWithColor(String key, String defaultValue) {
-        return HomePlugin.translateAlternateColorCodes(yamlConfiguration.getString(key, defaultValue));
+        return translateAlternateColorCodes(yamlConfiguration.getString(key, defaultValue));
+    }
+
+    public static @NotNull String translateAlternateColorCodes(@Nullable String s) {
+        if (s == null) {
+            return "§c[Traduction manquante]";
+        }
+        return s.replace('&', '§');
     }
 
     /**
@@ -73,4 +81,5 @@ public class LanguageManager {
     public Language getLanguage() {
         return language;
     }
+
 }

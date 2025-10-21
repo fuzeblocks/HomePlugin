@@ -21,14 +21,14 @@ public class DeleteSpawnCommand implements CommandExecutor {
                     Bukkit.getPluginManager().callEvent(onSpawnDelete);
                     if (!onSpawnDelete.isCancelled()) {
                         HomePlugin.getSpawnManager().removeSpawn(onSpawnDelete.getLocation().getWorld());
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(SPAWN + "Spawn-deleted")));
+                        player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(SPAWN + "Spawn-deleted"));
                     }
                 } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "Player-is-not-OP")));
+                player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(LANG + "Player-is-not-OP"));
                 }
                 return true;
             } else {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "Only-a-player-can-execute")));
+            sender.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(LANG + "Only-a-player-can-execute"));
             }
         return false;
     }

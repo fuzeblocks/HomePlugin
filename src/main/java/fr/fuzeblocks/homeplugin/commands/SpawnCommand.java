@@ -24,23 +24,23 @@ public class SpawnCommand implements CommandExecutor {
                 SpawnManager spawnManager = HomePlugin.getSpawnManager();
                     if (spawnManager.hasSpawn(player.getWorld())) {
                         if (spawnManager.isStatus(player)) {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "A-teleport-is-already-in-progress")));
+                            player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(LANG + "A-teleport-is-already-in-progress"));
                             return false;
                         }
                         if (!player.hasPermission("homeplugin.command.spawn")) {
-                            player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(SPAWN + "SetSpawn-permission-deny-message")));
+                            player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(SPAWN + "SetSpawn-permission-deny-message"));
                             return false;
                         }
                         TeleportationManager.teleportPlayerToSpawn(player);
                     } else {
-                        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(SPAWN + "No-spawn-defined")));
+                        player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(SPAWN + "No-spawn-defined"));
                     }
             } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString( SPAWN + "Spawn-usage-message")));
+                player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor( SPAWN + "Spawn-usage-message"));
             }
 
         } else {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "Only-a-player-can-execute")));
+            sender.sendMessage((HomePlugin.getLanguageManager().getString(LANG + "Only-a-player-can-execute")));
         }
         return false;
 
