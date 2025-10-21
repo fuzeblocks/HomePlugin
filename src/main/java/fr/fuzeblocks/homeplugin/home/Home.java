@@ -20,7 +20,7 @@ public interface Home {
      * @param name   the name
      * @return the boolean
      */
-    public boolean addHome(Player player, String name);
+    boolean addHome(Player player, String name);
 
     /**
      * Sets home.
@@ -30,7 +30,27 @@ public interface Home {
      * @param location the location
      * @return the home
      */
-    public boolean setHome(Player player, String name,Location location);
+    boolean setHome(Player player, String name, Location location);
+
+    /**
+     * Rename home boolean.
+     *
+     * @param player      the player
+     * @param oldHomeName the old home name
+     * @param newHomeName the new home name
+     * @return the boolean
+     */
+    boolean renameHome(Player player, String oldHomeName, String newHomeName);
+
+    /**
+     * Relocate home boolean.
+     *
+     * @param player      the player
+     * @param homeName    the home name
+     * @param newLocation the new location
+     * @return the boolean
+     */
+    boolean relocateHome(Player player, String homeName, Location newLocation);
 
     /**
      * Gets homes location.
@@ -38,7 +58,7 @@ public interface Home {
      * @param player the player
      * @return the homes location
      */
-    public List<Location> getHomesLocation(Player player);
+    List<Location> getHomesLocation(Player player);
 
     /**
      * Gets home number.
@@ -46,7 +66,7 @@ public interface Home {
      * @param player the player
      * @return the home number
      */
-    public int getHomeNumber(Player player);
+    int getHomeNumber(Player player);
 
     /**
      * Gets homes name.
@@ -54,14 +74,14 @@ public interface Home {
      * @param player the player
      * @return the homes name
      */
-    public List<String> getHomesName(Player player);
+    List<String> getHomesName(Player player);
 
     /**
      * Gets cache manager.
      *
      * @return the cache manager
      */
-    public CacheManager getCacheManager();
+    CacheManager getCacheManager();
 
     /**
      * Gets home location.
@@ -70,7 +90,7 @@ public interface Home {
      * @param homeName the home name
      * @return the home location
      */
-    public Location getHomeLocation(Player player, String homeName);
+    Location getHomeLocation(Player player, String homeName);
 
     /**
      * Delete home boolean.
@@ -79,7 +99,7 @@ public interface Home {
      * @param homeName the home name
      * @return the boolean
      */
-    public boolean deleteHome(Player player, String homeName);
+    boolean deleteHome(Player player, String homeName);
 
     /**
      * Is status boolean.
@@ -87,7 +107,7 @@ public interface Home {
      * @param player the player
      * @return the boolean
      */
-    public boolean isStatus(Player player);
+    boolean isStatus(Player player);
 
     /**
      * Exist boolean.
@@ -96,7 +116,7 @@ public interface Home {
      * @param homeName the home name
      * @return the boolean
      */
-    public boolean exist(Player player, String homeName);
+    boolean exist(Player player, String homeName);
 
     /**
      * Is yaml boolean.

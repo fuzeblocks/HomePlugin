@@ -16,11 +16,11 @@ import org.bukkit.scheduler.BukkitTask;
  * The type Task manager.
  */
 public class TaskManager extends BukkitRunnable {
+    private final HomePlugin plugin = HomePlugin.getPlugin(HomePlugin.class);
     private Task task;
     private Player player;
     private BukkitTask teleportTask;
     private BukkitRunnable titleTask;
-    private final HomePlugin plugin = HomePlugin.getPlugin(HomePlugin.class);
     private String homeName;
     private Location homeLocation;
 
@@ -35,7 +35,7 @@ public class TaskManager extends BukkitRunnable {
     }
 
     private void teleportHome() {
-        OnHomeTeleportEvent onHomeTeleport = new OnHomeTeleportEvent(player, homeLocation,homeName);
+        OnHomeTeleportEvent onHomeTeleport = new OnHomeTeleportEvent(player, homeLocation, homeName);
         Bukkit.getServer().getPluginManager().callEvent(onHomeTeleport);
         if (!onHomeTeleport.isCancelled()) {
             player.teleport(onHomeTeleport.getLocation());

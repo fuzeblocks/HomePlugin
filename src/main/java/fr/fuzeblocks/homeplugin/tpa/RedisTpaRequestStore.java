@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
  */
 public class RedisTpaRequestStore implements TpaRequestStore {
 
-    private final JedisPooled jedis;
     private static final String FIELD_TPA_TARGET = "tpa_target";
+    private final JedisPooled jedis;
 
     /**
      * Instantiates a new Redis tpa request store.
@@ -73,7 +73,8 @@ public class RedisTpaRequestStore implements TpaRequestStore {
             if (target.toString().equals(stored)) {
                 try {
                     return UUID.fromString(key);
-                } catch (IllegalArgumentException ignored) {}
+                } catch (IllegalArgumentException ignored) {
+                }
             }
         }
         return null;
@@ -89,6 +90,7 @@ public class RedisTpaRequestStore implements TpaRequestStore {
             return null;
         }
     }
+
     public Set<UUID> getAllTpaSenders() {
         Set<String> keys = jedis.keys("*");
         return keys.stream()

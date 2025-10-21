@@ -18,7 +18,7 @@ public class TeleportationManager {
      * @param homeName the home name
      */
     public static void teleportPlayerToHome(Player player, String homeName) {
-        sendHomeTeleportMessage(player,homeName);
+        sendHomeTeleportMessage(player, homeName);
 
         Location location = HomePlugin.getHomeManager().getHomeLocation(player, homeName);
 
@@ -53,6 +53,6 @@ public class TeleportationManager {
     }
 
     private static void setTaskManagerInstance(Player player, TaskManager taskManager) {
-       TaskSaveUtils.setTaskManagerInstance(player, taskManager);
+        TaskSaveUtils.setTaskManagerInstance(player, taskManager);
     }
 }

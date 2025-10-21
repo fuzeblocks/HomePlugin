@@ -2,8 +2,6 @@ package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.spawn.SpawnManager;
-import fr.fuzeblocks.homeplugin.status.StatusManager;
-import fr.fuzeblocks.homeplugin.task.TaskManager;
 import fr.fuzeblocks.homeplugin.task.TeleportationManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -38,6 +36,10 @@ public class SpawnCommand implements CommandExecutor {
                     } else {
                         player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(SPAWN + "No-spawn-defined"));
                     }
+                    TeleportationManager.teleportPlayerToSpawn(player);
+                } else {
+                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(SPAWN + "No-spawn-defined")));
+                }
             } else {
                 player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor( SPAWN + "Spawn-usage-message"));
             }

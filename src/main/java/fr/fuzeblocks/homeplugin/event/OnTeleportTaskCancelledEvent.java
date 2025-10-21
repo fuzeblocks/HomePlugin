@@ -19,7 +19,7 @@ public class OnTeleportTaskCancelledEvent extends OnEventAction {
      * @param task         the task
      */
     public OnTeleportTaskCancelledEvent(Player player, Location homelocation, String homeName, Task task) {
-        super(player, homelocation,homeName);
+        super(player, homelocation, homeName);
         this.task = task;
     }
 

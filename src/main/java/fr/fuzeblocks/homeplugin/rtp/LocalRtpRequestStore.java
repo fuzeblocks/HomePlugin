@@ -12,12 +12,12 @@ public class LocalRtpRequestStore implements RtpRequestStore {
 
     @Override
     public void addRtpRequest(UUID playerId, Long timestamp) {
-        rtpCooldownMap.put(playerId,timestamp);
+        rtpCooldownMap.put(playerId, timestamp);
     }
 
     @Override
     public Long getRtpRequest(UUID playerId) {
-       return rtpCooldownMap.get(playerId);
+        return rtpCooldownMap.get(playerId);
     }
 
     @Override

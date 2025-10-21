@@ -33,7 +33,7 @@ public class HomePermissionManager {
      * @return the boolean
      */
     public static boolean canSetHome(Player player) {
-       return HomePlugin.getHomeManager().getHomeNumber(player) < getMaxHomes(player);
+        return HomePlugin.getHomeManager().getHomeNumber(player) < getMaxHomes(player);
     }
 
 }

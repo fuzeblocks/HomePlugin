@@ -46,10 +46,12 @@ public class LocalTpaRequestStore implements TpaRequestStore {
                 .findFirst()
                 .orElse(null);
     }
+
     @Override
     public UUID getTpaTarget(UUID senderId) {
         return tpaRequests.get(senderId); // tpaRequests : Map<UUID, UUID>
     }
+
     public Set<UUID> getAllTpaSenders() {
         return tpaRequests.keySet();
     }

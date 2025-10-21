@@ -13,10 +13,10 @@ import org.bukkit.event.HandlerList;
  */
 public class OnEventAction extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    private String homeName;
     private final Player player;
     private final Location location;
     private final SyncMethod type;
+    private String homeName;
     private boolean isCancelled = false;
 
     /**

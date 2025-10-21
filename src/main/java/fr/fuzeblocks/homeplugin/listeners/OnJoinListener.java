@@ -22,10 +22,10 @@ public class OnJoinListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         HomeManager homeManager = HomePlugin.getHomeManager();
-            if (homeManager.getHomeNumber(player) > 0) {
-                CacheManager cacheManager = homeManager.getCacheManager();
-                cacheManager.loadAllHomesToCache(player);
-            }
+        if (homeManager.getHomeNumber(player) > 0) {
+            CacheManager cacheManager = homeManager.getCacheManager();
+            cacheManager.loadAllHomesToCache(player);
+        }
         if (!player.hasPlayedBefore()) {
             SpawnManager spawnManager = HomePlugin.getSpawnManager();
             if (spawnManager.hasSpawn(player.getWorld())) {

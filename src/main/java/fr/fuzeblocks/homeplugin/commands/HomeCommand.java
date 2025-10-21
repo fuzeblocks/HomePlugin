@@ -6,8 +6,6 @@ import fr.fuzeblocks.homeplugin.gui.BackItem;
 import fr.fuzeblocks.homeplugin.gui.ForwardItem;
 import fr.fuzeblocks.homeplugin.gui.HomeItem;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
-import fr.fuzeblocks.homeplugin.status.StatusManager;
-import fr.fuzeblocks.homeplugin.task.TaskManager;
 import fr.fuzeblocks.homeplugin.task.TeleportationManager;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
@@ -35,7 +33,6 @@ import java.util.stream.Collectors;
  */
 public class HomeCommand implements CommandExecutor {
 
-    private final HomePlugin instance;
     private final String HOME = "Home.";
 
     /**
@@ -49,7 +46,6 @@ public class HomeCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String LANG = "Language.";
 
         if (!(sender instanceof Player)) {
             sender.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(LANG + "Only-a-player-can-execute"));

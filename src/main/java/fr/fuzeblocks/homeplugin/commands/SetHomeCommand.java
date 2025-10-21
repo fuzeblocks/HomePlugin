@@ -110,7 +110,13 @@ public class SetHomeCommand implements CommandExecutor {
         return HomePlugin.getLanguageManager().getStringWithColor(key);
     }
 
-    private boolean isFair(Player player) {
+    /**
+     * Is fair boolean.
+     *
+     * @param player the player
+     * @return the boolean
+     */
+    public static boolean isFair(Player player) {
         Location loc = player.getLocation();
         World world = loc.getWorld();
 
@@ -147,12 +153,23 @@ public class SetHomeCommand implements CommandExecutor {
         return true;
     }
 
-    private boolean isOnFloatingPlatform(Location loc) {
+    /**
+     * Is on floating platform boolean.
+     *
+     * @param loc the loc
+     * @return the boolean
+     */
+    public static boolean isOnFloatingPlatform(Location loc) {
         World world = loc.getWorld();
+        if (world == null) return false;
 
-        for (int i = 1; i <= 10; i++) {
+        // considérer comme "vraiment flottant" uniquement si il y a une colonne d'air suffisamment profonde
+        final int requiredAirDepth = 20; // augmenter la profondeur réduit les faux positifs
+        for (int i = 1; i <= requiredAirDepth; i++) {
             Block b = world.getBlockAt(loc.getBlockX(), loc.getBlockY() - i, loc.getBlockZ());
-            if (b.getType() != Material.AIR) {
+            Material t = b.getType();
+            if (t != Material.AIR && t != Material.CAVE_AIR) {
+                // on a rencontré un bloc solide assez proche -> pas une plateforme flottante profonde
                 return false;
             }
         }
@@ -171,4 +188,5 @@ public class SetHomeCommand implements CommandExecutor {
         }
         return false;
     }
+
 }

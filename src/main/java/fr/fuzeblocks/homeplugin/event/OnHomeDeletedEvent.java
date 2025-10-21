@@ -16,6 +16,6 @@ public class OnHomeDeletedEvent extends OnEventAction {
      * @param homeName the home name
      */
     public OnHomeDeletedEvent(Player player, Location location, String homeName) {
-        super(player, location,homeName);
+        super(player, location, homeName);
     }
 }

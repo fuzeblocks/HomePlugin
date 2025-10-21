@@ -13,9 +13,9 @@ import java.io.File;
 public class LanguageManager {
 
     private final Language language;
-    private YamlConfiguration yamlConfiguration;
     private final File file;
     private final HomePlugin plugin;
+    private YamlConfiguration yamlConfiguration;
 
     /**
      * Instantiates a new Language manager.
@@ -43,9 +43,10 @@ public class LanguageManager {
      * @param key the key
      * @return the string
      */
-    @Nullable
+    @NotNull
     public String getString(String key) {
-        return yamlConfiguration.getString(key);
+        String value = yamlConfiguration.getString(key);
+        return value != null ? value : "";
     }
 
     /**
@@ -55,7 +56,7 @@ public class LanguageManager {
      * @param defaultValue the default value
      * @return the string
      */
-    @Nullable
+    @NotNull
     public String getString(String key, String defaultValue) {
         return yamlConfiguration.getString(key, defaultValue);
     }
@@ -66,7 +67,7 @@ public class LanguageManager {
      * @param key the key
      * @return the string with color
      */
-    @Nullable
+    @NotNull
     public String getStringWithColor(String key) {
         return translateAlternateColorCodes(yamlConfiguration.getString(key));
     }
@@ -78,7 +79,7 @@ public class LanguageManager {
      * @param defaultValue the default value
      * @return the string with color
      */
-    @Nullable
+    @NotNull
     public String getStringWithColor(String key, String defaultValue) {
         return translateAlternateColorCodes(yamlConfiguration.getString(key, defaultValue));
     }
@@ -95,6 +96,7 @@ public class LanguageManager {
         }
         return s.replace('&', '§');
     }
+
 
     /**
      * Regenerates the language file from the internal resource and reloads it.

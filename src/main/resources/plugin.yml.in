@@ -15,6 +15,10 @@ commands:
     description: Set a home at your current location.
   home:
     description: Teleport to a specific home or open the home GUI.
+  renamehome:
+    description: Rename an existing home.
+  relocatehome:
+    description: Move an existing home to your current location.
   delhome:
     description: Delete a home by name.
   listhome:

@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
  */
 public class LangTabCompleter implements TabCompleter {
 
-    private final Plugin plugin;
     private static final List<String> SUBCOMMANDS = Arrays.asList("update", "set", "merge");
+    private final Plugin plugin;
 
     /**
      * Instantiates a new Lang tab completer.

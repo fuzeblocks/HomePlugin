@@ -15,8 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class OnPlayerTakeDamageByAnotherPlayer implements Listener {
 
-    private final Map<UUID, Long> playerDamageTimestamps = new ConcurrentHashMap<>();
     private static final long _COOLDOWN_MS = 5000; // 5 secondes
+    private final Map<UUID, Long> playerDamageTimestamps = new ConcurrentHashMap<>();
 
     /**
      * On player damage.

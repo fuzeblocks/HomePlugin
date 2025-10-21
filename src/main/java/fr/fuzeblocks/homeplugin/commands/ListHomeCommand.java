@@ -2,11 +2,9 @@ package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -50,8 +48,10 @@ public class ListHomeCommand implements CommandExecutor {
         return true;
     }
 
+
     private void sendHomeMessage(Player player, String homeName, Location location) {
-        String detailHeader = HomePlugin.getLanguageManager().getStringWithColor(HOME + "List.Home-detail-header")
+        String detailHeader = HomePlugin.getLanguageManager()
+                .getString(HOME + "List.Home-detail-header")
                 .replace("%home%", homeName);
         player.sendMessage(detailHeader);
 
@@ -62,55 +62,56 @@ public class ListHomeCommand implements CommandExecutor {
                 .replace("%world%", location.getWorld().getName());
         player.sendMessage(locationLine);
 
-        // Composants interactifs
-        TextComponent teleportComponent = createInteractiveComponent(
-                HomePlugin.getLanguageManager().getStringWithColor(HOME + "List.Teleport-label"),
-                ChatColor.GRAY,
-                HomePlugin.getLanguageManager().getStringWithColor(HOME + "List.Teleport-click"),
-                ChatColor.YELLOW,
-                HomePlugin.getLanguageManager().getStringWithColor(HOME + "List.Teleport-hover"),
-                "/home " + homeName
+        // Composants interactifs (Adventure)
+        Component teleportComponent = Component.text(
+                        HomePlugin.getLanguageManager().getString(HOME + "List.Teleport-label"),
+                        NamedTextColor.GRAY
+                )
+                .append(Component.text(" "))
+                .append(Component.text(
+                                HomePlugin.getLanguageManager().getString(HOME + "List.Teleport-click"),
+                                NamedTextColor.YELLOW,
+                                TextDecoration.BOLD
+                        )
+                        .hoverEvent(net.kyori.adventure.text.event.HoverEvent.showText(
+                                Component.text(
+                                        HomePlugin.getLanguageManager().getString(HOME + "List.Teleport-hover"),
+                                        NamedTextColor.GRAY
+                                )
+                        ))
+                        .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/home " + homeName)));
+
+        Component manageComponent = Component.text(
+                HomePlugin.getLanguageManager().getString(HOME + "List.Manage-label"),
+                NamedTextColor.GRAY
         );
 
-        TextComponent manageComponent = new TextComponent(
-                HomePlugin.getLanguageManager().getStringWithColor(HOME + "List.Manage-label")
-        );
-        manageComponent.setColor(ChatColor.GRAY);
+        Component relocateComponent = Component.text(
+                        HomePlugin.getLanguageManager().getString(HOME + "List.Relocate-click"),
+                        NamedTextColor.GOLD
+                )
+                .hoverEvent(net.kyori.adventure.text.event.HoverEvent.showText(
+                        Component.text(
+                                HomePlugin.getLanguageManager().getString(HOME + "List.Relocate-hover"),
+                                NamedTextColor.GRAY
+                        )
+                ))
+                .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/homerelocate " + homeName));
 
-        TextComponent relocateComponent = createInteractiveComponent(
-                HomePlugin.getLanguageManager().getStringWithColor(HOME + "List.Relocate-click"),
-                ChatColor.GOLD,
-                HomePlugin.getLanguageManager().getStringWithColor(HOME + "List.Relocate-hover"),
-                "/homerelocate"
-        );
+        Component deleteComponent = Component.text(
+                        HomePlugin.getLanguageManager().getString(HOME + "List.Delete-click"),
+                        NamedTextColor.RED
+                )
+                .hoverEvent(net.kyori.adventure.text.event.HoverEvent.showText(
+                        Component.text(
+                                HomePlugin.getLanguageManager().getString(HOME + "List.Delete-hover"),
+                                NamedTextColor.GRAY
+                        )
+                ))
+                .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/homedelete " + homeName));
 
-        TextComponent deleteComponent = createInteractiveComponent(
-                HomePlugin.getLanguageManager().getStringWithColor(HOME + "List.Delete-click"),
-                ChatColor.RED,
-                HomePlugin.getLanguageManager().getStringWithColor(HOME + "List.Delete-hover"),
-                "/delhome " + homeName
-        );
-
-       //TODO send message
-
-
+        HomePlugin.getAdventure().player(player).sendMessage(teleportComponent);
+        HomePlugin.getAdventure().player(player).sendMessage(manageComponent.append(Component.text(" ")).append(relocateComponent).append(Component.text(" ")).append(deleteComponent));
     }
 
-    private TextComponent createInteractiveComponent(String label, ChatColor labelColor, String clickableText, ChatColor clickableColor, String hoverText, String command) {
-        TextComponent labelComponent = new TextComponent(label);
-        labelComponent.setColor(labelColor);
-
-        TextComponent clickableComponent = new TextComponent(clickableText);
-        clickableComponent.setColor(clickableColor);
-        clickableComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                new ComponentBuilder(hoverText).color(ChatColor.GRAY).create()));
-        clickableComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command));
-
-        labelComponent.addExtra(clickableComponent);
-        return labelComponent;
-    }
-
-    private TextComponent createInteractiveComponent(String clickableText, ChatColor clickableColor, String hoverText, String command) {
-        return createInteractiveComponent("", clickableColor, clickableText, clickableColor, hoverText, command);
-    }
 }

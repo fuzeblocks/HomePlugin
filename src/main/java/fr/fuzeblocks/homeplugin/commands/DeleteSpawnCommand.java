@@ -29,10 +29,11 @@ public class DeleteSpawnCommand implements CommandExecutor {
                 } else {
                 player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(LANG + "Player-is-not-OP"));
                 }
-                return true;
-            } else {
-            sender.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(LANG + "Only-a-player-can-execute"));
-            }
+            } 
+            return true;
+        } else {
+            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "Only-a-player-can-execute")));
+        }
         return false;
     }
 }

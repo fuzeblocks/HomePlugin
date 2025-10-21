@@ -16,7 +16,7 @@ public interface Spawn {
      * @param location the location
      * @return the spawn
      */
-    public boolean setSpawn(Location location);
+    boolean setSpawn(Location location);
 
     /**
      * Gets spawn.
@@ -24,7 +24,7 @@ public interface Spawn {
      * @param world the world
      * @return the spawn
      */
-    public Location getSpawn(World world);
+    Location getSpawn(World world);
 
     /**
      * Has spawn boolean.
@@ -32,7 +32,7 @@ public interface Spawn {
      * @param world the world
      * @return the boolean
      */
-    public boolean hasSpawn(World world);
+    boolean hasSpawn(World world);
 
     /**
      * Remove spawn boolean.
@@ -40,7 +40,7 @@ public interface Spawn {
      * @param world the world
      * @return the boolean
      */
-    public boolean removeSpawn(World world);
+    boolean removeSpawn(World world);
 
     /**
      * Is status boolean.
@@ -48,7 +48,7 @@ public interface Spawn {
      * @param player the player
      * @return the boolean
      */
-    public boolean isStatus(Player player);
+    boolean isStatus(Player player);
 
     /**
      * Is yaml boolean.

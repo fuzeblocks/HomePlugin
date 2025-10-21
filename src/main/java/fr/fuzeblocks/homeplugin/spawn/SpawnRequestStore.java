@@ -7,18 +7,18 @@ import org.bukkit.Location;
  */
 public interface SpawnRequestStore {
     /**
-     * Sets spawn.
-     *
-     * @param location the location
-     */
-    void setSpawn(Location location);
-
-    /**
      * Gets spawn.
      *
      * @return the spawn
      */
     Location getSpawn();
+
+    /**
+     * Sets spawn.
+     *
+     * @param location the location
+     */
+    void setSpawn(Location location);
 
     /**
      * Clear spawn.

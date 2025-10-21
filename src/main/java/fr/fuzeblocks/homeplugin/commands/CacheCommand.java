@@ -54,7 +54,7 @@ public class CacheCommand implements CommandExecutor {
                     return false;
                 }
 
-               Player target = Bukkit.getPlayer(args[1]);
+                Player target = Bukkit.getPlayer(args[1]);
                 if (target == null) {
                     sendMsg(player, LANG + "Player-is-not-online");
                     return false;
@@ -98,7 +98,7 @@ public class CacheCommand implements CommandExecutor {
 
             String locationLine = translate(CACHE + "Cache-home-location")
                     .replace("%home%", "§b" + homeName)
-                .replace("%x%", "§a" + String.format("%.1f", homeLocation.getX()))
+                    .replace("%x%", "§a" + String.format("%.1f", homeLocation.getX()))
                     .replace("%y%", "§a" + String.format("%.1f", homeLocation.getY()))
                     .replace("%z%", "§a" + String.format("%.1f", homeLocation.getZ()))
                     .replace("%world%", "§e" + homeLocation.getWorld().getName());

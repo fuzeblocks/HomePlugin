@@ -21,7 +21,6 @@ import redis.clients.jedis.JedisPooled;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The type Cache manager.
@@ -106,7 +105,7 @@ public class CacheManager {
      * @return the target with sender
      */
     public UUID getTargetWithSender(UUID sender) {
-       return tpaRequestStore.getTargetWithSender(sender);
+        return tpaRequestStore.getTargetWithSender(sender);
     }
 
     /**
@@ -147,7 +146,6 @@ public class CacheManager {
     public  Set<UUID> getAllTpaSenders() {
         return tpaRequestStore.getAllTpaSenders();
     }
-
 
 
     // --- HOMES ---
@@ -249,8 +247,8 @@ public class CacheManager {
      * @param timestamp the timestamp
      */
     public void addRtpRequest(UUID playerId, Long timestamp) {
-            rtpRequestStore.addRtpRequest(playerId, timestamp);
-        }
+        rtpRequestStore.addRtpRequest(playerId, timestamp);
+    }
 
     /**
      * Gets rtp request.
@@ -259,8 +257,8 @@ public class CacheManager {
      * @return the rtp request
      */
     public Long getRtpRequest(UUID playerId) {
-            return rtpRequestStore.getRtpRequest(playerId);
-        }
+        return rtpRequestStore.getRtpRequest(playerId);
+    }
 
 
     /**
@@ -269,9 +267,8 @@ public class CacheManager {
      * @param playerId the player id
      */
     public void removeRtpRequest(UUID playerId) {
-            rtpRequestStore.removeRtpRequest(playerId);
-        }
-
+        rtpRequestStore.removeRtpRequest(playerId);
+    }
 
     /**
      * Has rtp request boolean.
@@ -283,6 +280,16 @@ public class CacheManager {
             return rtpRequestStore.hasRtpRequest(playerId);
         }
 
+    /**
+     * Has rtp request boolean.
+     *
+     * @param playerId the player id
+     * @return the boolean
+     */
+    public boolean hasRtpRequest(UUID playerId) {
+        return rtpRequestStore.hasRtpRequest(playerId);
+    }
+
 
     /**
      * Gets all rtp requests.
@@ -290,9 +297,8 @@ public class CacheManager {
      * @return the all rtp requests
      */
     public Map<UUID, Long> getAllRtpRequests() {
-            return rtpRequestStore.getAllRtpRequests();
-        }
-
+        return rtpRequestStore.getAllRtpRequests();
+    }
 
 
     // --- UTIL ---

@@ -4,7 +4,6 @@ import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.spawn.sql.SpawnSQLManager;
 import fr.fuzeblocks.homeplugin.spawn.yml.SpawnYMLManager;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
-import fr.fuzeblocks.homeplugin.sync.SyncMethod;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -15,9 +14,9 @@ import org.bukkit.entity.Player;
  */
 public class SpawnManager implements Spawn {
 
+    private static SpawnManager instance = null;
     private final SpawnYMLManager spawnYMLManager = HomePlugin.getSpawnYMLManager();
     private final SpawnSQLManager spawnSQLManager = HomePlugin.getSpawnSQLManager();
-    private static SpawnManager instance = null;
 
     private SpawnManager() {
     }
@@ -33,6 +32,7 @@ public class SpawnManager implements Spawn {
         }
         return instance;
     }
+
     public boolean setSpawn(Location location) {
         if (isYAML()) {
             return spawnYMLManager.setSpawn(location);
@@ -42,11 +42,11 @@ public class SpawnManager implements Spawn {
     }
 
     public Location getSpawn(World world) {
-       if (isYAML()) {
-           return spawnYMLManager.getSpawn(world);
-       } else {
-           return spawnSQLManager.getSpawn(world);
-       }
+        if (isYAML()) {
+            return spawnYMLManager.getSpawn(world);
+        } else {
+            return spawnSQLManager.getSpawn(world);
+        }
     }
 
     public boolean hasSpawn(World world) {

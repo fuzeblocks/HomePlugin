@@ -47,14 +47,14 @@ public class HomeAdminCommand implements CommandExecutor {
 
             case "list":
                 if (args.length < 2) {
-                    sendMsg(player,"HomeAdmin.List-usage");
+                    sendMsg(player, "HomeAdmin.List-usage");
                     return false;
                 }
                 return listHomes(player, args[1], homeManager);
 
             case "deletehome":
                 if (args.length < 3) {
-                    sendMsg(player,"HomeAdmin.DeleteHome-usage");
+                    sendMsg(player, "HomeAdmin.DeleteHome-usage");
                     return false;
                 }
                 return deleteHome(player, args[1], args[2], homeManager);
@@ -149,13 +149,13 @@ public class HomeAdminCommand implements CommandExecutor {
             return false;
         }
 
-        boolean added = homeManager.addHome(admin,homeName);
+        boolean added = homeManager.addHome(admin, homeName);
 
         if (added) {
-            sendMsg(admin, ADMIN + "Home-added", "%home%", homeName,"%player%", target.getName());
+            sendMsg(admin, ADMIN + "Home-added", "%home%", homeName, "%player%", target.getName());
             return true;
         } else {
-            sendMsg(admin, ADMIN + "Home-already-exists", "%home%", homeName,"%player%", target.getName());
+            sendMsg(admin, ADMIN + "Home-already-exists", "%home%", homeName, "%player%", target.getName());
             return false;
         }
     }

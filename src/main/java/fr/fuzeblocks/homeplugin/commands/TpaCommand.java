@@ -8,7 +8,9 @@ import fr.fuzeblocks.homeplugin.tpa.TpaManager;
 import fr.fuzeblocks.homeplugin.tpa.TpaRequest;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
-import org.bukkit.command.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -58,7 +60,7 @@ public class TpaCommand implements CommandExecutor {
                 return true;
             }
 
-            OnTpaCreatedEvent onTpaCreatedEvent = new OnTpaCreatedEvent(new TpaRequest(player, target,null));
+            OnTpaCreatedEvent onTpaCreatedEvent = new OnTpaCreatedEvent(new TpaRequest(player, target, null));
             Bukkit.getPluginManager().callEvent(onTpaCreatedEvent);
             if (!onTpaCreatedEvent.isCancelled()) {
                 if (EconomyManager.pay(player,EconomyManager.getTpaRequestPrice()).equals(EconomyResponse.ResponseType.FAILURE)) {

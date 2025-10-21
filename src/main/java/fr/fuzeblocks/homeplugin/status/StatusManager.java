@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * The type Status manager.
  */
 public class StatusManager {
-    private static final ConcurrentHashMap<Player,Boolean> player_status = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<Player, Boolean> player_status = new ConcurrentHashMap<>();
 
     /**
      * Sets player status.
@@ -33,7 +33,7 @@ public class StatusManager {
      */
     public static boolean getPlayerStatus(Player player) {
         if (player_status.containsKey(player)) {
-            return  player_status.get(player);
+            return player_status.get(player);
         }
         return false;
     }
