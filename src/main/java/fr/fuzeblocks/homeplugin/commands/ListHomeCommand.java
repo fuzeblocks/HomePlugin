@@ -96,7 +96,7 @@ public class ListHomeCommand implements CommandExecutor {
                                 NamedTextColor.GRAY
                         )
                 ))
-                .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/homerelocate " + homeName));
+                .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/relocatehome " + homeName));
 
         Component deleteComponent = Component.text(
                         HomePlugin.getLanguageManager().getString(HOME + "List.Delete-click"),

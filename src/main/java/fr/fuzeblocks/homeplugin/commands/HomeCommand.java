@@ -34,15 +34,8 @@ import java.util.stream.Collectors;
 public class HomeCommand implements CommandExecutor {
 
     private final String HOME = "Home.";
+    private static final String LANG = "Language.";
 
-    /**
-     * Instantiates a new Home command.
-     *
-     * @param instance the instance
-     */
-    public HomeCommand(HomePlugin instance) {
-        this.instance = instance;
-    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -64,7 +57,7 @@ public class HomeCommand implements CommandExecutor {
         if (args.length == 1) {
             String homeName = args[0];
             if (homeManager.isStatus(player)) {
-                player.sendMessage(HomePlugin.getLanguageManager().getString(LANG + "A-teleport-is-already-in-progress"));
+                player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(LANG + "A-teleport-is-already-in-progress"));
                 return false;
             }
 
@@ -90,7 +83,7 @@ public class HomeCommand implements CommandExecutor {
                 TeleportationManager.teleportPlayerToHome(player, homeName);
                 return true;
             } else {
-                player.sendMessage(HomePlugin.getLanguageManager().getString(HOME + "Have-no-home"));
+                player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(HOME + "Have-no-home"));
                 return false;
             }
         }

@@ -280,16 +280,6 @@ public class CacheManager {
             return rtpRequestStore.hasRtpRequest(playerId);
         }
 
-    /**
-     * Has rtp request boolean.
-     *
-     * @param playerId the player id
-     * @return the boolean
-     */
-    public boolean hasRtpRequest(UUID playerId) {
-        return rtpRequestStore.hasRtpRequest(playerId);
-    }
-
 
     /**
      * Gets all rtp requests.

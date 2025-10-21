@@ -106,7 +106,7 @@ public class SetHomeCommand implements CommandExecutor {
         return allowed;
     }
 
-    private String translate(String key) {
+    private static String translate(String key) {
         return HomePlugin.getLanguageManager().getStringWithColor(key);
     }
 
@@ -119,6 +119,10 @@ public class SetHomeCommand implements CommandExecutor {
     public static boolean isFair(Player player) {
         Location loc = player.getLocation();
         World world = loc.getWorld();
+        if (world == null) {
+            player.sendMessage(translate(HOME + "Invalid-world"));
+            return false;
+        }
 
         if (loc.getY() >= world.getMaxHeight() - 2 || loc.getY() <= 5) {
             player.sendMessage(translate(HOME + "Invalid-height"));
@@ -136,12 +140,14 @@ public class SetHomeCommand implements CommandExecutor {
             return false;
         }
 
-        List<String> disabledWorlds = HomePlugin.getConfigurationSection()
-                .getStringList("Config.Home.DisabledWorlds");
+        List<String> disabledWorlds = HomePlugin.getConfigurationSection() == null
+                ? List.of()
+                : HomePlugin.getConfigurationSection().getStringList("Config.Home.DisabledWorlds");
 
-        if (disabledWorlds.stream()
-                .map(String::toLowerCase)
-                .anyMatch(name -> name.equals(world.getName().toLowerCase()))) {
+        if (!disabledWorlds.isEmpty() &&
+                disabledWorlds.stream()
+                        .map(String::toLowerCase)
+                        .anyMatch(name -> name.equals(world.getName().toLowerCase()))) {
             player.sendMessage(translate(HOME + "End-disabled"));
             return false;
         }
@@ -163,13 +169,17 @@ public class SetHomeCommand implements CommandExecutor {
         World world = loc.getWorld();
         if (world == null) return false;
 
-        // considérer comme "vraiment flottant" uniquement si il y a une colonne d'air suffisamment profonde
-        final int requiredAirDepth = 20; // augmenter la profondeur réduit les faux positifs
+        final int requiredAirDepth = 20; // profondeur minimale d'air pour considérer "flottant"
+        int minY = world.getMinHeight();
         for (int i = 1; i <= requiredAirDepth; i++) {
-            Block b = world.getBlockAt(loc.getBlockX(), loc.getBlockY() - i, loc.getBlockZ());
+            int checkY = loc.getBlockY() - i;
+            if (checkY < minY) {
+                // atteint le bas du monde -> pas considéré comme plateforme flottante
+                return false;
+            }
+            Block b = world.getBlockAt(loc.getBlockX(), checkY, loc.getBlockZ());
             Material t = b.getType();
             if (t != Material.AIR && t != Material.CAVE_AIR) {
-                // on a rencontré un bloc solide assez proche -> pas une plateforme flottante profonde
                 return false;
             }
         }
@@ -177,11 +187,12 @@ public class SetHomeCommand implements CommandExecutor {
         return loc.getY() < 100 && !hasNearbySolidBlocks(world, loc);
     }
 
-    private boolean hasNearbySolidBlocks(World world, Location loc) {
+    private static boolean hasNearbySolidBlocks(World world, Location loc) {
         for (int dx = -1; dx <= 1; dx++) {
             for (int dz = -1; dz <= 1; dz++) {
                 if (dx == 0 && dz == 0) continue;
-                if (world.getBlockAt(loc.getBlockX() + dx, loc.getBlockY(), loc.getBlockZ() + dz).getType() != Material.AIR) {
+                Material type = world.getBlockAt(loc.getBlockX() + dx, loc.getBlockY(), loc.getBlockZ() + dz).getType();
+                if (type != Material.AIR && type != Material.CAVE_AIR) {
                     return true;
                 }
             }

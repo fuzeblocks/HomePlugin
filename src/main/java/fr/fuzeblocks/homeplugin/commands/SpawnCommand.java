@@ -35,11 +35,9 @@ public class SpawnCommand implements CommandExecutor {
                         TeleportationManager.teleportPlayerToSpawn(player);
                     } else {
                         player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(SPAWN + "No-spawn-defined"));
+                        return false;
                     }
                     TeleportationManager.teleportPlayerToSpawn(player);
-                } else {
-                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(SPAWN + "No-spawn-defined")));
-                }
             } else {
                 player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor( SPAWN + "Spawn-usage-message"));
             }
