@@ -1,6 +1,6 @@
 # 🏡 HomePlugin (by fuzeblocks)
 
-> 🧩 A lightweight, flexible Home / Spawn / TPA / RTP management plugin with optional caching, multi-backend storage, language system, and modular extension support.
+A lightweight, flexible home/spawn/teleport management plugin for Paper/Spigot servers. HomePlugin supports named homes, global spawn, TPA requests, random teleport (RTP), optional Redis caching, YAML or MySQL storage backends, multilingual support, economy integration, and a modular extension API for adding internal plugin modules.
 
 <div align="center">
   <img src="https://img.icons8.com/fluency/96/home.png" width="80" alt="Home Icon" />
@@ -42,8 +42,7 @@
 | Admin Tools         | Manage other players’ homes, spawn, cache, language files |
 | Modular Loader      | Internal plugin loader to register additional HomePlugin modules |
 | Tasks / Warmup      | Configurable teleport warmup with titles/messages/particles |
-| Economy             | Configurable economy, using vault |
-
+| Economy             | Configurable economy, using Vault |
 
 ---
 
@@ -52,7 +51,7 @@
 | Command | Description | Notes |
 |---------|-------------|-------|
 | `/sethome [name] [info]` | Set (or overwrite) a home at your current position. | `info` optional metadata (if used) |
-| `/home [name]` | Teleport to a home; GUI opens if no name. | GUI behavior depends on implementation |
+| `/home [name]` | Teleport to a home; GUI opens if no name is provided. | GUI behavior depends on config/implementation |
 | `/home` | Open homes GUI (if enabled). |  |
 | `/delhome [name]` | Delete a named home. |  |
 | `/listhome` | List all your homes in chat. | Text alternative to GUI |
@@ -71,8 +70,8 @@
 | `/lang update` | Update base language files. | Admin |
 | `/lang merge` | Merge new keys into langs. | Admin |
 | `/lang set <code>` | Switch active language (e.g. `FRENCH`). | Admin |
-| ` /renamehome [name] [newname]`| allows players to rename their existing homes | 
-| ` /relocatehome [name]`| allows players to change the location of an existing home | 
+| `/renamehome [name] [newname]`| Rename an existing home | |
+| `/relocatehome [name]`| Change the location of an existing home | |
 
 ---
 
@@ -99,11 +98,11 @@ Additional (implicit / suggested):
 | `homeplugin.bypass.validation` | Ignore unfair location restrictions |
 | `homeplugin.bypass.cooldown` | Ignore RTP / teleport cooldowns (if implemented) |
 
-Dynamic limits: The code iterates `homeplugin.limit.1` through `homeplugin.limit.100`, applying the highest you possess.
+Dynamic limits: The code iterates `homeplugin.limit.1` through `homeplugin.limit.100`, applying the highest value the player possesses.
 
 ---
 
-## 🧩 PlaceholderAPI Vault Integration
+## 🧩 PlaceholderAPI Integration
 
 Implemented in `HomePluginExpansion`:
 
@@ -117,14 +116,13 @@ Implemented in `HomePluginExpansion`:
 | `%homeplugin_home_world_<name>%` | World name |
 | `%homeplugin_home_coordinates_<name>%` | Raw coordinates `X Y Z` |
 
-> `<name>` is case-insensitive as passed in.
+Note: `<name>` is case-insensitive.
 
+---
 
 ## Vault Integration
 
-Implemented in `EconomyManager`:
-
-See Vault documentation for more information
+Economy features are implemented in `EconomyManager` and use Vault for compatibility with supported economy plugins. See Vault documentation for setup and provider requirements.
 
 ---
 
@@ -136,8 +134,7 @@ Available (built-in):
 - ENGLISH
 - SPANISH
 
-Language loading uses an enum (`Language.valueOf(...)`) and falls back to FRENCH if invalid.  
-Customization is provided through shipped language YML files (and update/merge commands).
+Language loading uses an enum (`Language.valueOf(...)`) and falls back to FRENCH if an invalid value is provided. Customization is supported through shipped language YAML files; use the `/lang` commands to update/merge or switch languages.
 
 ---
 
@@ -187,32 +184,30 @@ Config:
     Rtp-Price: 150.0             # Cost to use /rtp command (0 to disable)
 ```
 
-Key behaviors (from code):
-- `Config.Home.DefaultHomeLimit` read for base home count (see `HomePermissionManager`).
-- TPA timeout: `Config.Tpa.Tpa-duration` (defaults 30 if missing).
-- Redis only initializes if `UseRedis: true`; otherwise skipped.
-- Validation uses `PreventUnfairLocation` & `DisabledWorlds`.
-- Teleport warmup (`Task-duration`) drives delayed execution (titles/messages/particles optional).
+Key behaviors:
+- `Config.Home.DefaultHomeLimit` is used as the base home limit.
+- TPA timeout uses `Config.Tpa.Tpa-duration` (defaults to 30 if missing).
+- Redis only initializes if `UseRedis: true`; otherwise it's skipped.
+- Validation uses `PreventUnfairLocation` and `DisabledWorlds`.
+- Teleport warmup (`Task-duration`) controls delayed teleports; titles/messages/particles are optional.
 
 ---
 
 ## 🧱 Architecture & Performance
 
-- Static access pattern (managers stored in main class after initialization).
-- Redis (JedisPooled) conditional setup for caching; fallback path if not connected.
-- MySQL registration path invoked if `Config.Connector.TYPE == MYSQL`.
-- Dynamic plugin extension system: `PluginLoader` / `PluginManager` supports loading internal modular HomePlugin components.
-- PlaceholderAPI soft-dependency: registers expansion only if present.
-- Dynamic permission-based home limit resolution (`homeplugin.limit.<n>` ascending scan).
-- Language manager chosen at startup based on configured language key.
-- Validation & fairness constraints restrict disabled worlds / unfair placements.
-- RTP + warmup timers use Bukkit scheduler (async delay for expiration tasks like TPA).
+- Managers use static access patterns from the main plugin instance after initialization.
+- Redis (JedisPooled) is initialized only when enabled; plugin gracefully falls back if unavailable.
+- MySQL support is available when `Config.Connector.TYPE == MYSQL`.
+- Dynamic plugin extension system: `PluginLoader` / `PluginManager` supports loading internal HomePlugin components.
+- PlaceholderAPI integration is a soft dependency — the plugin registers expansions only if PlaceholderAPI is present.
+- Home limit resolution scans permission nodes (`homeplugin.limit.<n>`) to determine the highest allowed value.
+- Teleport warmups and expiration tasks (e.g., TPA) use the Bukkit scheduler.
 
 ---
 
 ## 🧑‍💻 Developer / Extension API
 
-While no external facade class (like a unified `HomePluginAPI`) appears in the scanned snippets, extension points exist:
+Extension points exist even without a unified external facade:
 
 ### Plugin Loader Interfaces
 ```java
@@ -235,7 +230,7 @@ public interface PluginLoader {
 }
 ```
 
-`PluginManager.getInstance()` maintains an internal list of loaded HomePlugin modules.
+`PluginManager.getInstance()` maintains the internal list of loaded HomePlugin modules.
 
 ### Example (Registering an Internal Module)
 ```java
@@ -254,8 +249,8 @@ boolean canSet = HomePermissionManager.canSetHome(player);
 ## ✅ Compatibility
 
 - Declared `api-version: 1.14` (plugin.yml)
-- Designed for modern Paper/Spigot derivatives (later versions typically maintain 1.14 API compatibility)
-- Soft-dependency: PlaceholderAPI (for placeholders; plugin still loads without it, with warning)
+- Designed for modern Paper/Spigot derivatives (later versions generally maintain 1.14 API compatibility)
+- Soft-dependency: PlaceholderAPI (plugin still loads without it, with a warning)
 - Storage: YAML (default) or MySQL (when enabled)
 
 ---
@@ -277,7 +272,7 @@ Suggestions welcomed via Issues or Discord.
 
 - Issues: Use GitHub Issues for bugs / feature requests
 - Discord: [Join](https://discord.gg/5zJyKz6Nfm)
-- Pull Requests: Follow clean commit messages; discuss large changes beforehand
+- Pull Requests: Follow clear commit messages; discuss large changes beforehand
 
 ### Contribution Flow
 1. Fork
@@ -289,8 +284,8 @@ Suggestions welcomed via Issues or Discord.
 
 ## 📄 License
 
-[Here](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
+[Apache-2.0](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
 
 ---
 
-> 🛠️ HomePlugin — Stable, fast, and extensible home/spawn management for modern servers.
+> 🛠️ HomePlugin — Stable, fast, and extensible home/spawn/teleport management for modern servers.
