@@ -21,8 +21,6 @@
     <name>HomePlugin</name>
     <description>[Created by fuzeblocks]</description>
 
-
-
     <distributionManagement>
         <repository>
             <id>github</id>
@@ -56,7 +54,6 @@
                     <target>11</target>
                 </configuration>
             </plugin>
-
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -119,22 +116,24 @@
                         </goals>
                         <configuration>
                             <target>
+                                <!-- Ensure apidocs dir exists so move won't fail if javadoc wasn't produced -->
+                                <mkdir dir="${project.basedir}/docs/apidocs"/>
+
+                                <!-- Move any generated apidocs into docs (no-op if empty) -->
                                 <move todir="${project.basedir}/docs">
                                     <fileset dir="${project.basedir}/docs/apidocs"/>
                                 </move>
-                                <delete dir="${project.basedir}/docs/apidocs"/>
+
+                                <!-- Remove apidocs directory; don't fail the build if it's missing -->
+                                <delete dir="${project.basedir}/docs/apidocs" failonerror="false"/>
                             </target>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
 
-
-
-
         </plugins>
     </build>
-
 
     <repositories>
         <repository>
