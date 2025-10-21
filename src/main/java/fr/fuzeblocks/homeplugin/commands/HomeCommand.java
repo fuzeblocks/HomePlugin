@@ -66,28 +66,32 @@ public class HomeCommand implements CommandExecutor {
             }
 
             if (homeManager.getHomeNumber(player) > 0) {
-                if (isInCache(homeManager, player, homeName)) {
-                    TeleportationManager.teleportPlayerToHome(player,homeName);
-                    return true;
-                }
 
                 Location homeLocation = homeManager.getHomeLocation(player, homeName);
-                if (homeLocation != null) {
-                    homeManager.getCacheManager().addHome(player.getUniqueId(), homeName, homeLocation);
-                    if (EconomyManager.pay(player,EconomyManager.getHomeTeleportPrice()).equals(EconomyResponse.ResponseType.FAILURE)) {
-                        return true;
-                    }
-                    TeleportationManager.teleportPlayerToHome(player, homeName);
-                    return true;
-                } else {
+                if (homeLocation == null) {
                     player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(HOME + "Home-does-not-exist"));
                     return false;
                 }
+
+                double cost = EconomyManager.getHomeTeleportPrice();
+                if (cost > 0 && EconomyManager.pay(player, cost).equals(EconomyResponse.ResponseType.FAILURE)) {
+                    player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor("Language.Not-Enough-Money"));
+                    return true;
+                }
+
+
+                if (!isInCache(homeManager, player, homeName)) {
+                    homeManager.getCacheManager().addHome(player.getUniqueId(), homeName, homeLocation);
+                }
+
+                TeleportationManager.teleportPlayerToHome(player, homeName);
+                return true;
             } else {
                 player.sendMessage(HomePlugin.getLanguageManager().getString(HOME + "Have-no-home"));
                 return false;
             }
         }
+
 
         if (args.length == 0) {
             if (isGuiSupported()) {

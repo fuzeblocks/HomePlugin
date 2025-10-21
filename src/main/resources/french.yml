@@ -6,6 +6,8 @@ Language:
   Teleport-to-spawn: "&aVous vous êtes téléporté au spawn."
   Teleport-canceled: "&cTéléportation annulée car vous avez bougé."
   A-teleport-is-already-in-progress: "&cUne téléportation est déjà en cours !"
+  Home-Already-Exists: "&cVous avez déjà un home avec ce nom !"
+  Not-Enough-Money: "&cVous n'avez pas assez d'argent pour cette action !"
 
   Error: "&cUne erreur est survenue !"
   Unknown: "&cInconnu"

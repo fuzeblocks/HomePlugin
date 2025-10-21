@@ -7,6 +7,8 @@ Language:
   Teleport-to-spawn: "&aYou have teleported to spawn."
   Teleport-canceled: "&cTeleportation canceled because you moved."
   A-teleport-is-already-in-progress: "&cA teleportation is already in progress!"
+  Home-Already-Exists: "&cYou already have a home with that name!"
+  Not-Enough-Money: "&cYou do not have enough money for this action!"
 
   Error: "&cAn error has occurred!"
   Unknown: "&cUnknown"

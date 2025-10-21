@@ -6,6 +6,7 @@ import fr.fuzeblocks.homeplugin.completers.*;
 import fr.fuzeblocks.homeplugin.database.CreateTable;
 import fr.fuzeblocks.homeplugin.database.DatabaseManager;
 import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
+import fr.fuzeblocks.homeplugin.economy.EconomyManager;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
 import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
@@ -52,6 +53,7 @@ public final class HomePlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
+        setupEconomy();
         configurationSection = getConfig();
         checkConfig();
         loadPlugins();
@@ -65,7 +67,6 @@ public final class HomePlugin extends JavaPlugin {
         cacheManager = CacheManager.getInstance();
         checkDepend();
         loadLanguage();
-        setupEconomy();
         checkUpdate(113935);
         getLogger().info("----------------------HomePlugin----------------------");
         getLogger().info("----------HomePlugin a démmaré avec succés !----------");
@@ -254,6 +255,7 @@ public final class HomePlugin extends JavaPlugin {
             return false;
         }
         economy = rsp.getProvider();
+        EconomyManager.setup(this);
         return economy != null;
     }
 
