@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * The type Local home store.
+ */
 public class LocalHomeStore implements HomeRequestStore {
     private final Map<UUID, Map<String, Location>> playerHomes = new HashMap<>();
 

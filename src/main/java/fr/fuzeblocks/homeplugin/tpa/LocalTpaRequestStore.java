@@ -5,6 +5,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * The type Local tpa request store.
+ */
 public class LocalTpaRequestStore implements TpaRequestStore {
     private final Map<UUID, UUID> tpaRequests = new HashMap<>(); // sender -> target
 

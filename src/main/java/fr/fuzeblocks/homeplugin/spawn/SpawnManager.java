@@ -10,6 +10,9 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 
+/**
+ * The type Spawn manager.
+ */
 public class SpawnManager implements Spawn {
 
     private final SpawnYMLManager spawnYMLManager = HomePlugin.getSpawnYMLManager();
@@ -19,6 +22,11 @@ public class SpawnManager implements Spawn {
     private SpawnManager() {
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static SpawnManager getInstance() {
         if (instance == null) {
             instance = new SpawnManager();

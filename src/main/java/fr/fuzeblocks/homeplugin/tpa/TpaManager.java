@@ -9,12 +9,21 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 import java.util.UUID;
 
+/**
+ * The type Tpa manager.
+ */
 public class TpaManager {
 
     private static final HashMap<UUID, BukkitRunnable> timeoutTasks = new HashMap<>();
     private static final int TIMEOUT_SECONDS = HomePlugin.getConfigurationSection()
             .getInt("Config.Tpa.Tpa-duration", 30);
 
+    /**
+     * Send tpa request.
+     *
+     * @param sender the sender
+     * @param target the target
+     */
     public static void sendTpaRequest(Player sender, Player target) {
         CacheManager cacheManager = CacheManager.getInstance();
         UUID senderId = sender.getUniqueId();
@@ -69,6 +78,11 @@ public class TpaManager {
         timeoutTasks.put(senderId, timeoutTask);
     }
 
+    /**
+     * Cancel request.
+     *
+     * @param senderId the sender id
+     */
     public static void cancelRequest(UUID senderId) {
         CacheManager cacheManager = CacheManager.getInstance();
         UUID targetId = cacheManager.getTargetWithSender(senderId);
@@ -81,6 +95,12 @@ public class TpaManager {
         }
     }
 
+    /**
+     * Gets request.
+     *
+     * @param targetId the target id
+     * @return the request
+     */
     public static TpaRequest getRequest(UUID targetId) {
         CacheManager cacheManager = CacheManager.getInstance();
         UUID senderId = cacheManager.getSenderForTarget(targetId);

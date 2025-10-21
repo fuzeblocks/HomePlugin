@@ -16,6 +16,9 @@ import org.bukkit.entity.Player;
 import java.util.Random;
 import java.util.UUID;
 
+/**
+ * The type Rtp command.
+ */
 public class RtpCommand implements CommandExecutor {
 
 

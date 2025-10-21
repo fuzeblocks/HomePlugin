@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * The type Tp accept completer.
+ */
 public class TpAcceptCompleter implements TabCompleter {
 
     @Override

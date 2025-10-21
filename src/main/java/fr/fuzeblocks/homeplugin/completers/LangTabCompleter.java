@@ -13,11 +13,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Lang tab completer.
+ */
 public class LangTabCompleter implements TabCompleter {
 
     private final Plugin plugin;
     private static final List<String> SUBCOMMANDS = Arrays.asList("update", "set", "merge");
 
+    /**
+     * Instantiates a new Lang tab completer.
+     *
+     * @param plugin the plugin
+     */
     public LangTabCompleter(Plugin plugin) {
         this.plugin = plugin;
     }

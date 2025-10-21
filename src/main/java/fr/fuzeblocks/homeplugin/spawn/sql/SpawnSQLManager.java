@@ -14,6 +14,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
+/**
+ * The type Spawn sql manager.
+ */
 public class SpawnSQLManager implements Spawn {
     private final Connection connection = DatabaseConnection.getConnection();
 

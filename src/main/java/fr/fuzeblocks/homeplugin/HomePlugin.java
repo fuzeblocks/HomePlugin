@@ -37,6 +37,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * The type Home plugin.
+ */
 public final class HomePlugin extends JavaPlugin {
     private static HomeYMLManager homeYMLManager;
     private static SpawnYMLManager spawnYMLManager;
@@ -260,27 +263,56 @@ public final class HomePlugin extends JavaPlugin {
     }
 
 
-
+    /**
+     * Gets home yml manager.
+     *
+     * @return the home yml manager
+     */
     public static HomeYMLManager getHomeYMLManager() {
         return homeYMLManager;
     }
 
+    /**
+     * Gets spawn yml manager.
+     *
+     * @return the spawn yml manager
+     */
     public static SpawnYMLManager getSpawnYMLManager() {
         return spawnYMLManager;
     }
 
+    /**
+     * Gets cache manager.
+     *
+     * @return the cache manager
+     */
     public static CacheManager getCacheManager() {
         return cacheManager;
     }
 
+    /**
+     * Gets home sql manager.
+     *
+     * @return the home sql manager
+     */
     public static HomeSQLManager getHomeSQLManager() {
         return homeSQLManager;
     }
 
+    /**
+     * Gets spawn sql manager.
+     *
+     * @return the spawn sql manager
+     */
     public static SpawnSQLManager getSpawnSQLManager() {
         return spawnSQLManager;
     }
 
+    /**
+     * Gets registration type.
+     *
+     * @return the registration type
+     */
     public static SyncMethod getRegistrationType() {
         if (configurationSection.getString("Config.Connector.TYPE").equalsIgnoreCase("MYSQL")) {
             return SyncMethod.MYSQL;
@@ -289,28 +321,57 @@ public final class HomePlugin extends JavaPlugin {
         }
     }
 
+    /**
+     * Gets configuration section.
+     *
+     * @return the configuration section
+     */
     public static ConfigurationSection getConfigurationSection() {
         return configurationSection;
     }
 
 
-
-
+    /**
+     * Gets jedis pooled.
+     *
+     * @return the jedis pooled
+     */
     public static JedisPooled getJedisPooled() {
         return jedisPooled;
     }
 
+    /**
+     * Gets home manager.
+     *
+     * @return the home manager
+     */
     public static HomeManager getHomeManager() {
         return homeManager;
     }
+
+    /**
+     * Gets spawn manager.
+     *
+     * @return the spawn manager
+     */
     public static SpawnManager getSpawnManager() {
         return spawnManager;
     }
 
+    /**
+     * Gets language manager.
+     *
+     * @return the language manager
+     */
     public static LanguageManager getLanguageManager() {
         return languageManager;
     }
 
+    /**
+     * Gets economy.
+     *
+     * @return the economy
+     */
     public static Economy getEconomy() {
         return economy;
     }

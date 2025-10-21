@@ -3,6 +3,9 @@ package fr.fuzeblocks.homeplugin.plugin;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Plugin manager.
+ */
 public class PluginManager implements PluginLoader {
     private static PluginManager pluginManager = null;
     private static List<fr.fuzeblocks.homeplugin.plugin.HomePlugin> homePlugins = new ArrayList<>();
@@ -20,6 +23,12 @@ public class PluginManager implements PluginLoader {
     public void unregisterPlugin(fr.fuzeblocks.homeplugin.plugin.HomePlugin homePlugin) {
         homePlugins.remove(homePlugin);
     }
+
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static PluginManager getInstance() {
         if (pluginManager == null) {
             pluginManager = new PluginManager();

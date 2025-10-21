@@ -10,10 +10,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ * The type Home plugin expansion.
+ */
 public class HomePluginExpansion extends PlaceholderExpansion {
 
     private final HomePlugin homePlugin;
 
+    /**
+     * Instantiates a new Home plugin expansion.
+     *
+     * @param homePlugin the home plugin
+     */
     public HomePluginExpansion(HomePlugin homePlugin) {
         this.homePlugin = homePlugin;
     }

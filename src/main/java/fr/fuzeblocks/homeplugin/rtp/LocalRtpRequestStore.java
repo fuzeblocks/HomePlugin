@@ -4,6 +4,9 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * The type Local rtp request store.
+ */
 public class LocalRtpRequestStore implements RtpRequestStore {
     private final Map<UUID, Long> rtpCooldownMap = new ConcurrentHashMap<>();
 

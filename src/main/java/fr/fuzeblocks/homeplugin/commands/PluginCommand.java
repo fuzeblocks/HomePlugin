@@ -9,6 +9,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * The type Plugin command.
+ */
 public class PluginCommand implements CommandExecutor {
 
     private static final String PLUGIN_COMMAND = "PluginCommand.";

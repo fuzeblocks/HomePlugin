@@ -12,6 +12,9 @@ import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * The type Tpa command.
+ */
 public class TpaCommand implements CommandExecutor {
 
     @Override

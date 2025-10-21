@@ -10,11 +10,19 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * The type On player take damage by another player.
+ */
 public class OnPlayerTakeDamageByAnotherPlayer implements Listener {
 
     private final Map<UUID, Long> playerDamageTimestamps = new ConcurrentHashMap<>();
     private static final long _COOLDOWN_MS = 5000; // 5 secondes
 
+    /**
+     * On player damage.
+     *
+     * @param event the event
+     */
     @EventHandler
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
         if (!(event.getEntity() instanceof Player)) return;
@@ -25,21 +33,41 @@ public class OnPlayerTakeDamageByAnotherPlayer implements Listener {
         playerDamageTimestamps.put(event.getDamager().getUniqueId(), currentTime);
     }
 
+    /**
+     * On spawn teleport.
+     *
+     * @param event the event
+     */
     @EventHandler
     public void onSpawnTeleport(OnSpawnTeleportEvent event) {
         checkCooldown(event);
     }
 
+    /**
+     * On home teleport.
+     *
+     * @param event the event
+     */
     @EventHandler
     public void onHomeTeleport(OnHomeTeleportEvent event) {
         checkCooldown(event);
     }
 
+    /**
+     * On tpa accepted.
+     *
+     * @param event the event
+     */
     @EventHandler
     public void onTpaAccepted(OnTpaAcceptedEvent event) {
         checkCooldown(event);
     }
 
+    /**
+     * On rtp event.
+     *
+     * @param event the event
+     */
     @EventHandler
     public void onRtpEvent(OnRtpEvent event) {
         checkCooldown(event);

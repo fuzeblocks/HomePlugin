@@ -12,6 +12,9 @@ import org.bukkit.entity.Player;
 
 import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance;
 
+/**
+ * The type Spawn command.
+ */
 public class SpawnCommand implements CommandExecutor {
     private final String LANG = "Language.";
 

@@ -12,6 +12,9 @@ import org.bukkit.entity.Player;
 
 import java.util.Map;
 
+/**
+ * The type Cache command.
+ */
 public class CacheCommand implements CommandExecutor {
 
     private static final String LANG = "Language.";

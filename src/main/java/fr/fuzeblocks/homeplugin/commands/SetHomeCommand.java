@@ -18,6 +18,9 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
+/**
+ * The type Set home command.
+ */
 public class SetHomeCommand implements CommandExecutor {
     private static final String HOME = "Home.";
     private static final String LANG = "Language.";

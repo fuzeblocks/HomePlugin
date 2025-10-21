@@ -6,11 +6,19 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * The type Redis tpa request store.
+ */
 public class RedisTpaRequestStore implements TpaRequestStore {
 
     private final JedisPooled jedis;
     private static final String FIELD_TPA_TARGET = "tpa_target";
 
+    /**
+     * Instantiates a new Redis tpa request store.
+     *
+     * @param jedis the jedis
+     */
     public RedisTpaRequestStore(JedisPooled jedis) {
         this.jedis = jedis;
     }

@@ -18,6 +18,9 @@ import java.util.Arrays;
 
 import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance;
 
+/**
+ * The type Home item.
+ */
 public class HomeItem extends AbstractItem {
 
     private final String homeName;
@@ -25,6 +28,11 @@ public class HomeItem extends AbstractItem {
     private boolean deleted = false;
 
 
+    /**
+     * Instantiates a new Home item.
+     *
+     * @param homeName the home name
+     */
     public HomeItem(String homeName) {
         this.homeName = homeName;
     }
