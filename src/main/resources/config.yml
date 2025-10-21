@@ -32,4 +32,11 @@ Config:
     enabled: true
     cooldown-seconds: 1000 #seconds
     max-radius: 200
+  Economy:
+    UseEconomy: false #default false
+    HomeCreationCost: 100.0 #0 to disable
+    Home-Teleport-Price: 50.0 #0 to disable
+    Tpa-Request-Price: 20.0 #0 to disable
+    Rtp-Price: 150.0 #0 to disable
+
 

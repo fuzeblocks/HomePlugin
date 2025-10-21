@@ -84,8 +84,8 @@ public class CacheManager {
      * @param target the target
      * @return the boolean
      */
-    public boolean hasTpaRequest(UUID sender, UUID target) {
-        return tpaRequestStore.hasTpaRequest(sender, target);
+    public boolean hasTpaRequest(UUID sender,UUID target) {
+        return tpaRequestStore.hasTpaRequest(sender,target);
     }
 
     /**
@@ -94,7 +94,7 @@ public class CacheManager {
      * @param sender the sender
      * @param target the target
      */
-    public void removeTpaRequest(UUID sender, UUID target) {
+    public void removeTpaRequest(UUID sender,UUID target) {
         tpaRequestStore.removeTpaRequest(sender, target);
     }
 
@@ -143,7 +143,7 @@ public class CacheManager {
      *
      * @return the all tpa senders
      */
-    public Set<UUID> getAllTpaSenders() {
+    public  Set<UUID> getAllTpaSenders() {
         return tpaRequestStore.getAllTpaSenders();
     }
 
@@ -213,21 +213,21 @@ public class CacheManager {
     // --- SPAWN ---
 
     /**
-     * Gets spawn.
-     *
-     * @return the spawn
-     */
-    public Location getSpawn() {
-        return spawnStore.getSpawn();
-    }
-
-    /**
      * Sets spawn.
      *
      * @param location the location
      */
     public void setSpawn(Location location) {
         spawnStore.setSpawn(location);
+    }
+
+    /**
+     * Gets spawn.
+     *
+     * @return the spawn
+     */
+    public Location getSpawn() {
+        return spawnStore.getSpawn();
     }
 
     /**
@@ -270,6 +270,15 @@ public class CacheManager {
         rtpRequestStore.removeRtpRequest(playerId);
     }
 
+    /**
+     * Has rtp request boolean.
+     *
+     * @param playerId the player id
+     * @return the boolean
+     */
+    public boolean hasRtpRequest(UUID playerId) {
+            return rtpRequestStore.hasRtpRequest(playerId);
+        }
 
     /**
      * Has rtp request boolean.

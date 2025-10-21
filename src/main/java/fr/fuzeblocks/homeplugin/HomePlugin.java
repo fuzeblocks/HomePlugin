@@ -6,6 +6,7 @@ import fr.fuzeblocks.homeplugin.completers.*;
 import fr.fuzeblocks.homeplugin.database.CreateTable;
 import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
 import fr.fuzeblocks.homeplugin.database.DatabaseManager;
+import fr.fuzeblocks.homeplugin.economy.EconomyManager;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
 import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
@@ -22,8 +23,10 @@ import fr.fuzeblocks.homeplugin.spawn.yml.SpawnYMLManager;
 import fr.fuzeblocks.homeplugin.sync.SyncMethod;
 import fr.fuzeblocks.homeplugin.update.UpdateChecker;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -53,140 +56,12 @@ public final class HomePlugin extends JavaPlugin {
     private static SpawnManager spawnManager;
     private static LanguageManager languageManager;
     private static BukkitAudiences adventure;
-
-    /**
-     * Gets home yml manager.
-     *
-     * @return the home yml manager
-     */
-    public static HomeYMLManager getHomeYMLManager() {
-        return homeYMLManager;
-    }
-
-    /**
-     * Gets spawn yml manager.
-     *
-     * @return the spawn yml manager
-     */
-    public static SpawnYMLManager getSpawnYMLManager() {
-        return spawnYMLManager;
-    }
-
-    /**
-     * Gets cache manager.
-     *
-     * @return the cache manager
-     */
-    public static CacheManager getCacheManager() {
-        return cacheManager;
-    }
-
-    /**
-     * Gets home sql manager.
-     *
-     * @return the home sql manager
-     */
-    public static HomeSQLManager getHomeSQLManager() {
-        return homeSQLManager;
-    }
-
-    /**
-     * Gets spawn sql manager.
-     *
-     * @return the spawn sql manager
-     */
-    public static SpawnSQLManager getSpawnSQLManager() {
-        return spawnSQLManager;
-    }
-
-    /**
-     * Gets registration type.
-     *
-     * @return the registration type
-     */
-    public static SyncMethod getRegistrationType() {
-        if (configurationSection.getString("Config.Connector.TYPE").equalsIgnoreCase("MYSQL")) {
-            return SyncMethod.MYSQL;
-        } else {
-            return SyncMethod.YAML;
-        }
-    }
-
-    /**
-     * Gets configuration section.
-     *
-     * @return the configuration section
-     */
-    public static ConfigurationSection getConfigurationSection() {
-        return configurationSection;
-    }
-
-    /**
-     * Translate alternate color codes string.
-     *
-     * @param s the s
-     * @return the string
-     */
-    public static @NotNull String translateAlternateColorCodes(@Nullable String s) {
-        if (s == null) {
-            return "§c[Traduction manquante]";
-        }
-        return s.replace('&', '§');
-    }
-
-    /**
-     * Gets jedis pooled.
-     *
-     * @return the jedis pooled
-     */
-    public static JedisPooled getJedisPooled() {
-        return jedisPooled;
-    }
-
-    /**
-     * Gets home manager.
-     *
-     * @return the home manager
-     */
-    public static HomeManager getHomeManager() {
-        return homeManager;
-    }
-
-    /**
-     * Gets spawn manager.
-     *
-     * @return the spawn manager
-     */
-    public static SpawnManager getSpawnManager() {
-        return spawnManager;
-    }
-
-    /**
-     * Gets language manager.
-     *
-     * @return the language manager
-     */
-    public static LanguageManager getLanguageManager() {
-        return languageManager;
-    }
-
-    /**
-     * Gets adventure.
-     *
-     * @return the adventure
-     */
-    @NonNull
-    public static BukkitAudiences getAdventure() {
-        if (adventure == null) {
-            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
-        }
-        return adventure;
-    }
-
+    private static Economy economy;
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
+        setupEconomy();
         configurationSection = getConfig();
         adventure = BukkitAudiences.create(this);
         checkConfig();
@@ -396,4 +271,143 @@ public final class HomePlugin extends JavaPlugin {
             getLogger().warning("No plugins to load skipping...");
         }
     }
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        economy = rsp.getProvider();
+        EconomyManager.setup(this);
+        return economy != null;
+    }
+
+
+    /**
+     * Gets home yml manager.
+     *
+     * @return the home yml manager
+     */
+    public static HomeYMLManager getHomeYMLManager() {
+        return homeYMLManager;
+    }
+
+    /**
+     * Gets spawn yml manager.
+     *
+     * @return the spawn yml manager
+     */
+    public static SpawnYMLManager getSpawnYMLManager() {
+        return spawnYMLManager;
+    }
+
+    /**
+     * Gets cache manager.
+     *
+     * @return the cache manager
+     */
+    public static CacheManager getCacheManager() {
+        return cacheManager;
+    }
+
+    /**
+     * Gets home sql manager.
+     *
+     * @return the home sql manager
+     */
+    public static HomeSQLManager getHomeSQLManager() {
+        return homeSQLManager;
+    }
+
+    /**
+     * Gets spawn sql manager.
+     *
+     * @return the spawn sql manager
+     */
+    public static SpawnSQLManager getSpawnSQLManager() {
+        return spawnSQLManager;
+    }
+
+    /**
+     * Gets registration type.
+     *
+     * @return the registration type
+     */
+    public static SyncMethod getRegistrationType() {
+        if (configurationSection.getString("Config.Connector.TYPE").equalsIgnoreCase("MYSQL")) {
+            return SyncMethod.MYSQL;
+        } else {
+            return SyncMethod.YAML;
+        }
+    }
+
+    /**
+     * Gets configuration section.
+     *
+     * @return the configuration section
+     */
+    public static ConfigurationSection getConfigurationSection() {
+        return configurationSection;
+    }
+
+
+    /**
+     * Gets jedis pooled.
+     *
+     * @return the jedis pooled
+     */
+    public static JedisPooled getJedisPooled() {
+        return jedisPooled;
+    }
+
+    /**
+     * Gets home manager.
+     *
+     * @return the home manager
+     */
+    public static HomeManager getHomeManager() {
+        return homeManager;
+    }
+
+    /**
+     * Gets spawn manager.
+     *
+     * @return the spawn manager
+     */
+    public static SpawnManager getSpawnManager() {
+        return spawnManager;
+    }
+
+    /**
+     * Gets language manager.
+     *
+     * @return the language manager
+     */
+    public static LanguageManager getLanguageManager() {
+        return languageManager;
+    }
+
+    /**
+     * Gets economy.
+     *
+     * @return the economy
+     */
+    public static Economy getEconomy() {
+        return economy;
+    }
+    /**
+     * Gets adventure.
+     *
+     * @return the adventure
+     */
+    @NonNull
+    public static BukkitAudiences getAdventure() {
+        if (adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+        }
+        return adventure;
+    }
+
 }

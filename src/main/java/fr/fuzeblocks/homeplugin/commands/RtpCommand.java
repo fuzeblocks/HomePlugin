@@ -1,7 +1,10 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.economy.EconomyManager;
 import fr.fuzeblocks.homeplugin.event.OnRtpEvent;
+import fr.fuzeblocks.homeplugin.tpa.TpaManager;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -59,6 +62,11 @@ public class RtpCommand implements CommandExecutor {
         if (!player.isOnline()) {
             return true;
         }
+
+        if (EconomyManager.pay(player,EconomyManager.getRtpPrice()).equals(EconomyResponse.ResponseType.FAILURE)) {
+            return true;
+        }
+
         player.teleport(destination);
         player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor("Rtp.Teleport-success", "&aTéléportation aléatoire réussie !"));
         HomePlugin.getCacheManager().addRtpRequest(uuid, System.currentTimeMillis());

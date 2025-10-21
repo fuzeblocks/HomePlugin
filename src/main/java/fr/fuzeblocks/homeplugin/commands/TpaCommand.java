@@ -1,9 +1,12 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.economy.EconomyManager;
+import fr.fuzeblocks.homeplugin.event.OnTeleportTaskCancelledEvent;
 import fr.fuzeblocks.homeplugin.event.OnTpaCreatedEvent;
 import fr.fuzeblocks.homeplugin.tpa.TpaManager;
 import fr.fuzeblocks.homeplugin.tpa.TpaRequest;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -60,6 +63,9 @@ public class TpaCommand implements CommandExecutor {
             OnTpaCreatedEvent onTpaCreatedEvent = new OnTpaCreatedEvent(new TpaRequest(player, target, null));
             Bukkit.getPluginManager().callEvent(onTpaCreatedEvent);
             if (!onTpaCreatedEvent.isCancelled()) {
+                if (EconomyManager.pay(player,EconomyManager.getTpaRequestPrice()).equals(EconomyResponse.ResponseType.FAILURE)) {
+                    return true;
+                }
                 TpaManager.sendTpaRequest(player, target);
             }
             return true;

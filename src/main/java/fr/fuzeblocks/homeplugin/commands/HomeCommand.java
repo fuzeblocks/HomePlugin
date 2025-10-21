@@ -1,11 +1,13 @@
 package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.economy.EconomyManager;
 import fr.fuzeblocks.homeplugin.gui.BackItem;
 import fr.fuzeblocks.homeplugin.gui.ForwardItem;
 import fr.fuzeblocks.homeplugin.gui.HomeItem;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.task.TeleportationManager;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -33,16 +35,25 @@ public class HomeCommand implements CommandExecutor {
 
     private final String HOME = "Home.";
 
+    /**
+     * Instantiates a new Home command.
+     *
+     * @param instance the instance
+     */
+    public HomeCommand(HomePlugin instance) {
+        this.instance = instance;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Only-a-player-can-execute")));
+            sender.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(LANG + "Only-a-player-can-execute"));
             return false;
         }
 
         if (!sender.hasPermission("homeplugin.command.home")) {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("No-permission")));
+            sender.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(LANG + "No-permission"));
             return false;
         }
 
@@ -53,30 +64,37 @@ public class HomeCommand implements CommandExecutor {
         if (args.length == 1) {
             String homeName = args[0];
             if (homeManager.isStatus(player)) {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("A-teleport-is-already-in-progress")));
+                player.sendMessage(HomePlugin.getLanguageManager().getString(LANG + "A-teleport-is-already-in-progress"));
                 return false;
             }
 
             if (homeManager.getHomeNumber(player) > 0) {
-                if (isInCache(homeManager, player, homeName)) {
-                    TeleportationManager.teleportPlayerToHome(player, homeName);
+
+                Location homeLocation = homeManager.getHomeLocation(player, homeName);
+                if (homeLocation == null) {
+                    player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(HOME + "Home-does-not-exist"));
+                    return false;
+                }
+
+                double cost = EconomyManager.getHomeTeleportPrice();
+                if (cost > 0 && EconomyManager.pay(player, cost).equals(EconomyResponse.ResponseType.FAILURE)) {
+                    player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor("Language.Not-Enough-Money"));
                     return true;
                 }
 
-                Location homeLocation = homeManager.getHomeLocation(player, homeName);
-                if (homeLocation != null) {
+
+                if (!isInCache(homeManager, player, homeName)) {
                     homeManager.getCacheManager().addHome(player.getUniqueId(), homeName, homeLocation);
-                    TeleportationManager.teleportPlayerToHome(player, homeName);
-                    return true;
-                } else {
-                    player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home-does-not-exist")));
-                    return false;
                 }
+
+                TeleportationManager.teleportPlayerToHome(player, homeName);
+                return true;
             } else {
-                player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Have-no-home")));
+                player.sendMessage(HomePlugin.getLanguageManager().getString(HOME + "Have-no-home"));
                 return false;
             }
         }
+
 
         if (args.length == 0) {
             if (isGuiSupported()) {
@@ -87,7 +105,7 @@ public class HomeCommand implements CommandExecutor {
             return true;
         }
 
-        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home-usage-message")));
+        player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(HOME +"Home-usage-message"));
         return false;
     }
 
@@ -114,7 +132,7 @@ public class HomeCommand implements CommandExecutor {
 
         Window window = Window.single()
                 .setViewer(player)
-                .setTitle(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Home-gui-title").replace("%player%", player.getName())))
+                .setTitle(HomePlugin.getLanguageManager().getStringWithColor(HOME + "Home-gui-title").replace("%player%", player.getName()))
                 .setGui(gui)
                 .build();
 

@@ -23,12 +23,12 @@ public class ListHomeCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         String LANG = "Language.";
         if (!(sender instanceof Player)) {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(
-                    HomePlugin.getLanguageManager().getString(LANG + "Only-a-player-can-execute")));
+            sender.sendMessage(
+                    HomePlugin.getLanguageManager().getStringWithColor(LANG + "Only-a-player-can-execute"));
             return false;
         }
         if (!sender.hasPermission("homeplugin.command.listhome")) {
-            sender.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString(LANG + "No-permission")));
+            sender.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(LANG +"No-permission"));
             return false;
         }
 
@@ -36,9 +36,9 @@ public class ListHomeCommand implements CommandExecutor {
         HomeManager homeManager = HomePlugin.getHomeManager();
         int homeCount = homeManager.getHomeNumber(player);
 
-        String countMessage = HomePlugin.getLanguageManager().getString(HOME + "List.Home-count")
+        String countMessage = HomePlugin.getLanguageManager().getStringWithColor(HOME + "List.Home-count")
                 .replace("%count%", String.valueOf(homeCount));
-        player.sendMessage(HomePlugin.translateAlternateColorCodes(countMessage));
+        player.sendMessage(countMessage);
 
         for (String name : homeManager.getHomesName(player)) {
             Location loc = homeManager.getHomeLocation(player, name);
@@ -53,15 +53,14 @@ public class ListHomeCommand implements CommandExecutor {
         String detailHeader = HomePlugin.getLanguageManager()
                 .getString(HOME + "List.Home-detail-header")
                 .replace("%home%", homeName);
-        player.sendMessage(HomePlugin.translateAlternateColorCodes(detailHeader));
+        player.sendMessage(detailHeader);
 
-        String locationLine = HomePlugin.getLanguageManager()
-                .getString(HOME + "List.Home-location")
+        String locationLine = HomePlugin.getLanguageManager().getStringWithColor(HOME + "List.Home-location")
                 .replace("%x%", String.valueOf(location.getBlockX()))
                 .replace("%y%", String.valueOf(location.getBlockY()))
                 .replace("%z%", String.valueOf(location.getBlockZ()))
                 .replace("%world%", location.getWorld().getName());
-        player.sendMessage(HomePlugin.translateAlternateColorCodes(locationLine));
+        player.sendMessage(locationLine);
 
         // Composants interactifs (Adventure)
         Component teleportComponent = Component.text(

@@ -45,11 +45,11 @@ public class TeleportationManager {
     }
 
     private static void sendSpawnTeleportMessage(Player player) {
-        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Language.Start-of-teleportation-for-spawn")));
+        player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor( "Language.Start-of-teleportation-for-spawn"));
     }
 
     private static void sendHomeTeleportMessage(Player player, String homeName) {
-        player.sendMessage(HomePlugin.translateAlternateColorCodes(HomePlugin.getLanguageManager().getString("Language.Start-of-teleportation")) + " " + homeName);
+        player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor("Language.Start-of-teleportation") + " " + homeName);
     }
 
     private static void setTaskManagerInstance(Player player, TaskManager taskManager) {

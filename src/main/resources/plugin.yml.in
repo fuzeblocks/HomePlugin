@@ -2,12 +2,13 @@ name: HomePlugin
 version: ${project.version}
 main: fr.fuzeblocks.homeplugin.HomePlugin
 api-version: '1.14'
-load: STARTUP
+load: POSTWORLD
 author: fuzeblocks
 description: A lightweight and flexible home/spawn management plugin with admin tools and PlaceholderAPI support.
 website: https://modrinth.com/plugin/homeplugin
 softdepend:
   - PlaceholderAPI
+  - Vault
 
 commands:
   sethome:

@@ -1,6 +1,7 @@
 package fr.fuzeblocks.homeplugin.placeholder;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -112,6 +113,6 @@ public class HomePluginExpansion extends PlaceholderExpansion {
         if (value == null || value.isEmpty()) {
             value = defaultValue;
         }
-        return HomePlugin.translateAlternateColorCodes(value);
+        return LanguageManager.translateAlternateColorCodes(value);
     }
 }

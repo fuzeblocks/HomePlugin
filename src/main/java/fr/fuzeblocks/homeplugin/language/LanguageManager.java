@@ -69,7 +69,7 @@ public class LanguageManager {
      */
     @NotNull
     public String getStringWithColor(String key) {
-        return HomePlugin.translateAlternateColorCodes(yamlConfiguration.getString(key));
+        return translateAlternateColorCodes(yamlConfiguration.getString(key));
     }
 
     /**
@@ -81,7 +81,20 @@ public class LanguageManager {
      */
     @NotNull
     public String getStringWithColor(String key, String defaultValue) {
-        return HomePlugin.translateAlternateColorCodes(yamlConfiguration.getString(key, defaultValue));
+        return translateAlternateColorCodes(yamlConfiguration.getString(key, defaultValue));
+    }
+
+    /**
+     * Translate alternate color codes string.
+     *
+     * @param s the s
+     * @return the string
+     */
+    public static @NotNull String translateAlternateColorCodes(@Nullable String s) {
+        if (s == null) {
+            return "§c[Traduction manquante]";
+        }
+        return s.replace('&', '§');
     }
 
 
@@ -116,4 +129,5 @@ public class LanguageManager {
     public Language getLanguage() {
         return language;
     }
+
 }
