@@ -41,6 +41,8 @@
 | Admin Tools         | Manage other players’ homes, spawn, cache, language files |
 | Modular Loader      | Internal plugin loader to register additional HomePlugin modules |
 | Tasks / Warmup      | Configurable teleport warmup with titles/messages/particles |
+| Economy             | Configurable economy, using vault |
+
 
 ---
 
@@ -68,6 +70,8 @@
 | `/lang update` | Update base language files. | Admin |
 | `/lang merge` | Merge new keys into langs. | Admin |
 | `/lang set <code>` | Switch active language (e.g. `FRENCH`). | Admin |
+| ` /renamehome [name] [newname]`| allows players to rename their existing homes | 
+| ` /relocatehome [name]`| allows players to change the location of an existing home | 
 
 ---
 
@@ -167,6 +171,12 @@ Config:
   Rtp:
     cooldown-seconds: 1000 # seconds
     max-radius: 200
+  Economy:
+    UseEconomy: false            # Enable or disable economy features (default: false)
+    HomeCreationCost: 100.0      # Cost to create a new home (0 to disable)
+    Home-Teleport-Price: 50.0    # Cost to teleport to a home (0 to disable)
+    Tpa-Request-Price: 20.0      # Cost to send a /tpa request (0 to disable)
+    Rtp-Price: 150.0             # Cost to use /rtp command (0 to disable)
 ```
 
 Key behaviors (from code):
@@ -246,10 +256,10 @@ boolean canSet = HomePermissionManager.canSetHome(player);
 
 | Feature                            | Status     |
 |-----------------------------------|------------|
-| Economy cost per home             | Planned    |
+| Economy cost per home             | Good       |
 | Offline player home edit          | Planned    |
-| Edit existing homes               | Planned    |
-| Add public homes                  | Planned   |
+| Edit existing homes               | Good       |
+| Add public homes                  | Planned    |
 
 Suggestions welcomed via Issues or Discord.
 
