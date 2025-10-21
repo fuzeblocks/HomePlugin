@@ -120,7 +120,7 @@ Note: `<name>` is case-insensitive.
 
 ---
 
-## Vault Integration
+## 🧩 Vault Integration
 
 Economy features are implemented in `EconomyManager` and use Vault for compatibility with supported economy plugins. See Vault documentation for setup and provider requirements.
 
