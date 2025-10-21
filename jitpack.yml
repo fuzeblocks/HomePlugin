@@ -1,2 +1,9 @@
 jdk:
   - openjdk11
+install:
+  - echo "Installing Maven 3.9.11"
+  - curl -sL https://downloads.apache.org/maven/maven-3/3.9.11/binaries/apache-maven-3.9.11-bin.zip -o maven.zip
+  - unzip -q maven.zip
+  - export MAVEN_HOME=$PWD/apache-maven-3.9.11
+  - export PATH=$MAVEN_HOME/bin:$PATH
+  - mvn -v
