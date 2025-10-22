@@ -117,8 +117,10 @@
                         <configuration>
                             <target>
                                 <mkdir dir="${project.basedir}/docs/apidocs"/>
-                                <move todir="${project.basedir}/docs">
-                                    <fileset dir="${project.basedir}/docs/apidocs"/>
+                                <move todir="${project.basedir}/docs" overwrite="true">
+                                <fileset dir="${project.reporting.outputDirectory}/apidocs">
+                                    <include name="**/*"/>
+                                </fileset>
                                 </move>
                                 <delete dir="${project.basedir}/docs/apidocs" failonerror="false"/>
                             </target>
