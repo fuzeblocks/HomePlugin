@@ -144,3 +144,9 @@ Rtp:
   Teleport-failed: "&cNo se pudo encontrar un lugar seguro para teletransportarse."
   Cooldown-message: "&cDebes esperar %seconds% segundos antes de volver a usar RTP."
 
+Back:
+  No-previous-location: "&cNo se encontró una ubicación anterior."
+  Previous-location-invalid: "&cTu ubicación anterior ya no está disponible."
+  Teleported: "&aHas sido teletransportado a tu ubicación anterior."
+  Teleport-failed: "&cEl teletransporte ha fallado."
+

@@ -14,7 +14,7 @@ public class OnTpaDeniedEvent extends OnEventAction {
      * @param tpaRequest the tpa request
      */
     public OnTpaDeniedEvent(TpaRequest tpaRequest) {
-        super(tpaRequest);
+        super(tpaRequest); // sets from = sender loc, to = target loc
         this.tpaRequest = tpaRequest;
     }
 

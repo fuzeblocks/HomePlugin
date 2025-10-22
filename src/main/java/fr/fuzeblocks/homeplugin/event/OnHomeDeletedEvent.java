@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 
 /**
  * The type On home deleted event.
+ * Represents deletion of a home at a specific location.
  */
 public class OnHomeDeletedEvent extends OnEventAction {
 
@@ -15,7 +16,8 @@ public class OnHomeDeletedEvent extends OnEventAction {
      * @param location the location
      * @param homeName the home name
      */
+// Backward-compatible: treat 'location' as the affected home location and infer 'from'
     public OnHomeDeletedEvent(Player player, Location location, String homeName) {
-        super(player, location, homeName);
+        super(player, player != null ? player.getLocation() : null, location, homeName);
     }
 }

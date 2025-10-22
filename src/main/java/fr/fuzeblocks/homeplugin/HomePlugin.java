@@ -12,6 +12,7 @@ import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
 import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import fr.fuzeblocks.homeplugin.language.Language;
 import fr.fuzeblocks.homeplugin.language.LanguageManager;
+import fr.fuzeblocks.homeplugin.listeners.BackListener;
 import fr.fuzeblocks.homeplugin.listeners.OnJoinListener;
 import fr.fuzeblocks.homeplugin.listeners.OnMoveListener;
 import fr.fuzeblocks.homeplugin.listeners.OnPlayerTakeDamageByAnotherPlayer;
@@ -203,6 +204,7 @@ public final class HomePlugin extends JavaPlugin {
         getCommand("tpa").setExecutor(new TpaCommand());
         getCommand("tpaccept").setExecutor(new TpAcceptCommand());
         getCommand("tpdeny").setExecutor(new TpDenyCommand());
+        getCommand("back").setExecutor(new BackCommand());
         if (getConfig().getBoolean("Config.Rtp.enabled")) getCommand("rtp").setExecutor(new RtpCommand());
     }
 
@@ -211,6 +213,7 @@ public final class HomePlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new OnJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new OnMoveListener(), this);
         Bukkit.getPluginManager().registerEvents(new OnPlayerTakeDamageByAnotherPlayer(), this);
+        Bukkit.getPluginManager().registerEvents(new BackListener(),this);
     }
 
     private void completerManager() {
@@ -395,6 +398,7 @@ public final class HomePlugin extends JavaPlugin {
     public static Economy getEconomy() {
         return economy;
     }
+
     /**
      * Gets adventure.
      *

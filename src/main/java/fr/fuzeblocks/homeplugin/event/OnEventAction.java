@@ -9,18 +9,94 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * The type On event action.
+ * Base custom event for teleport-like actions.
+ * Provides explicit origin (from) and destination (to).
+ * getLocation() is retained for backward compatibility and returns the destination (to).
  */
 public class OnEventAction extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
+
     private final Player player;
-    private final Location location;
-    private final SyncMethod type;
-    private String homeName;
+    private final Location from; // origin
+    private final Location to;   // destination
+
+    private final SyncMethod type; // may be null
+    private String homeName;       // may be null
     private boolean isCancelled = false;
 
+    // -----------------------
+    // Preferred constructors
+    // -----------------------
+
     /**
-     * Instantiates a new On event action.
+     * Preferred constructor with explicit origin and destination and optional type.
+     *
+     * @param player the player
+     * @param from   the from
+     * @param to     the to
+     * @param type   the type
+     */
+    public OnEventAction(Player player, Location from, Location to, SyncMethod type) {
+        this.player = player;
+        this.from = from != null ? from.clone() : null;
+        this.to = to != null ? to.clone() : null;
+        this.type = type;
+    }
+
+    /**
+     * Preferred constructor with explicit origin and destination, optional type, and home name.
+     *
+     * @param player   the player
+     * @param from     the from
+     * @param to       the to
+     * @param type     the type
+     * @param homeName the home name
+     */
+    public OnEventAction(Player player, Location from, Location to, SyncMethod type, String homeName) {
+        this.player = player;
+        this.from = from != null ? from.clone() : null;
+        this.to = to != null ? to.clone() : null;
+        this.type = type;
+        this.homeName = homeName;
+    }
+
+    /**
+     * Preferred constructor with explicit origin and destination (no type).
+     *
+     * @param player the player
+     * @param from   the from
+     * @param to     the to
+     */
+    public OnEventAction(Player player, Location from, Location to) {
+        this.player = player;
+        this.from = from != null ? from.clone() : null;
+        this.to = to != null ? to.clone() : null;
+        this.type = null;
+    }
+
+    /**
+     * Preferred constructor with explicit origin and destination and home name (no type).
+     *
+     * @param player   the player
+     * @param from     the from
+     * @param to       the to
+     * @param homeName the home name
+     */
+    public OnEventAction(Player player, Location from, Location to, String homeName) {
+        this.player = player;
+        this.from = from != null ? from.clone() : null;
+        this.to = to != null ? to.clone() : null;
+        this.type = null;
+        this.homeName = homeName;
+    }
+
+    // ---------------------------------
+    // Backward-compatible constructors
+    // ---------------------------------
+
+    /**
+     * Backward-compatible: 'location' is treated as the destination ("to").
+     * 'from' defaults to the player's current location at event creation time.
      *
      * @param player   the player
      * @param location the location
@@ -28,24 +104,28 @@ public class OnEventAction extends Event implements Cancellable {
      */
     public OnEventAction(Player player, Location location, SyncMethod type) {
         this.player = player;
-        this.location = location;
+        this.from = player != null ? player.getLocation().clone() : null;
+        this.to = location != null ? location.clone() : null;
         this.type = type;
     }
 
     /**
-     * Instantiates a new On event action.
+     * Backward-compatible: 'location' is treated as the destination ("to").
+     * 'from' defaults to the player's current location at event creation time.
      *
      * @param player   the player
      * @param location the location
      */
     public OnEventAction(Player player, Location location) {
         this.player = player;
-        this.location = location;
-        type = null;
+        this.from = player != null ? player.getLocation().clone() : null;
+        this.to = location != null ? location.clone() : null;
+        this.type = null;
     }
 
     /**
-     * Instantiates a new On event action.
+     * Backward-compatible: 'location' is treated as the destination ("to").
+     * 'from' defaults to the player's current location at event creation time.
      *
      * @param player   the player
      * @param location the location
@@ -54,13 +134,15 @@ public class OnEventAction extends Event implements Cancellable {
      */
     public OnEventAction(Player player, Location location, SyncMethod type, String homeName) {
         this.player = player;
-        this.location = location;
+        this.from = player != null ? player.getLocation().clone() : null;
+        this.to = location != null ? location.clone() : null;
         this.type = type;
         this.homeName = homeName;
     }
 
     /**
-     * Instantiates a new On event action.
+     * Backward-compatible: 'location' is treated as the destination ("to").
+     * 'from' defaults to the player's current location at event creation time.
      *
      * @param player   the player
      * @param location the location
@@ -68,21 +150,30 @@ public class OnEventAction extends Event implements Cancellable {
      */
     public OnEventAction(Player player, Location location, String homeName) {
         this.player = player;
-        this.location = location;
+        this.from = player != null ? player.getLocation().clone() : null;
+        this.to = location != null ? location.clone() : null;
+        this.type = null;
         this.homeName = homeName;
-        type = null;
     }
 
     /**
-     * Instantiates a new On event action.
+     * Convenience constructor for TPA events.
+     * Sets 'from' to the sender's current location and 'to' to the target's current location.
      *
      * @param tpaRequest the tpa request
      */
     public OnEventAction(TpaRequest tpaRequest) {
         this.player = tpaRequest.sender;
-        this.location = tpaRequest.target.getLocation();
+        this.from = tpaRequest.sender != null ? tpaRequest.sender.getLocation().clone() : null;
+        this.to = (tpaRequest.target != null && tpaRequest.target.getLocation() != null)
+                ? tpaRequest.target.getLocation().clone()
+                : null;
         this.type = null;
     }
+
+    // -----------------------
+    // Bukkit/Event plumbing
+    // -----------------------
 
     /**
      * Gets handler list.
@@ -98,6 +189,10 @@ public class OnEventAction extends Event implements Cancellable {
         return handlers;
     }
 
+    // -------------
+    // Accessors
+    // -------------
+
     /**
      * Gets player.
      *
@@ -108,12 +203,32 @@ public class OnEventAction extends Event implements Cancellable {
     }
 
     /**
-     * Gets location.
+     * Origin location (where the player came FROM).
+     *
+     * @return the from
+     */
+    public Location getFrom() {
+        return from != null ? from.clone() : null;
+    }
+
+    /**
+     * Destination location (where the player is going TO).
+     *
+     * @return the to
+     */
+    public Location getTo() {
+        return to != null ? to.clone() : null;
+    }
+
+    /**
+     * Backward-compatible getter for the destination.
+     * Prefer getTo() in new code.
      *
      * @return the location
      */
+    @Deprecated
     public Location getLocation() {
-        return location;
+        return getTo();
     }
 
     /**
