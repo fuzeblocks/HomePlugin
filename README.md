@@ -265,6 +265,7 @@ boolean canSet = HomePermissionManager.canSetHome(player);
 | Add public homes                  | Planned    |
 | /back command                     | In dev     |
 | Clickeable messages               | Planned    |
+| Warp                              | Planned    |
 
 Suggestions welcomed via Issues or Discord.
 
