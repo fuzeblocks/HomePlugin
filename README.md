@@ -263,6 +263,8 @@ boolean canSet = HomePermissionManager.canSetHome(player);
 | Offline player home edit          | Planned    |
 | Edit existing homes               | Good       |
 | Add public homes                  | Planned    |
+| /back command                     | In dev     |
+| Clickeable messages               | Planned    |
 
 Suggestions welcomed via Issues or Discord.
 
