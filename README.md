@@ -72,6 +72,7 @@ A lightweight, flexible home/spawn/teleport management plugin for Paper/Spigot s
 | `/lang set <code>` | Switch active language (e.g. `FRENCH`). | Admin |
 | `/renamehome [name] [newname]`| Rename an existing home | |
 | `/relocatehome [name]`| Change the location of an existing home | |
+| `/back`               | Teleport back to your previous location. |
 
 ---
 
