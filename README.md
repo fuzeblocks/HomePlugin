@@ -259,7 +259,7 @@ dependencies { implementation("com.github.fuzeblocks:HomePlugin:Tag") }
 | Offline player home edit          | Planned  |
 | Edit existing homes               | Good     |
 | Public homes                      | Planned  |
-| `/back` command                   | In dev   |
+| `/back` command                   | Good     |
 | Clickable messages                | Planned  |
 | Warps                             | Planned  |
 
