@@ -1,8 +1,10 @@
 package fr.fuzeblocks.homeplugin.gui;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.economy.EconomyManager;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.task.TeleportationManager;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -49,8 +51,13 @@ public class HomeItem extends AbstractItem {
             } else {
                 // Logic to teleport the player to the home goes here
                 player.closeInventory();
-                TeleportationManager.teleportPlayerToHome(player, homeName);
+                double cost = EconomyManager.getHomeTeleportPrice();
+                if (cost > 0 && EconomyManager.pay(player, cost).equals(EconomyResponse.ResponseType.FAILURE)) {
+                    player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor("Language.Not-Enough-Money"));
+                } else {
 
+                    TeleportationManager.teleportPlayerToHome(player, homeName);
+                }
 
             }
         } else {

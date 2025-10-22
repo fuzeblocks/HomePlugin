@@ -88,7 +88,6 @@ public class HomeCommand implements CommandExecutor {
             }
         }
 
-
         if (args.length == 0) {
             if (isGuiSupported()) {
                 openHomeGui(player);
@@ -140,13 +139,34 @@ public class HomeCommand implements CommandExecutor {
     }
 
     private boolean isGuiSupported() {
-        String version = Bukkit.getBukkitVersion().split("-")[0]; // e.g. "1.20.4"
         try {
-            String[] parts = version.split("\\.");
-            int major = Integer.parseInt(parts[1]);
-            return major <= 20;
+            String raw = org.bukkit.Bukkit.getBukkitVersion(); // e.g., "1.21.3-R0.1-SNAPSHOT"
+            String ver = raw.split("-")[0];                    // -> "1.21.3"
+            int[] current = parseVersionTriple(ver);
+            int[] min = {1, 14, 0};
+            int[] max = {1, 21, 10};
+            return compareVersion(current, min) >= 0 && compareVersion(current, max) <= 0;
         } catch (Exception e) {
             return false;
         }
+    }
+
+    private static int[] parseVersionTriple(String v) {
+        if (v == null) return new int[]{0, 0, 0};
+        v = v.replaceAll("[^0-9.]", ""); // keep only digits and dots
+        String[] p = v.split("\\.");
+        int major = 0, minor = 0, patch = 0;
+        try { if (p.length > 0) major = Integer.parseInt(p[0]); } catch (Exception ignored) {}
+        try { if (p.length > 1) minor = Integer.parseInt(p[1]); } catch (Exception ignored) {}
+        try { if (p.length > 2) patch = Integer.parseInt(p[2]); } catch (Exception ignored) {}
+        return new int[]{major, minor, patch};
+    }
+
+    private static int compareVersion(int[] a, int[] b) {
+        for (int i = 0; i < 3; i++) {
+            int cmp = Integer.compare(a[i], b[i]);
+            if (cmp != 0) return cmp;
+        }
+        return 0;
     }
 }

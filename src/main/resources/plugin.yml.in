@@ -45,6 +45,8 @@ commands:
     description: Deny a teleportation request.
   rtp:
     description: Teleport to a random location within a specified radius.
+  back:
+    description: Teleport back to your previous location.
 
 
 
@@ -73,4 +75,6 @@ permissions:
   homeplugin.command.tpa:
     description: Allows sending/accept/deny teleport requests to other players.
     default: true
-
+  homeplugin.back.use:
+    description: Allows using the /back command.
+    default: op

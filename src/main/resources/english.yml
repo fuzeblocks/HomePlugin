@@ -145,6 +145,12 @@ Rtp:
   Teleport-failed: "&cUnable to find a safe location to teleport."
   Cooldown-message: "&cYou must wait %seconds% seconds before using RTP again."
 
+Back:
+  No-previous-location: "&cNo previous location found."
+  Previous-location-invalid: "&cYour previous location is no longer available."
+  Teleported: "&aTeleported back to your previous location."
+  Teleport-failed: "&cTeleport failed."
+
 
 
 

@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 
 /**
  * The type On spawn deleted event.
+ * Represents deletion of a spawn at a specific location.
  */
 public class OnSpawnDeletedEvent extends OnEventAction {
 
@@ -14,7 +15,9 @@ public class OnSpawnDeletedEvent extends OnEventAction {
      * @param player   the player
      * @param location the location
      */
+// Backward-compatible: treat 'location' as the affected spawn location and infer 'from'
     public OnSpawnDeletedEvent(Player player, Location location) {
-        super(player, location);
+        super(player, player != null ? player.getLocation() : null, location);
     }
+
 }
