@@ -5,39 +5,43 @@ A lightweight, flexible home/spawn/teleport management plugin for Paper/Spigot s
 <div align="center">
   <img src="https://img.icons8.com/fluency/96/home.png" width="80" alt="Home Icon" />
   <br/>
-  <strong>Stable • Fast • Modular • API-Driven</strong>
+  <strong>Stable • Fast • Modular • API‑Driven</strong>
 </div>
+
+[![](https://jitpack.io/v/fuzeblocks/HomePlugin.svg)](https://jitpack.io/#fuzeblocks/HomePlugin)
 
 ---
 
 ## 📚 Table of Contents
-- [✨ Features](#-features)
-- [🧾 Commands](#-commands)
-- [🔐 Permissions](#-permissions)
-- [🧩 PlaceholderAPI Integration](#-placeholderapi-integration)
-- [💰 Vault Integration](#-vault-integration)
-- [🌍 Languages](#-languages)
-- [⚙️ Configuration](#️-configuration)
-- [🧱 Architecture & Performance](#-architecture--performance)
-- [🧑‍💻 Developer / Extension API](#-developer--extension-api)
-- [✅ Compatibility](#-compatibility)
-- [🗺️ Roadmap](#-roadmap)
-- [🤝 Support & Contributions](#-support--contributions)
-- [📄 License](#-license)
+
+- [✨ Features](#features)
+- [🧾 Commands](#commands)
+- [🔐 Permissions](#permissions)
+- [🧩 PlaceholderAPI Integration](#placeholderapi-integration)
+- [💰 Vault Integration](#vault-integration)
+- [🌍 Languages](#languages)
+- [⬇️ Installation](#installation)
+- [⚙️ Configuration](#configuration)
+- [🧱 Architecture & Performance](#architecture--performance)
+- [🧑‍💻 Developer / Extension API](#developer--extension-api)
+- [✅ Compatibility](#compatibility)
+- [🗺️ Roadmap](#roadmap)
+- [🤝 Support & Contributions](#support--contributions)
+- [📄 License](#license)
 
 ---
 
 ## ✨ Features
 
 | Category            | Highlights |
-|---------------------|-----------|
+|---------------------|------------|
 | Homes & Spawn       | Named homes, GUI/list access, global spawn set/remove |
 | Teleport Systems    | TPA requests with timeout, RTP with cooldown & radius |
-| Storage             | YAML (default) or MySQL (config-selectable) |
+| Storage             | YAML (default) or MySQL (config‑selectable) |
 | Caching             | Optional Redis layer (Jedis) when enabled |
-| Limits              | Per-player home limits via permissions `homeplugin.limit.<n>` |
+| Limits              | Per‑player home limits via permissions `homeplugin.limit.<n>` |
 | Validation          | Prevent unfair placements / block disabled worlds |
-| Localization        | Built-in language system (French, English, Spanish) + editable YAML |
+| Localization        | Built‑in language system (French, English, Spanish) + editable YAML |
 | PlaceholderAPI      | Rich placeholders for homes, counts, and locations |
 | Admin Tools         | Manage other players’ homes, spawn, cache, language files |
 | Modular Loader      | Internal plugin loader to register HomePlugin modules |
@@ -50,11 +54,14 @@ A lightweight, flexible home/spawn/teleport management plugin for Paper/Spigot s
 
 | Command | Description | Notes |
 |---------|-------------|-------|
-| `/sethome [name] [info]` | Set (or overwrite) a home at your current position | `info` optional metadata (if used) |
+| `/sethome [name] [info]` | Set (or overwrite) a home at your current position | `info` optional metadata |
 | `/home [name]` | Teleport to a home; opens GUI if no name is provided | GUI depends on config |
 | `/home` | Open homes GUI (if enabled) |  |
 | `/delhome [name]` | Delete a named home |  |
 | `/listhome` | List all your homes in chat | Text alternative to GUI |
+| `/renamehome [name] [newname]` | Rename an existing home |  |
+| `/relocatehome [name]` | Move an existing home to your current location |  |
+| `/back` | Teleport back to your previous location |  |
 | `/spawn` | Teleport to global spawn | Requires spawn set |
 | `/setspawn` | Set global spawn at current location | Admin |
 | `/delspawn` | Remove the current global spawn | Admin |
@@ -67,12 +74,9 @@ A lightweight, flexible home/spawn/teleport management plugin for Paper/Spigot s
 | `/cache clearall` | Clear all plugin caches | Admin |
 | `/cache player <name>` | Clear cache for a specific player | Admin |
 | `/plugins` | List loaded HomePlugin internal modules | Admin (not Bukkit `/plugins`) |
-| `/lang update` | Update base language files (add-only merge) | Admin |
+| `/lang update` | Update base language files (add‑only merge) | Admin |
 | `/lang merge` | Merge new keys into language files | Admin |
 | `/lang set <code>` | Switch active language (e.g., `FRENCH`) | Admin |
-| `/renamehome [name] [newname]` | Rename an existing home |  |
-| `/relocatehome [name]` | Move an existing home to your current location |  |
-| `/back` | Teleport back to your previous location |  |
 
 ---
 
@@ -88,9 +92,9 @@ A lightweight, flexible home/spawn/teleport management plugin for Paper/Spigot s
 | `homeplugin.command.tpa` | Send/accept/deny TPA | true |
 | `homeplugin.admin` | Admin features (spawn, cache, manage others) | op |
 | `homeplugin.lang.update` | Update language files | op |
-| `homeplugin.limit.<n>` | Override max homes (1..100 scanned) | permission-based |
+| `homeplugin.limit.<n>` | Override max homes (1..100 scanned) | permission‑based |
 
-Suggested extras (if implemented in your setup):
+Suggested extras (if implemented):
 - `homeplugin.bypass.limit` — ignore base limit
 - `homeplugin.bypass.validation` — ignore placement restrictions
 - `homeplugin.bypass.cooldown` — ignore RTP/teleport cooldowns
@@ -105,15 +109,17 @@ Placeholders (via `HomePluginExpansion`):
 
 | Placeholder | Description |
 |-------------|-------------|
-| `%homeplugin_homes%` | Comma-separated home names (or fallback) |
+| `%homeplugin_homes%` | Comma‑separated home names (or fallback) |
 | `%homeplugin_homes_numbers%` | Number of homes |
 | `%homeplugin_has_homes%` | `true` if player has ≥ 1 home |
-| `%homeplugin_home_location_<name>%` | Formatted location (language-aware) |
+| `%homeplugin_home_location_<name>%` | Formatted location (language‑aware) |
 | `%homeplugin_home_exists_<name>%` | `true` / `false` |
 | `%homeplugin_home_world_<name>%` | World name |
 | `%homeplugin_home_coordinates_<name>%` | Raw coordinates `X Y Z` |
 
-Note: `<name>` is case-insensitive.
+Notes:
+- `<name>` is case‑insensitive.
+- The expansion registers automatically when PlaceholderAPI is present.
 
 ---
 
@@ -126,12 +132,27 @@ Economy features are handled by `EconomyManager` and use Vault to integrate with
 ## 🌍 Languages
 
 Configured via: `Config.Language`  
-Built-in:
+Built‑in:
 - FRENCH
 - ENGLISH
 - SPANISH
 
 Language loading uses an enum (`Language.valueOf(...)`) and falls back to FRENCH if invalid. Customize by editing the shipped YAML files; use `/lang update`, `/lang merge`, and `/lang set` to manage versions and switch locales.
+
+---
+
+## ⬇️ Installation
+
+1. Download: place the plugin JAR into your server’s `plugins/` folder.  
+   - Or build from source and place the resulting JAR into `plugins/`.
+2. Start the server once to generate configuration and language files.
+3. Adjust `plugins/HomePlugin/config.yml` (storage, Redis, economy, limits, etc.).
+4. Reload/restart the server.
+
+Quick check:
+- `/sethome` and `/home` should work immediately on YAML storage.
+- If using MySQL, verify credentials and connectivity before restarting.
+- If using Redis, set `UseRedis: true` and ensure the host is reachable.
 
 ---
 
@@ -181,10 +202,11 @@ Config:
 ```
 
 Key behaviors:
-- Base home limit via `Config.Home.DefaultHomeLimit` plus permission overrides
-- TPA timeout uses `Config.Tpa.Tpa-duration`
-- Redis initializes only when `UseRedis: true`
-- Teleport warmup via `Task-duration`; titles/messages/particles are optional
+- Base home limit via `Config.Home.DefaultHomeLimit` plus permission overrides.
+- TPA timeout uses `Config.Tpa.Tpa-duration`.
+- Redis initializes only when `UseRedis: true`.
+- Teleport warmup via `Task-duration`; titles/messages/particles are optional.
+- Worlds listed in `DisabledWorlds` cannot be used for homes/teleports (validation).
 
 ---
 
@@ -195,9 +217,9 @@ Key behaviors:
   - Spawns: `SpawnManager` → YAML (`SpawnYMLManager`) or SQL (`SpawnSQLManager`)
 - Optional Redis (JedisPooled) caching/sync when enabled
 - MySQL path enabled by `Config.Connector.TYPE=MYSQL`
-- Extension system (`PluginLoader`/`PluginManager`) for internal modules
-- PlaceholderAPI soft-dependency
-- Permission-driven home limits (`homeplugin.limit.<n>`)
+- Extension system (`PluginLoader` / `PluginManager`) for internal modules
+- PlaceholderAPI soft‑dependency
+- Permission‑driven home limits (`homeplugin.limit.<n>`)
 - Teleport warmups and TPA expiration via Bukkit scheduler
 
 ---
@@ -246,13 +268,12 @@ dependencies { implementation("com.github.fuzeblocks:HomePlugin:Tag") }
 
 - Declared `api-version: 1.14` (plugin.yml)
 - Built for modern Paper/Spigot derivatives
-- Soft-dependency: PlaceholderAPI
+- Soft‑dependency: PlaceholderAPI
 - Storage: YAML (default) or MySQL (when enabled)
 
 ---
 
 ## 🗺️ Roadmap
-
 
 | Feature                           | Status     |
 |-----------------------------------|------------|
@@ -285,8 +306,4 @@ Contribution flow:
 
 ## 📄 License
 
-[Apache-2.0](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
-
----
-
-[![](https://jitpack.io/v/fuzeblocks/HomePlugin.svg)](https://jitpack.io/#fuzeblocks/HomePlugin)
+[Apache‑2.0](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
