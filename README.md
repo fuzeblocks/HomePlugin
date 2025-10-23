@@ -162,37 +162,76 @@ Example structure (see `src/main/resources/config.yml`):
 
 ```yaml
 Config:
+
+  # ----------------------------------------
+  # Language / Localization
+  # Available: FRENCH, ENGLISH, SPANISH
+  # ----------------------------------------
   Language: FRENCH
+
+  # ----------------------------------------
+  # Storage Connector
+  # TYPE can be "YAML" or "MYSQL"
+  # MySQL settings are used only when TYPE="MYSQL"
+  # ----------------------------------------
   Connector:
-    TYPE: "YAML" # MYSQL or YAML
+    TYPE: "YAML"  # MYSQL or YAML
+
     # Optional (for MYSQL)
     HOST: "localhost"
     PORT: 3306
     USERNAME: "root"
     PASSWORD: ""
     DATABASE: "HomePlugin"
+
+  # ----------------------------------------
+  # Redis Cache (Optional)
+  # Enable only if you need cross-instance cache/sync
+  # ----------------------------------------
   Redis:
     UseRedis: false
     HOST: "localhost"
     PORT: 6379
     SSL: false
     PASSWORD: ""
+
+  # ----------------------------------------
+  # Home Settings
+  # Limits, validation, and disabled worlds
+  # ----------------------------------------
   Home:
     DefaultHomeLimit: 3
     PreventUnfairLocation: true
     DisabledWorlds:
       - "world_nether"
       - "world_the_end"
+
+  # ----------------------------------------
+  # Teleport Task / Warmup & Effects
+  # ----------------------------------------
   Task:
-    Task-duration: 3 # seconds
+    Task-duration: 3  # seconds
     UseTitle: true
     UseMessage: false
     Add-particles-after-teleport: true
+
+  # ----------------------------------------
+  # TPA (Teleport Requests)
+  # ----------------------------------------
   Tpa:
-    Tpa-duration: 30 # seconds
+    Tpa-duration: 30  # seconds
+
+  # ----------------------------------------
+  # RTP (Random Teleport)
+  # ----------------------------------------
   Rtp:
-    cooldown-seconds: 1000 # seconds
+    cooldown-seconds: 1000  # seconds
     max-radius: 200
+
+  # ----------------------------------------
+  # Economy (Vault)
+  # Toggle costs and set prices per action
+  # ----------------------------------------
   Economy:
     UseEconomy: false
     HomeCreationCost: 100.0
