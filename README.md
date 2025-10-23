@@ -253,17 +253,19 @@ dependencies { implementation("com.github.fuzeblocks:HomePlugin:Tag") }
 
 ## 🗺️ Roadmap
 
-| Feature                            | Status   |
-|-----------------------------------|----------|
-| Economy cost per home             | Good     |
-| Offline player home edit          | Planned  |
-| Edit existing homes               | Good     |
-| Public homes                      | Planned  |
-| `/back` command                   | Good     |
-| Clickable messages                | Planned  |
-| Warps                             | Planned  |
 
-Suggestions welcome via Issues or Discord.
+| Feature                           | Status     |
+|-----------------------------------|------------|
+| Per‑home economy cost             | ✅ Complete |
+| Offline player home editing       | 📝 Planned  |
+| Edit existing homes               | ✅ Complete |
+| Public homes                      | 📝 Planned  |
+| `/back` command                   | ✅ Complete |
+| Clickable chat messages           | 📝 Planned  |
+| Warps                             | 📝 Planned  |
+| UI/style refresh                  | 📝 Planned  |
+
+Suggestions welcome via Discussions or Discord.
 
 ---
 
