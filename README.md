@@ -324,6 +324,7 @@ dependencies { implementation("com.github.fuzeblocks:HomePlugin:Tag") }
 | Clickable chat messages           | 📝 Planned  |
 | Warps                             | 📝 Planned  |
 | UI/style refresh                  | 📝 Planned  |
+| BlueMap and Dynmap integration    | 📝 Planned  |
 
 Suggestions welcome via Discussions or Discord.
 
