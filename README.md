@@ -273,7 +273,7 @@ Key behaviors:
 
 Docs:
 - API Docs (Javadoc): [HomePlugin JavaDoc](https://fuzeblocks.github.io/HomePlugin/)
-- Developer Docs: [Events](docs/EVENTS.md) • [Home Managers](docs/HOME_MANAGERS.md) • [Spawn Managers](docs/SPAWN_MANAGERS.md) • [Language Management](docs/LANGUAGE_MANAGEMENT.md)
+- Developer Docs: [Events](https://github.com/fuzeblocks/HomePlugin/wiki/Events) • [Home Managers](https://github.com/fuzeblocks/HomePlugin/wiki/Home-API-usage) • [Spawn Managers](https://github.com/fuzeblocks/HomePlugin/wiki/Spawn-API-usage) • [Language Management](https://github.com/fuzeblocks/HomePlugin/wiki/Language-File-Update-GUIDE)
 
 Use JitPack to depend on the API (replace `Tag` with a release/tag):
 
