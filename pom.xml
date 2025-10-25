@@ -55,20 +55,31 @@
                 </configuration>
             </plugin>
 
-
+            <!-- Keep older Shade so you don't need Maven 3.6.3+. We only relocate bStats. -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.3</version>
+                <version>3.2.4</version>
+                <!-- IMPORTANT: override ASM to a version that supports Java 16+ class files -->
+                <dependencies>
+                    <dependency>
+                        <groupId>org.ow2.asm</groupId>
+                        <artifactId>asm</artifactId>
+                        <version>9.7.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.ow2.asm</groupId>
+                        <artifactId>asm-commons</artifactId>
+                        <version>9.7</version>
+                    </dependency>
+                </dependencies>
                 <configuration>
                     <relocations>
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <!-- Replace with your package if desired -->
-                            <shadedPattern>fr.fuzeblocks.homeplugin</shadedPattern>
+                            <shadedPattern>fr.fuzeblocks.homeplugin.bstats</shadedPattern>
                         </relocation>
                     </relocations>
-
                     <filters>
                         <filter>
                             <artifact>*:*</artifact>
@@ -180,24 +191,28 @@
             <version>5.2.0</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>2.11.6</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>com.yworks</groupId>
             <artifactId>yguard</artifactId>
             <version>4.1.0</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>1.20.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
@@ -218,17 +233,20 @@
             <version>5.11.3</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-platform-bukkit</artifactId>
             <version>4.4.1</version>
         </dependency>
+
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
