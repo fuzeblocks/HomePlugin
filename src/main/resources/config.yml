@@ -1,42 +1,77 @@
 Config:
+
+  # ----------------------------------------
+  # Language / Localization
+  # Available: FRENCH, ENGLISH, SPANISH
+  # ----------------------------------------
   Language: FRENCH
+
+  # ----------------------------------------
+  # Storage Connector
+  # TYPE can be "YAML" or "MYSQL"
+  # MySQL settings are used only when TYPE="MYSQL"
+  # ----------------------------------------
   Connector:
-    TYPE: "YAML" #MYSQL ou YAML
-    #Optional
+    TYPE: "YAML"  # MYSQL or YAML
+
+    # Optional (for MYSQL)
     HOST: "localhost"
     PORT: 3306
     USERNAME: "root"
     PASSWORD: ""
     DATABASE: "HomePlugin"
+
+  # ----------------------------------------
+  # Redis Cache (Optional)
+  # Enable only if you need cross-instance cache/sync
+  # ----------------------------------------
   Redis:
     UseRedis: false
-    #Optional
     HOST: "localhost"
     PORT: 6379
     SSL: false
     PASSWORD: ""
+
+  # ----------------------------------------
+  # Home Settings
+  # Limits, validation, and disabled worlds
+  # ----------------------------------------
   Home:
     DefaultHomeLimit: 3
     PreventUnfairLocation: true
     DisabledWorlds:
       - "world_nether"
       - "world_the_end"
+
+  # ----------------------------------------
+  # Teleport Task / Warmup & Effects
+  # ----------------------------------------
   Task:
-    Task-duration: 3 #second
+    Task-duration: 3  # seconds
     UseTitle: true
     UseMessage: false
     Add-particles-after-teleport: true
+
+  # ----------------------------------------
+  # TPA (Teleport Requests)
+  # ----------------------------------------
   Tpa:
-    Tpa-duration: 30 #seconds
+    Tpa-duration: 30  # seconds
+
+  # ----------------------------------------
+  # RTP (Random Teleport)
+  # ----------------------------------------
   Rtp:
-    enabled: true
-    cooldown-seconds: 1000 #seconds
+    cooldown-seconds: 1000  # seconds
     max-radius: 200
+
+  # ----------------------------------------
+  # Economy (Vault)
+  # Toggle costs and set prices per action
+  # ----------------------------------------
   Economy:
-    UseEconomy: false #default false
-    HomeCreationCost: 100.0 #0 to disable
-    Home-Teleport-Price: 50.0 #0 to disable
-    Tpa-Request-Price: 20.0 #0 to disable
-    Rtp-Price: 150.0 #0 to disable
-
-
+    UseEconomy: false
+    HomeCreationCost: 100.0
+    Home-Teleport-Price: 50.0
+    Tpa-Request-Price: 20.0
+    Rtp-Price: 150.0

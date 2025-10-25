@@ -25,6 +25,8 @@ import fr.fuzeblocks.homeplugin.sync.SyncMethod;
 import fr.fuzeblocks.homeplugin.update.UpdateChecker;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
+import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -56,6 +58,8 @@ public final class HomePlugin extends JavaPlugin {
     private static LanguageManager languageManager;
     private static BukkitAudiences adventure;
     private static Economy economy;
+    private static Metrics metrics;
+
 
     @Override
     public void onEnable() {
@@ -63,6 +67,7 @@ public final class HomePlugin extends JavaPlugin {
         setupEconomy();
         configurationSection = getConfig();
         adventure = BukkitAudiences.create(this);
+        setupMetrics();
         checkConfig();
         loadPlugins();
         redisRegistration();
@@ -285,6 +290,10 @@ public final class HomePlugin extends JavaPlugin {
         return economy != null;
     }
 
+    private void setupMetrics() {
+        metrics = new Metrics(this, 27702);
+    }
+
 
     /**
      * Gets home yml manager.
@@ -410,6 +419,15 @@ public final class HomePlugin extends JavaPlugin {
             throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
         }
         return adventure;
+    }
+
+    /**
+     * Gets metrics.
+     *
+     * @return the metrics
+     */
+    public static Metrics getMetrics() {
+        return metrics;
     }
 
 }

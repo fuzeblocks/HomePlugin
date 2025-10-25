@@ -9,6 +9,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+/**
+ * The type Back command.
+ */
 public class BackCommand implements CommandExecutor {
 
     private static final String PERM_USE = "homeplugin.back.use";

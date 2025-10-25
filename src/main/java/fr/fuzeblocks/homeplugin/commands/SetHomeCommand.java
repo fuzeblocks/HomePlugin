@@ -6,6 +6,7 @@ import fr.fuzeblocks.homeplugin.event.OnHomeCreatedEvent;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.home.HomePermissionManager;
 import net.milkbowl.vault.economy.EconomyResponse;
+import org.bstats.charts.SingleLineChart;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

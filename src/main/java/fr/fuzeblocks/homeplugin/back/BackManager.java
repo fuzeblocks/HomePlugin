@@ -17,6 +17,11 @@ public class BackManager {
     private final Map<UUID, Location> lastLocations = new ConcurrentHashMap<>();
 
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static BackManager getInstance() {
         if (instance == null) {
             instance = new BackManager();
