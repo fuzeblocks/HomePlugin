@@ -92,6 +92,7 @@ A lightweight, flexible home/spawn/teleport management plugin for Paper/Spigot s
 | `homeplugin.command.tpa` | Send/accept/deny TPA | true |
 | `homeplugin.admin` | Admin features (spawn, cache, manage others) | op |
 | `homeplugin.lang.update` | Update language files | op |
+| `homeplugin.back.use` | Use `/back` | op |
 | `homeplugin.limit.<n>` | Override max homes (1..100 scanned) | permission‑based |
 
 Suggested extras (if implemented):
