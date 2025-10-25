@@ -26,8 +26,10 @@ import fr.fuzeblocks.homeplugin.update.UpdateChecker;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
-import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.PluginCommand;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -40,12 +42,24 @@ import redis.clients.jedis.JedisPooled;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 /**
- * The type Home plugin.
+ * Main plugin class for HomePlugin.
  */
 public final class HomePlugin extends JavaPlugin {
+
+    // Config keys
+    private static final String CFG_ROOT = "Config.";
+    private static final String CFG_CONNECTOR = CFG_ROOT + "Connector.TYPE";
+    private static final String CFG_LANGUAGE = CFG_ROOT + "Language";
+    private static final String CFG_REDIS_USE = CFG_ROOT + "Redis.UseRedis";
+    private static final String CFG_REDIS_HOST = CFG_ROOT + "Redis.HOST";
+    private static final String CFG_REDIS_PORT = CFG_ROOT + "Redis.PORT";
+    private static final String CFG_REDIS_SSL = CFG_ROOT + "Redis.SSL";
+    private static final String CFG_REDIS_PASSWORD = CFG_ROOT + "Redis.PASSWORD";
+    private static final String CFG_RTP_ENABLED = CFG_ROOT + "Rtp.enabled";
+
+    // Managers and services
     private static HomeYMLManager homeYMLManager;
     private static SpawnYMLManager spawnYMLManager;
     private static CacheManager cacheManager;
@@ -60,229 +74,294 @@ public final class HomePlugin extends JavaPlugin {
     private static Economy economy;
     private static Metrics metrics;
 
-
     @Override
     public void onEnable() {
+        // Config and metrics
         saveDefaultConfig();
-        setupEconomy();
+        applyDefaultConfigValues();
         configurationSection = getConfig();
         adventure = BukkitAudiences.create(this);
         setupMetrics();
-        checkConfig();
-        loadPlugins();
-        redisRegistration();
-        databaseRegistration();
-        homeRegistration();
-        commandRegistration();
-        eventRegistration();
-        completerManager();
-        spawnManager();
-        cacheManager = CacheManager.getInstance();
+
+        // Dependencies and services
+        setupEconomy();
         checkDepend();
         loadLanguage();
-        checkUpdate(113935);
-        getLogger().info("----------------------HomePlugin----------------------");
-        getLogger().info("----------HomePlugin a démmaré avec succés !----------");
-        getLogger().info("------------------------------------------------------");
+        redisRegistration();
+        databaseRegistration();
+
+        // Domain managers
+        homeRegistration();
+        spawnRegistration();
+        cacheManager = CacheManager.getInstance();
+
+        // Commands, events, completers
+        commandRegistration();
+        eventRegistration();
+        completerRegistration();
+
+        // Optional plugin extensions
         countPlugins();
         initPluginFunc();
+
+        // Update check
+        checkUpdate(113935);
+
+        getLogger().info("------------------------------------------------------");
+        getLogger().info("HomePlugin started successfully!");
+        getLogger().info("Language: " + getConfig().getString(CFG_LANGUAGE));
+        getLogger().info("Storage: " + getConfig().getString(CFG_CONNECTOR));
+        getLogger().info("------------------------------------------------------");
     }
 
     @Override
     public void onDisable() {
+        // Close Adventure
         if (adventure != null) {
             adventure.close();
             adventure = null;
         }
+
+        // Close Redis
+        if (jedisPooled != null) {
+            try {
+                jedisPooled.close();
+            } catch (Exception ignored) {
+            } finally {
+                jedisPooled = null;
+            }
+        }
+
         stopPluginFunc();
-        getLogger().info("----------------------HomePlugin----------------------");
-        getLogger().info("----------HomePlugin a été éteint avec succés !----------");
+
+        getLogger().info("------------------------------------------------------");
+        getLogger().info("HomePlugin shut down successfully!");
         getLogger().info("------------------------------------------------------");
     }
 
-    private void checkConfig() {
-        String key = "Config.";
-        if (Objects.requireNonNull(getConfig().getString(key + "Connector.TYPE")).isEmpty()) {
-            getConfig().set(key + "Connector.TYPE", "YAML");
-        }
-        if (Objects.requireNonNull(getConfig().getString(key + "Language")).isEmpty()) {
-            getConfig().set(key + "Language", "FRENCH");
-        }
+    // -------------------- Setup and registration --------------------
+
+    private void applyDefaultConfigValues() {
+        getConfig().addDefault(CFG_CONNECTOR, "YAML");
+        getConfig().addDefault(CFG_LANGUAGE, "FRENCH");
+
+        getConfig().addDefault(CFG_REDIS_USE, false);
+        getConfig().addDefault(CFG_REDIS_HOST, "127.0.0.1");
+        getConfig().addDefault(CFG_REDIS_PORT, 6379);
+        getConfig().addDefault(CFG_REDIS_SSL, false);
+        getConfig().addDefault(CFG_REDIS_PASSWORD, "");
+
+        getConfig().addDefault(CFG_RTP_ENABLED, false);
+
+        getConfig().options().copyDefaults(true);
         saveConfig();
-        getLogger().info(getConfig().getString(key + "Language") + " has been selected !");
-        getLogger().info(getConfig().getString(key + "Connector.TYPE") + " has been selected !");
     }
 
     private void checkDepend() {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new HomePluginExpansion(this).register();
+            getLogger().info("PlaceholderAPI detected. Placeholders enabled.");
         } else {
-            getLogger().warning("PlaceholderAPI is not installed. Placeholders will not be available.");
+            getLogger().warning("PlaceholderAPI not installed. Placeholders disabled.");
         }
     }
 
     private void loadLanguage() {
-        String languageString = getConfig().getString("Config.Language");
-        Language language = Language.valueOf(languageString.toUpperCase());
-        if (language == null) {
+        String languageString = getConfig().getString(CFG_LANGUAGE, "FRENCH");
+        Language language;
+        try {
+            language = Language.valueOf(languageString.toUpperCase());
+        } catch (Exception e) {
+            getLogger().warning("Invalid language '" + languageString + "'. Falling back to FRENCH.");
             language = Language.FRENCH;
         }
         languageManager = new LanguageManager(language, this);
     }
 
     private void redisRegistration() {
-        if (getConfig().getBoolean("Config.Redis.UseRedis")) {
-            JedisClientConfig jedisClientConfig = DefaultJedisClientConfig.builder()
-                    .password(getConfig().getString("ConfigRedis.PASSWORD"))
-                    .ssl(getConfig().getBoolean("Config.Redis.SSL")).build();
-            HostAndPort hostAndPort = new HostAndPort(getConfig().getString("Config.Redis.HOST"), getConfig().getInt("Config.Redis.PORT"));
-            jedisPooled = new JedisPooled(hostAndPort, jedisClientConfig);
-        } else {
-            getLogger().info("Skipping Redis...");
+        if (!getConfig().getBoolean(CFG_REDIS_USE, false)) {
+            getLogger().info("Redis disabled in config. Skipping Redis setup.");
             return;
         }
-        if (jedisPooled != null) {
-            getLogger().info("Redis registered successfully !");
-        } else {
-            getLogger().info("Cannot connect to Redis... use default cache!");
+
+        try {
+            JedisClientConfig jedisClientConfig = DefaultJedisClientConfig.builder()
+                    .password(blankToNull(getConfig().getString(CFG_REDIS_PASSWORD)))
+                    .ssl(getConfig().getBoolean(CFG_REDIS_SSL, false))
+                    .build();
+
+            HostAndPort hostAndPort = new HostAndPort(
+                    getConfig().getString(CFG_REDIS_HOST, "127.0.0.1"),
+                    getConfig().getInt(CFG_REDIS_PORT, 6379)
+            );
+
+            jedisPooled = new JedisPooled(hostAndPort, jedisClientConfig);
+            // Basic connectivity test
+            jedisPooled.ping();
+            getLogger().info("Redis registered successfully!");
+        } catch (Exception e) {
+            getLogger().warning("Cannot connect to Redis (" + e.getClass().getSimpleName() + ": " + e.getMessage() + "). Falling back to default cache.");
+            jedisPooled = null;
         }
     }
 
     private void databaseRegistration() {
-        if (Objects.requireNonNull(getConfig().getString("Config.Connector.TYPE")).equalsIgnoreCase("MYSQL")) {
-            getLogger().info("Registering Database");
-            new DatabaseManager(this);
-            getLogger().info("Registering Manager");
-            new CreateTable(DatabaseConnection.getConnection());
-            getLogger().info("Registering Table");
-            homeSQLManager = new HomeSQLManager();
-            spawnSQLManager = new SpawnSQLManager();
-            getLogger().info("Registering More");
+        String connector = getConfig().getString(CFG_CONNECTOR, "YAML");
+        if ("MYSQL".equalsIgnoreCase(connector)) {
+            getLogger().info("Setting up MySQL storage...");
+            try {
+                new DatabaseManager(this);
+                new CreateTable(DatabaseConnection.getConnection());
+                homeSQLManager = new HomeSQLManager();
+                spawnSQLManager = new SpawnSQLManager();
+                getLogger().info("MySQL storage initialized.");
+            } catch (Exception e) {
+                getLogger().severe("Failed to initialize MySQL storage: " + e.getMessage());
+            }
+        } else {
+            getLogger().info("Using YAML storage.");
         }
     }
 
     private void homeRegistration() {
-        getLogger().info("Registering Homes");
-        File home = new File(this.getDataFolder(), "homes.yml");
-        registration(home);
+        getLogger().info("Registering Homes...");
+        File home = new File(getDataFolder(), "homes.yml");
+        ensureFile(home);
         homeYMLManager = new HomeYMLManager(home);
         homeManager = HomeManager.getInstance();
     }
 
-    private void spawnManager() {
-        getLogger().info("Registering Spawns");
-        File spawn = new File(this.getDataFolder(), "spawn.yml");
-        registration(spawn);
+    private void spawnRegistration() {
+        getLogger().info("Registering Spawns...");
+        File spawn = new File(getDataFolder(), "spawn.yml");
+        ensureFile(spawn);
         spawnYMLManager = new SpawnYMLManager(spawn);
         spawnManager = SpawnManager.getInstance();
     }
 
-    private void registration(File file) {
-        if (!this.getDataFolder().exists()) {
-            this.getDataFolder().mkdirs();
+    private void ensureFile(File file) {
+        if (!getDataFolder().exists() && !getDataFolder().mkdirs()) {
+            getLogger().severe("[HomePlugin] Cannot create plugin data folder. Disabling plugin...");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
         }
         if (!file.exists()) {
             try {
-                file.createNewFile();
+                if (!file.createNewFile()) {
+                    throw new IOException("createNewFile returned false");
+                }
             } catch (IOException e) {
-                getLogger().severe("[HomePlugin] Cannot create file exiting...");
+                getLogger().severe("[HomePlugin] Cannot create file " + file.getName() + " (" + e.getMessage() + "). Disabling plugin...");
                 Bukkit.getPluginManager().disablePlugin(this);
             }
         }
     }
 
     private void commandRegistration() {
-        getLogger().info("Registering Commands");
-        getCommand("home").setExecutor(new HomeCommand());
-        getCommand("sethome").setExecutor(new SetHomeCommand());
-        getCommand("delhome").setExecutor(new DeleteHomeCommand());
-        getCommand("setspawn").setExecutor(new SetSpawnCommand());
-        getCommand("delspawn").setExecutor(new DeleteSpawnCommand());
-        getCommand("renamehome").setExecutor(new RenameHomeCommand());
-        getCommand("relocatehome").setExecutor(new RelocateHomeCommand());
-        getCommand("spawn").setExecutor(new SpawnCommand());
-        getCommand("cache").setExecutor(new CacheCommand());
-        getCommand("homeadmin").setExecutor(new HomeAdminCommand());
-        getCommand("plugins").setExecutor(new PluginCommand());
-        getCommand("listhome").setExecutor(new ListHomeCommand());
-        getCommand("lang").setExecutor(new LangCommand(this));
-        getCommand("tpa").setExecutor(new TpaCommand());
-        getCommand("tpaccept").setExecutor(new TpAcceptCommand());
-        getCommand("tpdeny").setExecutor(new TpDenyCommand());
-        getCommand("back").setExecutor(new BackCommand());
-        if (getConfig().getBoolean("Config.Rtp.enabled")) getCommand("rtp").setExecutor(new RtpCommand());
+        getLogger().info("Registering commands...");
+
+        bind("home", new HomeCommand(), new HomeCompleter());
+        bind("sethome", new SetHomeCommand(), new SetHomeCompleter());
+        bind("delhome", new DeleteHomeCommand(), new DeleteHomeCompleter());
+        bind("renamehome", new RenameHomeCommand(), null);
+        bind("relocatehome", new RelocateHomeCommand(), null);
+        bind("listhome", new ListHomeCommand(), null);
+
+        bind("setspawn", new SetSpawnCommand(), null);
+        bind("delspawn", new DeleteSpawnCommand(), null);
+        bind("spawn", new SpawnCommand(), null);
+
+        bind("cache", new CacheCommand(), new CacheCompleter());
+        bind("homeadmin", new HomeAdminCommand(), new HomeAdminCompleter());
+        bind("plugins", new fr.fuzeblocks.homeplugin.commands.PluginCommand(), null);
+        bind("lang", new LangCommand(this), new LangTabCompleter(this));
+
+        bind("tpa", new TpaCommand(), new TpaCompleter());
+        bind("tpaccept", new TpAcceptCommand(), new TpAcceptCompleter());
+        bind("tpdeny", new TpDenyCommand(), new TpDenyCompleter());
+        bind("back", new BackCommand(), null);
+
+        if (getConfig().getBoolean(CFG_RTP_ENABLED, false)) {
+            bind("rtp", new RtpCommand(), null);
+        }
     }
 
     private void eventRegistration() {
-        getLogger().info("Registering Events");
+        getLogger().info("Registering events...");
         Bukkit.getPluginManager().registerEvents(new OnJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new OnMoveListener(), this);
         Bukkit.getPluginManager().registerEvents(new OnPlayerTakeDamageByAnotherPlayer(), this);
-        Bukkit.getPluginManager().registerEvents(new BackListener(),this);
+        Bukkit.getPluginManager().registerEvents(new BackListener(), this);
     }
 
-    private void completerManager() {
-        getLogger().info("Registering Completers");
-        getCommand("home").setTabCompleter(new HomeCompleter());
-        getCommand("delhome").setTabCompleter(new DeleteHomeCompleter());
-        getCommand("cache").setTabCompleter(new CacheCompleter());
-        getCommand("sethome").setTabCompleter(new SetHomeCompleter());
-        getCommand("homeadmin").setTabCompleter(new HomeAdminCompleter());
-        getCommand("lang").setTabCompleter(new LangTabCompleter(this));
-        getCommand("tpa").setTabCompleter(new TpaCompleter());
-        getCommand("tpaccept").setTabCompleter(new TpAcceptCompleter());
-        getCommand("tpdeny").setTabCompleter(new TpDenyCompleter());
+    private void completerRegistration() {
+        // Completers are attached in bind(...) above to avoid duplicate getCommand calls.
+        // Method kept for symmetry and future additions.
     }
 
     private void checkUpdate(int id) {
         new UpdateChecker(this, id).getVersion(version -> {
-            String local = this.getDescription().getVersion().replaceAll("[^0-9.]", "");
-            String remote = version.replaceAll("[^0-9.]", "");
+            try {
+                String local = safeDigits(this.getDescription().getVersion());
+                String remote = safeDigits(version);
 
-            int localVersion = Integer.parseInt(local.replace(".", ""));
-            int remoteVersion = Integer.parseInt(remote.replace(".", ""));
+                int localVersion = Integer.parseInt(local.replace(".", ""));
+                int remoteVersion = Integer.parseInt(remote.replace(".", ""));
 
-            if (remoteVersion > localVersion) {
-                getLogger().warning("There is a new update available.");
+                if (remoteVersion > localVersion) {
+                    getLogger().warning("A new update is available. Current: " + local + " | Latest: " + remote);
+                }
+            } catch (Exception e) {
+                getLogger().fine("Could not compare versions: " + e.getMessage());
             }
         });
     }
 
-    private void loadPlugins() {
-        if (checkPlugin() != null) {
-            getLogger().info(checkPlugin().getName() + "." + "loaded plugin !");
-        }
-    }
-
     private void initPluginFunc() {
-        if (Objects.nonNull(checkPlugin())) checkPlugin().initialize();
+        fr.fuzeblocks.homeplugin.plugin.HomePlugin plug = getFirstHomePlugin();
+        if (plug != null) {
+            try {
+                plug.initialize();
+                getLogger().info(plug.getName() + " plugin initialized.");
+            } catch (Exception e) {
+                getLogger().warning("Failed to initialize plugin extension: " + e.getMessage());
+            }
+        }
     }
 
     private void stopPluginFunc() {
-        if (Objects.nonNull(checkPlugin())) checkPlugin().stop();
-    }
-
-    private fr.fuzeblocks.homeplugin.plugin.HomePlugin checkPlugin() {
-        List<fr.fuzeblocks.homeplugin.plugin.HomePlugin> pluginManager = PluginManager.getInstance().getHomePlugin();
-        if (!pluginManager.isEmpty()) {
-            for (fr.fuzeblocks.homeplugin.plugin.HomePlugin homePlugin : pluginManager) {
-                return homePlugin;
+        fr.fuzeblocks.homeplugin.plugin.HomePlugin plug = getFirstHomePlugin();
+        if (plug != null) {
+            try {
+                plug.stop();
+            } catch (Exception e) {
+                getLogger().warning("Failed to stop plugin extension: " + e.getMessage());
             }
         }
-        return null;
+    }
+
+    private fr.fuzeblocks.homeplugin.plugin.HomePlugin getFirstHomePlugin() {
+        List<fr.fuzeblocks.homeplugin.plugin.HomePlugin> plugins = PluginManager.getInstance().getHomePlugin();
+        return (plugins == null || plugins.isEmpty()) ? null : plugins.get(0);
     }
 
     private void countPlugins() {
-        if (PluginManager.getInstance().getHomePlugin().isEmpty()) {
-            getLogger().warning("No plugins to load skipping...");
+        int count = PluginManager.getInstance().getHomePlugin().size();
+        if (count == 0) {
+            getLogger().warning("No plugin extensions detected.");
+        } else {
+            getLogger().info("Loaded " + count + " plugin extension(s).");
         }
     }
+
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            getLogger().info("Vault not found. Economy features disabled.");
             return false;
         }
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
+            getLogger().info("No Economy provider found. Economy features disabled.");
             return false;
         }
         economy = rsp.getProvider();
@@ -294,6 +373,27 @@ public final class HomePlugin extends JavaPlugin {
         metrics = new Metrics(this, 27702);
     }
 
+    // -------------------- Helpers --------------------
+
+    private void bind(String name, CommandExecutor exec, TabCompleter tab) {
+        PluginCommand c = getCommand(name);
+        if (c == null) {
+            getLogger().warning("Command '" + name + "' not found in plugin.yml. Skipping registration.");
+            return;
+        }
+        if (exec != null) c.setExecutor(exec);
+        if (tab != null) c.setTabCompleter(tab);
+    }
+
+    private static String safeDigits(String ver) {
+        return ver == null ? "0" : ver.replaceAll("[^0-9.]", "");
+    }
+
+    private static String blankToNull(String s) {
+        return (s == null || s.isBlank()) ? null : s;
+    }
+
+    // -------------------- Static getters --------------------
 
     /**
      * Gets home yml manager.
@@ -346,11 +446,8 @@ public final class HomePlugin extends JavaPlugin {
      * @return the registration type
      */
     public static SyncMethod getRegistrationType() {
-        if (configurationSection.getString("Config.Connector.TYPE").equalsIgnoreCase("MYSQL")) {
-            return SyncMethod.MYSQL;
-        } else {
-            return SyncMethod.YAML;
-        }
+        String type = configurationSection != null ? configurationSection.getString(CFG_CONNECTOR, "YAML") : "YAML";
+        return "MYSQL".equalsIgnoreCase(type) ? SyncMethod.MYSQL : SyncMethod.YAML;
     }
 
     /**
@@ -361,7 +458,6 @@ public final class HomePlugin extends JavaPlugin {
     public static ConfigurationSection getConfigurationSection() {
         return configurationSection;
     }
-
 
     /**
      * Gets jedis pooled.
@@ -429,5 +525,4 @@ public final class HomePlugin extends JavaPlugin {
     public static Metrics getMetrics() {
         return metrics;
     }
-
 }
