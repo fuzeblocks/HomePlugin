@@ -31,6 +31,7 @@ A lightweight, flexible home/spawn/teleport management plugin for Paper/Spigot s
 
 ---
 
+<a id="features"></a>
 ## ✨ Features
 
 | Category            | Highlights |
@@ -50,6 +51,7 @@ A lightweight, flexible home/spawn/teleport management plugin for Paper/Spigot s
 
 ---
 
+<a id="commands"></a>
 ## 🧾 Commands
 
 | Command | Description | Notes |
@@ -80,6 +82,7 @@ A lightweight, flexible home/spawn/teleport management plugin for Paper/Spigot s
 
 ---
 
+<a id="permissions"></a>
 ## 🔐 Permissions
 
 | Permission | Purpose | Default |
@@ -104,6 +107,7 @@ Dynamic limits: the plugin scans `homeplugin.limit.1` … `homeplugin.limit.100`
 
 ---
 
+<a id="placeholderapi-integration"></a>
 ## 🧩 PlaceholderAPI Integration
 
 Placeholders (via `HomePluginExpansion`):
@@ -124,12 +128,14 @@ Notes:
 
 ---
 
+<a id="vault-integration"></a>
 ## 💰 Vault Integration
 
 Economy features are handled by `EconomyManager` and use Vault to integrate with supported economy plugins. Configure costs per action (create home, teleport, TPA, RTP) in `config.yml`.
 
 ---
 
+<a id="languages"></a>
 ## 🌍 Languages
 
 Configured via: `Config.Language`  
@@ -142,6 +148,7 @@ Language loading uses an enum (`Language.valueOf(...)`) and falls back to FRENCH
 
 ---
 
+<a id="installation"></a>
 ## ⬇️ Installation
 
 1. Download: place the plugin JAR into your server’s `plugins/` folder.  
@@ -157,6 +164,7 @@ Quick check:
 
 ---
 
+<a id="configuration"></a>
 ## ⚙️ Configuration
 
 Example structure (see `src/main/resources/config.yml`):
@@ -250,6 +258,7 @@ Key behaviors:
 
 ---
 
+<a id="architecture--performance"></a>
 ## 🧱 Architecture & Performance
 
 - Unified managers with storage abstraction:
@@ -264,6 +273,7 @@ Key behaviors:
 
 ---
 
+<a id="developer--extension-api"></a>
 ## 🧑‍💻 Developer / Extension API
 
 - Events, managers, and language tools with documented APIs
@@ -304,6 +314,7 @@ dependencies { implementation("com.github.fuzeblocks:HomePlugin:Tag") }
 
 ---
 
+<a id="compatibility"></a>
 ## ✅ Compatibility
 
 - Declared `api-version: 1.14` (plugin.yml)
@@ -313,6 +324,7 @@ dependencies { implementation("com.github.fuzeblocks:HomePlugin:Tag") }
 
 ---
 
+<a id="roadmap"></a>
 ## 🗺️ Roadmap
 
 | Feature                           | Status     |
@@ -331,6 +343,7 @@ Suggestions welcome via Discussions or Discord.
 
 ---
 
+<a id="support--contributions"></a>
 ## 🤝 Support & Contributions
 
 - Issues: Use GitHub Issues for bugs/feature requests
@@ -345,6 +358,7 @@ Contribution flow:
 
 ---
 
+<a id="license"></a>
 ## 📄 License
 
 [Apache‑2.0](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
