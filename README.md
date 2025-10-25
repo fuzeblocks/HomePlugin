@@ -142,7 +142,7 @@ Configured via: `Config.Language`
 Built‑in:
 - FRENCH
 - ENGLISH
-- SPANISH
+- SPANISH (Henri Topper)
 
 Language loading uses an enum (`Language.valueOf(...)`) and falls back to FRENCH if invalid. Customize by editing the shipped YAML files; use `/lang update`, `/lang merge`, and `/lang set` to manage versions and switch locales.
 
