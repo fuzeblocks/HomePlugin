@@ -2,8 +2,8 @@ Language:
   Teleportation-in-progress: "&e&lTéléportation dans :"
   Start-of-teleportation: "&6Début de la téléportation vers le home :"
   Start-of-teleportation-for-spawn: "&6Début de la téléportation vers le spawn."
-  Teleport-to-home: "&aVous vous êtes téléporté à votre home :"
-  Teleport-to-spawn: "&aVous vous êtes téléporté au spawn."
+  Teleport-to-home: "&aVous avez été téléporté à votre home :"
+  Teleport-to-spawn: "&aVous avez été téléporté au spawn."
   Teleport-canceled: "&cTéléportation annulée car vous avez bougé."
   A-teleport-is-already-in-progress: "&cUne téléportation est déjà en cours !"
   Home-Already-Exists: "&cVous avez déjà un home avec ce nom !"
@@ -20,9 +20,9 @@ Spawn:
   SetSpawn-permission-deny-message: "&cVous n'avez pas la permission de définir le spawn !"
   Spawn-usage-message: "&cUtilisation : /spawn"
   Spawn-already-exists: "&cLe spawn existe déjà !"
-  Spawn-has-been-set: "&aLe spawn a été défini en X : %x% Y : %y% Z : %z%"
+  Spawn-has-been-set: "&aLe spawn a été défini en X: %x% Y: %y% Z: %z%"
   No-spawn-defined: "&cAucun spawn n'est défini !"
-  Spawn-deleted: "&cLe spawn a été supprimé !"
+  Spawn-deleted: "&aLe spawn a été supprimé !"
 
 Home:
   Home-added: "&aHome ajouté !"
@@ -33,15 +33,13 @@ Home:
   Home-limite-permission-for-bypass: "HomePlugin.home.bypass"
   Home-limite-message: "&c&lVous n'avez pas la permission d'ajouter un autre home !"
   Home-usage-message: "&cUtilisation : /home <nom-du-home>"
-  SetHome-usage-message: "&cUtilisation : /sethome <nom-du-home>"
-  DelHome-usage-message: "&cUtilisation : /delhome <nom-du-home>"
-  home-location-format: "&6X: %.1f, Y: %.1f, Z: %.1f, Monde: %s"
+  Home-location-format: "&6X: %.1f, Y: %.1f, Z: %.1f, Monde: %s"
   SetHome-permission-deny-message: "&cVous n'avez pas la permission de poser un home !"
-  Invalid-height: "&cTu ne peux pas poser de home à cette hauteur."
-  Portal-location: "&cTu ne peux pas poser de home sur un portail."
-  End-disabled: "&cTu ne peux pas poser de home dans l'End."
-  Floating-platform: "&cTu ne peux pas poser de home sur une plateforme flottante."
-  Water-location: "&cTu ne peux pas poser de home dans l'eau."
+  Invalid-height: "&cVous ne pouvez pas poser de home à cette hauteur."
+  Portal-location: "&cVous ne pouvez pas poser de home sur un portail."
+  End-disabled: "&cVous ne pouvez pas poser de home dans l'End."
+  Floating-platform: "&cVous ne pouvez pas poser de home sur une plateforme flottante."
+  Water-location: "&cVous ne pouvez pas poser de home dans l'eau."
 
   Home-item-displayname: "({homeName}) Home"
   Home-item-lore-teleport: "&aCliquez pour vous téléporter à ce home."
@@ -49,17 +47,22 @@ Home:
   Home-info-count: "&eVous avez &6%used%&e home(s), limite : &6%max%, restant : &6%remaining%"
   Home-gui-title: "&eHomes de %player%"
   Home-renamed: "&aLe home &e{old_home} &aa été renommé en &e{new_home}&a !"
-  Usage-edit-home: "&cUtilisation : /edithome <ancien_nom> <nouveau_nom>"
   Home-relocated: "&aLe home &e{home}&a a été déplacé à votre position actuelle !"
-  Usage-relocate-home: "&cUtilisation : /relocatehome <nom-du-home>"
-
+  Relocate-management-title: "&eGestion du déplacement des homes"
+  Relocate-usage-icon: "&7[?]"
+  Relocate-click-suggest: "&7Cliquez pour insérer la commande dans votre chat."
+  Relocate-view-description: "&7Déplace un home existant vers votre position actuelle et/ou le renomme."
+  Rename-management-title: "&eGestion du renommage des homes"
+  Rename-usage-icon: "&7[✎]"
+  Rename-click-suggest: "&7Cliquez pour insérer la commande de renommage dans votre chat."
+  Rename-view-description: "&7Renomme un home existant sans changer sa position."
 
 List:
   Home-count: "&bVous avez &6%count%&b home(s) enregistré(s)."
   Home-detail-header: "&aDétails du home : &l%home%"
   Home-location: "&9Position : &6X: %x% Y: %y% Z: %z% Monde: %world%"
   Teleport-label: "&7Téléportation :"
-  Teleport-click: " [Clique ici]"
+  Teleport-click: " [Cliquez ici]"
   Teleport-hover: "&eCliquez pour vous téléporter."
   Manage-label: "&7Gérer ce home :"
   Relocate-click: " [Déplacer]"
@@ -76,12 +79,11 @@ List:
   List-relocate-button: "&6&l[ʀᴇʟᴏᴄᴀʟɪsᴇʀ]"
   List-relocate-hover: "&7Cliquez pour relocaliser &b{home}\n&7à votre position actuelle"
   List-delete-button: "&c&l[sᴜᴘᴘʀɪᴍᴇʀ]"
-  List-delete-hover: "&7Cliquez pour supprimer &b{home}\n&e&l⚠ Cette action ne peut pas être annulée!"
+  List-delete-hover: "&7Cliquez pour supprimer &b{home}\n&e&l⚠ Cette action ne peut pas être annulée !"
   List-world-label: "&8({world})"
 
-
 Cache:
-  Cache-cleared: "&c&lLe cache a été vidé !"
+  Cache-cleared: "&a&lLe cache a été vidé !"
   Cache-player-cleared: "&aLe cache pour %player% a été vidé !"
   Have-no-cache: "&cLe joueur n'a pas de données en cache."
   Cache-home-name: "&4Nom du home en cache : %home%"
@@ -90,31 +92,23 @@ Cache:
   Cache-home-count: "&6%count% home(s)"
   Cache-view-usage-command: "&cUtilisation : /cache view <joueur>"
   Cache-usage-command: "&cUtilisation : /cache <clearall|view> <joueur>"
-  # Usage Message
+
   Cache-management-title: "&6&lGestion du Cache"
-  Cache-view-description: "Voir les homes en cache d'un joueur"
-  Cache-clearall-description: "Vider tous les caches des joueurs"
-  Cache-clear-player-description: "Vider le cache d'un joueur spécifique"
+  Cache-view-description: "&7Voir les homes en cache d'un joueur"
+  Cache-clearall-description: "&7Vider tous les caches des joueurs"
+  Cache-clear-player-description: "&7Vider le cache d'un joueur spécifique"
   Cache-click-suggest: "&7Cliquez pour suggérer la commande"
-  Cache-clearall-warning: "&c&l⚠ ATTENTION: Vide TOUS les caches des joueurs!"
-
-  # Success Messages
-  Cache-all-cleared-success: "&a&l✓ &aTous les caches des joueurs ont été vidés avec succès!"
+  Cache-clearall-warning: "&c&l⚠ ATTENTION: Vide TOUS les caches des joueurs !"
+  Cache-all-cleared-success: "&a&l✓ &aTous les caches des joueurs ont été vidés avec succès !"
   Cache-player-cleared-success: "&a&l✓ &aCache vidé pour le joueur &b&l{player}"
-
-  # View Cache
   Cache-player-empty: "&c&l✗ &c{player} n'a aucun home en cache."
   Cache-player-homes-title: "&6&l         Homes en Cache de {player}"
   Cache-total-label: "&7Total: &b&l{count}"
-
-  # Interactive Home
   Cache-teleport-button: "&e&l[ᴛᴇʟᴇᴘᴏʀᴛ]"
   Cache-teleport-hover: "&7Cliquez pour vous téléporter à cet emplacement"
   Cache-coord-label-x: "&8X:"
   Cache-coord-label-y: "&8Y:"
   Cache-coord-label-z: "&8Z:"
-
-  # Icons (compatibles 1.14)
   Cache-home-icon: "&e■"
   Cache-location-icon: "&7►"
   Cache-world-label: "&8({world})"
@@ -135,7 +129,6 @@ HomeAdmin:
   Home-added: "&aLe home &b%home% &aa été ajouté pour &e%player%&a."
   Home-already-exists: "&cLe joueur &e%player% &ca déjà un home nommé &b%home%&c."
   Teleported-to-home: "&aVous avez été téléporté au home &b%home% &a appartenant au joueur &e%player%&a."
-
 
 PluginCommand:
   Plugin-list-header: "&l§aListe des plugins chargés :"
@@ -180,18 +173,15 @@ TpaCommand:
   Tpa-denied: "&cVous avez refusé la demande de téléportation de %player%."
   Tpa-accepted-by-target: "&a%player% a accepté votre demande de téléportation."
   Tpa-denied-by-target: "&c%player% a refusé votre demande de téléportation."
-  Tpa-request-exists: "&eUne demande de téléportation existe déjà. Veuillez attendre qu'elle expire ou que le joueur l'accepter/décliner."
+  Tpa-request-exists: "&eUne demande de téléportation existe déjà. Veuillez attendre qu'elle expire ou que le joueur l'accepte/décline."
 
 Rtp:
   Teleportation-in-progress: "&eTéléportation aléatoire en cours..."
   Teleport-success: "&aTéléportation aléatoire réussie !"
   Teleport-failed: "&cImpossible de trouver un endroit sûr pour téléporter."
   Cooldown-message: "&cVous devez attendre %seconds% secondes avant de refaire un RTP."
-
 Back:
   No-previous-location: "&cAucune position précédente trouvée."
   Previous-location-invalid: "&cVotre position précédente n'est plus disponible."
   Teleported: "&aVous avez été téléporté à votre position précédente."
   Teleport-failed: "&cLa téléportation a échoué."
-
-

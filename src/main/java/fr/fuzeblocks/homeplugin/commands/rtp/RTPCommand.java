@@ -20,7 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * Teleports the player to a random safe location within a defined radius.
  */
 public class RTPCommand implements CommandExecutor {
-    private final static String CONFIG_RTP = "Config.Rtp.";
+    private final static String CONFIG_RTP = "Config.RTP.";
     private final static String LANGUAGE = "Language.";
     private final static String MESSAGE_RTP = "Rtp.";
     private final static int COOLDOWN_SECONDS = Math.max(0, HomePlugin.getConfigurationSection().getInt(CONFIG_RTP + "Cooldown-Seconds", 300));

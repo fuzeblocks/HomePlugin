@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
  */
 public class HomePermissionManager {
 
-    private static final int DEFAULT_LIMIT = HomePlugin.getConfigurationSection().getInt("Config.Home.DefaultHomeLimit");
+    private static final int DEFAULT_LIMIT = HomePlugin.getConfigurationSection().getInt("Config.Home.Default-Home-Limit");
 
     /**
      * Gets max homes.

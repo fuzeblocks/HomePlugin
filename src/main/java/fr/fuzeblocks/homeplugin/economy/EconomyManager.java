@@ -53,7 +53,7 @@ public class EconomyManager {
      * @return home creation cost
      */
     public static double getHomeCreationCost() {
-        return getCost("HomeCreationCost", 0.0);
+        return getCost("Home-Creation-Price", 0.0);
     }
 
     /**
@@ -74,7 +74,7 @@ public class EconomyManager {
      * @return RTP price
      */
     public static double getRtpPrice() {
-        return getCost("Rtp-Price", 0.0);
+        return getCost("RTP-Price", 0.0);
     }
 
     /**

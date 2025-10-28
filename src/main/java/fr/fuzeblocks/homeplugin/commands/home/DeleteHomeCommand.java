@@ -4,6 +4,11 @@ import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.event.OnHomeDeletedEvent;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.language.LanguageManager;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -37,7 +42,7 @@ public class DeleteHomeCommand implements CommandExecutor {
         }
 
         if (args.length != 1) {
-            player.sendMessage(languageManager.getStringWithColor(HOME + "DelHome-usage-message"));
+            sendUsage(player);
             return false;
         }
 
@@ -65,5 +70,51 @@ public class DeleteHomeCommand implements CommandExecutor {
         }
 
         return false;
+    }
+
+    private void sendUsage(Player player) {
+        player.sendMessage(ChatColor.DARK_GRAY + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+
+        // Title
+        String title = translate(HOME + "DelHome-management-title");
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "         " + title));
+        player.sendMessage("");
+
+        // Get usage icon from language file
+        String usageIcon = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', translate(HOME + "DelHome-usage-icon")));
+
+        // /delhome <home-name> - clickable
+        TextComponent viewCmd = new TextComponent("  " + usageIcon + " ");
+        viewCmd.setColor(ChatColor.DARK_GRAY);
+
+        TextComponent viewText = new TextComponent("/delhome <home-name>");
+        viewText.setColor(ChatColor.YELLOW);
+        viewText.setBold(false);
+        viewText.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/delhome <home-name>"));
+
+        String viewHover = translate(HOME + "DelHome-click-suggest");
+        viewText.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                new ComponentBuilder(ChatColor.stripColor(viewHover))
+                        .color(ChatColor.GRAY).create()));
+
+        String viewDesc = translate(HOME + "DelHome-view-description");
+        TextComponent viewDescComp = new TextComponent(" - " + ChatColor.stripColor(viewDesc));
+        viewDescComp.setColor(ChatColor.GRAY);
+
+        viewCmd.addExtra(viewText);
+        viewCmd.addExtra(viewDescComp);
+        player.spigot().sendMessage(viewCmd);
+        player.sendMessage("");
+        player.sendMessage(ChatColor.DARK_GRAY + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+    }
+
+    /**
+     * Translates a language key to a colored string.
+     *
+     * @param path The language file path
+     * @return The translated and colored string
+     */
+    private String translate(String path) {
+        return HomePlugin.getLanguageManager().getStringWithColor(path);
     }
 }

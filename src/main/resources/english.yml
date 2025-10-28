@@ -1,5 +1,4 @@
 Language:
-
   Teleportation-in-progress: "&e&lTeleporting in:"
   Start-of-teleportation: "&6Starting teleportation to home:"
   Start-of-teleportation-for-spawn: "&6Starting teleportation to spawn."
@@ -67,7 +66,6 @@ List:
   Delete-click: " [Delete]"
   Delete-hover: "&cClick to delete this home."
 
-  # New for ListHomeCommand
   List-header-title: "&6&lYour Homes"
   List-total-label: "&7Total: &b&l{count}"
   List-home-icon: "&e■"
@@ -90,31 +88,27 @@ Cache:
   Cache-home-count: "&6%count% home(s)"
   Cache-view-usage-command: "&cUsage: /cache view <player>"
   Cache-usage-command: "&cUsage: /cache <clearall|view> <player>"
-  # Usage Message
+
   Cache-management-title: "&6&lCache Management"
-  Cache-view-description: "View player's cached homes"
-  Cache-clearall-description: "Clear all player caches"
-  Cache-clear-player-description: "Clear specific player's cache"
+  Cache-view-description: "&7View player's cached homes"
+  Cache-clearall-description: "&7Clear all player caches"
+  Cache-clear-player-description: "&7Clear specific player's cache"
   Cache-click-suggest: "&7Click to suggest command"
   Cache-clearall-warning: "&c&l⚠ WARNING: Clears ALL player caches!"
 
-  # Success Messages
   Cache-all-cleared-success: "&a&l✓ &aAll player caches have been cleared successfully!"
   Cache-player-cleared-success: "&a&l✓ &aCache cleared for player &b&l{player}"
 
-  # View Cache
   Cache-player-empty: "&c&l✗ &c{player} has no cached homes."
   Cache-player-homes-title: "&6&l         {player}'s Cached Homes"
   Cache-total-label: "&7Total: &b&l{count}"
 
-  # Interactive Home
   Cache-teleport-button: "&e&l[ᴛᴇʟᴇᴘᴏʀᴛ]"
   Cache-teleport-hover: "&7Click to teleport to this location"
   Cache-coord-label-x: "&8X:"
   Cache-coord-label-y: "&8Y:"
   Cache-coord-label-z: "&8Z:"
 
-  # Icons (1.14 compatible)
   Cache-home-icon: "&e■"
   Cache-location-icon: "&7►"
   Cache-world-label: "&8({world})"
@@ -192,7 +186,3 @@ Back:
   Previous-location-invalid: "&cYour previous location is no longer available."
   Teleported: "&aTeleported back to your previous location."
   Teleport-failed: "&cTeleport failed."
-
-
-
-

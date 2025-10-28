@@ -5,6 +5,11 @@ import fr.fuzeblocks.homeplugin.economy.EconomyManager;
 import fr.fuzeblocks.homeplugin.event.OnHomeCreatedEvent;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.home.HomePermissionManager;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -40,35 +45,58 @@ public class SetHomeCommand implements CommandExecutor {
         }
 
         if (args.length == 1 && args[0].equalsIgnoreCase("info")) {
-            return showHomeInfo(player);
+            player.sendMessage(translate(HOME + "Home-location-format"));
+            return false;
         }
 
         if (args.length == 1) {
-            return createHome(player, args[0]);
+            String homeName = args[0];
+            return createHome(player, homeName);
         }
 
-        player.sendMessage(translate(HOME + "SetHome-usage-message"));
+
+        sendUsage(player);
         return false;
     }
 
-    /**
-     * Shows home usage information to the player.
-     *
-     * @param player The player to show info to
-     * @return true always
-     */
-    private boolean showHomeInfo(Player player) {
-        HomeManager homeManager = HomePlugin.getHomeManager();
-        int used = homeManager.getHomeNumber(player);
-        int max = HomePermissionManager.getMaxHomes(player);
-        int remaining = Math.max(0, max - used);
 
-        player.sendMessage(translate(HOME + "Home-info-count")
-                .replace("%used%", String.valueOf(used))
-                .replace("%max%", String.valueOf(max))
-                .replace("%remaining%", String.valueOf(remaining)));
-        return true;
+
+    private void sendUsage(Player player) {
+        player.sendMessage(ChatColor.DARK_GRAY + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+
+        // Title
+        String title = translate(HOME + "SetHome-management-title");
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "         " + title));
+        player.sendMessage("");
+
+        // Get usage icon from language file
+        String usageIcon = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', translate(HOME + "SetHome-usage-icon")));
+
+        // /sethome <home-name> - clickable
+        TextComponent viewCmd = new TextComponent("  " + usageIcon + " ");
+        viewCmd.setColor(ChatColor.DARK_GRAY);
+
+        TextComponent viewText = new TextComponent("/sethome <home-name>");
+        viewText.setColor(ChatColor.YELLOW);
+        viewText.setBold(false);
+        viewText.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/sethome <home-name>"));
+
+        String viewHover = translate(HOME + "SetHome-click-suggest");
+        viewText.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                new ComponentBuilder(ChatColor.stripColor(viewHover))
+                        .color(ChatColor.GRAY).create()));
+
+        String viewDesc = translate(HOME + "SetHome-view-description");
+        TextComponent viewDescComp = new TextComponent(" - " + ChatColor.stripColor(viewDesc));
+        viewDescComp.setColor(ChatColor.GRAY);
+
+        viewCmd.addExtra(viewText);
+        viewCmd.addExtra(viewDescComp);
+        player.spigot().sendMessage(viewCmd);
+        player.sendMessage("");
+        player.sendMessage(ChatColor.DARK_GRAY + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
     }
+
 
     /**
      * Creates a new home for the player.
@@ -94,7 +122,7 @@ public class SetHomeCommand implements CommandExecutor {
             return false;
         }
 
-        if (HomePlugin.getConfigurationSection().getBoolean("Config.Home.PreventUnfairLocation", true)) {
+        if (HomePlugin.getConfigurationSection().getBoolean("Config.Home.Prevent-Unfair-Location", true)) {
             if (!isFair(player)) {
                 return false;
             }
@@ -177,7 +205,7 @@ public class SetHomeCommand implements CommandExecutor {
 
         List<String> disabledWorlds = HomePlugin.getConfigurationSection() == null
                 ? List.of()
-                : HomePlugin.getConfigurationSection().getStringList("Config.Home.DisabledWorlds");
+                : HomePlugin.getConfigurationSection().getStringList("Config.Home.Disabled-Worlds");
 
         if (!disabledWorlds.isEmpty() &&
                 disabledWorlds.stream()

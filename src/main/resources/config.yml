@@ -61,7 +61,7 @@ Config:
   # ----------------------------------------
   # RTP (Random Teleport)
   # ----------------------------------------
-  Rtp:
+  RTP:
     Cooldown-Seconds: 1000  # seconds
     Max-Radius: 200
     Enabled: true
@@ -75,4 +75,4 @@ Config:
     Home-Creation-Price: 100.0
     Home-Teleport-Price: 50.0
     Tpa-Request-Price: 20.0
-    Rtp-Price: 150.0
+    RTP-Price: 150.0

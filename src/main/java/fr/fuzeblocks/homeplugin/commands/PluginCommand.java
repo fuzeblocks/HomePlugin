@@ -78,6 +78,7 @@ public class PluginCommand implements CommandExecutor {
                 .replace("%count%", String.valueOf(plugins.size())));
     }
 
+
     /**
      * Translates a language key to colored text.
      *

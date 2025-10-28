@@ -1,4 +1,4 @@
-Language: 
+Language:
   Teleportation-in-progress: "&e&lTeletransportación en:"
   Start-of-teleportation: "&6Comenzando la teletransportación al home:"
   Start-of-teleportation-for-spawn: "&6Comenzando la teletransportación al spawn."
@@ -66,7 +66,6 @@ List:
   Delete-click: " [Eliminar]"
   Delete-hover: "&cHaz clic para eliminar este home."
 
-  # Nuevo para ListHomeCommand
   List-header-title: "&6&lTus Homes"
   List-total-label: "&7Total: &b&l{count}"
   List-home-icon: "&e■"
@@ -90,7 +89,6 @@ Cache:
   Cache-view-usage-command: "&cUso: /cache view <jugador>"
   Cache-usage-command: "&cUso: /cache <clearall|view> <jugador>"
 
-  # Usage Message
   Cache-management-title: "&6&lGestión de Caché"
   Cache-view-description: "Ver los homes en caché de un jugador"
   Cache-clearall-description: "Limpiar todos los cachés de jugadores"
@@ -98,23 +96,19 @@ Cache:
   Cache-click-suggest: "&7Haz clic para sugerir el comando"
   Cache-clearall-warning: "&c&l⚠ ADVERTENCIA: ¡Limpia TODOS los cachés de jugadores!"
 
-  # Success Messages
   Cache-all-cleared-success: "&a&l✓ &a¡Todos los cachés de jugadores se han limpiado con éxito!"
   Cache-player-cleared-success: "&a&l✓ &aCaché limpiado para el jugador &b&l{player}"
 
-  # View Cache
   Cache-player-empty: "&c&l✗ &c{player} no tiene homes en caché."
   Cache-player-homes-title: "&6&l         Homes en Caché de {player}"
   Cache-total-label: "&7Total: &b&l{count}"
 
-  # Interactive Home
   Cache-teleport-button: "&e&l[ᴛᴇʟᴇᴘᴏʀᴛᴀʀ]"
   Cache-teleport-hover: "&7Haz clic para teletransportarte a esta ubicación"
   Cache-coord-label-x: "&8X:"
   Cache-coord-label-y: "&8Y:"
   Cache-coord-label-z: "&8Z:"
 
-  # Iconos (compatibles con 1.14)
   Cache-home-icon: "&e■"
   Cache-location-icon: "&7►"
   Cache-world-label: "&8({world})"
@@ -192,4 +186,3 @@ Back:
   Previous-location-invalid: "&cTu ubicación anterior ya no está disponible."
   Teleported: "&aHas sido teletransportado a tu ubicación anterior."
   Teleport-failed: "&cEl teletransporte ha fallado."
-
