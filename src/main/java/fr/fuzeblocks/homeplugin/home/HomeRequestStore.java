@@ -27,6 +27,14 @@ public interface HomeRequestStore {
     void removeHome(UUID playerId, String homeName);
 
     /**
+     * Relocate home.
+     *
+     * @param playerId the player id
+     * @param homeName the home name
+     * @param newLocation the new location
+     */
+    void relocateHome(UUID playerId, String homeName,Location newLocation);
+    /**
      * Gets homes.
      *
      * @param playerId the player id

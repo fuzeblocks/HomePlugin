@@ -55,12 +55,11 @@
                 </configuration>
             </plugin>
 
-            <!-- Keep older Shade so you don't need Maven 3.6.3+. We only relocate bStats. -->
+        
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.4</version>
-                <!-- IMPORTANT: override ASM to a version that supports Java 16+ class files -->
                 <dependencies>
                     <dependency>
                         <groupId>org.ow2.asm</groupId>

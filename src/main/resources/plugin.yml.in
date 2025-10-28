@@ -8,6 +8,7 @@ description: A lightweight and flexible home/spawn management plugin with admin 
 website: https://modrinth.com/plugin/homeplugin
 softdepend:
   - PlaceholderAPI
+dependencies:
   - Vault
 
 commands:

@@ -2,6 +2,14 @@ package fr.fuzeblocks.homeplugin;
 
 import fr.fuzeblocks.homeplugin.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.commands.*;
+import fr.fuzeblocks.homeplugin.commands.home.*;
+import fr.fuzeblocks.homeplugin.commands.rtp.RTPCommand;
+import fr.fuzeblocks.homeplugin.commands.spawn.DeleteSpawnCommand;
+import fr.fuzeblocks.homeplugin.commands.spawn.SetSpawnCommand;
+import fr.fuzeblocks.homeplugin.commands.spawn.SpawnCommand;
+import fr.fuzeblocks.homeplugin.commands.tpa.TPAAcceptCommand;
+import fr.fuzeblocks.homeplugin.commands.tpa.TPACommand;
+import fr.fuzeblocks.homeplugin.commands.tpa.TPADenyCommand;
 import fr.fuzeblocks.homeplugin.completers.*;
 import fr.fuzeblocks.homeplugin.database.CreateTable;
 import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
@@ -33,7 +41,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jspecify.annotations.NonNull;
 import redis.clients.jedis.DefaultJedisClientConfig;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisClientConfig;
@@ -263,8 +271,8 @@ public final class HomePlugin extends JavaPlugin {
         bind("home", new HomeCommand(), new HomeCompleter());
         bind("sethome", new SetHomeCommand(), new SetHomeCompleter());
         bind("delhome", new DeleteHomeCommand(), new DeleteHomeCompleter());
-        bind("renamehome", new RenameHomeCommand(), null);
-        bind("relocatehome", new RelocateHomeCommand(), null);
+        bind("renamehome", new RenameHomeCommand(), new RenameHomeCompleter());
+        bind("relocatehome", new RelocateHomeCommand(), new RelocateHomeCompleter());
         bind("listhome", new ListHomeCommand(), null);
 
         bind("setspawn", new SetSpawnCommand(), null);
@@ -276,13 +284,13 @@ public final class HomePlugin extends JavaPlugin {
         bind("plugins", new fr.fuzeblocks.homeplugin.commands.PluginCommand(), null);
         bind("lang", new LangCommand(this), new LangTabCompleter(this));
 
-        bind("tpa", new TpaCommand(), new TpaCompleter());
-        bind("tpaccept", new TpAcceptCommand(), new TpAcceptCompleter());
-        bind("tpdeny", new TpDenyCommand(), new TpDenyCompleter());
+        bind("tpa", new TPACommand(), new TpaCompleter());
+        bind("tpaccept", new TPAAcceptCommand(), new TpAcceptCompleter());
+        bind("tpdeny", new TPADenyCommand(), new TpDenyCompleter());
         bind("back", new BackCommand(), null);
 
         if (getConfig().getBoolean(CFG_RTP_ENABLED, false)) {
-            bind("rtp", new RtpCommand(), null);
+            bind("rtp", new RTPCommand(), null);
         }
     }
 

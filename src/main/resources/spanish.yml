@@ -53,18 +53,31 @@ Home:
   Home-relocated: "&aEl home &e{home}&a ha sido trasladado a tu posición actual!"
   Usage-relocate-home: "&cUso: /relocatehome <nombre_del_home>"
 
-  List:
-    Home-count: "&bTienes &6%count%&b home(s) registrados."
-    Home-detail-header: "&aDetalles del home: &l%home%"
-    Home-location: "&9Ubicación: &6X: %x% Y: %y% Z: %z% Mundo: %world%"
-    Teleport-label: "&7Teletransportación:"
-    Teleport-click: " [Haz clic aquí]"
-    Teleport-hover: "&eHaz clic para teletransportarte."
-    Manage-label: "&7Gestionar este home:"
-    Relocate-click: " [Reubicar]"
-    Relocate-hover: "&eHaz clic para redefinir la posición de este home."
-    Delete-click: " [Eliminar]"
-    Delete-hover: "&cHaz clic para eliminar este home."
+List:
+  Home-count: "&bTienes &6%count%&b home(s) registrado(s)."
+  Home-detail-header: "&aDetalles del home: &l%home%"
+  Home-location: "&9Posición: &6X: %x% Y: %y% Z: %z% Mundo: %world%"
+  Teleport-label: "&7Teletransportación:"
+  Teleport-click: " [Haz clic aquí]"
+  Teleport-hover: "&eHaz clic para teletransportarte."
+  Manage-label: "&7Gestionar este home:"
+  Relocate-click: " [Reubicar]"
+  Relocate-hover: "&eHaz clic para redefinir la posición de este home."
+  Delete-click: " [Eliminar]"
+  Delete-hover: "&cHaz clic para eliminar este home."
+
+  # Nuevo para ListHomeCommand
+  List-header-title: "&6&lTus Homes"
+  List-total-label: "&7Total: &b&l{count}"
+  List-home-icon: "&e■"
+  List-location-icon: "&7►"
+  List-teleport-button: "&e&l[ᴛᴇʟᴇᴘᴏʀᴛᴀʀ]"
+  List-teleport-hover: "&7Haz clic para teletransportarte a &b{home}"
+  List-relocate-button: "&6&l[ʀᴇᴜʙɪᴄᴀʀ]"
+  List-relocate-hover: "&7Haz clic para reubicar &b{home}\n&7a tu ubicación actual"
+  List-delete-button: "&c&l[ᴇʟɪᴍɪɴᴀʀ]"
+  List-delete-hover: "&7Haz clic para eliminar &b{home}\n&e&l⚠ ¡Esta acción no se puede deshacer!"
+  List-world-label: "&8({world})"
 
 Cache:
   Cache-cleared: "&c&l¡La caché ha sido vaciada!"
@@ -76,6 +89,36 @@ Cache:
   Cache-home-count: "&6%count% home(s)"
   Cache-view-usage-command: "&cUso: /cache view <jugador>"
   Cache-usage-command: "&cUso: /cache <clearall|view> <jugador>"
+
+  # Usage Message
+  Cache-management-title: "&6&lGestión de Caché"
+  Cache-view-description: "Ver los homes en caché de un jugador"
+  Cache-clearall-description: "Limpiar todos los cachés de jugadores"
+  Cache-clear-player-description: "Limpiar el caché de un jugador específico"
+  Cache-click-suggest: "&7Haz clic para sugerir el comando"
+  Cache-clearall-warning: "&c&l⚠ ADVERTENCIA: ¡Limpia TODOS los cachés de jugadores!"
+
+  # Success Messages
+  Cache-all-cleared-success: "&a&l✓ &a¡Todos los cachés de jugadores se han limpiado con éxito!"
+  Cache-player-cleared-success: "&a&l✓ &aCaché limpiado para el jugador &b&l{player}"
+
+  # View Cache
+  Cache-player-empty: "&c&l✗ &c{player} no tiene homes en caché."
+  Cache-player-homes-title: "&6&l         Homes en Caché de {player}"
+  Cache-total-label: "&7Total: &b&l{count}"
+
+  # Interactive Home
+  Cache-teleport-button: "&e&l[ᴛᴇʟᴇᴘᴏʀᴛᴀʀ]"
+  Cache-teleport-hover: "&7Haz clic para teletransportarte a esta ubicación"
+  Cache-coord-label-x: "&8X:"
+  Cache-coord-label-y: "&8Y:"
+  Cache-coord-label-z: "&8Z:"
+
+  # Iconos (compatibles con 1.14)
+  Cache-home-icon: "&e■"
+  Cache-location-icon: "&7►"
+  Cache-world-label: "&8({world})"
+  Cache-usage-icon: "&8▸"
 
 HomeAdmin:
   HomeAdmin-usage-message: "&cUso: /homeadmin <list|addhome|deletehome|tphome> <jugador> [home]"
