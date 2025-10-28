@@ -65,7 +65,7 @@ public final class HomePlugin extends JavaPlugin {
     private static final String CFG_REDIS_PORT = CFG_ROOT + "Redis.PORT";
     private static final String CFG_REDIS_SSL = CFG_ROOT + "Redis.SSL";
     private static final String CFG_REDIS_PASSWORD = CFG_ROOT + "Redis.PASSWORD";
-    private static final String CFG_RTP_ENABLED = CFG_ROOT + "RTP.enabled";
+    private static final String CFG_RTP_ENABLED = CFG_ROOT + "RTP.Enabled";
 
     // Managers and services
     private static HomeYMLManager homeYMLManager;
