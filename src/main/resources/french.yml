@@ -33,6 +33,7 @@ Home:
   Home-limite-permission-for-bypass: "HomePlugin.home.bypass"
   Home-limite-message: "&c&lVous n'avez pas la permission d'ajouter un autre home !"
   Home-usage-message: "&cUtilisation : /home <nom-du-home>"
+  SetHome-usage-message: "&cUtilisation : /sethome <nom-du-home>"
   Home-location-format: "&6X: %.1f, Y: %.1f, Z: %.1f, Monde: %s"
   SetHome-permission-deny-message: "&cVous n'avez pas la permission de poser un home !"
   Invalid-height: "&cVous ne pouvez pas poser de home à cette hauteur."
