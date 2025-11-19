@@ -2,6 +2,7 @@ package fr.fuzeblocks.homeplugin.commands.home;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
+import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -24,6 +25,7 @@ public class HomeAdminCommand implements CommandExecutor {
 
     private static final String LANG = "Language.";
     private static final String ADMIN = "HomeAdmin.";
+    private static final LanguageManager languageManager = HomePlugin.getLanguageManager();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -102,7 +104,7 @@ public class HomeAdminCommand implements CommandExecutor {
         List<String> homeNames = homeManager.getHomesName(target);
 
         if (homeNames == null || homeNames.isEmpty()) {
-            sendErrorMessage(player, target.getName() + " has no homes.");
+            sendErrorMessage(player, languageManager.getStringWithColor(ADMIN + "ListHome-has-no-homes").replace("%player%", target.getName()));
             return false;
         }
 
@@ -111,20 +113,16 @@ public class HomeAdminCommand implements CommandExecutor {
         player.sendMessage(ChatColor.DARK_GRAY + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
 
         TextComponent header = new TextComponent("         ");
-        TextComponent playerHeader = new TextComponent(target.getName() + "'s Homes");
+        TextComponent playerHeader = new TextComponent(languageManager.getStringWithColor(ADMIN + "Home-list-header").replace("%player%", target.getName()));
         playerHeader.setColor(ChatColor.GOLD);
         playerHeader.setBold(true);
         header.addExtra(playerHeader);
         player.spigot().sendMessage(header);
 
         TextComponent count = new TextComponent("              ");
-        TextComponent countText = new TextComponent("Total: ");
+        TextComponent countText = new TextComponent(languageManager.getStringWithColor(ADMIN + "Home-count").replace("%count%", String.valueOf(homeNames.size())));
         countText.setColor(ChatColor.GRAY);
-        TextComponent countNum = new TextComponent(String.valueOf(homeNames.size()));
-        countNum.setColor(ChatColor.AQUA);
-        countNum.setBold(true);
         count.addExtra(countText);
-        count.addExtra(countNum);
         player.spigot().sendMessage(count);
 
         player.sendMessage("");
@@ -153,7 +151,7 @@ public class HomeAdminCommand implements CommandExecutor {
      * @param location The home location
      */
     private void sendInteractiveHomeEntry(Player admin, Player target, String homeName, Location location) {
-        TextComponent homeEntry = new TextComponent("  🏠 ");
+        TextComponent homeEntry = new TextComponent(languageManager.getStringWithColor(ADMIN + "Home-icon"));
         homeEntry.setColor(ChatColor.YELLOW);
 
         TextComponent nameComponent = new TextComponent(homeName);
@@ -190,7 +188,7 @@ public class HomeAdminCommand implements CommandExecutor {
         tpButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
                 "/homeadmin tphome " + target.getName() + " " + homeName));
         tpButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                new ComponentBuilder("Click to teleport to this home").color(ChatColor.GRAY).create()));
+                new ComponentBuilder(languageManager.getString(ADMIN + "Click-to-teleport")).color(ChatColor.GRAY).create()));
 
         TextComponent space = new TextComponent("  ");
 
@@ -200,8 +198,8 @@ public class HomeAdminCommand implements CommandExecutor {
         delButton.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
                 "/homeadmin deletehome " + target.getName() + " " + homeName));
         delButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                new ComponentBuilder("Click to delete this home\n").color(ChatColor.GRAY)
-                        .append("⚠ This will suggest the command").color(ChatColor.YELLOW).create()));
+                new ComponentBuilder(languageManager.getString(ADMIN + "Click-to-delete") + "\n").color(ChatColor.GRAY)
+                        .append(languageManager.getString(ADMIN + "Click-to-delete-warning")).color(ChatColor.YELLOW).create()));
 
         buttonLine.addExtra(tpButton);
         buttonLine.addExtra(space);
@@ -230,7 +228,7 @@ public class HomeAdminCommand implements CommandExecutor {
 
         Location homeLocation = homeManager.getHomeLocation(target, homeName);
         if (homeLocation == null) {
-            sendErrorMessage(admin, "Home '" + homeName + "' not found for player " + target.getName());
+            sendErrorMessage(admin, languageManager.getStringWithColor(ADMIN + "Home-not-found-admin").replace("%home%", homeName).replace("%player%", target.getName()));
             return false;
         }
 
@@ -243,7 +241,7 @@ public class HomeAdminCommand implements CommandExecutor {
             message.setColor(ChatColor.GREEN);
             message.setBold(true);
 
-            TextComponent text = new TextComponent("Deleted home ");
+            TextComponent text = new TextComponent(languageManager.getStringWithColor(ADMIN + "DeleteHome-text") + " ");
             text.setColor(ChatColor.GREEN);
             text.setBold(false);
 
@@ -251,7 +249,7 @@ public class HomeAdminCommand implements CommandExecutor {
             home.setColor(ChatColor.AQUA);
             home.setBold(true);
 
-            TextComponent from = new TextComponent(" from ");
+            TextComponent from = new TextComponent(" " + languageManager.getString("DeleteHome-from-player") + " ");
             from.setColor(ChatColor.GREEN);
             from.setBold(false);
 
@@ -266,7 +264,7 @@ public class HomeAdminCommand implements CommandExecutor {
             admin.spigot().sendMessage(message);
             return true;
         } else {
-            sendErrorMessage(admin, "Failed to delete home '" + homeName + "'");
+            sendErrorMessage(admin, languageManager.getStringWithColor(ADMIN + "Failed-to-delete-home").replace("%home%", homeName).replace("%player%", target.getName()));
             return false;
         }
     }
@@ -289,7 +287,7 @@ public class HomeAdminCommand implements CommandExecutor {
 
         Location loc = homeManager.getHomeLocation(target, homeName);
         if (loc == null) {
-            sendErrorMessage(admin, "Home '" + homeName + "' not found for player " + target.getName());
+            sendErrorMessage(admin, languageManager.getStringWithColor(ADMIN + "Home-not-found-admin").replace("%home%", homeName).replace("%player%", target.getName()));
             return false;
         }
 
@@ -299,7 +297,7 @@ public class HomeAdminCommand implements CommandExecutor {
         message.setColor(ChatColor.GREEN);
         message.setBold(true);
 
-        TextComponent text = new TextComponent("Teleported to ");
+        TextComponent text = new TextComponent(languageManager.getStringWithColor(ADMIN + "TeleportHome-Text") + " ");
         text.setColor(ChatColor.GREEN);
         text.setBold(false);
 
@@ -307,17 +305,12 @@ public class HomeAdminCommand implements CommandExecutor {
         player.setColor(ChatColor.YELLOW);
         player.setBold(true);
 
-        TextComponent apostrophe = new TextComponent("'s home ");
-        apostrophe.setColor(ChatColor.GREEN);
-        apostrophe.setBold(false);
-
         TextComponent home = new TextComponent(homeName);
         home.setColor(ChatColor.AQUA);
         home.setBold(true);
 
         message.addExtra(text);
         message.addExtra(player);
-        message.addExtra(apostrophe);
         message.addExtra(home);
         admin.spigot().sendMessage(message);
         return true;
@@ -349,7 +342,7 @@ public class HomeAdminCommand implements CommandExecutor {
             message.setColor(ChatColor.GREEN);
             message.setBold(true);
 
-            TextComponent text = new TextComponent("Added home ");
+            TextComponent text = new TextComponent(languageManager.getStringWithColor(ADMIN + "AddHome-text") + " ");
             text.setColor(ChatColor.GREEN);
             text.setBold(false);
 
@@ -357,7 +350,7 @@ public class HomeAdminCommand implements CommandExecutor {
             home.setColor(ChatColor.AQUA);
             home.setBold(true);
 
-            TextComponent forText = new TextComponent(" for ");
+            TextComponent forText = new TextComponent(" " + languageManager.getString("AddHome-to-player") + " ");
             forText.setColor(ChatColor.GREEN);
             forText.setBold(false);
 
@@ -372,7 +365,7 @@ public class HomeAdminCommand implements CommandExecutor {
             admin.spigot().sendMessage(message);
             return true;
         } else {
-            sendErrorMessage(admin, "Home '" + homeName + "' already exists for " + target.getName());
+            sendErrorMessage(admin, languageManager.getStringWithColor(ADMIN + "Home-Already-Exists-Admin").replace("%home%", homeName).replace("%player%", target.getName()));
             return false;
         }
     }
@@ -384,13 +377,14 @@ public class HomeAdminCommand implements CommandExecutor {
      */
     private void sendUsage(Player player) {
         player.sendMessage(ChatColor.DARK_GRAY + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-        player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "         Home Admin Commands");
+        player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "         "
+        + languageManager.getStringWithColor(ADMIN + "Usage-title"));
         player.sendMessage("");
 
-        sendUsageCommand(player, "/homeadmin list <player>", "View all homes of a player");
-        sendUsageCommand(player, "/homeadmin tphome <player> <home>", "Teleport to a player's home");
-        sendUsageCommand(player, "/homeadmin addhome <player> <home>", "Add a home for a player");
-        sendUsageCommand(player, "/homeadmin deletehome <player> <home>", "Delete a player's home");
+        sendUsageCommand(player, "/homeadmin list <player>", languageManager.getStringWithColor(ADMIN + "List-usage-description"));
+        sendUsageCommand(player, "/homeadmin tphome <player> <home>", languageManager.getStringWithColor(ADMIN + "TpHome-usage-description"));
+        sendUsageCommand(player, "/homeadmin addhome <player> <home>", languageManager.getStringWithColor(ADMIN + "AddHome-usage-description"));
+        sendUsageCommand(player, "/homeadmin deletehome <player> <home>", languageManager.getStringWithColor(ADMIN + "DeleteHome-usage-description"));
 
         player.sendMessage("");
         player.sendMessage(ChatColor.DARK_GRAY + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
@@ -411,7 +405,7 @@ public class HomeAdminCommand implements CommandExecutor {
         cmdText.setColor(ChatColor.YELLOW);
         cmdText.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, command));
         cmdText.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                new ComponentBuilder("Click to suggest command").color(ChatColor.GRAY).create()));
+                new ComponentBuilder(languageManager.getStringWithColor(ADMIN + "HomeAdmin-click-suggest")).color(ChatColor.GRAY).create()));
 
         TextComponent desc = new TextComponent(" - " + description);
         desc.setColor(ChatColor.GRAY);
