@@ -340,7 +340,7 @@ dependencies { implementation("com.github.fuzeblocks:HomePlugin:Tag") }
 | Edit existing homes               | ✅ Complete |
 | Public homes                      | 📝 Planned  |
 | `/back` command                   | ✅ Complete |
-| Clickable chat messages           | 📝 Planned  |
+| Clickable chat messages           | ✅ Complete  |
 | Warps                             | 📝 Planned  |
 | UI/style refresh                  | 📝 Planned  |
 | BlueMap and Dynmap integration    | 📝 Planned  |
@@ -368,5 +368,6 @@ Contribution flow:
 ## 📄 License
 
 [Apache‑2.0](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
+
 
 
