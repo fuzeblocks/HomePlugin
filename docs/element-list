@@ -2,6 +2,10 @@ fr.fuzeblocks.homeplugin
 fr.fuzeblocks.homeplugin.back
 fr.fuzeblocks.homeplugin.cache
 fr.fuzeblocks.homeplugin.commands
+fr.fuzeblocks.homeplugin.commands.home
+fr.fuzeblocks.homeplugin.commands.rtp
+fr.fuzeblocks.homeplugin.commands.spawn
+fr.fuzeblocks.homeplugin.commands.tpa
 fr.fuzeblocks.homeplugin.completers
 fr.fuzeblocks.homeplugin.database
 fr.fuzeblocks.homeplugin.economy

@@ -18,6 +18,18 @@ public enum Language {
      */
     SPANISH,
     /**
+     * Ukrainian language.
+     */
+    UKRAINIAN,
+    /**
+     * German language.
+     */
+    GERMAN,
+    /**
+     * Russian language.
+     */
+    RUSSIAN,
+    /**
      * Custom language.
      */
     CUSTOM

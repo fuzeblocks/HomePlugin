@@ -11,8 +11,8 @@
 
     <properties>
         <revision>0.0.0</revision>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <!-- Compile target: Java 11 bytecode so the jar runs on JRE 11..21 -->
+        <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -39,6 +39,9 @@
                     <include>spanish.yml</include>
                     <include>config.yml</include>
                     <include>custom.yml</include>
+                    <include>ukrainian.yml</include>
+                    <include>russian.yml</include>
+                    <include>german.yml</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
@@ -48,29 +51,26 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.11.0</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <release>${maven.compiler.release}</release>
                 </configuration>
             </plugin>
 
-            <!-- Keep older Shade so you don't need Maven 3.6.3+. We only relocate bStats. -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
-                <!-- IMPORTANT: override ASM to a version that supports Java 16+ class files -->
+                <version>3.5.0</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.ow2.asm</groupId>
                         <artifactId>asm</artifactId>
-                        <version>9.7.1</version>
+                        <version>9.6</version>
                     </dependency>
                     <dependency>
                         <groupId>org.ow2.asm</groupId>
                         <artifactId>asm-commons</artifactId>
-                        <version>9.7</version>
+                        <version>9.5</version>
                     </dependency>
                 </dependencies>
                 <configuration>
@@ -78,6 +78,10 @@
                         <relocation>
                             <pattern>org.bstats</pattern>
                             <shadedPattern>fr.fuzeblocks.homeplugin.bstats</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>net.kyori</pattern>
+                            <shadedPattern>fr.fuzeblocks.libs.net.kyori</shadedPattern>
                         </relocation>
                     </relocations>
                     <filters>
@@ -88,6 +92,7 @@
                             </excludes>
                         </filter>
                     </filters>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
                 </configuration>
                 <executions>
                     <execution>
@@ -99,6 +104,7 @@
                 </executions>
             </plugin>
 
+            <!-- other plugins unchanged (javadoc, antrun) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -205,6 +211,8 @@
             <version>4.1.0</version>
             <scope>compile</scope>
         </dependency>
+
+
 
         <dependency>
             <groupId>org.spigotmc</groupId>

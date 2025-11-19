@@ -4,7 +4,6 @@ import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.economy.EconomyManager;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.task.TeleportationManager;
-import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -16,8 +15,6 @@ import xyz.xenondevs.invui.item.impl.AbstractItem;
 
 import java.util.Arrays;
 
-import static fr.fuzeblocks.homeplugin.task.TaskSaveUtils.setTaskManagerInstance;
-
 /**
  * The type Home item.
  */
@@ -26,7 +23,6 @@ public class HomeItem extends AbstractItem {
     private final String homeName;
     private final String HOME = "Home.";
     private boolean deleted = false;
-
 
     /**
      * Instantiates a new Home item.
@@ -44,28 +40,23 @@ public class HomeItem extends AbstractItem {
         if (homeManager.exist(player, homeName)) {
             if (clickType.isRightClick()) {
                 player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(HOME + "Home-deleted-with-name").replace("{homeName}", homeName));
-                // Logic to delete the home goes here
                 homeManager.deleteHome(player, homeName);
                 this.deleted = true;
                 notifyWindows();
             } else {
-                // Logic to teleport the player to the home goes here
                 player.closeInventory();
                 double cost = EconomyManager.getHomeTeleportPrice();
-                if (cost > 0 && EconomyManager.pay(player, cost).equals(EconomyResponse.ResponseType.FAILURE)) {
+                if (cost > 0 && !EconomyManager.pay(player, cost)) {
                     player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor("Language.Not-Enough-Money"));
                 } else {
-
                     TeleportationManager.teleportPlayerToHome(player, homeName);
                 }
-
             }
         } else {
             player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(HOME + "Home-does-not-exist"));
             player.closeInventory();
         }
     }
-
 
     @Override
     public ItemProvider getItemProvider() {
@@ -83,7 +74,6 @@ public class HomeItem extends AbstractItem {
                     .setLegacyLore(Arrays.asList(loreTeleport, loreDelete));
         }
     }
-
 
     private Material getRandomBedColor() {
         Material[] bedColors = {

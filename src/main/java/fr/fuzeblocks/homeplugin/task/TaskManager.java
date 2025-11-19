@@ -41,7 +41,7 @@ public class TaskManager extends BukkitRunnable {
             player.teleport(onHomeTeleport.getLocation());
             player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor("Language.Teleport-to-home") + " " + homeName);
             player.resetTitle();
-            if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.Add-particles-after-teleport")) {
+            if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.Particles-After-Teleport")) {
                 player.playEffect(homeLocation, Effect.MOBSPAWNER_FLAMES, 5000);
             }
         }
@@ -127,11 +127,11 @@ public class TaskManager extends BukkitRunnable {
                 String key = "Language.Teleportation-in-progress";
                 String message = HomePlugin.getLanguageManager().getStringWithColor(key) + " ";
 
-                if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.UseTitle")) {
+                if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.Use-Title")) {
                     player.sendTitle(message, String.valueOf(time), 0, 20, 0);
                 }
 
-                if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.UseMessage")) {
+                if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.Use-Message")) {
                     player.sendMessage(message + time);
                 }
 
