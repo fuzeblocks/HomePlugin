@@ -143,6 +143,9 @@ Built‑in:
 - FRENCH
 - ENGLISH
 - SPANISH (Henri Topper)
+- RUSSIAN
+- UKRAINIAN
+- GERMAN
 
 Language loading uses an enum (`Language.valueOf(...)`) and falls back to FRENCH if invalid. Customize by editing the shipped YAML files; use `/lang update`, `/lang merge`, and `/lang set` to manage versions and switch locales.
 
@@ -223,6 +226,8 @@ Config:
     Use-Title: true
     Use-Message: false
     Particles-After-Teleport: true
+    Skip-If-Op: true
+
 
   # ----------------------------------------
   # TPA (Teleport Requests)
@@ -363,4 +368,5 @@ Contribution flow:
 ## 📄 License
 
 [Apache‑2.0](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
+
 
