@@ -174,7 +174,7 @@ Config:
 
   # ----------------------------------------
   # Language / Localization
-  # Available: FRENCH, ENGLISH, SPANISH
+  # Available: FRENCH, ENGLISH, SPANISH, CUSTOM
   # ----------------------------------------
   Language: FRENCH
 
@@ -183,7 +183,7 @@ Config:
   # TYPE can be "YAML" or "MYSQL"
   # MySQL settings are used only when TYPE="MYSQL"
   # ----------------------------------------
-  Connector:
+  Storage:
     TYPE: "YAML"  # MYSQL or YAML
 
     # Optional (for MYSQL)
@@ -198,7 +198,7 @@ Config:
   # Enable only if you need cross-instance cache/sync
   # ----------------------------------------
   Redis:
-    UseRedis: false
+    Use-Redis: false
     HOST: "localhost"
     PORT: 6379
     SSL: false
@@ -209,9 +209,9 @@ Config:
   # Limits, validation, and disabled worlds
   # ----------------------------------------
   Home:
-    DefaultHomeLimit: 3
-    PreventUnfairLocation: true
-    DisabledWorlds:
+    Default-Home-Limit: 3
+    Prevent-Unfair-Location: true
+    Disabled-Worlds:
       - "world_nether"
       - "world_the_end"
 
@@ -219,23 +219,24 @@ Config:
   # Teleport Task / Warmup & Effects
   # ----------------------------------------
   Task:
-    Task-duration: 3  # seconds
-    UseTitle: true
-    UseMessage: false
-    Add-particles-after-teleport: true
+    Task-Duration: 3  # seconds
+    Use-Title: true
+    Use-Message: false
+    Particles-After-Teleport: true
 
   # ----------------------------------------
   # TPA (Teleport Requests)
   # ----------------------------------------
   Tpa:
-    Tpa-duration: 30  # seconds
+    Tpa-Duration: 30  # seconds
 
   # ----------------------------------------
   # RTP (Random Teleport)
   # ----------------------------------------
-  Rtp:
-    cooldown-seconds: 1000  # seconds
-    max-radius: 200
+  RTP:
+    Cooldown-Seconds: 1000  # seconds
+    Max-Radius: 200
+    Enabled: true
 
   # ----------------------------------------
   # Economy (Vault)
@@ -243,10 +244,10 @@ Config:
   # ----------------------------------------
   Economy:
     UseEconomy: false
-    HomeCreationCost: 100.0
+    Home-Creation-Price: 100.0
     Home-Teleport-Price: 50.0
     Tpa-Request-Price: 20.0
-    Rtp-Price: 150.0
+    RTP-Price: 150.0
 ```
 
 Key behaviors:
@@ -362,3 +363,4 @@ Contribution flow:
 ## 📄 License
 
 [Apache‑2.0](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
+
