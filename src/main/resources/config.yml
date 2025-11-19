@@ -51,6 +51,8 @@ Config:
     Use-Title: true
     Use-Message: false
     Particles-After-Teleport: true
+    Skip-If-Op: true
+
 
   # ----------------------------------------
   # TPA (Teleport Requests)

@@ -8,9 +8,12 @@ import fr.fuzeblocks.homeplugin.task.exception.TeleportTaskException;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+
+import java.lang.module.Configuration;
 
 /**
  * The type Task manager.
@@ -23,6 +26,9 @@ public class TaskManager extends BukkitRunnable {
     private BukkitRunnable titleTask;
     private String homeName;
     private Location homeLocation;
+    private final ConfigurationSection config = HomePlugin.getConfigurationSection();
+    private final String LANG = "Language.";
+    private final String TASK = "Config.Task.";
 
 
     @Override
@@ -41,7 +47,7 @@ public class TaskManager extends BukkitRunnable {
             player.teleport(onHomeTeleport.getLocation());
             player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor("Language.Teleport-to-home") + " " + homeName);
             player.resetTitle();
-            if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.Particles-After-Teleport")) {
+            if (config.getBoolean(TASK + "Particles-After-Teleport")) {
                 player.playEffect(homeLocation, Effect.MOBSPAWNER_FLAMES, 5000);
             }
         }
@@ -69,7 +75,7 @@ public class TaskManager extends BukkitRunnable {
         StatusManager.setPlayerStatus(player, true);
         TaskSaveUtils.setTaskManagerInstance(player, this);
         addTimeTitle(player);
-        int duration = HomePlugin.getConfigurationSection().getInt("Config.Task.Task-duration");
+        int duration = config.getInt("Config.Task.Task-duration");
         teleportTask = runTaskLater(plugin, 20L * duration);
     }
 
@@ -117,7 +123,7 @@ public class TaskManager extends BukkitRunnable {
     }
 
     private void addTimeTitle(Player player) {
-        int duration = HomePlugin.getConfigurationSection().getInt("Config.Task.Task-duration");
+        int duration = player.isOp() && config.getBoolean("Config.Task.Skip-If-Op") ? 0 : config.getInt("Config.Task.Task-duration") * 10;
 
         titleTask = new BukkitRunnable() {
             int time = duration;
@@ -127,11 +133,11 @@ public class TaskManager extends BukkitRunnable {
                 String key = "Language.Teleportation-in-progress";
                 String message = HomePlugin.getLanguageManager().getStringWithColor(key) + " ";
 
-                if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.Use-Title")) {
+                if (config.getBoolean("Config.Task.Use-Title")) {
                     player.sendTitle(message, String.valueOf(time), 0, 20, 0);
                 }
 
-                if (HomePlugin.getConfigurationSection().getBoolean("Config.Task.Use-Message")) {
+                if (config.getBoolean("Config.Task.Use-Message")) {
                     player.sendMessage(message + time);
                 }
 
