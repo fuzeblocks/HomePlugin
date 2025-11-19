@@ -65,12 +65,12 @@
                     <dependency>
                         <groupId>org.ow2.asm</groupId>
                         <artifactId>asm</artifactId>
-                        <version>9.7.1</version>
+                        <version>9.6</version>
                     </dependency>
                     <dependency>
                         <groupId>org.ow2.asm</groupId>
                         <artifactId>asm-commons</artifactId>
-                        <version>9.7</version>
+                        <version>9.5</version>
                     </dependency>
                 </dependencies>
                 <configuration>
@@ -212,8 +212,8 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- Recommendation: compile against the lowest Spigot API you support (1.14).
-             If your code already uses newer APIs, you'll need to refactor to keep compatibility. -->
+
+
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>

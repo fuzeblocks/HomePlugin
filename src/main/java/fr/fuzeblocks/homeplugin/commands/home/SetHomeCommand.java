@@ -45,8 +45,16 @@ public class SetHomeCommand implements CommandExecutor {
         }
 
         if (args.length == 1 && args[0].equalsIgnoreCase("info")) {
-            player.sendMessage(translate(HOME + "Home-location-format"));
-            return false;
+            HomeManager homeManager = HomePlugin.getHomeManager();
+            int used = homeManager.getHomeNumber(player);
+            int max = HomePermissionManager.getMaxHomes(player);
+            int remaining = Math.max(0, max - used);
+
+            player.sendMessage(translate(HOME + "Home-info-count")
+                    .replace("%used%", String.valueOf(used))
+                    .replace("%max%", String.valueOf(max))
+                    .replace("%remaining%", String.valueOf(remaining)));
+            return true;
         }
 
         if (args.length == 1) {

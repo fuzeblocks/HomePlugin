@@ -6,7 +6,6 @@ Language:
   Teleport-to-spawn: "&aVous avez été téléporté au spawn."
   Teleport-canceled: "&cTéléportation annulée car vous avez bougé."
   A-teleport-is-already-in-progress: "&cUne téléportation est déjà en cours !"
-  Home-Already-Exists: "&cVous avez déjà un home avec ce nom !"
   Not-Enough-Money: "&cVous n'avez pas assez d'argent pour cette action !"
 
   Error: "&cUne erreur est survenue !"
@@ -41,6 +40,9 @@ Home:
   End-disabled: "&cVous ne pouvez pas poser de home dans l'End."
   Floating-platform: "&cVous ne pouvez pas poser de home sur une plateforme flottante."
   Water-location: "&cVous ne pouvez pas poser de home dans l'eau."
+  Home-Already-Exists: "&cVous avez déjà un home avec ce nom !"
+  Invalid-world: "&cVous ne pouvez pas poser de home dans ce monde."
+  Invalid-height:
 
   Home-item-displayname: "({homeName}) Home"
   Home-item-lore-teleport: "&aCliquez pour vous téléporter à ce home."
@@ -57,7 +59,10 @@ Home:
   Rename-usage-icon: "&7[✎]"
   Rename-click-suggest: "&7Cliquez pour insérer la commande de renommage dans votre chat."
   Rename-view-description: "&7Renomme un home existant sans changer sa position."
-
+  SetHome-management-title: "&eGestion de la définition des homes"
+  SetHome-click-suggest: "&7Cliquez pour insérer la commande dans votre chat."
+  SetHome-view-description: "&7Définit un nouveau home à votre position actuelle."
+  SetHome-usage-icon: "&7[＋]"
 List:
   Home-count: "&bVous avez &6%count%&b home(s) enregistré(s)."
   Home-detail-header: "&aDétails du home : &l%home%"

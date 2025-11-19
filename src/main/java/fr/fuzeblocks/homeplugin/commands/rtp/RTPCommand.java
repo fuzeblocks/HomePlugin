@@ -144,7 +144,7 @@ public class RTPCommand implements CommandExecutor {
         try {
               maxY = world.getMaxHeight();
           } catch (NoSuchMethodError e) {
-                maxY = 255;
+           maxY = world.getEnvironment() == World.Environment.NETHER ? 126 : 255;
         }
         int minY;
         try {
