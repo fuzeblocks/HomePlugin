@@ -164,7 +164,7 @@ public class HomeAdminCommand implements CommandExecutor {
 
         TextComponent locationLine = new TextComponent("     ");
 
-        TextComponent locIcon = new TextComponent("📍 ");
+        TextComponent locIcon = new TextComponent("● ");
         locIcon.setColor(ChatColor.GRAY);
 
         TextComponent coords = new TextComponent(String.format("%.1f, %.1f, %.1f",
@@ -297,11 +297,11 @@ public class HomeAdminCommand implements CommandExecutor {
         message.setColor(ChatColor.GREEN);
         message.setBold(true);
 
-        TextComponent text = new TextComponent(languageManager.getStringWithColor(ADMIN + "TeleportHome-Text") + " ");
+        TextComponent text = new TextComponent(languageManager.getStringWithColor(ADMIN + "TeleportHome-text") + " ");
         text.setColor(ChatColor.GREEN);
         text.setBold(false);
 
-        TextComponent player = new TextComponent(target.getName());
+        TextComponent player = new TextComponent(target.getName() + " ");
         player.setColor(ChatColor.YELLOW);
         player.setBold(true);
 
