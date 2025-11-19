@@ -69,7 +69,7 @@ public class OnPlayerTakeDamageByAnotherPlayer implements Listener {
      * @param event the event
      */
     @EventHandler
-    public void onRtpEvent(OnRtpEvent event) {
+    public void onRtpEvent(OnRTPEvent event) {
         checkCooldown(event);
     }
 

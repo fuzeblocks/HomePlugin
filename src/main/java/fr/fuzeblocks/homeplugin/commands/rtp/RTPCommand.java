@@ -2,7 +2,7 @@ package fr.fuzeblocks.homeplugin.commands.rtp;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.economy.EconomyManager;
-import fr.fuzeblocks.homeplugin.event.OnRtpEvent;
+import fr.fuzeblocks.homeplugin.event.OnRTPEvent;
 import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -60,7 +60,7 @@ public class RTPCommand implements CommandExecutor {
         }
 
 
-        OnRtpEvent event = new OnRtpEvent(player, randomLocation);
+        OnRTPEvent event = new OnRTPEvent(player, randomLocation);
         Bukkit.getPluginManager().callEvent(event);
 
         if (event.isCancelled() || event.getPlayer() == null) {

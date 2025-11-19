@@ -42,7 +42,6 @@ Home:
   Water-location: "&cVous ne pouvez pas poser de home dans l'eau."
   Home-Already-Exists: "&cVous avez déjà un home avec ce nom !"
   Invalid-world: "&cVous ne pouvez pas poser de home dans ce monde."
-  Invalid-height:
 
   Home-item-displayname: "({homeName}) Home"
   Home-item-lore-teleport: "&aCliquez pour vous téléporter à ce home."
@@ -63,30 +62,31 @@ Home:
   SetHome-click-suggest: "&7Cliquez pour insérer la commande dans votre chat."
   SetHome-view-description: "&7Définit un nouveau home à votre position actuelle."
   SetHome-usage-icon: "&7[＋]"
-List:
-  Home-count: "&bVous avez &6%count%&b home(s) enregistré(s)."
-  Home-detail-header: "&aDétails du home : &l%home%"
-  Home-location: "&9Position : &6X: %x% Y: %y% Z: %z% Monde: %world%"
-  Teleport-label: "&7Téléportation :"
-  Teleport-click: " [Cliquez ici]"
-  Teleport-hover: "&eCliquez pour vous téléporter."
-  Manage-label: "&7Gérer ce home :"
-  Relocate-click: " [Déplacer]"
-  Relocate-hover: "&eCliquez pour redéfinir la position de ce home."
-  Delete-click: " [Supprimer]"
-  Delete-hover: "&cCliquez pour supprimer ce home."
 
-  List-header-title: "&6&lVos Homes"
-  List-total-label: "&7Total: &b&l{count}"
-  List-home-icon: "&e■"
-  List-location-icon: "&7►"
-  List-teleport-button: "&e&l[ᴛᴇʟᴇᴘᴏʀᴛ]"
-  List-teleport-hover: "&7Cliquez pour vous téléporter à &b{home}"
-  List-relocate-button: "&6&l[ʀᴇʟᴏᴄᴀʟɪsᴇʀ]"
-  List-relocate-hover: "&7Cliquez pour relocaliser &b{home}\n&7à votre position actuelle"
-  List-delete-button: "&c&l[sᴜᴘᴘʀɪᴍᴇʀ]"
-  List-delete-hover: "&7Cliquez pour supprimer &b{home}\n&e&l⚠ Cette action ne peut pas être annulée !"
-  List-world-label: "&8({world})"
+  List:
+    Home-count: "&bVous avez &6%count%&b home(s) enregistré(s)."
+    Home-detail-header: "&aDétails du home : &l%home%"
+    Home-location: "&9Position : &6X: %x% Y: %y% Z: %z% Monde: %world%"
+    Teleport-label: "&7Téléportation :"
+    Teleport-click: " [Cliquez ici]"
+    Teleport-hover: "&eCliquez pour vous téléporter."
+    Manage-label: "&7Gérer ce home :"
+    Relocate-click: " [Déplacer]"
+    Relocate-hover: "&eCliquez pour redéfinir la position de ce home."
+    Delete-click: " [Supprimer]"
+    Delete-hover: "&cCliquez pour supprimer ce home."
+
+    List-header-title: "&6&lVos Homes"
+    List-total-label: "&7Total: &b&l{count}"
+    List-home-icon: "&e■"
+    List-location-icon: "&7►"
+    List-teleport-button: "&e&l[ᴛᴇʟᴇᴘᴏʀᴛ]"
+    List-teleport-hover: "&7Cliquez pour vous téléporter à &b{home}"
+    List-relocate-button: "&6&l[ʀᴇʟᴏᴄᴀʟɪsᴇʀ]"
+    List-relocate-hover: "&7Cliquez pour relocaliser &b{home}\n&7à votre position actuelle"
+    List-delete-button: "&c&l[sᴜᴘᴘʀɪᴍᴇʀ]"
+    List-delete-hover: "&7Cliquez pour supprimer &b{home}\n&e&l⚠ Cette action ne peut pas être annulée !"
+    List-world-label: "&8({world})"
 
 Cache:
   Cache-cleared: "&a&lLe cache a été vidé !"
@@ -121,7 +121,6 @@ Cache:
   Cache-usage-icon: "&8▸"
 
 HomeAdmin:
-  HomeAdmin-usage-message: "&cUtilisation : /homeadmin <list|addhome|deletehome|tphome> <joueur> [home]"
   List-usage: "&cUtilisation : /homeadmin list <joueur>"
   DeleteHome-usage: "&cUtilisation : /homeadmin deletehome <joueur> <home>"
   AddHome-usage: "&cUtilisation : /homeadmin addhome <joueur> <home>"
@@ -180,6 +179,7 @@ TpaCommand:
   Tpa-accepted-by-target: "&a%player% a accepté votre demande de téléportation."
   Tpa-denied-by-target: "&c%player% a refusé votre demande de téléportation."
   Tpa-request-exists: "&eUne demande de téléportation existe déjà. Veuillez attendre qu'elle expire ou que le joueur l'accepte/décline."
+  Tpa-cannot-request-yourself: "&cVous ne pouvez pas vous envoyer une demande de téléportation à vous-même."
 
 Rtp:
   Teleportation-in-progress: "&eTéléportation aléatoire en cours..."

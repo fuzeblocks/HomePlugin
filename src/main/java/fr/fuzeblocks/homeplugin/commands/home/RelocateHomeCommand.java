@@ -107,14 +107,14 @@ public class RelocateHomeCommand implements CommandExecutor {
         // Get usage icon from language file
         String usageIcon = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', translate(HOME + "Relocate-usage-icon")));
 
-        // /relocatehome <existing_home> <new_home_name> - clickable
+        // /relocatehome <existing_home> - clickable
         TextComponent viewCmd = new TextComponent("  " + usageIcon + " ");
         viewCmd.setColor(ChatColor.DARK_GRAY);
 
-        TextComponent viewText = new TextComponent("/relocatehome <existing_home> <new_home_name>");
+        TextComponent viewText = new TextComponent("/relocatehome <existing_home>");
         viewText.setColor(ChatColor.YELLOW);
         viewText.setBold(false);
-        viewText.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/relocatehome <existing_home> <new_home_name>"));
+        viewText.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/relocatehome <existing_home>"));
 
         String viewHover = translate(HOME + "Relocate-click-suggest");
         viewText.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,

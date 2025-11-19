@@ -2,7 +2,7 @@ package fr.fuzeblocks.homeplugin.listeners;
 
 import fr.fuzeblocks.homeplugin.back.BackManager;
 import fr.fuzeblocks.homeplugin.event.OnHomeTeleportEvent;
-import fr.fuzeblocks.homeplugin.event.OnRtpEvent;
+import fr.fuzeblocks.homeplugin.event.OnRTPEvent;
 import fr.fuzeblocks.homeplugin.event.OnSpawnTeleportEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -68,7 +68,7 @@ public class BackListener implements Listener {
      */
 // Track origin for custom RTP teleports
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerRtp(OnRtpEvent event) {
+    public void onPlayerRtp(OnRTPEvent event) {
         Player player = event.getPlayer();
         backManager.setLastLocation(player, event.getFrom());
     }
