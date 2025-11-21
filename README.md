@@ -369,5 +369,6 @@ Contribution flow:
 
 [Apache‑2.0](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
 
+![Usage](https://bstats.org/signatures/bukkit/HomePlugin.svg)
 
 
