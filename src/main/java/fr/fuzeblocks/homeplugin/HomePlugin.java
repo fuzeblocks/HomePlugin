@@ -1,5 +1,7 @@
 package fr.fuzeblocks.homeplugin;
 
+import de.bluecolored.bluemap.api.BlueMapAPI;
+import fr.fuzeblocks.homeplugin.bluemap.BlueMapPublicHomeManager;
 import fr.fuzeblocks.homeplugin.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.commands.*;
 import fr.fuzeblocks.homeplugin.commands.home.*;
@@ -50,6 +52,7 @@ import redis.clients.jedis.JedisPooled;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Main plugin class for HomePlugin.
@@ -81,6 +84,8 @@ public final class HomePlugin extends JavaPlugin {
     private static BukkitAudiences adventure;
     private static Economy economy;
     private static Metrics metrics;
+    private static Optional<BlueMapAPI> blueMapAPI;
+    private static BlueMapPublicHomeManager blueMapPublicHomeManager;
 
     @Override
     public void onEnable() {
@@ -97,7 +102,7 @@ public final class HomePlugin extends JavaPlugin {
         loadLanguage();
         redisRegistration();
         databaseRegistration();
-
+        blueMapIntegration();
         // Domain managers
         homeRegistration();
         spawnRegistration();
@@ -229,6 +234,15 @@ public final class HomePlugin extends JavaPlugin {
         } else {
             getLogger().info("Using YAML storage.");
         }
+    }
+    private void blueMapIntegration() {
+        BlueMapAPI.onEnable(api -> {
+            getLogger().info("BlueMap detected. Integrating with BlueMap...");
+            blueMapAPI = Optional.of(api);
+            File markerFile = new File(getDataFolder(), "bluemap-markers.yml");
+            ensureFile(markerFile);
+            blueMapPublicHomeManager = new BlueMapPublicHomeManager(markerFile);
+        });
     }
 
     private void homeRegistration() {
@@ -532,5 +546,22 @@ public final class HomePlugin extends JavaPlugin {
      */
     public static Metrics getMetrics() {
         return metrics;
+    }
+
+    /**
+     * Gets blue map api.
+     *
+     * @return the blue map api
+     */
+    public static Optional<BlueMapAPI> getBlueMapAPI() {
+        return blueMapAPI;
+    }
+    /**
+     * Gets blue map public home manager.
+     *
+     * @return the blue map public home manager
+     */
+    public static BlueMapPublicHomeManager getBlueMapPublicHomeManager() {
+        return blueMapPublicHomeManager;
     }
 }
