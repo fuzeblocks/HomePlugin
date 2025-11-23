@@ -78,3 +78,12 @@ Config:
     Home-Teleport-Price: 50.0
     Tpa-Request-Price: 20.0
     RTP-Price: 150.0
+
+  # ----------------------------------------
+  # Features
+  # Enable or disable specific features
+  # ----------------------------------------
+  Features:
+      Enable-TPA: true
+      Enable-Spawn: true
+      Enable-Home: true

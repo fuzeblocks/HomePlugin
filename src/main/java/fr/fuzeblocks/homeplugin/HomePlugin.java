@@ -66,6 +66,7 @@ public final class HomePlugin extends JavaPlugin {
     private static final String CFG_REDIS_SSL = CFG_ROOT + "Redis.SSL";
     private static final String CFG_REDIS_PASSWORD = CFG_ROOT + "Redis.PASSWORD";
     private static final String CFG_RTP_ENABLED = CFG_ROOT + "RTP.Enabled";
+    private static final String CFG_FEATURES = CFG_ROOT + "Features.";
 
     // Managers and services
     private static HomeYMLManager homeYMLManager;
@@ -268,26 +269,32 @@ public final class HomePlugin extends JavaPlugin {
     private void commandRegistration() {
         getLogger().info("Registering commands...");
 
-        bind("home", new HomeCommand(), new HomeCompleter());
-        bind("sethome", new SetHomeCommand(), new SetHomeCompleter());
-        bind("delhome", new DeleteHomeCommand(), new DeleteHomeCompleter());
-        bind("renamehome", new RenameHomeCommand(), new RenameHomeCompleter());
-        bind("relocatehome", new RelocateHomeCommand(), new RelocateHomeCompleter());
-        bind("listhome", new ListHomeCommand(), null);
+        if (isActivatedFeature("Enable-Home")) {
+            bind("home", new HomeCommand(), new HomeCompleter());
+            bind("sethome", new SetHomeCommand(), new SetHomeCompleter());
+            bind("delhome", new DeleteHomeCommand(), new DeleteHomeCompleter());
+            bind("renamehome", new RenameHomeCommand(), new RenameHomeCompleter());
+            bind("relocatehome", new RelocateHomeCommand(), new RelocateHomeCompleter());
+            bind("listhome", new ListHomeCommand(), null);
+        }
 
+        if (isActivatedFeature("Enable-Spawn")) {
         bind("setspawn", new SetSpawnCommand(), null);
         bind("delspawn", new DeleteSpawnCommand(), null);
         bind("spawn", new SpawnCommand(), null);
+        }
 
         bind("cache", new CacheCommand(), new CacheCompleter());
         bind("homeadmin", new HomeAdminCommand(), new HomeAdminCompleter());
         bind("plugins", new fr.fuzeblocks.homeplugin.commands.PluginCommand(), null);
         bind("lang", new LangCommand(this), new LangTabCompleter(this));
 
-        bind("tpa", new TPACommand(), new TpaCompleter());
-        bind("tpaccept", new TPAAcceptCommand(), new TpAcceptCompleter());
-        bind("tpdeny", new TPADenyCommand(), new TpDenyCompleter());
-        bind("back", new BackCommand(), null);
+        if (isActivatedFeature("Enable-TPA")) {
+            bind("tpa", new TPACommand(), new TpaCompleter());
+            bind("tpaccept", new TPAAcceptCommand(), new TpAcceptCompleter());
+            bind("tpdeny", new TPADenyCommand(), new TpDenyCompleter());
+            bind("back", new BackCommand(), null);
+        }
 
         if (getConfig().getBoolean(CFG_RTP_ENABLED, false)) {
             bind("rtp", new RTPCommand(), null);
@@ -381,6 +388,7 @@ public final class HomePlugin extends JavaPlugin {
         metrics = new Metrics(this, 27702);
     }
 
+
     // -------------------- Helpers --------------------
 
     private void bind(String name, CommandExecutor exec, TabCompleter tab) {
@@ -399,6 +407,10 @@ public final class HomePlugin extends JavaPlugin {
 
     private static String blankToNull(String s) {
         return (s == null || s.isBlank()) ? null : s;
+    }
+
+    private static boolean isActivatedFeature(String feature) {
+        return HomePlugin.getConfigurationSection().getBoolean(CFG_FEATURES + feature, false);
     }
 
     // -------------------- Static getters --------------------
