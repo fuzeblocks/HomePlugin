@@ -1,7 +1,7 @@
-Teleportation-in-progress: "&e&lTeleportation in :"
-Start-of-teleportation: "&6Start der Teleportation zum Home :"
+Teleportation-in-progress: "&e&lTeleportation in:"
+Start-of-teleportation: "&6Start der Teleportation zum Home:"
 Start-of-teleportation-for-spawn: "&6Beginne Teleportation zum Spawn."
-Teleport-to-home: "&aDu wurdest zu deinem Home teleportiert :"
+Teleport-to-home: "&aDu wurdest zu deinem Home teleportiert:"
 Teleport-to-spawn: "&aDu wurdest zum Spawn teleportiert."
 Teleport-canceled: "&cTeleportation abgebrochen, weil du dich bewegt hast."
 A-teleport-is-already-in-progress: "&cEine Teleportation läuft bereits!"
@@ -66,7 +66,7 @@ Home:
 
   List:
     Home-count: "&bDu hast &6%count%&b gespeicherte Home(s)."
-    Home-detail-header: "&aHome Details: &l%home%"
+    Home-detail-header: "&aHome-Details: &l%home%"
     Home-location: "&9Position: &6X: %x% Y: %y% Z: %z% Welt: %world%"
     Teleport-label: "&7Teleportation:"
     Teleport-click: " [Klicke hier]"
@@ -81,11 +81,11 @@ Home:
     List-total-label: "&7Insgesamt: &b&l{count}"
     List-home-icon: "&e■"
     List-location-icon: "&7►"
-    List-teleport-button: "&e&l[ᴛᴇʟᴇᴘᴏʀᴛ]"
+    List-teleport-button: "&e&l[ᴛᴇʟᴇᴘᴏʀᴛɪᴇʀᴇɴ]"
     List-teleport-hover: "&7Klicke, um zu &b{home} zu teleportieren"
-    List-relocate-button: "&6&l[ʀᴇʟᴏᴄᴀᴛᴇ]"
+    List-relocate-button: "&6&l[ᴠᴇʀꜱᴄʜɪᴇʙᴇɴ]"
     List-relocate-hover: "&7Klicke, um &b{home}\n&7an deine aktuelle Position zu verschieben"
-    List-delete-button: "&c&l[ᴅᴇʟᴇᴛᴇ]"
+    List-delete-button: "&c&l[ʟᴏ̈ꜱᴄʜᴇɴ]"
     List-delete-hover: "&7Klicke, um &b{home} zu löschen\n&e&l⚠ Diese Aktion kann nicht rückgängig gemacht werden!"
     List-world-label: "&8({world})"
 
@@ -111,7 +111,7 @@ Cache:
   Cache-player-empty: "&c&l✗ &c{player} hat keine Homes im Cache."
   Cache-player-homes-title: "&6&l         Gecachte Homes von {player}"
   Cache-total-label: "&7Gesamt: &b&l{count}"
-  Cache-teleport-button: "&e&l[ᴛᴇʟᴇᴘᴏʀᴛ]"
+  Cache-teleport-button: "&e&l[ᴛᴇʟᴇᴘᴏʀᴛɪᴇʀᴇɴ]"
   Cache-teleport-hover: "&7Klicke, um zu diesem Ort zu teleportieren"
   Cache-coord-label-x: "&8X:"
   Cache-coord-label-y: "&8Y:"
@@ -198,7 +198,7 @@ TpaCommand:
   Tpa-denied: "&cDu hast die Teleportanfrage von %player% abgelehnt."
   Tpa-accepted-by-target: "&a%player% hat deine Teleportanfrage angenommen."
   Tpa-denied-by-target: "&c%player% hat deine Teleportanfrage abgelehnt."
-  Tpa-request-exists: "&eEine Teleportanfrage existiert bereits. Bitte warte, bis sie abläuft oder der Spieler sie annimmt/lehnt."
+  Tpa-request-exists: "&eEine Teleportanfrage existiert bereits. Bitte warte, bis sie abläuft oder der Spieler sie annimmt/ablehnt."
   Tpa-cannot-request-yourself: "&cDu kannst keine Teleportanfrage an dich selbst senden."
 
 Rtp:
