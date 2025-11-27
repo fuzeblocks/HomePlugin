@@ -28,6 +28,7 @@ Home:
   Home-deleted-with-name: "&aThe home {homeName} has been successfully deleted!"
   Home-does-not-exist: "&cThe specified home does not exist!"
   Have-no-home: "&cYou have no homes saved."
+  Home-world-not-loaded: "&cThe world for this home is not loaded!"
   Home-limite-permission-for-bypass: "HomePlugin.home.bypass"
   Home-limite-message: "&c&lYou do not have permission to add another home!"
   Home-usage-message: "&cUsage: /home <home-name>"

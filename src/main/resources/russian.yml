@@ -28,6 +28,7 @@ Home:
   Home-deleted-with-name: "&aДом {homeName} успешно удалён!"
   Home-does-not-exist: "&cУказанный дом не существует!"
   Have-no-home: "&cУ вас нет сохранённых домов."
+  Home-world-not-loaded: "&cМир вашего дома не загружен!"
   Home-limite-permission-for-bypass: "HomePlugin.home.bypass"
   Home-limite-message: "&c&lУ вас нет прав добавлять ещё один дом!"
   Home-usage-message: "&cИспользование: /home <имя-дома>"
