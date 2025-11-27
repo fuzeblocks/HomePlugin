@@ -24,12 +24,6 @@ commands:
     description: Delete a home by name.
   listhome:
     description: View a list of your homes.
-  spawn:
-    description: Teleport to the global spawn.
-  setspawn:
-    description: Define the global spawn location.
-  delspawn:
-    description: Remove the current spawn point.
   cache:
     description: Manage internal cache.
   homeadmin:
@@ -38,16 +32,6 @@ commands:
     description: List all loaded plugins.
   lang:
     description: Update or change the plugin language.
-  tpa:
-    description: Request teleportation to another player.
-  tpaccept:
-    description: Accept a teleportation request.
-  tpdeny:
-    description: Deny a teleportation request.
-  rtp:
-    description: Teleport to a random location within a specified radius.
-  back:
-    description: Teleport back to your previous location.
 
 
 
@@ -64,18 +48,9 @@ permissions:
   homeplugin.command.listhome:
     description: Allows listing homes.
     default: true
-  homeplugin.command.spawn:
-    description: Allows teleporting to spawn.
-    default: true
   homeplugin.admin:
     description: Allows managing the internal cache and viewing homes of other players and add/deleting spawns.
     default: op
   homeplugin.lang.update:
     description: Allows updating the plugin language.
-    default: op
-  homeplugin.command.tpa:
-    description: Allows sending/accept/deny teleport requests to other players.
-    default: true
-  homeplugin.back.use:
-    description: Allows using the /back command.
     default: op

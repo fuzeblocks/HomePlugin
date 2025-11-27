@@ -66,7 +66,6 @@ Config:
   RTP:
     Cooldown-Seconds: 1000  # seconds
     Max-Radius: 200
-    Enabled: true
 
   # ----------------------------------------
   # Economy (Vault)
@@ -84,6 +83,6 @@ Config:
   # Enable or disable specific features
   # ----------------------------------------
   Features:
-      Enable-TPA: true
-      Enable-Spawn: true
-      Enable-Home: true
+    Enable-TPA: true
+    Enable-Spawn: true
+    Enable-Home: true

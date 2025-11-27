@@ -75,7 +75,7 @@ public class TaskManager extends BukkitRunnable {
         StatusManager.setPlayerStatus(player, true);
         TaskSaveUtils.setTaskManagerInstance(player, this);
         addTimeTitle(player);
-        int duration = config.getInt("Config.Task.Task-duration");
+        int duration = player.isOp() && config.getBoolean("Config.Task.Skip-If-Op") ? 0 : config.getInt("Config.Task.Task-Duration");
         teleportTask = runTaskLater(plugin, 20L * duration);
     }
 
@@ -123,7 +123,7 @@ public class TaskManager extends BukkitRunnable {
     }
 
     private void addTimeTitle(Player player) {
-        int duration = player.isOp() && config.getBoolean("Config.Task.Skip-If-Op") ? 0 : config.getInt("Config.Task.Task-duration") * 10;
+        int duration = player.isOp() && config.getBoolean("Config.Task.Skip-If-Op") ? 0 : config.getInt("Config.Task.Task-Duration");
 
         titleTask = new BukkitRunnable() {
             int time = duration;

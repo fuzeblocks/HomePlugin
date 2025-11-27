@@ -171,8 +171,9 @@ public class HomeYMLManager implements Home {
     }
 
     @Override
-    public Location getHomeLocation(@NotNull Player player, String homeName) {
+    public Location getHomeLocation(@NotNull Player player,String homeName) {
         String key = player.getUniqueId() + ".Home." + homeName + ".";
+        assert homeName != null;
         if (yaml.contains(key)) {
             return new Location(Bukkit.getWorld(yaml.getString(key + "World")), yaml.getDouble(key + "X"), yaml.getDouble(key + "Y"), yaml.getDouble(key + "Z"), (float) yaml.getDouble(key + "YAW"), (float) yaml.getDouble(key + "PITCH"));
         }

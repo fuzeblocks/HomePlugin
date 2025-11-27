@@ -216,6 +216,9 @@ public class CacheManager {
     public void loadAllHomesToCache(Player player) {
         HomeManager homeManager = HomePlugin.getHomeManager();
         for (String homeName : homeManager.getHomesName(player)) {
+            System.out.println("Loading home '" + homeName + "' for player " + player.getName() + " into cache.");
+            assert homeName != null;
+            assert homeManager.exist(player, homeName);
             Location location = homeManager.getHomeLocation(player, homeName);
             addHome(player.getUniqueId(), homeName, location);
         }
