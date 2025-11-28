@@ -52,7 +52,7 @@ public class DeleteHomeCommand implements CommandExecutor {
         Location homeLocation = homeManager.getHomeLocation(player, homeName);
 
         if (homeLocation == null) {
-            player.sendMessage(languageManager.getStringWithColor(HOME + "Home-not-found"));
+            player.sendMessage(languageManager.getStringWithColor(HOME + "Home-does-not-exist"));
             return false;
         }
 
