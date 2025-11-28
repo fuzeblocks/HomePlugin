@@ -1,6 +1,7 @@
 package fr.fuzeblocks.homeplugin.task;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -11,6 +12,8 @@ import org.bukkit.entity.Player;
  */
 public class TeleportationManager {
 
+    private static final String HOME = "Home.";
+    private static final LanguageManager languageManager = HomePlugin.getLanguageManager();
     /**
      * Teleport player to home.
      *
@@ -21,6 +24,9 @@ public class TeleportationManager {
         sendHomeTeleportMessage(player, homeName);
 
         Location location = HomePlugin.getHomeManager().getHomeLocation(player, homeName);
+          if (location.getWorld() == null) {
+            player.sendMessage(languageManager.getStringWithColor(HOME + "Home-world-not-loaded"));
+        }
 
         TaskManager taskManager = new TaskManager();
         taskManager.homeTask(homeName, player, location);
