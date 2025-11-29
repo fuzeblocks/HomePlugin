@@ -224,7 +224,7 @@ Config:
   Task:
     Task-Duration: 3  # seconds
     Use-Title: true
-    Use-Message: false
+    Use-Message: true
     Particles-After-Teleport: true
     Skip-If-Op: true
 
@@ -253,6 +253,16 @@ Config:
     Home-Teleport-Price: 50.0
     Tpa-Request-Price: 20.0
     RTP-Price: 150.0
+
+  # ----------------------------------------
+  # Features
+  # Enable or disable specific features
+  # ----------------------------------------
+  Features:
+    Enable-TPA: true
+    Enable-Spawn: true
+    Enable-Home: true
+
 ```
 
 Key behaviors:
@@ -370,5 +380,6 @@ Contribution flow:
 [Apache‑2.0](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
 
 ![Usage](https://bstats.org/signatures/bukkit/HomePlugin.svg)
+
 
 
