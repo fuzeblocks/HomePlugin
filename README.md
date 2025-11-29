@@ -1,3 +1,4 @@
+[![sponsor](https://cdn.modrinth.com/data/cached_images/636893885c8e3a5995bf8e8b4fca194a9f2f029e_0.webp)](https://client.pristis.fr/aff.php?aff=2)
 # 🏡 HomePlugin (by fuzeblocks)
 
 A lightweight, flexible home/spawn/teleport management plugin for Paper/Spigot servers. HomePlugin supports named homes, global spawn, TPA requests, random teleport (RTP), optional Redis caching, YAML or MySQL storage backends, multilingual support, economy integration, and a modular extension API for internal plugin modules.
@@ -379,6 +380,7 @@ Contribution flow:
 [Apache‑2.0](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
 
 ![Usage](https://bstats.org/signatures/bukkit/HomePlugin.svg)
+
 
 
 
