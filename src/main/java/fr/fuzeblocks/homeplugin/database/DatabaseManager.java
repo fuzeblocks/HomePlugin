@@ -9,7 +9,7 @@ import org.bukkit.configuration.ConfigurationSection;
 public class DatabaseManager {
     private static DatabaseConnection connection;
 
-    private final String key = "Config.Connector.";
+    private final String key = "Config.Storage.";
 
     /**
      * Instantiates a new Database manager.
