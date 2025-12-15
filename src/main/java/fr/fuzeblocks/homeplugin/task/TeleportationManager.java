@@ -1,19 +1,20 @@
-package fr.fuzeblocks.homeplugin.task;
+package fr.fuzeblocks. homeplugin.task;
 
-import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.language.LanguageManager;
+import fr.fuzeblocks. homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.language. LanguageManager;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
-
+import org.bukkit. entity.Player;
 
 /**
  * The type Teleportation manager.
  */
 public class TeleportationManager {
 
-    private static final String HOME = "Home.";
+    private static final String HOME_PREFIX = "Home.";
+    private static final String LANGUAGE_PREFIX = "Language.";
     private static final LanguageManager languageManager = HomePlugin.getLanguageManager();
+
     /**
      * Teleport player to home.
      *
@@ -24,16 +25,14 @@ public class TeleportationManager {
         sendHomeTeleportMessage(player, homeName);
 
         Location location = HomePlugin.getHomeManager().getHomeLocation(player, homeName);
-          if (location.getWorld() == null) {
-            player.sendMessage(languageManager.getStringWithColor(HOME + "Home-world-not-loaded"));
+
+        // Early return if world is not loaded
+        if (location == null || location.getWorld() == null) {
+            player.sendMessage(languageManager.getStringWithColor(HOME_PREFIX + "Home-world-not-loaded"));
+            return;
         }
 
-        TaskManager taskManager = new TaskManager();
-        taskManager.homeTask(homeName, player, location);
-        taskManager.startTeleportTask();
-        StatusManager.setPlayerStatus(player, true);
-
-        setTaskManagerInstance(player, taskManager);
+        startTeleportTask(player, homeName, location);
     }
 
     /**
@@ -43,22 +42,57 @@ public class TeleportationManager {
      */
     public static void teleportPlayerToSpawn(Player player) {
         sendSpawnTeleportMessage(player);
+        startSpawnTeleportTask(player);
+    }
+
+    /**
+     * Starts a home teleport task for the player.
+     *
+     * @param player   the player
+     * @param homeName the home name
+     * @param location the target location
+     */
+    private static void startTeleportTask(Player player, String homeName, Location location) {
+        TaskManager taskManager = new TaskManager();
+        taskManager.homeTask(homeName, player, location);
+        taskManager.startTeleportTask();
+
+        StatusManager.setPlayerStatus(player, true);
+        TaskSaveUtils.setTaskManagerInstance(player, taskManager);
+    }
+
+    /**
+     * Starts a spawn teleport task for the player.
+     *
+     * @param player the player
+     */
+    private static void startSpawnTeleportTask(Player player) {
         TaskManager taskManager = new TaskManager();
         taskManager.spawnTask(player);
         taskManager.startTeleportTask();
-        setTaskManagerInstance(player, taskManager);
+
         StatusManager.setPlayerStatus(player, true);
+        TaskSaveUtils. setTaskManagerInstance(player, taskManager);
     }
 
+    /**
+     * Sends spawn teleport start message to player.
+     *
+     * @param player the player
+     */
     private static void sendSpawnTeleportMessage(Player player) {
-        player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor( "Language.Start-of-teleportation-for-spawn"));
+        String message = languageManager.getStringWithColor(LANGUAGE_PREFIX + "Start-of-teleportation-for-spawn");
+        player.sendMessage(message);
     }
 
+    /**
+     * Sends home teleport start message to player.
+     *
+     * @param player   the player
+     * @param homeName the home name
+     */
     private static void sendHomeTeleportMessage(Player player, String homeName) {
-        player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor("Language.Start-of-teleportation") + " " + homeName);
-    }
-
-    private static void setTaskManagerInstance(Player player, TaskManager taskManager) {
-        TaskSaveUtils.setTaskManagerInstance(player, taskManager);
+        String message = languageManager.getStringWithColor(LANGUAGE_PREFIX + "Start-of-teleportation") + " " + homeName;
+        player.sendMessage(message);
     }
 }
