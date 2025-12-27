@@ -209,7 +209,7 @@ public class HomeCommand implements CommandExecutor {
             String ver = raw.split("-")[0];
             int[] current = parseVersionTriple(ver);
             int[] min = {1, 14, 0};
-            int[] max = {1, 21, 10};
+            int[] max = {1, 21, 11};
             return compareVersion(current, min) >= 0 && compareVersion(current, max) <= 0;
         } catch (Exception e) {
             return false;
