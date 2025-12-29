@@ -1,14 +1,14 @@
-package fr.fuzeblocks.homeplugin.status;
+package fr.fuzeblocks. homeplugin.status;
 
-import org.bukkit.entity.Player;
+import org.bukkit.entity. Player;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util. concurrent.ConcurrentHashMap;
 
 /**
  * The type Status manager.
  */
 public class StatusManager {
-    private static final ConcurrentHashMap<Player, Boolean> player_status = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<Player, Boolean> playerStatus = new ConcurrentHashMap<>();
 
     /**
      * Sets player status.
@@ -17,12 +17,7 @@ public class StatusManager {
      * @param status the status
      */
     public static void setPlayerStatus(Player player, boolean status) {
-        if (player_status.containsKey(player)) {
-            player_status.remove(player);
-            player_status.put(player, status);
-        } else {
-            player_status.put(player, status);
-        }
+        playerStatus.put(player, status);
     }
 
     /**
@@ -32,9 +27,33 @@ public class StatusManager {
      * @return the player status
      */
     public static boolean getPlayerStatus(Player player) {
-        if (player_status.containsKey(player)) {
-            return player_status.get(player);
-        }
-        return false;
+        return playerStatus.getOrDefault(player, false);
+    }
+
+    /**
+     * Removes player status.
+     *
+     * @param player the player
+     */
+    public static void removePlayerStatus(Player player) {
+        playerStatus.remove(player);
+    }
+
+    /**
+     * Clears all player statuses.
+     * Useful for plugin reload or shutdown.
+     */
+    public static void clearAll() {
+        playerStatus.clear();
+    }
+
+    /**
+     * Checks if player has a status entry.
+     *
+     * @param player the player
+     * @return true if player has a status entry
+     */
+    public static boolean hasStatus(Player player) {
+        return playerStatus.containsKey(player);
     }
 }
