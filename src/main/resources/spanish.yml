@@ -214,3 +214,7 @@ Back:
   Previous-location-invalid: "&cTu ubicación anterior ya no está disponible."
   Teleported: "&aHas sido teletransportado a tu ubicación anterior."
   Teleport-failed: "&cEl teletransporte falló."
+
+Economy:
+  Payment-successful: "&a Pago exitoso de %amount%."
+  Payment-failed: "&c El pago de %amount% falló."
