@@ -214,3 +214,7 @@ Back:
   Previous-location-invalid: "&cDeine vorherige Position ist nicht mehr verfügbar."
   Teleported: "&aDu wurdest zu deiner vorherigen Position teleportiert."
   Teleport-failed: "&cTeleportation fehlgeschlagen."
+
+Economy:
+  Payment-successful: "&aZahlung von %amount% erfolgreich!"
+  Payment-failed: "&cZahlung von %amount% fehlgeschlagen."

@@ -30,6 +30,10 @@ public enum Language {
      */
     RUSSIAN,
     /**
+     * Turkish language.
+     */
+    TURKISH,
+    /**
      * Custom language.
      */
     CUSTOM
