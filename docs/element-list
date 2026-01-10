@@ -12,6 +12,9 @@ fr.fuzeblocks.homeplugin.economy
 fr.fuzeblocks.homeplugin.event
 fr.fuzeblocks.homeplugin.gui
 fr.fuzeblocks.homeplugin.home
+fr.fuzeblocks.homeplugin.home.offline
+fr.fuzeblocks.homeplugin.home.offline.sql
+fr.fuzeblocks.homeplugin.home.offline.yml
 fr.fuzeblocks.homeplugin.home.sql
 fr.fuzeblocks.homeplugin.home.yml
 fr.fuzeblocks.homeplugin.language

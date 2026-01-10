@@ -7,6 +7,9 @@ import org.bukkit.Location;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * The type Home offline manager.
+ */
 public class HomeOfflineManager implements OfflineHome {
 
     private static HomeOfflineManager instance = null;
@@ -20,7 +23,12 @@ public class HomeOfflineManager implements OfflineHome {
         }
     }
 
-     public static HomeOfflineManager getInstance() {
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
+    public static HomeOfflineManager getInstance() {
         if (instance == null) {
             instance = new HomeOfflineManager();
         }

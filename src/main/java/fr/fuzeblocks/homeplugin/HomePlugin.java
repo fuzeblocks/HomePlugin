@@ -433,6 +433,11 @@ public final class HomePlugin extends JavaPlugin {
         return homeYMLManager;
     }
 
+    /**
+     * Gets home offline yml manager.
+     *
+     * @return the home offline yml manager
+     */
     public static HomeOfflineYMLManager getHomeOfflineYMLManager() {
         return homeOfflineYMLManager;
     }
@@ -464,6 +469,11 @@ public final class HomePlugin extends JavaPlugin {
         return homeSQLManager;
     }
 
+    /**
+     * Gets home offline sql manager.
+     *
+     * @return the home offline sql manager
+     */
     public static HomeOfflineSQLManager getHomeOfflineSQLManager() {
         return homeOfflineSQLManager;
     }
@@ -514,6 +524,11 @@ public final class HomePlugin extends JavaPlugin {
         return homeManager;
     }
 
+    /**
+     * Gets home offline manager.
+     *
+     * @return the home offline manager
+     */
     public static HomeOfflineManager getHomeOfflineManager() {
         return homeOfflineManager;
     }

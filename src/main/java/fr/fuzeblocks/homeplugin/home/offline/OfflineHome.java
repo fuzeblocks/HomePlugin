@@ -26,9 +26,9 @@ public interface OfflineHome {
     /**
      * Rename home boolean.
      *
-     * @param uuid         the UUID of the player
-     * @param oldHomeName  the old home name
-     * @param newHomeName  the new home name
+     * @param uuid        the UUID of the player
+     * @param oldHomeName the old home name
+     * @param newHomeName the new home name
      * @return the boolean
      */
     boolean renameHome(UUID uuid, String oldHomeName, String newHomeName);
@@ -36,9 +36,9 @@ public interface OfflineHome {
     /**
      * Relocate home boolean.
      *
-     * @param uuid         the UUID of the player
-     * @param homeName     the home name
-     * @param newLocation  the new location
+     * @param uuid        the UUID of the player
+     * @param homeName    the home name
+     * @param newLocation the new location
      * @return the boolean
      */
     boolean relocateHome(UUID uuid, String homeName, Location newLocation);
@@ -77,8 +77,8 @@ public interface OfflineHome {
     /**
      * Gets home location.
      *
-     * @param uuid      the UUID of the player
-     * @param homeName  the home name
+     * @param uuid     the UUID of the player
+     * @param homeName the home name
      * @return the home location
      */
     Location getHomeLocation(UUID uuid, String homeName);
@@ -86,8 +86,8 @@ public interface OfflineHome {
     /**
      * Delete home boolean.
      *
-     * @param uuid      the UUID of the player
-     * @param homeName  the home name
+     * @param uuid     the UUID of the player
+     * @param homeName the home name
      * @return the boolean
      */
     boolean deleteHome(UUID uuid, String homeName);
@@ -95,8 +95,8 @@ public interface OfflineHome {
     /**
      * Exist boolean.
      *
-     * @param uuid      the UUID of the player
-     * @param homeName  the home name
+     * @param uuid     the UUID of the player
+     * @param homeName the home name
      * @return the boolean
      */
     boolean exist(UUID uuid, String homeName);

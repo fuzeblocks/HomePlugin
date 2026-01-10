@@ -18,6 +18,9 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * The type Home admin command.
+ */
 public class HomeAdminCommand implements CommandExecutor {
 
     private static final String LANG = "Language.";

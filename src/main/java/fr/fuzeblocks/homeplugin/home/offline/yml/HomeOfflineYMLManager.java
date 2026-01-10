@@ -15,11 +15,19 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * The type Home offline yml manager.
+ */
 public class HomeOfflineYMLManager implements OfflineHome {
 
     private final File file;
     private final YamlConfiguration yaml;
 
+    /**
+     * Instantiates a new Home offline yml manager.
+     *
+     * @param file the file
+     */
     public HomeOfflineYMLManager(File file) {
         this.file = file;
         this.yaml = YamlConfiguration.loadConfiguration(file);

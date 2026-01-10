@@ -32,6 +32,8 @@ public class EconomyManager {
     }
 
     /**
+     * Is enabled boolean.
+     *
      * @return true if economy is enabled via config
      */
     public static boolean isEnabled() {
@@ -50,6 +52,8 @@ public class EconomyManager {
     }
 
     /**
+     * Gets home creation cost.
+     *
      * @return home creation cost
      */
     public static double getHomeCreationCost() {
@@ -57,6 +61,8 @@ public class EconomyManager {
     }
 
     /**
+     * Gets home teleport price.
+     *
      * @return home teleport price
      */
     public static double getHomeTeleportPrice() {
@@ -64,6 +70,8 @@ public class EconomyManager {
     }
 
     /**
+     * Gets tpa request price.
+     *
      * @return TPA request price
      */
     public static double getTpaRequestPrice() {
@@ -71,6 +79,8 @@ public class EconomyManager {
     }
 
     /**
+     * Gets rtp price.
+     *
      * @return RTP price
      */
     public static double getRtpPrice() {

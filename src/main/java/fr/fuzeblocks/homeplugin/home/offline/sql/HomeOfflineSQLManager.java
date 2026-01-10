@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * The type Home offline sql manager.
+ */
 public class HomeOfflineSQLManager implements OfflineHome {
 
     private final Connection connection = DatabaseConnection.getConnection();
