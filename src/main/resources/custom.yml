@@ -45,6 +45,7 @@ Home:
   Invalid-world: "&cYou cannot set a home in this world."
   Disabled-world: "&cHomes are disabled in this world."
   No-solid-ground: "&cYou cannot set a home here, there is no solid ground below."
+  Gui-not-supported: "&cYour minecraft version does not support GUI."
 
   Home-item-displayname: "({homeName}) Home"
   Home-item-lore-teleport: "&aClick to teleport to this home."
