@@ -45,6 +45,7 @@ Home:
   Invalid-world: "&cVous ne pouvez pas poser de home dans ce monde."
   Disabled-world: "&cLes homes sont désactivés dans ce monde."
   No-solid-ground: "&cVous ne pouvez pas poser de home ici, il n'y a pas de sol solide en dessous."
+  Gui-not-supported: "&cVotre client ne supporte pas les interfaces graphiques."
 
   Home-item-displayname: "({homeName}) Home"
   Home-item-lore-teleport: "&aCliquez pour vous téléporter à ce home."
