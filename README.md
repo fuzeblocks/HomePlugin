@@ -122,6 +122,11 @@ Placeholders (via `HomePluginExpansion`):
 | `%homeplugin_home_exists_<name>%` | `true` / `false` |
 | `%homeplugin_home_world_<name>%` | World name |
 | `%homeplugin_home_coordinates_<name>%` | Raw coordinates `X Y Z` |
+| `%homeplugin_home_teleport_price%` | Teleport price |
+| `%homeplugin_home_creation_price%` | Home creation price |
+| `%homeplugin_tpa_request_price%` | TPA request price |
+| `%homeplugin_rtp_price%` | RTP request price |
+
 
 Notes:
 - `<name>` is case‑insensitive.
@@ -381,6 +386,7 @@ Contribution flow:
 [Apache‑2.0](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
 
 ![Usage](https://bstats.org/signatures/bukkit/HomePlugin.svg)
+
 
 
 
