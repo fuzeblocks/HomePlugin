@@ -42,6 +42,7 @@
                     <include>ukrainian.yml</include>
                     <include>russian.yml</include>
                     <include>german.yml</include>
+                    <include>turkish.yml</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>

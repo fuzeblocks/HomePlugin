@@ -18,7 +18,7 @@ public class HomeManager implements Home {
 
     private HomeManager() {
         if (isYAML()) {
-            this.homeImplementation = HomePlugin. getHomeYMLManager();
+            this.homeImplementation = HomePlugin.getHomeYMLManager();
         } else {
             this.homeImplementation = HomePlugin.getHomeSQLManager();
         }
@@ -68,7 +68,7 @@ public class HomeManager implements Home {
 
     @Override
     public List<String> getHomesName(Player player) {
-        return homeImplementation. getHomesName(player);
+        return homeImplementation.getHomesName(player);
     }
 
     @Override
