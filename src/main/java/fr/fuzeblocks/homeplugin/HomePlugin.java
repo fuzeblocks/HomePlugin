@@ -16,6 +16,9 @@ import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
 import fr.fuzeblocks.homeplugin.database.DatabaseManager;
 import fr.fuzeblocks.homeplugin.economy.EconomyManager;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
+import fr.fuzeblocks.homeplugin.home.offline.HomeOfflineManager;
+import fr.fuzeblocks.homeplugin.home.offline.sql.HomeOfflineSQLManager;
+import fr.fuzeblocks.homeplugin.home.offline.yml.HomeOfflineYMLManager;
 import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
 import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
 import fr.fuzeblocks.homeplugin.language.Language;
@@ -74,9 +77,12 @@ public final class HomePlugin extends JavaPlugin {
     private static CacheManager cacheManager;
     private static HomeSQLManager homeSQLManager;
     private static SpawnSQLManager spawnSQLManager;
+    private static HomeOfflineYMLManager homeOfflineYMLManager;
+    private static HomeOfflineSQLManager homeOfflineSQLManager;
     private static ConfigurationSection configurationSection;
     private static JedisPooled jedisPooled;
     private static HomeManager homeManager;
+    private static HomeOfflineManager homeOfflineManager;
     private static SpawnManager spawnManager;
     private static LanguageManager languageManager;
     private static BukkitAudiences adventure;
@@ -222,6 +228,7 @@ public final class HomePlugin extends JavaPlugin {
                 new DatabaseManager(this);
                 new CreateTable(DatabaseConnection.getConnection());
                 homeSQLManager = new HomeSQLManager();
+                homeOfflineSQLManager = new HomeOfflineSQLManager();
                 spawnSQLManager = new SpawnSQLManager();
                 getLogger().info("MySQL storage initialized.");
             } catch (Exception e) {
@@ -237,7 +244,9 @@ public final class HomePlugin extends JavaPlugin {
         File home = new File(getDataFolder(), "homes.yml");
         ensureFile(home);
         homeYMLManager = new HomeYMLManager(home);
+        homeOfflineYMLManager = new HomeOfflineYMLManager(home);
         homeManager = HomeManager.getInstance();
+        homeOfflineManager = HomeOfflineManager.getInstance();
     }
 
     private void spawnRegistration() {
@@ -424,6 +433,10 @@ public final class HomePlugin extends JavaPlugin {
         return homeYMLManager;
     }
 
+    public static HomeOfflineYMLManager getHomeOfflineYMLManager() {
+        return homeOfflineYMLManager;
+    }
+
     /**
      * Gets spawn yml manager.
      *
@@ -449,6 +462,10 @@ public final class HomePlugin extends JavaPlugin {
      */
     public static HomeSQLManager getHomeSQLManager() {
         return homeSQLManager;
+    }
+
+    public static HomeOfflineSQLManager getHomeOfflineSQLManager() {
+        return homeOfflineSQLManager;
     }
 
     /**
@@ -495,6 +512,10 @@ public final class HomePlugin extends JavaPlugin {
      */
     public static HomeManager getHomeManager() {
         return homeManager;
+    }
+
+    public static HomeOfflineManager getHomeOfflineManager() {
+        return homeOfflineManager;
     }
 
     /**
