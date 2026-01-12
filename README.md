@@ -352,7 +352,7 @@ dependencies { implementation("com.github.fuzeblocks:HomePlugin:Tag") }
 | Feature                           | Status     |
 |-----------------------------------|------------|
 | Per‑home economy cost             | ✅ Complete |
-| Offline player home editing       | 📝 Planned  |
+| Offline player home editing       | ✅ Complete  |
 | Edit existing homes               | ✅ Complete |
 | Public homes                      | 📝 Planned  |
 | `/back` command                   | ✅ Complete |
