@@ -27,6 +27,7 @@ import fr.fuzeblocks.homeplugin.listeners.BackListener;
 import fr.fuzeblocks.homeplugin.listeners.OnJoinListener;
 import fr.fuzeblocks.homeplugin.listeners.OnMoveListener;
 import fr.fuzeblocks.homeplugin.listeners.OnPlayerTakeDamageByAnotherPlayer;
+import fr.fuzeblocks.homeplugin.metrics.MetricsPlugin;
 import fr.fuzeblocks.homeplugin.placeholder.HomePluginExpansion;
 import fr.fuzeblocks.homeplugin.plugin.PluginManager;
 import fr.fuzeblocks.homeplugin.spawn.SpawnManager;
@@ -88,6 +89,7 @@ public final class HomePlugin extends JavaPlugin {
     private static BukkitAudiences adventure;
     private static Economy economy;
     private static Metrics metrics;
+    private static PluginManager pluginManager = PluginManager.getInstance();
 
     @Override
     public void onEnable() {
@@ -190,6 +192,7 @@ public final class HomePlugin extends JavaPlugin {
             getLogger().warning("Invalid language '" + languageString + "'. Falling back to FRENCH.");
             language = Language.FRENCH;
         }
+
         languageManager = new LanguageManager(language, this);
     }
 
@@ -342,19 +345,20 @@ public final class HomePlugin extends JavaPlugin {
     }
 
     private void initPluginFunc() {
-        fr.fuzeblocks.homeplugin.plugin.HomePlugin plug = getFirstHomePlugin();
-        if (plug != null) {
-            try {
-                plug.initialize();
-                getLogger().info(plug.getName() + " plugin initialized.");
-            } catch (Exception e) {
-                getLogger().warning("Failed to initialize plugin extension: " + e.getMessage());
+        for (fr.fuzeblocks.homeplugin.plugin.HomePlugin plug : pluginManager.getHomePlugin()) {
+            if (plug != null) {
+                try {
+                    plug.initialize();
+                    getLogger().info(plug.getName() + " plugin initialized.");
+                } catch (Exception e) {
+                    getLogger().warning("Failed to initialize plugin extension: " + e.getMessage());
+                }
             }
         }
     }
 
     private void stopPluginFunc() {
-        fr.fuzeblocks.homeplugin.plugin.HomePlugin plug = getFirstHomePlugin();
+        for (fr.fuzeblocks.homeplugin.plugin.HomePlugin plug : pluginManager.getHomePlugin()) {
         if (plug != null) {
             try {
                 plug.stop();
@@ -362,12 +366,10 @@ public final class HomePlugin extends JavaPlugin {
                 getLogger().warning("Failed to stop plugin extension: " + e.getMessage());
             }
         }
+        }
     }
 
-    private fr.fuzeblocks.homeplugin.plugin.HomePlugin getFirstHomePlugin() {
-        List<fr.fuzeblocks.homeplugin.plugin.HomePlugin> plugins = PluginManager.getInstance().getHomePlugin();
-        return (plugins == null || plugins.isEmpty()) ? null : plugins.get(0);
-    }
+
 
     private void countPlugins() {
         int count = PluginManager.getInstance().getHomePlugin().size();
@@ -395,6 +397,7 @@ public final class HomePlugin extends JavaPlugin {
 
     private void setupMetrics() {
         metrics = new Metrics(this, 27702);
+        PluginManager.getInstance().loadPlugin(new MetricsPlugin());
     }
 
 

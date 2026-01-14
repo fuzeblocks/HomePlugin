@@ -43,25 +43,4 @@ public interface HomePlugin {
      */
     void stop();
 
-    /**
-     * Is sql storage enabled boolean.
-     *
-     * @return the boolean
-     */
-    boolean isSqlStorageEnabled();
-
-    /**
-     * Is placeholder api hooked boolean.
-     *
-     * @return the boolean
-     */
-    boolean isPlaceholderApiHooked();
-
-    /**
-     * Is cache enabled boolean.
-     *
-     * @return the boolean
-     */
-    boolean isCacheEnabled();
-
 }
