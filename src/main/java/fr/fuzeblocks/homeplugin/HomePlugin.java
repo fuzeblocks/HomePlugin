@@ -37,6 +37,7 @@ import fr.fuzeblocks.homeplugin.update.UpdateChecker;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
@@ -190,6 +191,9 @@ public final class HomePlugin extends JavaPlugin {
             getLogger().warning("Invalid language '" + languageString + "'. Falling back to FRENCH.");
             language = Language.FRENCH;
         }
+
+        final Language resolvedLanguage = language;
+        metrics.addCustomChart(new SimplePie("used_language", resolvedLanguage::name));
         languageManager = new LanguageManager(language, this);
     }
 
