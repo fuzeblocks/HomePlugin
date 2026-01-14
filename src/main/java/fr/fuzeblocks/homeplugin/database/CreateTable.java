@@ -19,6 +19,7 @@ public class CreateTable {
         this.connection = connection;
         createHome();
         createSpawn();
+        createWarps();
     }
 
     /**
@@ -41,6 +42,21 @@ public class CreateTable {
         String request = "CREATE TABLE IF NOT EXISTS SpawnPlugin (X INT(11), Y INT(11), Z INT(11), YAW INT(11), PITCH INT(11), WORLD VARCHAR(255))";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(request);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createWarps() {
+        String request =
+                "CREATE TABLE IF NOT EXISTS Warps (" +
+                        "  WARP_NAME VARCHAR(64) NOT NULL," +
+                        "  DATA TEXT NOT NULL," +
+                        "  PRIMARY KEY (WARP_NAME)" +
+                        ")";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(request)) {
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();

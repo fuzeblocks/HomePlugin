@@ -35,6 +35,9 @@ import fr.fuzeblocks.homeplugin.spawn.sql.SpawnSQLManager;
 import fr.fuzeblocks.homeplugin.spawn.yml.SpawnYMLManager;
 import fr.fuzeblocks.homeplugin.sync.SyncMethod;
 import fr.fuzeblocks.homeplugin.update.UpdateChecker;
+import fr.fuzeblocks.homeplugin.warps.WarpManager;
+import fr.fuzeblocks.homeplugin.warps.sql.WarpSQLManager;
+import fr.fuzeblocks.homeplugin.warps.yml.WarpYMLManager;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
@@ -90,6 +93,9 @@ public final class HomePlugin extends JavaPlugin {
     private static Economy economy;
     private static Metrics metrics;
     private static PluginManager pluginManager = PluginManager.getInstance();
+    private static WarpSQLManager warpSQLManager;
+    private static WarpYMLManager warpYMLManager;
+    private static WarpManager warpManager;
 
     @Override
     public void onEnable() {
@@ -110,6 +116,7 @@ public final class HomePlugin extends JavaPlugin {
         // Domain managers
         homeRegistration();
         spawnRegistration();
+        warpRegistration();
         cacheManager = CacheManager.getInstance();
 
         // Commands, events, completers
@@ -130,6 +137,7 @@ public final class HomePlugin extends JavaPlugin {
         getLogger().info("Storage: " + getConfig().getString(CFG_CONNECTOR));
         getLogger().info("------------------------------------------------------");
     }
+
 
     @Override
     public void onDisable() {
@@ -233,6 +241,7 @@ public final class HomePlugin extends JavaPlugin {
                 homeSQLManager = new HomeSQLManager();
                 homeOfflineSQLManager = new HomeOfflineSQLManager();
                 spawnSQLManager = new SpawnSQLManager();
+                warpSQLManager = new WarpSQLManager();
                 getLogger().info("MySQL storage initialized.");
             } catch (Exception e) {
                 getLogger().severe("Failed to initialize MySQL storage: " + e.getMessage());
@@ -259,6 +268,15 @@ public final class HomePlugin extends JavaPlugin {
         spawnYMLManager = new SpawnYMLManager(spawn);
         spawnManager = SpawnManager.getInstance();
     }
+
+    private void warpRegistration() {
+        getLogger().info("Registering Warp...");
+        File warp = new File(getDataFolder(), "warps.yml");
+        ensureFile(warp);
+        warpYMLManager = new WarpYMLManager(warp);
+        warpManager = WarpManager.getInstance();
+    }
+
 
     private void ensureFile(File file) {
         if (!getDataFolder().exists() && !getDataFolder().mkdirs()) {
@@ -583,5 +601,17 @@ public final class HomePlugin extends JavaPlugin {
      */
     public static Metrics getMetrics() {
         return metrics;
+    }
+
+    public static WarpManager getWarpManager() {
+        return warpManager;
+    }
+
+    public static WarpYMLManager getWarpYMLManager() {
+        return warpYMLManager;
+    }
+
+    public static WarpSQLManager getWarpSQLManager() {
+        return warpSQLManager;
     }
 }
