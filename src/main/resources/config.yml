@@ -78,6 +78,7 @@ Config:
     Home-Teleport-Price: 50.0
     Tpa-Request-Price: 20.0
     RTP-Price: 150.0
+    Warp-Use-Price: 75.0
 
   # ----------------------------------------
   # Features

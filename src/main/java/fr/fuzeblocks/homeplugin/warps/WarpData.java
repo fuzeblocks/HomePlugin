@@ -192,6 +192,14 @@ public class WarpData {
         return location;
     }
 
+
+    public boolean canAccess(UUID playerUUID) {
+        if (isPublic) {
+            return true;
+        }
+        return allowedPlayers.contains(playerUUID);
+    }
+
     /**
      * Serialize this WarpData into a single string.
      * <p>

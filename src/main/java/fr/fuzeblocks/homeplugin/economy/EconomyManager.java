@@ -87,6 +87,10 @@ public class EconomyManager {
         return getCost("RTP-Price", 0.0);
     }
 
+    public static double getWarpUsePrice() {
+        return getCost("Warp-Use-Price", 0.0);
+    }
+
     /**
      * Attempts to withdraw the given amount from the player's balance.
      * Behavior:

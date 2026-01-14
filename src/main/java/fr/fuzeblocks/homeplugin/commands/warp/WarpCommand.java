@@ -1,6 +1,8 @@
 package fr.fuzeblocks.homeplugin.commands.warp;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.economy.EconomyManager;
+import fr.fuzeblocks.homeplugin.gui.warp.WarpGUIManager;
 import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.task.TaskManager;
 import fr.fuzeblocks.homeplugin.task.TeleportationManager;
@@ -44,9 +46,10 @@ public class WarpCommand implements CommandExecutor {
                 player.sendMessage(languageManager.getStringWithColor(HOME + "Warp-does-not-exist").replace("{warp}", warpName)); //Missing key. In dev
                 return false;
             }
-            //Todo launch teleportation procedure with checking permissions and economy
-            boolean success = true; //Just for testing
-            if (success) {
+
+            WarpData warpData = warpManager.getWarp(warpName);
+
+            if (warpData.canAccess(player.getUniqueId()) && EconomyManager.pay(player, EconomyManager.getWarpUsePrice())) {
                 TeleportationManager.teleportPlayerToWarp(player, warpName);
             } else {
                 player.sendMessage(languageManager.getStringWithColor(HOME + "Warp-teleport-failed").replace("{warp}", warpName)); //Missing key. In dev
@@ -73,8 +76,7 @@ public class WarpCommand implements CommandExecutor {
                 player.sendMessage(languageManager.getStringWithColor(HOME + "Warp-delete-success").replace("{warp}", warpName)); //Missing key. In dev
                 return true;
             } else if (subCommand.equals("list")) {
-                //Todo open GUI with list of warps
-
+                WarpGUIManager.openWarpListGUI(player);
             } else if (subCommand.equals("modify")) {
                 //Todo open friendly GUI to modify warp settings
 
