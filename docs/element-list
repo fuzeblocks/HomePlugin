@@ -19,6 +19,7 @@ fr.fuzeblocks.homeplugin.home.sql
 fr.fuzeblocks.homeplugin.home.yml
 fr.fuzeblocks.homeplugin.language
 fr.fuzeblocks.homeplugin.listeners
+fr.fuzeblocks.homeplugin.metrics
 fr.fuzeblocks.homeplugin.placeholder
 fr.fuzeblocks.homeplugin.plugin
 fr.fuzeblocks.homeplugin.rtp
