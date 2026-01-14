@@ -8,6 +8,9 @@ import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * The type Warp data.
+ */
 public class WarpData {
 
     private final String name;
@@ -23,6 +26,23 @@ public class WarpData {
     private final Timestamp creationDate;
     private final Location location;
 
+
+    /**
+     * Instantiates a new Warp data.
+     *
+     * @param name           the name
+     * @param creatorName    the creator name
+     * @param creatorUUID    the creator uuid
+     * @param icon           the icon
+     * @param lores          the lores
+     * @param isPublic       the is public
+     * @param allowedPlayers the allowed players
+     * @param cost           the cost
+     * @param permission     the permission
+     * @param expirationDate the expiration date
+     * @param creationDate   the creation date
+     * @param location       the location
+     */
     public WarpData(String name,
                     String creatorName,
                     UUID creatorUUID,
@@ -49,57 +69,132 @@ public class WarpData {
         this.location = location;
     }
 
+    /**
+     * Instantiates a new Warp data.
+     *
+     * @param name        the name
+     * @param creatorName the creator name
+     * @param creatorUUID the creator uuid
+     * @param location    the location
+     */
+    public WarpData(String name,
+                    String creatorName,
+                    UUID creatorUUID,
+                    Location location) {
+        this(name, creatorName, creatorUUID,Material.RED_BED, Collections.emptyList(), true, Collections.emptySet(), 0.0, null, null, new Timestamp(System.currentTimeMillis()), location);
+    }
+
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets creator name.
+     *
+     * @return the creator name
+     */
     public String getCreatorName() {
         return creatorName;
     }
 
+    /**
+     * Gets creator uuid.
+     *
+     * @return the creator uuid
+     */
     public UUID getCreatorUUID() {
         return creatorUUID;
     }
 
+    /**
+     * Gets icon.
+     *
+     * @return the icon
+     */
     public Material getIcon() {
         return icon;
     }
 
+    /**
+     * Gets lores.
+     *
+     * @return the lores
+     */
     public List<String> getLores() {
         return lores;
     }
 
+    /**
+     * Is public boolean.
+     *
+     * @return the boolean
+     */
     public boolean isPublic() {
         return isPublic;
     }
 
+    /**
+     * Gets allowed players.
+     *
+     * @return the allowed players
+     */
     public Set<UUID> getAllowedPlayers() {
         return allowedPlayers;
     }
 
+    /**
+     * Gets cost.
+     *
+     * @return the cost
+     */
     public double getCost() {
         return cost;
     }
 
+    /**
+     * Gets permission.
+     *
+     * @return the permission
+     */
     public String getPermission() {
         return permission;
     }
 
+    /**
+     * Gets expiration date.
+     *
+     * @return the expiration date
+     */
     public Timestamp getExpirationDate() {
         return expirationDate;
     }
 
+    /**
+     * Gets creation date.
+     *
+     * @return the creation date
+     */
     public Timestamp getCreationDate() {
         return creationDate;
     }
 
+    /**
+     * Gets location.
+     *
+     * @return the location
+     */
     public Location getLocation() {
         return location;
     }
 
     /**
      * Serialize this WarpData into a single string.
-     *
+     * <p>
      * Format:
      * 0  name
      * 1  creatorName
@@ -113,6 +208,8 @@ public class WarpData {
      * 9  expirationDate millis or "null"
      * 10 creationDate millis or "null"
      * 11 location: world,x,y,z,yaw,pitch (comma-separated)
+     *
+     * @return the string
      */
     public String serialize() {
         String loresPart = String.join(",", lores);
@@ -147,6 +244,12 @@ public class WarpData {
         );
     }
 
+    /**
+     * Deserialize warp data.
+     *
+     * @param serializedData the serialized data
+     * @return the warp data
+     */
     public static WarpData deserialize(String serializedData) {
         String[] parts = serializedData.split(";", -1); // -1 to keep empty strings
         if (parts.length != 12) {
@@ -218,6 +321,12 @@ public class WarpData {
         );
     }
 
+    /**
+     * Is valid serialized data boolean.
+     *
+     * @param serializedData the serialized data
+     * @return the boolean
+     */
     public static boolean isValidSerializedData(String serializedData) {
         if (serializedData == null || serializedData.isEmpty()) return false;
         String[] parts = serializedData.split(";", -1);

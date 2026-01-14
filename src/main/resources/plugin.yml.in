@@ -48,6 +48,8 @@ commands:
     description: Teleport to a random location within a specified radius.
   back:
     description: Teleport back to your previous location.
+  warp:
+    description: Teleport to a predefined warp point.
 
 
 
@@ -78,4 +80,10 @@ permissions:
     default: true
   homeplugin.back.use:
     description: Allows using the /back command.
+    default: op
+  homeplugin.warp.use:
+    description: Allows using /back for other players.
+    default: true
+  homeplugin.warp.modify:
+    description: Allows setting/modifying warps.
     default: op

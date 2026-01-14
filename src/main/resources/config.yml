@@ -87,3 +87,4 @@ Config:
     Enable-TPA: true
     Enable-Spawn: true
     Enable-Home: true
+    Enable-Warp: true

@@ -41,6 +41,8 @@ public class TaskManager extends BukkitRunnable {
                 teleportHome();
             } else if (task == Task.SPAWN) {
                 teleportSpawn();
+            } else {
+                teleportWarp();
             }
         } finally {
             cleanup();
@@ -81,6 +83,11 @@ public class TaskManager extends BukkitRunnable {
         Player target = event.getPlayer();
         target.teleport(event. getLocation());
         target.sendMessage(languageManager. getStringWithColor(LANG_PREFIX + "Teleport-to-spawn"));
+    }
+
+    private void teleportWarp() {
+        // Placeholder for warp teleportation logic
+        // Implement similar to teleportHome and teleportSpawn methods
     }
 
     /**
@@ -140,6 +147,20 @@ public class TaskManager extends BukkitRunnable {
     public void spawnTask(Player player) {
         this.player = player;
         this.task = Task.SPAWN;
+    }
+
+    /**
+     * Warp task.
+     *
+     * @param warpName the warp name
+     * @param player   the player
+     * @param location the location
+     */
+    public void warpTask(String warpName, Player player, Location location) {
+        this.player = player;
+        this.homeName = warpName;
+        this.homeLocation = location;
+        this.task = Task.WARP;
     }
 
     /**

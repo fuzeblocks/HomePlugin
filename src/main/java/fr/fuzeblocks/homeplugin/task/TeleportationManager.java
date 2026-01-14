@@ -12,6 +12,7 @@ import org.bukkit. entity.Player;
 public class TeleportationManager {
 
     private static final String HOME_PREFIX = "Home.";
+    private static final String WARP_PREFIX = "Warp.";
     private static final String LANGUAGE_PREFIX = "Language.";
     private static final LanguageManager languageManager = HomePlugin.getLanguageManager();
 
@@ -32,7 +33,7 @@ public class TeleportationManager {
             return;
         }
 
-        startTeleportTask(player, homeName, location);
+        startHomeTeleportTask(player, homeName, location);
     }
 
     /**
@@ -46,13 +47,33 @@ public class TeleportationManager {
     }
 
     /**
+     * Teleport player to warp.
+     *
+     * @param player   the player
+     * @param warpName the warp name
+     */
+    public static void teleportPlayerToWarp(Player player, String warpName) {
+        sendWarpTeleportMessage(player, warpName);
+
+        Location location = HomePlugin.getWarpManager().getWarp(warpName).getLocation();
+
+        // Early return if world is not loaded
+        if (location == null || location.getWorld() == null) {
+            player.sendMessage(languageManager.getStringWithColor(WARP_PREFIX + "Warp-world-not-loaded"));
+            return;
+        }
+
+        startWarpTeleportTask(player, warpName, location);
+    }
+
+    /**
      * Starts a home teleport task for the player.
      *
      * @param player   the player
      * @param homeName the home name
      * @param location the target location
      */
-    private static void startTeleportTask(Player player, String homeName, Location location) {
+    private static void startHomeTeleportTask(Player player, String homeName, Location location) {
         TaskManager taskManager = new TaskManager();
         taskManager.homeTask(homeName, player, location);
         taskManager.startTeleportTask();
@@ -75,6 +96,15 @@ public class TeleportationManager {
         TaskSaveUtils. setTaskManagerInstance(player, taskManager);
     }
 
+     private static void startWarpTeleportTask(Player player, String warpName, Location location) {
+        TaskManager taskManager = new TaskManager();
+        taskManager.warpTask(warpName,player,location);
+        taskManager.startTeleportTask();
+
+        StatusManager.setPlayerStatus(player, true);
+        TaskSaveUtils.setTaskManagerInstance(player, taskManager);
+    }
+
     /**
      * Sends spawn teleport start message to player.
      *
@@ -94,5 +124,8 @@ public class TeleportationManager {
     private static void sendHomeTeleportMessage(Player player, String homeName) {
         String message = languageManager.getStringWithColor(LANGUAGE_PREFIX + "Start-of-teleportation") + " " + homeName;
         player.sendMessage(message);
+    }
+    private static void sendWarpTeleportMessage(Player player, String warpName) {
+       //Todo
     }
 }

@@ -1,7 +1,9 @@
 package fr.fuzeblocks.homeplugin;
 
 import fr.fuzeblocks.homeplugin.cache.CacheManager;
-import fr.fuzeblocks.homeplugin.commands.*;
+import fr.fuzeblocks.homeplugin.commands.BackCommand;
+import fr.fuzeblocks.homeplugin.commands.CacheCommand;
+import fr.fuzeblocks.homeplugin.commands.LangCommand;
 import fr.fuzeblocks.homeplugin.commands.home.*;
 import fr.fuzeblocks.homeplugin.commands.rtp.RTPCommand;
 import fr.fuzeblocks.homeplugin.commands.spawn.DeleteSpawnCommand;
@@ -10,6 +12,7 @@ import fr.fuzeblocks.homeplugin.commands.spawn.SpawnCommand;
 import fr.fuzeblocks.homeplugin.commands.tpa.TPAAcceptCommand;
 import fr.fuzeblocks.homeplugin.commands.tpa.TPACommand;
 import fr.fuzeblocks.homeplugin.commands.tpa.TPADenyCommand;
+import fr.fuzeblocks.homeplugin.commands.warp.WarpCommand;
 import fr.fuzeblocks.homeplugin.completers.*;
 import fr.fuzeblocks.homeplugin.database.CreateTable;
 import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
@@ -56,7 +59,6 @@ import redis.clients.jedis.JedisPooled;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Main plugin class for HomePlugin.
@@ -328,6 +330,10 @@ public final class HomePlugin extends JavaPlugin {
 
         if (getConfig().getBoolean(CFG_RTP_ENABLED, false)) {
             bind("rtp", new RTPCommand(), null);
+        }
+
+        if (isActivatedFeature("Enable-Warp")) {
+            bind("warp",new WarpCommand(),new WarpCompleter());
         }
     }
 
@@ -603,14 +609,29 @@ public final class HomePlugin extends JavaPlugin {
         return metrics;
     }
 
+    /**
+     * Gets warp manager.
+     *
+     * @return the warp manager
+     */
     public static WarpManager getWarpManager() {
         return warpManager;
     }
 
+    /**
+     * Gets warp yml manager.
+     *
+     * @return the warp yml manager
+     */
     public static WarpYMLManager getWarpYMLManager() {
         return warpYMLManager;
     }
 
+    /**
+     * Gets warp sql manager.
+     *
+     * @return the warp sql manager
+     */
     public static WarpSQLManager getWarpSQLManager() {
         return warpSQLManager;
     }

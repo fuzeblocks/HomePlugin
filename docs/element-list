@@ -6,6 +6,7 @@ fr.fuzeblocks.homeplugin.commands.home
 fr.fuzeblocks.homeplugin.commands.rtp
 fr.fuzeblocks.homeplugin.commands.spawn
 fr.fuzeblocks.homeplugin.commands.tpa
+fr.fuzeblocks.homeplugin.commands.warp
 fr.fuzeblocks.homeplugin.completers
 fr.fuzeblocks.homeplugin.database
 fr.fuzeblocks.homeplugin.economy
@@ -19,6 +20,7 @@ fr.fuzeblocks.homeplugin.home.sql
 fr.fuzeblocks.homeplugin.home.yml
 fr.fuzeblocks.homeplugin.language
 fr.fuzeblocks.homeplugin.listeners
+fr.fuzeblocks.homeplugin.metrics
 fr.fuzeblocks.homeplugin.placeholder
 fr.fuzeblocks.homeplugin.plugin
 fr.fuzeblocks.homeplugin.rtp
@@ -31,3 +33,6 @@ fr.fuzeblocks.homeplugin.task
 fr.fuzeblocks.homeplugin.task.exception
 fr.fuzeblocks.homeplugin.tpa
 fr.fuzeblocks.homeplugin.update
+fr.fuzeblocks.homeplugin.warps
+fr.fuzeblocks.homeplugin.warps.sql
+fr.fuzeblocks.homeplugin.warps.yml
