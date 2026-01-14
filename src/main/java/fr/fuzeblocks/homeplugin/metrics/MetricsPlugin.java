@@ -13,7 +13,7 @@ public class MetricsPlugin implements HomePlugin {
 
     @Override
     public String getName() {
-        return "Metrics-Internal-Plugin";
+        return "Metrics-Internal";
     }
 
     @Override
