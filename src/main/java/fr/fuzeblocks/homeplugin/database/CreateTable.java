@@ -48,6 +48,9 @@ public class CreateTable {
         }
     }
 
+    /**
+     * Create warps.
+     */
     public void createWarps() {
         String request =
                 "CREATE TABLE IF NOT EXISTS Warps (" +

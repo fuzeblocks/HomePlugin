@@ -6,6 +6,9 @@ import fr.fuzeblocks.homeplugin.sync.SyncMethod;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
 
+/**
+ * The type Metrics plugin.
+ */
 public class MetricsPlugin implements HomePlugin {
 
     private final Metrics metrics = fr.fuzeblocks.homeplugin.HomePlugin.getMetrics();

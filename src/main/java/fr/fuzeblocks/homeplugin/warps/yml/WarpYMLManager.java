@@ -13,11 +13,19 @@ import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * The type Warp yml manager.
+ */
 public class WarpYMLManager implements Warp {
 
     private final File file;
     private final YamlConfiguration yaml;
 
+    /**
+     * Instantiates a new Warp yml manager.
+     *
+     * @param file the file
+     */
     public WarpYMLManager(File file) {
         this.file = file;
         this.yaml = YamlConfiguration.loadConfiguration(file);

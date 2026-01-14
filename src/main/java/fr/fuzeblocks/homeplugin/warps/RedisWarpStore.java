@@ -4,12 +4,20 @@ import redis.clients.jedis.JedisPooled;
 
 import java.util.*;
 
+/**
+ * The type Redis warp store.
+ */
 public class RedisWarpStore implements WarpRequestStore {
 
     private final JedisPooled jedis;
     private static final String WARP_KEY_PREFIX = "warp:";
     private static final String WARP_NAMES_KEY = "warp:names";
 
+    /**
+     * Instantiates a new Redis warp store.
+     *
+     * @param jedis the jedis
+     */
     public RedisWarpStore(JedisPooled jedis) {
         this.jedis = jedis;
     }

@@ -320,6 +320,8 @@ public class CacheManager {
 
     /**
      * Ajoute ou met à jour un warp dans le cache.
+     *
+     * @param warpData the warp data
      */
     public void addWarp(WarpData warpData) {
         warpRequestStore.saveWarp(warpData);
@@ -327,6 +329,8 @@ public class CacheManager {
 
     /**
      * Supprime un warp par son nom.
+     *
+     * @param name the name
      */
     public void removeWarp(String name) {
         warpRequestStore.deleteWarp(name);
@@ -334,6 +338,9 @@ public class CacheManager {
 
     /**
      * Charge un warp par son nom.
+     *
+     * @param name the name
+     * @return the warp
      */
     public WarpData getWarp(String name) {
         return warpRequestStore.loadWarp(name);
@@ -341,6 +348,9 @@ public class CacheManager {
 
     /**
      * Vérifie si un warp existe dans le cache.
+     *
+     * @param name the name
+     * @return the boolean
      */
     public boolean warpExists(String name) {
         return warpRequestStore.warpExists(name);
@@ -348,6 +358,8 @@ public class CacheManager {
 
     /**
      * Retourne tous les warps dans le cache (nom -> WarpData).
+     *
+     * @return the all warps
      */
     public Map<String, WarpData> getAllWarps() {
         return warpRequestStore.loadAllWarps();
@@ -355,6 +367,8 @@ public class CacheManager {
 
     /**
      * Retourne tous les noms de warps dans le cache.
+     *
+     * @return the warp names
      */
     public Set<String> getWarpNames() {
         return warpRequestStore.getWarpNames();

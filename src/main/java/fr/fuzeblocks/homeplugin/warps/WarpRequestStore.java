@@ -3,10 +3,14 @@ package fr.fuzeblocks.homeplugin.warps;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * The interface Warp request store.
+ */
 public interface WarpRequestStore {
 
     /**
      * Sauvegarde ou met à jour un warp.
+     *
      * @param warpData données du warp
      * @return true si succès
      */
@@ -14,6 +18,7 @@ public interface WarpRequestStore {
 
     /**
      * Supprime un warp par son nom.
+     *
      * @param name nom du warp
      * @return true si un warp a été supprimé
      */
@@ -21,6 +26,7 @@ public interface WarpRequestStore {
 
     /**
      * Charge un warp par son nom.
+     *
      * @param name nom du warp
      * @return WarpData ou null si inexistant
      */
@@ -29,6 +35,7 @@ public interface WarpRequestStore {
 
     /**
      * Vérifie si un warp existe.
+     *
      * @param name nom du warp
      * @return true si présent
      */
@@ -36,12 +43,15 @@ public interface WarpRequestStore {
 
     /**
      * Charge tous les warps.
+     *
      * @return Map nom -> WarpData
      */
     Map<String, WarpData> loadAllWarps();
 
     /**
      * Retourne tous les noms de warps.
+     *
+     * @return the warp names
      */
     Set<String> getWarpNames();
 }

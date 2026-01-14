@@ -9,6 +9,9 @@ import org.bukkit.Material;
 import java.sql.*;
 import java.util.*;
 
+/**
+ * The type Warp sql manager.
+ */
 public class WarpSQLManager implements Warp {
 
   private final Connection connection = DatabaseConnection.getConnection();

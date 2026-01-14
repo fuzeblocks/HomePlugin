@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * The type Local warp store.
+ */
 public class LocalWarpStore implements WarpRequestStore {
 
     private final Map<String, WarpData> store = new HashMap<>();

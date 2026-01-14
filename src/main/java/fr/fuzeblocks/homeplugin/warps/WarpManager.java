@@ -48,10 +48,21 @@ public class WarpManager implements Warp {
         return HomePlugin.getConfigurationSection().getBoolean("Config.Connector.Storage.UseYAML");
     }
 
+    /**
+     * Gets cache manager.
+     *
+     * @return the cache manager
+     */
     public CacheManager getCacheManager() {
         return HomePlugin.getCacheManager();
     }
 
+    /**
+     * Is status boolean.
+     *
+     * @param player the player
+     * @return the boolean
+     */
     public boolean isStatus(Player player) {
         return StatusManager.getPlayerStatus(player);
     }
