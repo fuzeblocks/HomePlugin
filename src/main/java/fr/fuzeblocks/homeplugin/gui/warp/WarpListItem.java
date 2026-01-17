@@ -1,18 +1,26 @@
 package fr.fuzeblocks.homeplugin.gui.warp;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
+import xyz.xenondevs.invui.item.ItemProvider;
+import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.AbstractItem;
 
-public class WarpItem extends AbstractItem  {
+public class WarpListItem extends AbstractItem  {
 
 
     private String warpName;
-    public WarpItem(String warpName) {
+    public WarpListItem(String warpName) {
         this.warpName = warpName;
+    }
+
+    @Override
+    public ItemProvider getItemProvider() {
+        return new ItemBuilder(Material.RED_BED).setDisplayName(warpName);
     }
 
     @Override

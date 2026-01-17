@@ -43,10 +43,13 @@ public class WarpManager implements Warp {
 
     // --- Helpers de config (comme pour HomeManager) ---
 
-    private boolean isYAML() {
-        // Adapte la clé de config à ton plugin
-        return HomePlugin.getConfigurationSection().getBoolean("Config.Connector.Storage.UseYAML");
-    }
+     private boolean isYAML() {
+        return "YAML".equalsIgnoreCase(
+            HomePlugin.getConfigurationSection()
+                .getString("Config.Storage.TYPE", "YAML")
+        );
+}
+
 
     /**
      * Gets cache manager.

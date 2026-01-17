@@ -218,3 +218,10 @@ Back:
 Economy:
   Payment-successful: "&aPayement de %amount% reussi !"
   Payment-failed: "&cLe payement de %amount% a échoué !"
+
+Warp:
+  Warp-does-not-exist: "&cLe warp &e({warp}) spécifié n'existe pas !"
+  Warp-teleport-failed: "&cLa téléportation vers le warp &e({warp}) a échoué !"
+  Warp-set-success: "&aLe warp &e({warp}) &aa été défini."
+  Usage-warp-command: "&cUtilisation : /warp <nom-du-warp>"
+

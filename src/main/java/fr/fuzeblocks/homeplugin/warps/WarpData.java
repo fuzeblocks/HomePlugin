@@ -3,6 +3,8 @@ package fr.fuzeblocks.homeplugin.warps;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import xyz.xenondevs.invui.item.builder.ItemBuilder;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -340,4 +342,35 @@ public class WarpData {
         String[] parts = serializedData.split(";", -1);
         return parts.length == 12;
     }
+
+    public static ItemBuilder toItemBuilder(WarpData warpData) {
+    org.bukkit.ChatColor titleColor = org.bukkit.ChatColor.GOLD;
+    org.bukkit.ChatColor labelColor = org.bukkit.ChatColor.AQUA;
+    org.bukkit.ChatColor valueColor = org.bukkit.ChatColor.WHITE;
+    org.bukkit.ChatColor accentColor = org.bukkit.ChatColor.YELLOW;
+
+    ItemBuilder itemBuilder = new ItemBuilder(warpData.getIcon())
+            .setDisplayName(titleColor + warpData.getName());
+
+    if (!warpData.getLores().isEmpty()) {
+        List<String> coloredLores = warpData.getLores().stream()
+                .map(l -> valueColor + l)
+                .collect(Collectors.toList());
+        itemBuilder.setLegacyLore(coloredLores);
+    }
+
+    itemBuilder.addLegacyLoreLines(Arrays.asList(
+            labelColor + "Public: " + valueColor + warpData.isPublic(),
+            labelColor + "Coût: " + valueColor + warpData.getCost(),
+            labelColor + "Créateur: " + valueColor + warpData.getCreatorName(),
+            labelColor + "Créé le: " + valueColor + (warpData.getCreationDate() != null ? warpData.getCreationDate().toString() : "N/A"),
+            labelColor + "Expire: " + valueColor + (warpData.getExpirationDate() != null ? warpData.getExpirationDate().toString() : "Jamais"),
+            labelColor + "Lieu: " + valueColor + warpData.getLocation().getWorld().getName() + " " +
+                    accentColor + "(" + String.format("%.1f, %.1f, %.1f)", warpData.getLocation().getX(), warpData.getLocation().getY(), warpData.getLocation().getZ()) + valueColor,
+            labelColor + "Permission: " + valueColor + (warpData.getPermission() != null ? warpData.getPermission() : "Aucune")
+    ));
+
+    return itemBuilder;
+}
+
 }

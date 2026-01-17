@@ -3,8 +3,6 @@ package fr.fuzeblocks.homeplugin.gui.warp;
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.gui.BackItem;
 import fr.fuzeblocks.homeplugin.gui.ForwardItem;
-import fr.fuzeblocks.homeplugin.gui.HomeItem;
-import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.warps.WarpData;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -23,15 +21,25 @@ import java.util.stream.Collectors;
 public class WarpGUIManager {
 
 
-    private static List<Item> getWarpItems() {
+    private static List<Item> getWarpListItems() {
         Map<String, WarpData> warps = HomePlugin.getWarpManager().getAllWarps();
 
         return warps.keySet()
                 .stream()
                 .filter(name -> name != null)
-                .map(WarpItem::new)
+                .map(WarpListItem::new)
                 .collect(Collectors.toList());
     }
+      private static List<Item> getWarpModifyItems() {
+        Map<String, WarpData> warps = HomePlugin.getWarpManager().getAllWarps();
+
+        return warps.keySet()
+                .stream()
+                .filter(name -> name != null)
+                .map(name -> new WarpModifyItem(warps.get(name)))
+                .collect(Collectors.toList());
+    }
+
     public static void openWarpListGUI(Player player) {
         Item border = new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(""));
         Gui gui = PagedGui.items()
@@ -44,7 +52,7 @@ public class WarpGUIManager {
                 .addIngredient('#', border)
                 .addIngredient('<', new BackItem())
                 .addIngredient('>', new ForwardItem())
-                .setContent(getWarpItems())
+                .setContent(getWarpListItems())
                 .build();
 
         Window window = Window.single()
@@ -57,6 +65,27 @@ public class WarpGUIManager {
         }
     public static void openEditWarpGUI(Player player, String warpName) {
         WarpData warpData = HomePlugin.getWarpManager().getWarp(warpName);
+        Item border = new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(""));
+        Gui gui = PagedGui.items()
+                .setStructure(
+                        "# # # # # # # # #",
+                        "# x x x x x x x #",
+                        "# x x x x x x x #",
+                        "# # # < # > # # #")
+                .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
+                .addIngredient('#', border)
+                .addIngredient('<', new BackItem())
+                .addIngredient('>', new ForwardItem())
+                .setContent(getWarpModifyItems())
+                .build();
+
+        Window window = Window.single()
+                .setViewer(player)
+                .setTitle(HomePlugin.getLanguageManager().getStringWithColor("Warp List"))
+                .setGui(gui)
+                .build();
+
+        window.open();
     }
 
 }
