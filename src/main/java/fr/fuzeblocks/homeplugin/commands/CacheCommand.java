@@ -164,7 +164,7 @@ public class CacheCommand implements CommandExecutor {
     /**
      * Handles clearing all player caches.
      *
-     * @param player The admin executing the command
+     * @param player       The admin executing the command
      * @param cacheManager The cache manager instance
      */
     private void handleClearAll(Player player, CacheManager cacheManager) {
@@ -177,8 +177,8 @@ public class CacheCommand implements CommandExecutor {
     /**
      * Handles clearing a specific player's cache.
      *
-     * @param player The admin executing the command
-     * @param targetName The target player name
+     * @param player       The admin executing the command
+     * @param targetName   The target player name
      * @param cacheManager The cache manager instance
      */
     private void handleClearPlayer(Player player, String targetName, CacheManager cacheManager) {
@@ -198,10 +198,10 @@ public class CacheCommand implements CommandExecutor {
     /**
      * Handles viewing a player's cached homes with interactive teleport buttons.
      *
-     * @param player The admin viewing the cache
-     * @param targetName The target player name
+     * @param player       The admin viewing the cache
+     * @param targetName   The target player name
      * @param cacheManager The cache manager instance
-     * @param homeManager The home manager instance
+     * @param homeManager  The home manager instance
      */
     private void handleViewCache(Player player, String targetName, CacheManager cacheManager, HomeManager homeManager) {
         Player target = Bukkit.getPlayer(targetName);
@@ -242,10 +242,10 @@ public class CacheCommand implements CommandExecutor {
     /**
      * Sends an interactive home entry with clickable teleport button.
      *
-     * @param homes The map of homes
+     * @param homes    The map of homes
      * @param homeName The name of the home
-     * @param player The player receiving the message
-     * @param target The player who owns the home
+     * @param player   The player receiving the message
+     * @param target   The player who owns the home
      */
     private void sendInteractiveHomeMessage(Map<String, Location> homes, String homeName, Player player, Player target) {
         Location homeLocation = homes.get(homeName);
@@ -321,7 +321,7 @@ public class CacheCommand implements CommandExecutor {
      * Sends a simple translated message to the sender.
      *
      * @param sender The command sender
-     * @param path The language file path
+     * @param path   The language file path
      */
     private void sendMsg(CommandSender sender, String path) {
         sender.sendMessage(translate(path));

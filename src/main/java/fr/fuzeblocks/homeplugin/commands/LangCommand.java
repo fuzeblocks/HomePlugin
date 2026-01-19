@@ -20,9 +20,9 @@ import java.io.IOException;
  */
 public class LangCommand implements CommandExecutor {
 
-    private final Plugin plugin;
     private static final String LANG = "LangCommand.";
     private static final LanguageManager languageManager = HomePlugin.getLanguageManager();
+    private final Plugin plugin;
 
     /**
      * Instantiates a new Lang command.
@@ -63,7 +63,7 @@ public class LangCommand implements CommandExecutor {
      * Handles the update subcommand.
      *
      * @param sender The command sender
-     * @param args Command arguments
+     * @param args   Command arguments
      * @return true always
      */
     private boolean handleUpdate(CommandSender sender, String[] args) {
@@ -127,7 +127,7 @@ public class LangCommand implements CommandExecutor {
      * Handles the merge subcommand.
      *
      * @param sender The command sender
-     * @param args Command arguments
+     * @param args   Command arguments
      * @return true always
      */
     private boolean handleMerge(CommandSender sender, String[] args) {
@@ -166,7 +166,7 @@ public class LangCommand implements CommandExecutor {
      * Handles the set subcommand.
      *
      * @param sender The command sender
-     * @param args Command arguments
+     * @param args   Command arguments
      * @return true always
      */
     private boolean handleSet(CommandSender sender, String[] args) {

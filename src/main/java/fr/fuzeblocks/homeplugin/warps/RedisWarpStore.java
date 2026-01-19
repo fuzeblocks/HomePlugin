@@ -9,9 +9,9 @@ import java.util.*;
  */
 public class RedisWarpStore implements WarpRequestStore {
 
-    private final JedisPooled jedis;
     private static final String WARP_KEY_PREFIX = "warp:";
     private static final String WARP_NAMES_KEY = "warp:names";
+    private final JedisPooled jedis;
 
     /**
      * Instantiates a new Redis warp store.

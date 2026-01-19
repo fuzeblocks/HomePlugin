@@ -224,4 +224,12 @@ Warp:
   Warp-teleport-failed: "&cLa téléportation vers le warp &e({warp}) a échoué !"
   Warp-set-success: "&aLe warp &e({warp}) &aa été défini."
   Usage-warp-command: "&cUtilisation : /warp <nom-du-warp>"
+  Warp-delete-success: "&aLe warp &e({warp}) &aa été supprimé."
+
+  List:
+    Warp-list-header: "&6&lListe des Warps"
+    Warp-modify-header: "&6&lGestion des Warps"
+    Warp-name: "&eNom du warp : %warp%"
+    Warp-location: "&9Position : &6X: %x% Y: %y% Z: %z% Monde: %world%"
+    Warp-teleport-hover: "&eCliquez pour vous téléporter."
 

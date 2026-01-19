@@ -22,6 +22,7 @@ import java.util.UUID;
 public class HomeOfflineSQLManager implements OfflineHome {
 
     private final Connection connection = DatabaseConnection.getConnection();
+
     @Override
     public boolean setHome(UUID uuid, String name, Location location) {
         return addHome(uuid.toString(), name, location);

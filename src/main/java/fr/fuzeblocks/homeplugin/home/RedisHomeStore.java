@@ -16,9 +16,9 @@ import java.util.logging.Logger;
  */
 public class RedisHomeStore implements HomeRequestStore {
 
+    private static final String KEY_PREFIX = "homes:";
     private final JedisPooled jedis;
     private final Logger logger;
-    private static final String KEY_PREFIX = "homes:";
 
     /**
      * Instantiates a new Redis home store.

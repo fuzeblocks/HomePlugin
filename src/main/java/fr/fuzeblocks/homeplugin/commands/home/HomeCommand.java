@@ -34,6 +34,47 @@ public class HomeCommand implements CommandExecutor {
     private static final String HOME = "Home.";
     private static final String LANG = "Language.";
 
+    /**
+     * Parses a version string into a triple array [major, minor, patch].
+     *
+     * @param v The version string
+     * @return Array of [major, minor, patch]
+     */
+    private static int[] parseVersionTriple(String v) {
+        if (v == null) return new int[]{0, 0, 0};
+        v = v.replaceAll("[^0-9.]", "");
+        String[] p = v.split("\\.");
+        int major = 0, minor = 0, patch = 0;
+        try {
+            if (p.length > 0) major = Integer.parseInt(p[0]);
+        } catch (Exception ignored) {
+        }
+        try {
+            if (p.length > 1) minor = Integer.parseInt(p[1]);
+        } catch (Exception ignored) {
+        }
+        try {
+            if (p.length > 2) patch = Integer.parseInt(p[2]);
+        } catch (Exception ignored) {
+        }
+        return new int[]{major, minor, patch};
+    }
+
+    /**
+     * Compares two version arrays.
+     *
+     * @param a First version array
+     * @param b Second version array
+     * @return Negative if a < b, 0 if equal, positive if a > b
+     */
+    private static int compareVersion(int[] a, int[] b) {
+        for (int i = 0; i < 3; i++) {
+            int cmp = Integer.compare(a[i], b[i]);
+            if (cmp != 0) return cmp;
+        }
+        return 0;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         final LanguageManager languageManager = HomePlugin.getLanguageManager();
@@ -67,9 +108,9 @@ public class HomeCommand implements CommandExecutor {
     /**
      * Teleports the player to a specific home.
      *
-     * @param player The player to teleport
-     * @param homeName The name of the home
-     * @param homeManager The home manager instance
+     * @param player          The player to teleport
+     * @param homeName        The name of the home
+     * @param homeManager     The home manager instance
      * @param languageManager The language manager instance
      * @return true if successful, false otherwise
      */
@@ -112,8 +153,8 @@ public class HomeCommand implements CommandExecutor {
     /**
      * Opens the home selection GUI or sends a message if GUI is not supported.
      *
-     * @param player The player to show the GUI to
-     * @param homeManager The home manager instance
+     * @param player          The player to show the GUI to
+     * @param homeManager     The home manager instance
      * @param languageManager The language manager instance
      * @return true if successful, false otherwise
      */
@@ -135,8 +176,8 @@ public class HomeCommand implements CommandExecutor {
      * Checks if a home is already in the cache.
      *
      * @param homeManager The home manager instance
-     * @param player The player
-     * @param homeName The home name
+     * @param player      The player
+     * @param homeName    The home name
      * @return true if in cache, false otherwise
      */
     private boolean isInCache(HomeManager homeManager, Player player, String homeName) {
@@ -214,43 +255,5 @@ public class HomeCommand implements CommandExecutor {
         } catch (Exception e) {
             return false;
         }
-    }
-
-    /**
-     * Parses a version string into a triple array [major, minor, patch].
-     *
-     * @param v The version string
-     * @return Array of [major, minor, patch]
-     */
-    private static int[] parseVersionTriple(String v) {
-        if (v == null) return new int[]{0, 0, 0};
-        v = v.replaceAll("[^0-9.]", "");
-        String[] p = v.split("\\.");
-        int major = 0, minor = 0, patch = 0;
-        try {
-            if (p.length > 0) major = Integer.parseInt(p[0]);
-        } catch (Exception ignored) {}
-        try {
-            if (p.length > 1) minor = Integer.parseInt(p[1]);
-        } catch (Exception ignored) {}
-        try {
-            if (p.length > 2) patch = Integer.parseInt(p[2]);
-        } catch (Exception ignored) {}
-        return new int[]{major, minor, patch};
-    }
-
-    /**
-     * Compares two version arrays.
-     *
-     * @param a First version array
-     * @param b Second version array
-     * @return Negative if a < b, 0 if equal, positive if a > b
-     */
-    private static int compareVersion(int[] a, int[] b) {
-        for (int i = 0; i < 3; i++) {
-            int cmp = Integer.compare(a[i], b[i]);
-            if (cmp != 0) return cmp;
-        }
-        return 0;
     }
 }

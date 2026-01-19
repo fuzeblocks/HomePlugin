@@ -43,12 +43,12 @@ public class WarpManager implements Warp {
 
     // --- Helpers de config (comme pour HomeManager) ---
 
-     private boolean isYAML() {
+    private boolean isYAML() {
         return "YAML".equalsIgnoreCase(
-            HomePlugin.getConfigurationSection()
-                .getString("Config.Storage.TYPE", "YAML")
+                HomePlugin.getConfigurationSection()
+                        .getString("Config.Storage.TYPE", "YAML")
         );
-}
+    }
 
 
     /**

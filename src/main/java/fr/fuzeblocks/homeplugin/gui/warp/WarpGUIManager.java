@@ -3,6 +3,7 @@ package fr.fuzeblocks.homeplugin.gui.warp;
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.gui.BackItem;
 import fr.fuzeblocks.homeplugin.gui.ForwardItem;
+import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.warps.WarpData;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,6 +21,8 @@ import java.util.stream.Collectors;
 
 public class WarpGUIManager {
 
+    private static final String WARP_LIST = "Warp.List.";
+    private static final LanguageManager languageManager = HomePlugin.getLanguageManager();
 
     private static List<Item> getWarpListItems() {
         Map<String, WarpData> warps = HomePlugin.getWarpManager().getAllWarps();
@@ -27,10 +30,11 @@ public class WarpGUIManager {
         return warps.keySet()
                 .stream()
                 .filter(name -> name != null)
-                .map(WarpListItem::new)
+                .map(name -> new WarpListItem(name, languageManager.getStringWithColor(WARP_LIST + "Warp-name", "&eNom du warp : %warp%").replace("{warp}", name)))
                 .collect(Collectors.toList());
     }
-      private static List<Item> getWarpModifyItems() {
+
+    private static List<Item> getWarpModifyItems() {
         Map<String, WarpData> warps = HomePlugin.getWarpManager().getAllWarps();
 
         return warps.keySet()
@@ -57,12 +61,13 @@ public class WarpGUIManager {
 
         Window window = Window.single()
                 .setViewer(player)
-                .setTitle(HomePlugin.getLanguageManager().getStringWithColor("Warp List"))
+                .setTitle(HomePlugin.getLanguageManager().getStringWithColor(WARP_LIST + "Warp-list-header", "&6&lListe des Warps"))
                 .setGui(gui)
                 .build();
 
         window.open();
-        }
+    }
+
     public static void openEditWarpGUI(Player player, String warpName) {
         WarpData warpData = HomePlugin.getWarpManager().getWarp(warpName);
         Item border = new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(""));
@@ -81,7 +86,7 @@ public class WarpGUIManager {
 
         Window window = Window.single()
                 .setViewer(player)
-                .setTitle(HomePlugin.getLanguageManager().getStringWithColor("Warp List"))
+                .setTitle(HomePlugin.getLanguageManager().getStringWithColor(languageManager.getStringWithColor(WARP_LIST + "Warp-modify-header", "&6&lGestion des Warps")))
                 .setGui(gui)
                 .build();
 

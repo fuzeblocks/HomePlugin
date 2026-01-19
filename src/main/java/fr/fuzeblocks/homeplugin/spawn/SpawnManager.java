@@ -1,8 +1,8 @@
-package fr.fuzeblocks. homeplugin.spawn;
+package fr.fuzeblocks.homeplugin.spawn;
 
-import fr.fuzeblocks. homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
-import org. bukkit.Location;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -16,9 +16,9 @@ public class SpawnManager implements Spawn {
 
     private SpawnManager() {
         if (isYAML()) {
-            this. spawnImplementation = HomePlugin. getSpawnYMLManager();
+            this.spawnImplementation = HomePlugin.getSpawnYMLManager();
         } else {
-            this. spawnImplementation = HomePlugin. getSpawnSQLManager();
+            this.spawnImplementation = HomePlugin.getSpawnSQLManager();
         }
     }
 
@@ -51,7 +51,7 @@ public class SpawnManager implements Spawn {
 
     @Override
     public boolean removeSpawn(World world) {
-        return spawnImplementation. removeSpawn(world);
+        return spawnImplementation.removeSpawn(world);
     }
 
     @Override

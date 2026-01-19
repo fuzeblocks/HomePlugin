@@ -41,14 +41,14 @@ public class WarpCommand implements CommandExecutor {
         if (args.length == 1) {
             String warpName = args[0];
             if (!warpManager.warpExists(warpName)) {
-                player.sendMessage(languageManager.getStringWithColor(WARP + "Warp-does-not-exist").replace("{warp}", warpName)); // Missing key. In dev
+                player.sendMessage(languageManager.getStringWithColor(WARP + "Warp-does-not-exist", "&cLe warp &e({warp}) spécifié n'existe pas !").replace("{warp}", warpName));
                 return false;
             }
             WarpData warpData = warpManager.getWarp(warpName);
             if (warpData.canAccess(player.getUniqueId()) && EconomyManager.pay(player, EconomyManager.getWarpUsePrice())) {
                 TeleportationManager.teleportPlayerToWarp(player, warpName);
             } else {
-                player.sendMessage(languageManager.getStringWithColor(WARP + "Warp-teleport-failed").replace("{warp}", warpName)); // Missing key. In dev
+                player.sendMessage(languageManager.getStringWithColor(WARP + "Warp-teleport-failed", "&cLa téléportation vers le warp &e({warp}) a échoué !").replace("{warp}", warpName));
             }
         }
 
@@ -63,23 +63,23 @@ public class WarpCommand implements CommandExecutor {
             if (subCommand.equals("set") && args.length == 2 && args[1] != null) {
                 String warpName = args[1];
                 warpManager.addWarp(new WarpData(warpName, player.getName(), player.getUniqueId(), player.getLocation()));
-                player.sendMessage(languageManager.getStringWithColor(WARP + "Warp-set-success").replace("{warp}", warpName)); // Missing key. In dev
+                player.sendMessage(languageManager.getStringWithColor(WARP + "Warp-set-success", "&aLe warp &e({warp}) &aa été défini.").replace("{warp}", warpName)); // Missing key. In dev
                 return true;
             } else if (subCommand.equals("delete") && args.length == 2 && args[1] != null) {
                 String warpName = args[1];
                 if (!warpManager.warpExists(warpName)) {
-                    player.sendMessage(languageManager.getStringWithColor(WARP + "Warp-does-not-exist").replace("{warp}", warpName)); // Missing key. In dev
+                    player.sendMessage(languageManager.getStringWithColor(WARP + "Warp-does-not-exist", "&cLe warp &e({warp}) spécifié n'existe pas !").replace("{warp}", warpName)); // Missing key. In dev
                     return false;
                 }
                 warpManager.deleteWarp(warpName);
-                player.sendMessage(languageManager.getStringWithColor(WARP + "Warp-delete-success").replace("{warp}", warpName)); // Missing key. In dev
+                player.sendMessage(languageManager.getStringWithColor(WARP + "Warp-delete-success", "&aLe warp &e({warp}) &aa été supprimé.").replace("{warp}", warpName)); // Missing key. In dev
                 return true;
             } else if (subCommand.equals("list")) {
                 WarpGUIManager.openWarpListGUI(player);
             } else if (subCommand.equals("modify") && args.length == 2) {
                 WarpGUIManager.openEditWarpGUI(player, args[1]);
             } else {
-                player.sendMessage(languageManager.getStringWithColor(WARP + "Usage-warp-command")); // Missing key. In dev
+                player.sendMessage(languageManager.getStringWithColor(WARP + "Usage-warp-command", "&cUtilisation : /warp <nom-du-warp>"));
                 return false;
             }
         }

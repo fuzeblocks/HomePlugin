@@ -14,8 +14,7 @@ import java.util.*;
  */
 public class WarpSQLManager implements Warp {
 
-  private final Connection connection = DatabaseConnection.getConnection();
-
+    private final Connection connection = DatabaseConnection.getConnection();
 
 
     // ---------- Helpers ----------
@@ -25,7 +24,7 @@ public class WarpSQLManager implements Warp {
 
         String sql =
                 "INSERT INTO Warps (WARP_NAME, DATA) VALUES (?, ?) " +
-                "ON DUPLICATE KEY UPDATE DATA = VALUES(DATA)";
+                        "ON DUPLICATE KEY UPDATE DATA = VALUES(DATA)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, warpData.getName());

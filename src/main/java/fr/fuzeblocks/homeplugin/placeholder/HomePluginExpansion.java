@@ -119,7 +119,7 @@ public class HomePluginExpansion extends PlaceholderExpansion {
     private String getHomeCoordinates(Player player, String name) {
         Location loc = HomePlugin.getHomeManager().getHomeLocation(player, name);
         return (loc != null) ? String.format("%.1f %.1f %.1f", loc.getX(), loc.getY(), loc.getZ())
-                             : translate("Messages.Unknown", "Inconnu");
+                : translate("Messages.Unknown", "Inconnu");
     }
 
     private String translate(String path, String defaultValue) {

@@ -44,7 +44,7 @@ public class SpawnCommand implements CommandExecutor {
     /**
      * Teleports the player to the spawn point.
      *
-     * @param player The player to teleport
+     * @param player          The player to teleport
      * @param languageManager The language manager instance
      * @return true if successful, false otherwise
      */

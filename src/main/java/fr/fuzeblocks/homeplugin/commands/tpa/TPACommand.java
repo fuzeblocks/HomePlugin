@@ -49,8 +49,8 @@ public class TPACommand implements CommandExecutor {
     /**
      * Sends a TPA request to a target player.
      *
-     * @param player The player sending the request
-     * @param targetName The name of the target player
+     * @param player          The player sending the request
+     * @param targetName      The name of the target player
      * @param languageManager The language manager instance
      * @return true if successful, false otherwise
      */

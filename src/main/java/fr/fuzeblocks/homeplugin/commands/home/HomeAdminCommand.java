@@ -28,7 +28,6 @@ public class HomeAdminCommand implements CommandExecutor {
     private static final LanguageManager lang = HomePlugin.getLanguageManager();
 
 
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
@@ -88,20 +87,6 @@ public class HomeAdminCommand implements CommandExecutor {
         return false;
     }
 
-
-
-    private static class Target {
-        private final Player online;
-        private final UUID uuid;
-        private final String name;
-
-        private Target(Player online, UUID uuid, String name) {
-            this.online = online;
-            this.uuid = uuid;
-            this.name = name;
-        }
-    }
-
     private Target resolveTarget(String name) {
 
         Player online = Bukkit.getPlayerExact(name);
@@ -116,8 +101,6 @@ public class HomeAdminCommand implements CommandExecutor {
 
         return new Target(null, offline.getUniqueId(), offline.getName());
     }
-
-
 
     private boolean listHomes(Player admin, String targetName, HomeManager hm) {
 
@@ -258,8 +241,6 @@ public class HomeAdminCommand implements CommandExecutor {
         admin.spigot().sendMessage(line);
     }
 
-
-
     private void sendError(Player p, String msg) {
         p.sendMessage(ChatColor.RED + "✗ " + ChatColor.stripColor(msg));
     }
@@ -273,5 +254,17 @@ public class HomeAdminCommand implements CommandExecutor {
 
     private String translate(String path) {
         return HomePlugin.getLanguageManager().getStringWithColor(path);
+    }
+
+    private static class Target {
+        private final Player online;
+        private final UUID uuid;
+        private final String name;
+
+        private Target(Player online, UUID uuid, String name) {
+            this.online = online;
+            this.uuid = uuid;
+            this.name = name;
+        }
     }
 }

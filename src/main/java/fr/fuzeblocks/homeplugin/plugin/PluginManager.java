@@ -7,8 +7,8 @@ import java.util.List;
  * The type Plugin manager.
  */
 public class PluginManager implements PluginLoader {
-    private static PluginManager pluginManager = null;
     private static final List<fr.fuzeblocks.homeplugin.plugin.HomePlugin> homePlugins = new ArrayList<>();
+    private static PluginManager pluginManager = null;
 
     /**
      * Gets instance.

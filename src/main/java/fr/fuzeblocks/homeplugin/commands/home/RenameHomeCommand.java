@@ -50,9 +50,9 @@ public class RenameHomeCommand implements CommandExecutor {
     /**
      * Renames a home from old name to new name.
      *
-     * @param player The player renaming the home
-     * @param oldHomeName The current home name
-     * @param newHomeName The new home name
+     * @param player          The player renaming the home
+     * @param oldHomeName     The current home name
+     * @param newHomeName     The new home name
      * @param languageManager The language manager instance
      * @return true if successful, false otherwise
      */

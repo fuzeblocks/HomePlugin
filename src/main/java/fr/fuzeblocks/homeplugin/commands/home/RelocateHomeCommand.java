@@ -53,8 +53,8 @@ public class RelocateHomeCommand implements CommandExecutor {
     /**
      * Relocates a home to the player's current location.
      *
-     * @param player The player relocating the home
-     * @param homeName The name of the home to relocate
+     * @param player          The player relocating the home
+     * @param homeName        The name of the home to relocate
      * @param languageManager The language manager instance
      * @return true if successful, false otherwise
      */
@@ -96,11 +96,12 @@ public class RelocateHomeCommand implements CommandExecutor {
 
         return success;
     }
+
     private void sendUsage(Player player) {
         player.sendMessage(ChatColor.DARK_GRAY + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
 
         // Title
-        String title =  translate(HOME + "Relocate-management-title");
+        String title = translate(HOME + "Relocate-management-title");
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', "         " + title));
         player.sendMessage("");
 
@@ -131,6 +132,7 @@ public class RelocateHomeCommand implements CommandExecutor {
         player.sendMessage("");
         player.sendMessage(ChatColor.DARK_GRAY + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
     }
+
     /**
      * Translates a language key to a colored string.
      *

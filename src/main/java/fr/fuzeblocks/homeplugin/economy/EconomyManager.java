@@ -2,8 +2,8 @@ package fr.fuzeblocks.homeplugin.economy;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.entity.Player;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 
 /**
  * Economy manager with a global toggle (Config.Economy.UseEconomy).
@@ -15,9 +15,9 @@ import org.bukkit.configuration.ConfigurationSection;
  */
 public class EconomyManager {
 
+    private static final String ECONOMY_KEY = "Config.Economy.";
     private static Economy economy;
     private static ConfigurationSection config;
-    private static final String ECONOMY_KEY = "Config.Economy.";
     private static boolean enabled = true;
 
     /**

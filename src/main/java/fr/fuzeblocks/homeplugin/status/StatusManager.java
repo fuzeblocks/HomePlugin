@@ -1,8 +1,8 @@
-package fr.fuzeblocks. homeplugin.status;
+package fr.fuzeblocks.homeplugin.status;
 
-import org.bukkit.entity. Player;
+import org.bukkit.entity.Player;
 
-import java.util. concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The type Status manager.

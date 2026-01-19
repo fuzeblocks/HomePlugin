@@ -22,10 +22,11 @@ public class WarpCompleter implements TabCompleter {
             } else {
                 return new ArrayList<>(HomePlugin.getWarpManager().getAllWarps().keySet());
             }
-         } else if (args.length == 2) {
-            if (sender.hasPermission("homeplugin.command.warp.modify")) return new ArrayList<>(HomePlugin.getWarpManager().getAllWarps().keySet());
+        } else if (args.length == 2) {
+            if (sender.hasPermission("homeplugin.command.warp.modify"))
+                return new ArrayList<>(HomePlugin.getWarpManager().getAllWarps().keySet());
 
         }
         return List.of();
-     }
+    }
 }

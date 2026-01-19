@@ -129,12 +129,12 @@ public class RTPCommand implements CommandExecutor {
     /**
      * Scans a vertical column (x, z) from the top of the world down to the bottom
      * to find the first safe location for teleportation.
-     *
+     * <p>
      * Compatible with all Minecraft versions thanks to world.getMaxHeight() and getMinHeight().
      *
-     * @param world The world to search in
-     * @param x X coordinate of the column
-     * @param z Z coordinate of the column
+     * @param world        The world to search in
+     * @param x            X coordinate of the column
+     * @param z            Z coordinate of the column
      * @param baseLocation Base location to retrieve yaw/pitch
      * @return A safe location or null if none is found
      */
@@ -142,13 +142,13 @@ public class RTPCommand implements CommandExecutor {
     private Location findSafeLocationAtColumn(World world, int x, int z, Location baseLocation) {
         int maxY;
         try {
-              maxY = world.getMaxHeight();
-          } catch (NoSuchMethodError e) {
-           maxY = world.getEnvironment() == World.Environment.NETHER ? 126 : 255;
+            maxY = world.getMaxHeight();
+        } catch (NoSuchMethodError e) {
+            maxY = world.getEnvironment() == World.Environment.NETHER ? 126 : 255;
         }
         int minY;
         try {
-           minY = world.getMinHeight();
+            minY = world.getMinHeight();
         } catch (NoSuchMethodError e) {
             minY = 0;
         }
@@ -204,7 +204,7 @@ public class RTPCommand implements CommandExecutor {
      * The position is calculated around the base location on the horizontal plane (x, z).
      *
      * @param baseLocation The center position (player position)
-     * @param radius The maximum radius of the circle
+     * @param radius       The maximum radius of the circle
      * @return An array [x, z] with integer coordinates
      */
     private int[] randomIntPositionInCircle(Location baseLocation, double radius) {
@@ -221,17 +221,17 @@ public class RTPCommand implements CommandExecutor {
         int x = (int) Math.round(baseLocation.getX() + offsetX);
         int z = (int) Math.round(baseLocation.getZ() + offsetZ);
 
-        return new int[] { x, z };
+        return new int[]{x, z};
     }
 
     /**
      * Checks if a position (x, z) is inside the WorldBorder.
      *
-     * @param x X coordinate to check
-     * @param z Z coordinate to check
+     * @param x       X coordinate to check
+     * @param z       Z coordinate to check
      * @param centerX WorldBorder center X
      * @param centerZ WorldBorder center Z
-     * @param radius WorldBorder radius
+     * @param radius  WorldBorder radius
      * @return true if the position is within the border, false otherwise
      */
     private boolean isWithinWorldBorder(int x, int z, double centerX, double centerZ, double radius) {

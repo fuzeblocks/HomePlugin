@@ -1,10 +1,10 @@
-package fr.fuzeblocks. homeplugin.task;
+package fr.fuzeblocks.homeplugin.task;
 
-import fr.fuzeblocks. homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.language. LanguageManager;
+import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import org.bukkit.Location;
-import org.bukkit. entity.Player;
+import org.bukkit.entity.Player;
 
 /**
  * The type Teleportation manager.
@@ -93,12 +93,12 @@ public class TeleportationManager {
         taskManager.startTeleportTask();
 
         StatusManager.setPlayerStatus(player, true);
-        TaskSaveUtils. setTaskManagerInstance(player, taskManager);
+        TaskSaveUtils.setTaskManagerInstance(player, taskManager);
     }
 
-     private static void startWarpTeleportTask(Player player, String warpName, Location location) {
+    private static void startWarpTeleportTask(Player player, String warpName, Location location) {
         TaskManager taskManager = new TaskManager();
-        taskManager.warpTask(warpName,player,location);
+        taskManager.warpTask(warpName, player, location);
         taskManager.startTeleportTask();
 
         StatusManager.setPlayerStatus(player, true);
@@ -125,7 +125,8 @@ public class TeleportationManager {
         String message = languageManager.getStringWithColor(LANGUAGE_PREFIX + "Start-of-teleportation") + " " + homeName;
         player.sendMessage(message);
     }
+
     private static void sendWarpTeleportMessage(Player player, String warpName) {
-       //Todo
+        //Todo
     }
 }
