@@ -220,3 +220,30 @@ Economy:
   Payment-successful: "&a Платіж на суму %amount% успішний."
   Payment-failed: "&c Платіж на суму %amount% не вдалося здійснити."
 
+Warp:
+  Warp-does-not-exist: "&cВказаний варп &e({warp}) не існує!"
+  Warp-teleport-failed: "&cТелепортація до варпу &e({warp}) не вдалася!"
+  Warp-set-success: "&aВарп &e({warp}) &aуспішно створено."
+  Usage-warp-command: "&cВикористання: /warp <назва-варпу>"
+  Warp-delete-success: "&aВарп &e({warp}) &aуспішно видалено."
+
+  Item:
+    Public: "&aПублічний "
+    Cost: "&eВартість "
+    Creator: "&bСтворив: "
+    Created-On: "&aСтворено "
+    Expires: "&cЗакінчується "
+    Location: "&9Локація "
+    Permission: "&dПотрібен дозвіл "
+    None: "&cНемає"
+    N/A: "&7Н/Д"
+    Never: "&cНіколи"
+
+  List:
+    Warp-list-header: "&6&lСписок Варпів"
+    Warp-modify-header: "&6&lУправління Варпами"
+    Warp-name: "&eНазва варпу: %warp%"
+    Warp-location: "&9Локація: &6X: %x% Y: %y% Z: %z% Світ: %world%"
+    Warp-teleport-hover: "&eКлікніть, щоб телепортуватися."
+
+

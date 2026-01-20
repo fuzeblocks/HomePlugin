@@ -219,3 +219,29 @@ Back:
 Economy:
   Payment-successful: "&a%amount% tutarında ödeme başarıyla tamamlandı!"
   Payment-failed: "&c%amount% tutarındaki ödeme başarısız oldu!"
+
+Warp:
+  Warp-does-not-exist: "&cBelirtilen warp &e({warp}) mevcut değil!"
+  Warp-teleport-failed: "&cWarp &e({warp}) 'a teleportasyon başarısız oldu!"
+  Warp-set-success: "&aWarp &e({warp}) &aayarlanmıştır."
+  Usage-warp-command: "&cKullanım: /warp <warp-adı>"
+  Warp-delete-success: "&aWarp &e({warp}) &asilindi."
+
+  Item:
+    Public: "&aHerkese Açık "
+    Cost: "&eMaliyet "
+    Creator: "&bOluşturan: "
+    Created-On: "&aOluşturuldu: "
+    Expires: "&cSona erme tarihi: "
+    Location: "&9Konum "
+    Permission: "&dGerekli izin "
+    None: "&cYok"
+    N/A: "&7N/A"
+    Never: "&cAsla"
+
+  List:
+    Warp-list-header: "&6&lWarp Listesi"
+    Warp-modify-header: "&6&lWarp Yönetimi"
+    Warp-name: "&eWarp adı: %warp%"
+    Warp-location: "&9Konum: &6X: %x% Y: %y% Z: %z% Dünya: %world%"
+    Warp-teleport-hover: "&eTeleport etmek için tıklayın."

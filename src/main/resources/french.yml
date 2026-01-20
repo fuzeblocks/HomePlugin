@@ -226,6 +226,18 @@ Warp:
   Usage-warp-command: "&cUtilisation : /warp <nom-du-warp>"
   Warp-delete-success: "&aLe warp &e({warp}) &aa été supprimé."
 
+  Item:
+    Public: "&aPublic "
+    Cost: "&eCoût "
+    Creator: "&bCréateur: "
+    Created-On: "&aCréé le "
+    Expires: "&cExpire le "
+    Location: "&9Position "
+    Permission: "&dPermission requise "
+    None: "&cAucun"
+    N/A: "&7N/A"
+    Never: "&cJamais"
+
   List:
     Warp-list-header: "&6&lListe des Warps"
     Warp-modify-header: "&6&lGestion des Warps"

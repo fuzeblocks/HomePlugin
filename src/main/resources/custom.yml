@@ -219,3 +219,30 @@ Back:
 Economy:
   Payment-successful: "&aPayment of %amount% successful!"
   Payment-failed: "&cPayment of %amount% failed!"
+
+Warp:
+  Warp-does-not-exist: "&cThe warp &e({warp}) specified does not exist!"
+  Warp-teleport-failed: "&cTeleportation to the warp &e({warp}) failed!"
+  Warp-set-success: "&aThe warp &e({warp}) &ahas been set."
+  Usage-warp-command: "&cUsage: /warp <warp-name>"
+  Warp-delete-success: "&aThe warp &e({warp}) &ahas been deleted."
+
+  Item:
+    Public: "&aPublic "
+    Cost: "&eCost "
+    Creator: "&bCreator: "
+    Created-On: "&aCreated on "
+    Expires: "&cExpires on "
+    Location: "&9Location "
+    Permission: "&dRequired permission "
+    None: "&cNone"
+    N/A: "&7N/A"
+    Never: "&cNever"
+
+  List:
+    Warp-list-header: "&6&lWarp List"
+    Warp-modify-header: "&6&lWarp Management"
+    Warp-name: "&eWarp name: %warp%"
+    Warp-location: "&9Location: &6X: %x% Y: %y% Z: %z% World: %world%"
+    Warp-teleport-hover: "&eClick to teleport."
+
