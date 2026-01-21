@@ -1,6 +1,7 @@
 package fr.fuzeblocks.homeplugin.warps;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
@@ -208,7 +209,7 @@ public class WarpData {
     public static ItemBuilder toItemBuilderUsingLanguage(WarpData warpData, fr.fuzeblocks.homeplugin.language.LanguageManager languageManager) {
         org.bukkit.ChatColor titleColor = org.bukkit.ChatColor.GOLD;
         org.bukkit.ChatColor labelColor = org.bukkit.ChatColor.AQUA;
-        org.bukkit.ChatColor valueColor = org.bukkit.ChatColor.WHITE;
+        org.bukkit.ChatColor valueColor = ChatColor.GREEN;
         org.bukkit.ChatColor accentColor = org.bukkit.ChatColor.YELLOW;
 
         ItemBuilder itemBuilder = new ItemBuilder(warpData.getIcon())

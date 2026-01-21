@@ -14,6 +14,8 @@ Language:
   Only-a-player-can-execute: "&cSeul un joueur peut exécuter cette commande !"
   Player-is-not-OP: "&cVous n'êtes pas OP !"
   Player-is-not-online: "&cLe joueur spécifié n'existe pas ou n'est pas en ligne !"
+  Teleport-to-warp: "&aVous avez été téléporté au warp :"
+  Start-of-teleportation-for-warp: "&6Début de la téléportation vers le warp : "
 
 Spawn:
   SetSpawn-permission-deny-message: "&cVous n'avez pas la permission de définir le spawn !"
@@ -225,18 +227,19 @@ Warp:
   Warp-set-success: "&aLe warp &e({warp}) &aa été défini."
   Usage-warp-command: "&cUtilisation : /warp <nom-du-warp>"
   Warp-delete-success: "&aLe warp &e({warp}) &aa été supprimé."
+  Warp-world-not-loaded: "&cLe monde du warp spécifié n'est pas chargé !"
 
   Item:
-    Public: "&aPublic "
-    Cost: "&eCoût "
-    Creator: "&bCréateur: "
-    Created-On: "&aCréé le "
-    Expires: "&cExpire le "
-    Location: "&9Position "
-    Permission: "&dPermission requise "
-    None: "&cAucun"
-    N/A: "&7N/A"
-    Never: "&cJamais"
+    Public: "Public "
+    Cost: "Coût "
+    Creator: "Créateur: "
+    Created-On: "Créé le "
+    Expires: "Expire le "
+    Location: "Position "
+    Permission: "Permission requise "
+    None: "Aucun"
+    N/A: "N/A"
+    Never: "Jamais"
 
   List:
     Warp-list-header: "&6&lListe des Warps"

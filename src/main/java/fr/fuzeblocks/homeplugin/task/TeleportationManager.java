@@ -127,6 +127,7 @@ public class TeleportationManager {
     }
 
     private static void sendWarpTeleportMessage(Player player, String warpName) {
-        //Todo
+        String message = languageManager.getStringWithColor(LANGUAGE_PREFIX + "Start-of-teleportation-for-warp") + " " + warpName;
+        player.sendMessage(message);
     }
 }

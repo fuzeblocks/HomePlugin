@@ -68,8 +68,7 @@ public class WarpGUIManager {
         window.open();
     }
 
-    public static void openEditWarpGUI(Player player, String warpName) {
-        WarpData warpData = HomePlugin.getWarpManager().getWarp(warpName);
+    public static void openEditWarpGUI(Player player) {
         Item border = new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(""));
         Gui gui = PagedGui.items()
                 .setStructure(
@@ -86,7 +85,39 @@ public class WarpGUIManager {
 
         Window window = Window.single()
                 .setViewer(player)
-                .setTitle(HomePlugin.getLanguageManager().getStringWithColor(languageManager.getStringWithColor(WARP_LIST + "Warp-modify-header", "&6&lGestion des Warps")))
+                .setTitle(languageManager.getStringWithColor(WARP_LIST + "Warp-modify-header", "&6&lGestion des Warps"))
+                .setGui(gui)
+                .build();
+
+        window.open();
+    }
+
+    public static void openOptionsWarpGUI(Player player) {
+        Item border = new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(""));
+        Gui gui = Gui.normal()
+                .setStructure(
+                        "# # # # # # # # #",
+                        "# D E P A I C N #",
+                        "# S L x x x x x #",
+                        "# # # # # # # # #")
+                .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
+                .addIngredient('#', border)
+                //D for Delete
+                //E for Expiration
+                //P for Public
+                //A for permission
+                //I for Icon
+                //C for cost
+                //N for Name
+                //S for lore
+                //L for location
+
+
+                .build();
+
+        Window window = Window.single()
+                .setViewer(player)
+                .setTitle(languageManager.getStringWithColor(WARP_LIST + "Warp-modify-header", "&6&lGestion des Warps"))
                 .setGui(gui)
                 .build();
 
