@@ -1,4 +1,4 @@
-package fr.fuzeblocks.homeplugin.gui.warp;
+package fr.fuzeblocks.homeplugin.gui.warp.item;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.language.LanguageManager;

@@ -3,6 +3,7 @@ package fr.fuzeblocks.homeplugin.gui.warp;
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.gui.BackItem;
 import fr.fuzeblocks.homeplugin.gui.ForwardItem;
+import fr.fuzeblocks.homeplugin.gui.warp.item.*;
 import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.warps.WarpData;
 import org.bukkit.Material;
@@ -92,7 +93,7 @@ public class WarpGUIManager {
         window.open();
     }
 
-    public static void openOptionsWarpGUI(Player player) {
+    public static void openOptionsWarpGUI(Player player,WarpData warpData) {
         Item border = new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(""));
         Gui gui = Gui.normal()
                 .setStructure(
@@ -102,12 +103,12 @@ public class WarpGUIManager {
                         "# # # # # # # # #")
                 .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
                 .addIngredient('#', border)
-                //D for Delete
+                .addIngredient('D', new DeleteItem(warpData))
                 //E for Expiration
-                //P for Public
+                .addIngredient('P', new PublicItem(warpData))
                 //A for permission
                 //I for Icon
-                //C for cost
+                .addIngredient('C',new CostItem(warpData))
                 //N for Name
                 //S for lore
                 //L for location
@@ -123,5 +124,30 @@ public class WarpGUIManager {
 
         window.open();
     }
+    public static void openCostWarpGUI(Player player,WarpData warpData) {
+        Item border = new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(""));
+        Gui gui = Gui.normal()
+                .setStructure(
+                        "# # # # # # # # #",
+                        "# x + x N x x - #",
+                        "# # # # # # # # #",
+                        "# # # # # # # # #")
+                .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
+                .addIngredient('#', border)
+                .addIngredient('+', new IncreaseCostItem(warpData))
+                .addIngredient('-', new DecreaseCostItem(warpData))
+                .addIngredient('N', new SimpleItem(new ItemBuilder(Material.EMERALD)))
+                        .setDisplayName(languageManager.getStringWithColor(WARP_LIST + "Warp-modify-cost-current", "&aCoût actuel: &e%cost%").replace("{cost}", String.valueOf(warpData.getCost())))
+                .build();
+
+        Window window = Window.single()
+                .setViewer(player)
+                .setTitle(languageManager.getStringWithColor(WARP_LIST + "Warp-modify-cost-header", "&6&lDéfinir le coût du Warp"))
+                .setGui(gui)
+                .build();
+
+        window.open();
+    }
+
 
 }
