@@ -1,320 +1,262 @@
-[![sponsor](https://cdn.modrinth.com/data/cached_images/636893885c8e3a5995bf8e8b4fca194a9f2f029e_0.webp)](https://client.pristis.fr/aff.php?aff=2)
-# 🏡 HomePlugin (by fuzeblocks)
-
-A lightweight, flexible home/spawn/teleport management plugin for Paper/Spigot servers. HomePlugin supports named homes, global spawn, TPA requests, random teleport (RTP), optional Redis caching, YAML or MySQL storage backends, multilingual support, economy integration, and a modular extension API for internal plugin modules.
-
 <div align="center">
-  <img src="https://img.icons8.com/fluency/96/home.png" width="80" alt="Home Icon" />
-  <br/>
-  <strong>Stable • Fast • Modular • API‑Driven</strong>
-</div>
+
+# 🏡 HomePlugin
+
+**A lightweight, flexible home & teleport management plugin for Paper/Spigot servers**
 
 [![](https://jitpack.io/v/fuzeblocks/HomePlugin.svg)](https://jitpack.io/#fuzeblocks/HomePlugin)
+[![sponsor](https://img.shields.io/badge/Sponsor-Support%20Development-blue)](https://client.pristis.fr/aff.php?aff=2)
+[![Discord](https://img.shields.io/discord/1394947383560900618?color=5865F2&logo=discord&logoColor=white&label=Discord)](https://discord.gg/5zJyKz6Nfm)
+[![License](https://img.shields.io/badge/license-Apache--2.0-orange.svg)](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
+
+**Stable • Fast • Modular • API-Driven**
+
+[Features](#-features) • [Installation](#%EF%B8%8F-installation) • [Commands](#-commands) • [Configuration](#%EF%B8%8F-configuration) • [API Documentation](https://fuzeblocks.github.io/HomePlugin/)
+
+![Usage](https://bstats.org/signatures/bukkit/HomePlugin.svg)
+
+</div>
 
 ---
 
-## 📚 Table of Contents
-
-- [✨ Features](#features)
-- [🧾 Commands](#commands)
-- [🔐 Permissions](#permissions)
-- [🧩 PlaceholderAPI Integration](#placeholderapi-integration)
-- [💰 Vault Integration](#vault-integration)
-- [🌍 Languages](#languages)
-- [⬇️ Installation](#installation)
-- [⚙️ Configuration](#configuration)
-- [🧱 Architecture & Performance](#architecture--performance)
-- [🧑‍💻 Developer / Extension API](#developer--extension-api)
-- [✅ Compatibility](#compatibility)
-- [🗺️ Roadmap](#roadmap)
-- [🤝 Support & Contributions](#support--contributions)
-- [📄 License](#license)
-
----
-
-<a id="features"></a>
 ## ✨ Features
 
-| Category            | Highlights |
-|---------------------|------------|
-| Homes & Spawn       | Named homes, GUI/list access, global spawn set/remove |
-| Teleport Systems    | TPA requests with timeout, RTP with cooldown & radius |
-| Storage             | YAML (default) or MySQL (config‑selectable) |
-| Caching             | Optional Redis layer (Jedis) when enabled |
-| Limits              | Per‑player home limits via permissions `homeplugin.limit.<n>` |
-| Validation          | Prevent unfair placements / block disabled worlds |
-| Localization        | Built‑in language system (French, English, Spanish) + editable YAML |
-| PlaceholderAPI      | Rich placeholders for homes, counts, and locations |
-| Admin Tools         | Manage other players’ homes, spawn, cache, language files |
-| Modular Loader      | Internal plugin loader to register HomePlugin modules |
-| Tasks / Warmup      | Delayed teleports with titles/messages/particles |
-| Economy             | Optional costs via Vault (create/teleport/TPA/RTP) |
+### 🏠 **Core Functionality**
+- **Named Homes** - Set multiple homes with custom names and optional metadata
+- **Global Spawn** - Server-wide spawn point management
+- **Teleport Requests (TPA)** - Request to teleport to other players with configurable timeout
+- **Random Teleport (RTP)** - Random teleport with cooldown and radius controls
+- **Back Command** - Return to your previous location
+
+### 🗄️ **Flexible Storage**
+- **YAML** (default) - Simple file-based storage
+- **MySQL** - Full database support for larger servers
+- **Redis Caching** - Optional cross-instance cache synchronization
+
+### 🎮 **Player Experience**
+- **Interactive GUI** - Visual home management interface
+- **Multiple Languages** - French, English, Spanish, Russian, Ukrainian, German, Turkish
+- **Teleport Warmup** - Configurable delays with titles, messages, and particles
+- **Permission-Based Limits** - Dynamic home limits via permissions
+
+### 🔌 **Integrations**
+- **PlaceholderAPI** - Rich placeholders for homes, counts, and locations
+- **Vault Economy** - Optional costs for home creation, teleportation, TPA, and RTP
+
+### 🛠️ **Administration**
+- **Admin Tools** - Manage other players' homes, spawn points, and cache
+- **World Restrictions** - Block home creation in specific worlds
+- **Location Validation** - Prevent unfair placements
+- **Modular Architecture** - Extensible plugin loader for custom modules
 
 ---
 
-<a id="commands"></a>
+## ⬇️ Installation
+
+1. **Download** the latest release from [Releases](https://github.com/fuzeblocks/HomePlugin/releases) or build from source
+2. **Place** the JAR file into your server's `plugins/` folder
+3. **Start** your server to generate default configuration files
+4. **Configure** `plugins/HomePlugin/config.yml` to your preferences
+5. **Restart** or reload your server
+
+### Quick Configuration Tips
+- ✅ Works out-of-the-box with YAML storage
+- 🗄️ For MySQL: Configure credentials in `config.yml` before restarting
+- 🚀 For Redis: Set `Use-Redis: true` and ensure Redis server is accessible
+
+---
+
 ## 🧾 Commands
 
-| Command | Description | Notes |
-|---------|-------------|-------|
-| `/sethome [name] [info]` | Set (or overwrite) a home at your current position | `info` optional metadata |
-| `/home [name]` | Teleport to a home; opens GUI if no name is provided | GUI depends on config |
-| `/home` | Open homes GUI (if enabled) |  |
-| `/delhome [name]` | Delete a named home |  |
-| `/listhome` | List all your homes in chat | Text alternative to GUI |
-| `/renamehome [name] [newname]` | Rename an existing home |  |
-| `/relocatehome [name]` | Move an existing home to your current location |  |
-| `/back` | Teleport back to your previous location |  |
-| `/spawn` | Teleport to global spawn | Requires spawn set |
-| `/setspawn` | Set global spawn at current location | Admin |
-| `/delspawn` | Remove the current global spawn | Admin |
-| `/tpa <player>` | Send a teleport request to a player | Times out via `Tpa-duration` |
-| `/tpaccept [player]` | Accept pending TPA request | Player optional |
-| `/tpdeny [player]` | Deny pending TPA request | Player optional |
-| `/rtp` | Random teleport within configured radius | Cooldown applies |
-| `/homeadmin <player>` | View/manage another player’s homes | Admin |
-| `/cache view` | View cache status | Admin |
-| `/cache clearall` | Clear all plugin caches | Admin |
-| `/cache player <name>` | Clear cache for a specific player | Admin |
-| `/plugins` | List loaded HomePlugin internal modules | Admin (not Bukkit `/plugins`) |
-| `/lang update` | Update base language files (add‑only merge) | Admin |
-| `/lang merge` | Merge new keys into language files | Admin |
-| `/lang set <code>` | Switch active language (e.g., `FRENCH`) | Admin |
+### Player Commands
+
+| Command | Description | Permission |
+|---------|-------------|------------|
+| `/sethome [name] [info]` | Create or update a home | `homeplugin.command.sethome` |
+| `/home [name]` | Teleport to a home (opens GUI if no name) | `homeplugin.command.home` |
+| `/delhome <name>` | Delete a home | `homeplugin.command.delhome` |
+| `/listhome` | List all your homes | `homeplugin.command.listhome` |
+| `/renamehome <old> <new>` | Rename an existing home | `homeplugin.command.home` |
+| `/relocatehome <name>` | Move a home to your current location | `homeplugin.command.home` |
+| `/back` | Return to your previous location | `homeplugin.back.use` |
+| `/spawn` | Teleport to server spawn | `homeplugin.command.spawn` |
+| `/tpa <player>` | Request to teleport to a player | `homeplugin.command.tpa` |
+| `/tpaccept [player]` | Accept a teleport request | `homeplugin.command.tpa` |
+| `/tpdeny [player]` | Deny a teleport request | `homeplugin.command.tpa` |
+| `/rtp` | Random teleport | `homeplugin.command.rtp` |
+
+### Admin Commands
+
+| Command | Description | Permission |
+|---------|-------------|------------|
+| `/setspawn` | Set the global spawn point | `homeplugin.admin` |
+| `/delspawn` | Remove the global spawn point | `homeplugin.admin` |
+| `/homeadmin <player>` | Manage another player's homes | `homeplugin.admin` |
+| `/cache view` | View cache statistics | `homeplugin.admin` |
+| `/cache clearall` | Clear all plugin caches | `homeplugin.admin` |
+| `/cache player <name>` | Clear cache for a specific player | `homeplugin.admin` |
+| `/lang set <code>` | Set the active language | `homeplugin.lang.update` |
+| `/lang update` | Update language files (merge new keys) | `homeplugin.lang.update` |
+| `/plugins` | List loaded HomePlugin modules | `homeplugin.admin` |
 
 ---
 
-<a id="permissions"></a>
 ## 🔐 Permissions
 
-| Permission | Purpose | Default |
-|------------|---------|---------|
-| `homeplugin.command.home` | Use `/home` (teleport/GUI) | true |
-| `homeplugin.command.sethome` | Use `/sethome` | true |
-| `homeplugin.command.delhome` | Use `/delhome` | true |
-| `homeplugin.command.listhome` | Use `/listhome` | true |
-| `homeplugin.command.spawn` | Use `/spawn` | true |
-| `homeplugin.command.tpa` | Send/accept/deny TPA | true |
-| `homeplugin.admin` | Admin features (spawn, cache, manage others) | op |
-| `homeplugin.lang.update` | Update language files | op |
-| `homeplugin.back.use` | Use `/back` | op |
-| `homeplugin.limit.<n>` | Override max homes (1..100 scanned) | permission‑based |
+### Basic Permissions
 
-Suggested extras (if implemented):
-- `homeplugin.bypass.limit` — ignore base limit
-- `homeplugin.bypass.validation` — ignore placement restrictions
-- `homeplugin.bypass.cooldown` — ignore RTP/teleport cooldowns
+| Permission | Description | Default |
+|------------|-------------|---------|
+| `homeplugin.command.home` | Use home commands | `true` |
+| `homeplugin.command.sethome` | Create homes | `true` |
+| `homeplugin.command.delhome` | Delete homes | `true` |
+| `homeplugin.command.listhome` | List homes | `true` |
+| `homeplugin.command.spawn` | Use spawn | `true` |
+| `homeplugin.command.tpa` | Use TPA system | `true` |
+| `homeplugin.command.rtp` | Use random teleport | `true` |
+| `homeplugin.back.use` | Use /back command | `op` |
+| `homeplugin.admin` | Admin features | `op` |
+| `homeplugin.lang.update` | Manage languages | `op` |
 
-Dynamic limits: the plugin scans `homeplugin.limit.1` … `homeplugin.limit.100` and applies the highest held value.
+### Dynamic Home Limits
+
+Set custom home limits using `homeplugin.limit.<number>`:
+- `homeplugin.limit.5` - 5 homes
+- `homeplugin.limit.10` - 10 homes
+- `homeplugin.limit.unlimited` - No limit
+
+The plugin scans from 1-100 and applies the highest value held by the player.
+
+### Bypass Permissions
+
+| Permission | Description |
+|------------|-------------|
+| `homeplugin.bypass.limit` | Ignore home limits |
+| `homeplugin.bypass.validation` | Bypass location restrictions |
+| `homeplugin.bypass.cooldown` | Ignore teleport cooldowns |
 
 ---
 
-<a id="placeholderapi-integration"></a>
-## 🧩 PlaceholderAPI Integration
+## ⚙️ Configuration
 
-Placeholders (via `HomePluginExpansion`):
+### 📄 Configuration File
+
+The plugin's configuration is located at `plugins/HomePlugin/config.yml` after the first server start.
+
+**[📖 View Full config.yml](https://github.com/fuzeblocks/HomePlugin/blob/main/src/main/resources/config.yml)**
+
+### 🔧 Configuration Overview
+
+#### Language & Localization
+Set your preferred language from: `FRENCH`, `ENGLISH`, `SPANISH`, `RUSSIAN`, `UKRAINIAN`, `GERMAN`, `TURKISH`
+
+#### Storage Backend
+Choose between **YAML** (simple file-based) or **MySQL** (database) storage:
+- `TYPE: "YAML"` - Default, no additional setup required
+- `TYPE: "MYSQL"` - Configure `HOST`, `PORT`, `USERNAME`, `PASSWORD`, `DATABASE`
+
+#### Redis Cache (Optional)
+Enable `Use-Redis: true` for cross-instance synchronization. Configure host, port, SSL, and password as needed.
+
+#### Home Settings
+- `Default-Home-Limit` - Base home limit (override with permissions)
+- `Prevent-Unfair-Location` - Block unsafe home placements
+- `Disabled-Worlds` - List of worlds where homes cannot be created
+
+#### Teleport Warmup & Effects
+- `Task-Duration` - Delay before teleport (seconds)
+- `Use-Title` / `Use-Message` - Show teleport notifications
+- `Particles-After-Teleport` - Spawn particles on arrival
+- `Skip-If-Op` - Instant teleport for operators
+
+#### TPA System
+- `Tpa-Duration` - Request expiration time (seconds)
+
+#### Random Teleport (RTP)
+- `Enabled` - Enable/disable RTP feature
+- `Cooldown-Seconds` - Cooldown between uses
+- `Max-Radius` - Maximum teleport distance from spawn
+
+#### Economy (Vault Integration)
+- `UseEconomy` - Enable economy features
+- `Home-Creation-Price` - Cost to create a home
+- `Home-Teleport-Price` - Cost to teleport to a home
+- `Tpa-Request-Price` - Cost to send TPA request
+- `RTP-Price` - Cost to use random teleport
+
+#### Feature Toggles
+Enable or disable specific features:
+- `Enable-TPA` - TPA system
+- `Enable-Spawn` - Spawn teleportation
+- `Enable-Home` - Home system
+
+---
+
+## 🧩 Integrations
+
+### PlaceholderAPI
+
+HomePlugin provides rich placeholders for use in other plugins:
 
 | Placeholder | Description |
 |-------------|-------------|
-| `%homeplugin_homes%` | Comma‑separated home names (or fallback) |
-| `%homeplugin_homes_numbers%` | Number of homes |
-| `%homeplugin_has_homes%` | `true` if player has ≥ 1 home |
-| `%homeplugin_home_location_<name>%` | Formatted location (language‑aware) |
-| `%homeplugin_home_exists_<name>%` | `true` / `false` |
-| `%homeplugin_home_world_<name>%` | World name |
-| `%homeplugin_home_coordinates_<name>%` | Raw coordinates `X Y Z` |
-| `%homeplugin_home_teleport_price%` | Teleport price |
-| `%homeplugin_home_creation_price%` | Home creation price |
-| `%homeplugin_tpa_request_price%` | TPA request price |
-| `%homeplugin_rtp_price%` | RTP request price |
+| `%homeplugin_homes%` | Comma-separated list of home names |
+| `%homeplugin_homes_numbers%` | Total number of homes |
+| `%homeplugin_has_homes%` | `true` if player has homes |
+| `%homeplugin_home_location_<name>%` | Formatted location |
+| `%homeplugin_home_exists_<name>%` | Check if home exists |
+| `%homeplugin_home_world_<name>%` | Home world name |
+| `%homeplugin_home_coordinates_<name>%` | Raw coordinates (X Y Z) |
+| `%homeplugin_home_teleport_price%` | Teleport cost |
+| `%homeplugin_home_creation_price%` | Creation cost |
+| `%homeplugin_tpa_request_price%` | TPA request cost |
+| `%homeplugin_rtp_price%` | RTP cost |
 
+### Vault Economy
 
-Notes:
-- `<name>` is case‑insensitive.
-- The expansion registers automatically when PlaceholderAPI is present.
-
----
-
-<a id="vault-integration"></a>
-## 💰 Vault Integration
-
-Economy features are handled by `EconomyManager` and use Vault to integrate with supported economy plugins. Configure costs per action (create home, teleport, TPA, RTP) in `config.yml`.
+Configure optional costs for various actions through Vault integration. Supports any Vault-compatible economy plugin.
 
 ---
 
-<a id="languages"></a>
-## 🌍 Languages
+## 🌍 Supported Languages
 
-Configured via: `Config.Language`  
-Built‑in:
-- FRENCH
-- ENGLISH
-- SPANISH (Henri Topper)
-- RUSSIAN
-- UKRAINIAN
-- GERMAN
-- TURKISH (Xenetotyp3)
+Built-in language support with fully customizable YAML files:
 
-Language loading uses an enum (`Language.valueOf(...)`) and falls back to FRENCH if invalid. Customize by editing the shipped YAML files; use `/lang update`, `/lang merge`, and `/lang set` to manage versions and switch locales.
+- 🇫🇷 **French** (FRENCH)
+- 🇬🇧 **English** (ENGLISH)
+- 🇪🇸 **Spanish** (SPANISH) - _by Henri Topper_
+- 🇷🇺 **Russian** (RUSSIAN)
+- 🇺🇦 **Ukrainian** (UKRAINIAN)
+- 🇩🇪 **German** (GERMAN)
+- 🇹🇷 **Turkish** (TURKISH) - _by Xenetotyp3_
 
----
-
-<a id="installation"></a>
-## ⬇️ Installation
-
-1. Download: place the plugin JAR into your server’s `plugins/` folder.  
-   - Or build from source and place the resulting JAR into `plugins/`.
-2. Start the server once to generate configuration and language files.
-3. Adjust `plugins/HomePlugin/config.yml` (storage, Redis, economy, limits, etc.).
-4. Reload/restart the server.
-
-Quick check:
-- `/sethome` and `/home` should work immediately on YAML storage.
-- If using MySQL, verify credentials and connectivity before restarting.
-- If using Redis, set `UseRedis: true` and ensure the host is reachable.
+Set your language in `config.yml` or use `/lang set <LANGUAGE>` in-game.
 
 ---
 
-<a id="configuration"></a>
-## ⚙️ Configuration
+## 🧑‍💻 Developer API
 
-Example structure (see `src/main/resources/config.yml`):
+HomePlugin provides a comprehensive API for developers to integrate and extend functionality.
 
-```yaml
-Config:
+### 📚 Documentation
 
-  # ----------------------------------------
-  # Language / Localization
-  # Available: FRENCH, ENGLISH, SPANISH, CUSTOM
-  # ----------------------------------------
-  Language: FRENCH
+- **[JavaDocs](https://fuzeblocks.github.io/HomePlugin/)** - Complete API reference
+- **[Wiki](https://github.com/fuzeblocks/HomePlugin/wiki)** - Usage guides and examples
+  - [Events](https://github.com/fuzeblocks/HomePlugin/wiki/Events)
+  - [Home Managers](https://github.com/fuzeblocks/HomePlugin/wiki/Home-API-usage)
+  - [Spawn Managers](https://github.com/fuzeblocks/HomePlugin/wiki/Spawn-API-usage)
 
-  # ----------------------------------------
-  # Storage Connector
-  # TYPE can be "YAML" or "MYSQL"
-  # MySQL settings are used only when TYPE="MYSQL"
-  # ----------------------------------------
-  Storage:
-    TYPE: "YAML"  # MYSQL or YAML
+### 📦 Dependency Management
 
-    # Optional (for MYSQL)
-    HOST: "localhost"
-    PORT: 3306
-    USERNAME: "root"
-    PASSWORD: ""
-    DATABASE: "HomePlugin"
+Add HomePlugin as a dependency via JitPack:
 
-  # ----------------------------------------
-  # Redis Cache (Optional)
-  # Enable only if you need cross-instance cache/sync
-  # ----------------------------------------
-  Redis:
-    Use-Redis: false
-    HOST: "localhost"
-    PORT: 6379
-    SSL: false
-    PASSWORD: ""
-
-  # ----------------------------------------
-  # Home Settings
-  # Limits, validation, and disabled worlds
-  # ----------------------------------------
-  Home:
-    Default-Home-Limit: 3
-    Prevent-Unfair-Location: true
-    Disabled-Worlds:
-      - "world_nether"
-      - "world_the_end"
-
-  # ----------------------------------------
-  # Teleport Task / Warmup & Effects
-  # ----------------------------------------
-  Task:
-    Task-Duration: 3  # seconds
-    Use-Title: true
-    Use-Message: true
-    Particles-After-Teleport: true
-    Skip-If-Op: true
-
-
-  # ----------------------------------------
-  # TPA (Teleport Requests)
-  # ----------------------------------------
-  Tpa:
-    Tpa-Duration: 30  # seconds
-
-  # ----------------------------------------
-  # RTP (Random Teleport)
-  # ----------------------------------------
-  RTP:
-    Cooldown-Seconds: 1000  # seconds
-    Max-Radius: 200
-    Enabled: true
-
-  # ----------------------------------------
-  # Economy (Vault)
-  # Toggle costs and set prices per action
-  # ----------------------------------------
-  Economy:
-    UseEconomy: false
-    Home-Creation-Price: 100.0
-    Home-Teleport-Price: 50.0
-    Tpa-Request-Price: 20.0
-    RTP-Price: 150.0
-
-  # ----------------------------------------
-  # Features
-  # Enable or disable specific features
-  # ----------------------------------------
-  Features:
-    Enable-TPA: true
-    Enable-Spawn: true
-    Enable-Home: true
-```
-
-Key behaviors:
-- Base home limit via `Config.Home.DefaultHomeLimit` plus permission overrides.
-- TPA timeout uses `Config.Tpa.Tpa-duration`.
-- Redis initializes only when `UseRedis: true`.
-- Teleport warmup via `Task-duration`; titles/messages/particles are optional.
-- Worlds listed in `DisabledWorlds` cannot be used for homes/teleports (validation).
-
----
-
-<a id="architecture--performance"></a>
-## 🧱 Architecture & Performance
-
-- Unified managers with storage abstraction:
-  - Homes: `HomeManager` → YAML (`HomeYMLManager`) or SQL (`HomeSQLManager`)
-  - Spawns: `SpawnManager` → YAML (`SpawnYMLManager`) or SQL (`SpawnSQLManager`)
-- Optional Redis (JedisPooled) caching/sync when enabled
-- MySQL path enabled by `Config.Connector.TYPE=MYSQL`
-- Extension system (`PluginLoader` / `PluginManager`) for internal modules
-- PlaceholderAPI soft‑dependency
-- Permission‑driven home limits (`homeplugin.limit.<n>`)
-- Teleport warmups and TPA expiration via Bukkit scheduler
-
----
-
-<a id="developer--extension-api"></a>
-## 🧑‍💻 Developer / Extension API
-
-- Events, managers, and language tools with documented APIs
-- Detect active backend:
-  - From events: `SyncMethod getType()`
-  - Globally: `fr.fuzeblocks.homeplugin.HomePlugin.getRegistrationType()`
-
-Docs:
-- API Docs (Javadoc): [HomePlugin JavaDoc](https://fuzeblocks.github.io/HomePlugin/)
-- Developer Docs: [Events](https://github.com/fuzeblocks/HomePlugin/wiki/Events) • [Home Managers](https://github.com/fuzeblocks/HomePlugin/wiki/Home-API-usage) • [Spawn Managers](https://github.com/fuzeblocks/HomePlugin/wiki/Spawn-API-usage) • [Language Management](https://github.com/fuzeblocks/HomePlugin/wiki/Language-File-Update-GUIDE)
-
-Use JitPack to depend on the API (replace `Tag` with a release/tag):
-
-Maven:
+**Maven:**
 ```xml
 <repository>
   <id>jitpack.io</id>
   <url>https://jitpack.io</url>
 </repository>
+
 <dependency>
   <groupId>com.github.fuzeblocks</groupId>
   <artifactId>HomePlugin</artifactId>
@@ -322,73 +264,112 @@ Maven:
 </dependency>
 ```
 
-Gradle (Groovy):
+**Gradle (Groovy):**
 ```groovy
-repositories { maven { url 'https://jitpack.io' } }
-dependencies { implementation 'com.github.fuzeblocks:HomePlugin:Tag' }
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.fuzeblocks:HomePlugin:Tag'
+}
 ```
 
-Gradle (Kotlin):
+**Gradle (Kotlin DSL):**
 ```kotlin
-repositories { maven("https://jitpack.io") }
-dependencies { implementation("com.github.fuzeblocks:HomePlugin:Tag") }
+repositories {
+    maven("https://jitpack.io")
+}
+
+dependencies {
+    implementation("com.github.fuzeblocks:HomePlugin:Tag")
+}
 ```
+
+Replace `Tag` with the desired version/release tag.
 
 ---
 
-<a id="compatibility"></a>
+## 🧱 Architecture
+
+HomePlugin features a modular, performance-focused architecture:
+
+- **Storage Abstraction** - Unified interface for YAML and MySQL backends
+- **Optional Redis Layer** - Cross-instance caching and synchronization
+- **Event System** - Comprehensive events for all plugin actions
+- **Extension System** - Internal module loader for custom functionality
+- **Async Operations** - Database queries run asynchronously
+- **Permission-Driven** - Flexible limits and restrictions via permissions
+
+---
+
 ## ✅ Compatibility
 
-- Declared `api-version: 1.14` (plugin.yml)
-- Built for modern Paper/Spigot derivatives
-- Soft‑dependency: PlaceholderAPI
-- Storage: YAML (default) or MySQL (when enabled)
+- **Minecraft:** 1.14+ (declared `api-version: 1.14`)
+- **Server:** Paper, Spigot, and derivatives
+- **Java:** Java 8+
+- **Soft Dependencies:** PlaceholderAPI, Vault
 
 ---
 
-<a id="roadmap"></a>
 ## 🗺️ Roadmap
 
-| Feature                           | Status     |
-|-----------------------------------|------------|
-| Per‑home economy cost             | ✅ Complete |
-| Offline player home editing       | ✅ Complete  |
-| Edit existing homes               | ✅ Complete |
-| Public homes                      | 📝 Planned  |
-| `/back` command                   | ✅ Complete |
-| Clickable chat messages           | ✅ Complete  |
-| Warps                             | 📝 Planned  |
-| UI/style refresh                  | 📝 Planned  |
-| BlueMap and Dynmap integration    | 📝 Planned  |
+| Feature | Status |
+|---------|--------|
+| Per-home economy costs | ✅ Complete |
+| Offline player home editing | ✅ Complete |
+| Edit existing homes | ✅ Complete |
+| `/back` command | ✅ Complete |
+| Clickable chat messages | ✅ Complete |
+| Public homes | 📝 Planned |
+| Warps | 📝 Planned |
+| UI/style refresh | 📝 Planned |
+| BlueMap and Dynmap integration | 📝 Planned |
 
-Suggestions welcome via Discussions or Discord.
-
----
-
-<a id="support--contributions"></a>
-## 🤝 Support & Contributions
-
-- Issues: Use GitHub Issues for bugs/feature requests
-- Discord: [Join the server](https://discord.gg/5zJyKz6Nfm)
-- Pull Requests: Use clear commit messages; discuss large changes beforehand
-
-Contribution flow:
-1. Fork
-2. Create a feature branch
-3. Commit changes
-4. Open a PR referencing related issues
+Have a suggestion? Open a [Discussion](https://github.com/fuzeblocks/HomePlugin/discussions) or join our [Discord](https://discord.gg/5zJyKz6Nfm)!
 
 ---
 
-<a id="license"></a>
+## 🤝 Contributing
+
+Contributions are welcome! Here's how you can help:
+
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
+
+### Guidelines
+- Use clear, descriptive commit messages
+- Follow existing code style and conventions
+- Test your changes thoroughly
+- Update documentation as needed
+- Discuss major changes in Issues or Discord first
+
+---
+
+## 💬 Support
+
+Need help? Have questions?
+
+- 📖 **[Wiki](https://github.com/fuzeblocks/HomePlugin/wiki)** - Documentation and guides
+- 🐛 **[Issues](https://github.com/fuzeblocks/HomePlugin/issues)** - Bug reports and feature requests
+- 💬 **[Discord](https://discord.gg/5zJyKz6Nfm)** - Community support and discussion
+- 📧 **[Discussions](https://github.com/fuzeblocks/HomePlugin/discussions)** - General questions and ideas
+
+---
+
 ## 📄 License
 
-[Apache‑2.0](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
+HomePlugin is licensed under the [Apache License 2.0](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file).
 
-![Usage](https://bstats.org/signatures/bukkit/HomePlugin.svg)
+---
 
+<div align="center">
 
+**Made with ❤️ by [fuzeblocks](https://github.com/fuzeblocks)**
 
+If you find this plugin useful, consider [sponsoring](https://client.pristis.fr/aff.php?aff=2) to support development!
 
-
-
+</div>
