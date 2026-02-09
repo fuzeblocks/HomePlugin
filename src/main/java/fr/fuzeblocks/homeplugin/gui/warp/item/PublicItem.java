@@ -32,7 +32,7 @@ public class PublicItem extends AbstractItem {
     @Override
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent inventoryClickEvent) {
         WarpManager warpManager = HomePlugin.getWarpManager();
-        warpManager.setWarpPublic(warpData,true);
+        warpManager.setWarpPublic(warpData, !warpData.isPublic());
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING,1.0f,1.0f);
         WarpGUIManager.openOptionsWarpGUI(player,warpManager.getWarp(warpData.getName()));
     }

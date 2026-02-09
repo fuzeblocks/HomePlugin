@@ -1,6 +1,7 @@
 package fr.fuzeblocks.homeplugin.gui.warp.item;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.gui.warp.WarpGUIManager;
 import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.warps.WarpData;
 import org.bukkit.Material;
@@ -33,6 +34,6 @@ public class CostItem extends AbstractItem {
 
     @Override
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent inventoryClickEvent) {
-
+        WarpGUIManager.openCostWarpGUI(player,warpData);
     }
 }

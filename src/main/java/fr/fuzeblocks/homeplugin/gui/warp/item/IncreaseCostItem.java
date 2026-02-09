@@ -1,6 +1,7 @@
 package fr.fuzeblocks.homeplugin.gui.warp.item;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.gui.warp.WarpGUIManager;
 import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.warps.WarpData;
 import fr.fuzeblocks.homeplugin.warps.WarpManager;
@@ -21,7 +22,7 @@ import java.util.function.Supplier;
 public class IncreaseCostItem extends AbstractItem {
     private final LanguageManager languageManager = HomePlugin.getLanguageManager();
 
-    private final WarpData warpData;
+    private WarpData warpData;
     public IncreaseCostItem(WarpData warpData) {
         this.warpData = warpData;
     }
@@ -38,5 +39,6 @@ public class IncreaseCostItem extends AbstractItem {
             WarpManager warpManager = HomePlugin.getWarpManager();
             warpManager.setWarpCost(warpData, cost + 1);
             player.playSound(player.getLocation(), "entity.experience_orb.pickup", 1.0f, 1.0f);
+            WarpGUIManager.openCostWarpGUI(player,warpManager.getWarp(warpData.getName()));
     }
 }

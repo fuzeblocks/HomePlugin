@@ -12,6 +12,8 @@ fr.fuzeblocks.homeplugin.database
 fr.fuzeblocks.homeplugin.economy
 fr.fuzeblocks.homeplugin.event
 fr.fuzeblocks.homeplugin.gui
+fr.fuzeblocks.homeplugin.gui.warp
+fr.fuzeblocks.homeplugin.gui.warp.item
 fr.fuzeblocks.homeplugin.home
 fr.fuzeblocks.homeplugin.home.offline
 fr.fuzeblocks.homeplugin.home.offline.sql

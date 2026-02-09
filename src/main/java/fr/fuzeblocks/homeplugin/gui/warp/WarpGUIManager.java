@@ -16,6 +16,7 @@ import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SimpleItem;
 import xyz.xenondevs.invui.window.Window;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -107,11 +108,11 @@ public class WarpGUIManager {
                 //E for Expiration
                 .addIngredient('P', new PublicItem(warpData))
                 //A for permission
-                //I for Icon
+                .addIngredient('I', new IconItem(warpData))
                 .addIngredient('C',new CostItem(warpData))
                 //N for Name
                 //S for lore
-                //L for location
+                .addIngredient('L', new LocationItem(warpData))
 
 
                 .build();
@@ -129,20 +130,43 @@ public class WarpGUIManager {
         Gui gui = Gui.normal()
                 .setStructure(
                         "# # # # # # # # #",
-                        "# x + x N x x - #",
+                        "# x + x N x - x #",
                         "# # # # # # # # #",
                         "# # # # # # # # #")
                 .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
                 .addIngredient('#', border)
                 .addIngredient('+', new IncreaseCostItem(warpData))
                 .addIngredient('-', new DecreaseCostItem(warpData))
-                .addIngredient('N', new SimpleItem(new ItemBuilder(Material.EMERALD)))
-                        .setDisplayName(languageManager.getStringWithColor(WARP_LIST + "Warp-modify-cost-current", "&aCoût actuel: &e%cost%").replace("{cost}", String.valueOf(warpData.getCost())))
+                .addIngredient('N', new SimpleItem(new ItemBuilder(Material.EMERALD).setDisplayName(languageManager.getStringWithColor(WARP_LIST + "Warp-modify-cost-current", "&aCoût actuel: &e%cost%").replace("%cost%", String.valueOf(warpData.getCost())))))
                 .build();
 
         Window window = Window.single()
                 .setViewer(player)
                 .setTitle(languageManager.getStringWithColor(WARP_LIST + "Warp-modify-cost-header", "&6&lDéfinir le coût du Warp"))
+                .setGui(gui)
+                .build();
+
+        window.open();
+    }
+
+    public static void openChangeIconWarpGUI(Player player,WarpData warpData) {
+        Item border = new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(""));
+        Gui gui = PagedGui.items()
+                .setStructure(
+                        "# # # # # # # # #",
+                        "# x x x x x x x #",
+                        "# x x x x x x x #",
+                        "# # # < # > # # #")
+                .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
+                .addIngredient('#', border)
+                .addIngredient('<', new BackItem())
+                .addIngredient('>', new ForwardItem())
+                .setContent(Arrays.stream(Material.values()).filter(mat -> mat != Material.AIR).map(mat -> new IconsItem(mat, warpData)).collect(Collectors.toList()))
+                .build();
+
+        Window window = Window.single()
+                .setViewer(player)
+                .setTitle(languageManager.getStringWithColor(WARP_LIST + "Warp-modify-icon-header", "&6&lChanger l'icône du Warp"))
                 .setGui(gui)
                 .build();
 
