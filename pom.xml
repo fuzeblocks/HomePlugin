@@ -7,13 +7,13 @@
 
     <groupId>fr.fuzeblocks</groupId>
     <artifactId>HomePlugin</artifactId>
-    <version>${revision}</version>
+    <version>0.8.6</version>
 
     <properties>
-        <revision>0.0.0</revision>
-        <!-- Compile target: Java 11 bytecode so the jar runs on JRE 11..21 -->
+        <!-- Compile target: Java 11 bytecode -->
         <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
     </properties>
 
     <packaging>jar</packaging>
@@ -49,6 +49,7 @@
         </resources>
 
         <plugins>
+            <!-- Compiler -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -58,6 +59,7 @@
                 </configuration>
             </plugin>
 
+            <!-- Shade -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -105,26 +107,7 @@
                 </executions>
             </plugin>
 
-            <!-- other plugins unchanged (javadoc, antrun) -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.4.0</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                    <outputDirectory>${project.basedir}/docs</outputDirectory>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>generate-javadocs</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>javadoc</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
+            <!-- Move plugin.yml -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
@@ -143,28 +126,8 @@
                             </target>
                         </configuration>
                     </execution>
-
-                    <execution>
-                        <id>move-javadoc</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-                                <mkdir dir="${project.basedir}/docs/apidocs"/>
-                                <move todir="${project.basedir}/docs" overwrite="true">
-                                    <fileset dir="${project.reporting.outputDirectory}/apidocs">
-                                        <include name="**/*"/>
-                                    </fileset>
-                                </move>
-                                <delete dir="${project.basedir}/docs/apidocs" failonerror="false"/>
-                            </target>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 
@@ -196,7 +159,6 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>5.2.0</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -210,10 +172,7 @@
             <groupId>com.yworks</groupId>
             <artifactId>yguard</artifactId>
             <version>4.1.0</version>
-            <scope>compile</scope>
         </dependency>
-
-
 
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -226,7 +185,6 @@
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>26.0.2</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -260,7 +218,6 @@
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
             <version>3.0.2</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
