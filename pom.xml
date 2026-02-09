@@ -96,6 +96,7 @@
                         </filter>
                     </filters>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
+                  <shadedArtifactAttached>false</shadedArtifactAttached>
                 </configuration>
                 <executions>
                     <execution>
