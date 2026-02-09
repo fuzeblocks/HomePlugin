@@ -1,5 +1,6 @@
 jdk:
   - openjdk17
-
 install:
-  - MAVEN_VERSION=3.9.11; BASE_URL=https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries; echo "Installing Maven ${MAVEN_VERSION}"; curl -fsSL ${BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz -o maven.tgz && tar -xzf maven.tgz && export MAVEN_HOME="$PWD/apache-maven-${MAVEN_VERSION}" && export PATH="$MAVEN_HOME/bin:$PATH" && mvn -v && mvn -V -B -DskipTests=true clean package
+  - mvn clean install -DskipTests=true
+  - VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+  - mvn install:install-file -Dfile=target/HomePlugin-${VERSION}.jar -DgroupId=fr.fuzeblocks -DartifactId=HomePlugin -Dversion=${VERSION} -Dpackaging=jar
