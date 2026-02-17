@@ -14,6 +14,7 @@ import xyz.xenondevs.invui.gui.structure.Markers;
 import xyz.xenondevs.invui.item.Item;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 import xyz.xenondevs.invui.item.impl.SimpleItem;
+import xyz.xenondevs.invui.window.AnvilWindow;
 import xyz.xenondevs.invui.window.Window;
 
 import java.util.Arrays;
@@ -105,13 +106,13 @@ public class WarpGUIManager {
                 .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
                 .addIngredient('#', border)
                 .addIngredient('D', new DeleteItem(warpData))
-                //E for Expiration
+                 .addIngredient('E',new ExpirationItem(warpData))
                 .addIngredient('P', new PublicItem(warpData))
-                //A for permission
+                .addIngredient('A',new PermissionItem(warpData))
                 .addIngredient('I', new IconItem(warpData))
-                .addIngredient('C',new CostItem(warpData))
-                //N for Name
-                //S for lore
+                .addIngredient('C', new CostItem(warpData))
+                .addIngredient('N', new RenameItem(warpData))
+                .addIngredient('S',new LoreItem(warpData))
                 .addIngredient('L', new LocationItem(warpData))
 
 
@@ -172,6 +173,7 @@ public class WarpGUIManager {
 
         window.open();
     }
+
 
 
 }

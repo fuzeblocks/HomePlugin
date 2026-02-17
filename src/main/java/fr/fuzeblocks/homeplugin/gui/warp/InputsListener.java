@@ -18,7 +18,7 @@ public class InputsListener implements Listener {
     private final InputsManager inputsManager;
     private final WarpManager warpManager;
 
-    public InputsListener(HomePlugin plugin) {
+    public InputsListener() {
         this.inputsManager = HomePlugin.getInputsManager();
         this.warpManager = HomePlugin.getWarpManager();
     }

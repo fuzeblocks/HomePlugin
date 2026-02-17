@@ -18,6 +18,8 @@ import fr.fuzeblocks.homeplugin.database.CreateTable;
 import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
 import fr.fuzeblocks.homeplugin.database.DatabaseManager;
 import fr.fuzeblocks.homeplugin.economy.EconomyManager;
+import fr.fuzeblocks.homeplugin.gui.warp.InputsListener;
+import fr.fuzeblocks.homeplugin.gui.warp.InputsManager;
 import fr.fuzeblocks.homeplugin.home.HomeManager;
 import fr.fuzeblocks.homeplugin.home.offline.HomeOfflineManager;
 import fr.fuzeblocks.homeplugin.home.offline.sql.HomeOfflineSQLManager;
@@ -98,6 +100,7 @@ public final class HomePlugin extends JavaPlugin {
     private static WarpSQLManager warpSQLManager;
     private static WarpYMLManager warpYMLManager;
     private static WarpManager warpManager;
+    private static InputsManager inputsManager = new InputsManager();
 
     private static String safeDigits(String ver) {
         return ver == null ? "0" : ver.replaceAll("[^0-9.]", "");
@@ -299,6 +302,10 @@ public final class HomePlugin extends JavaPlugin {
      */
     public static WarpSQLManager getWarpSQLManager() {
         return warpSQLManager;
+    }
+
+    public static InputsManager getInputsManager() {
+        return inputsManager;
     }
 
     @Override
@@ -543,6 +550,7 @@ public final class HomePlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new OnMoveListener(), this);
         Bukkit.getPluginManager().registerEvents(new OnPlayerTakeDamageByAnotherPlayer(), this);
         Bukkit.getPluginManager().registerEvents(new BackListener(), this);
+        Bukkit.getPluginManager().registerEvents(new InputsListener(),this);
     }
 
     private void completerRegistration() {
