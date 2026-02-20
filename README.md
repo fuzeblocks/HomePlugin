@@ -6,7 +6,7 @@
 
 [![](https://jitpack.io/v/fuzeblocks/HomePlugin.svg)](https://jitpack.io/#fuzeblocks/HomePlugin)
 [![sponsor](https://img.shields.io/badge/Sponsor-Support%20Development-blue)](https://client.pristis.fr/aff.php?aff=2)
-[![Discord](https://img.shields.io/discord/1394947383560900618?color=5865F2&logo=discord&logoColor=white&label=Discord)](https://discord.com/api/guilds/1394947383560900618/widget.json)
+[![Discord](https://img.shields.io/discord/1394947383560900618?color=5865F2&logo=discord&logoColor=white&label=Discord)](https://discord.com/5zJyKz6Nfm)
 [![License](https://img.shields.io/badge/license-Apache--2.0-orange.svg)](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
 
 **Stable • Fast • Modular • API-Driven**
