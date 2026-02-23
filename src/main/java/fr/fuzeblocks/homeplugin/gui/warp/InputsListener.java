@@ -79,7 +79,7 @@ public class InputsListener implements Listener {
     private void handleLocationInput(Player player, String message, WarpData warpData) {
 
         if (!isValidLocationInput(message)) {
-            player.sendMessage(color("&cEntrée invalide ! Format: x=100 y=64 z=200 ou 'here'."));
+            player.sendMessage(color("&cEntrée invalide ! Format: x=100 y=64 z=200 ou 'here' ou 'cancel'."));
             return;
         }
 
@@ -91,6 +91,8 @@ public class InputsListener implements Listener {
         message = message.trim();
 
         if (message.equalsIgnoreCase("here")) return true;
+
+        if (message.equalsIgnoreCase("cancel")) return true;
 
         String[] parts = message.split(" ");
         if (parts.length != 3) return false;
@@ -106,6 +108,10 @@ public class InputsListener implements Listener {
         if (message.equalsIgnoreCase("here")) {
             return player.getLocation();
         }
+        if (message.equalsIgnoreCase("cancel")) {
+            player.sendMessage(color("&cModification annulée !"));
+            return warpData.getLocation();
+        }
 
         double x = 0, y = 0, z = 0;
 
@@ -120,7 +126,6 @@ public class InputsListener implements Listener {
             }
         }
 
-        // Conserve le monde du warp
         return new Location(warpData.getLocation().getWorld(), x, y, z);
     }
 
@@ -154,7 +159,6 @@ public class InputsListener implements Listener {
             return;
         }
 
-        // Si ton manager attend une List<String>
         warpManager.setWarpLores(warpData, Collections.singletonList(lore));
     }
 

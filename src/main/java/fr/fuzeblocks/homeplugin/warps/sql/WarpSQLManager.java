@@ -489,4 +489,19 @@ public class WarpSQLManager implements Warp {
 
         return Collections.unmodifiableSet(names);
     }
+    @Override
+    public boolean isExpired(String name) {
+        WarpData data = loadWarpInternal(name);
+        if (data == null) return false;
+
+        Timestamp expiration = data.getExpirationDate();
+        if (expiration == null) return false;
+
+        return expiration.before(new Timestamp(System.currentTimeMillis()));
+    }
+    @Override
+    public boolean isExpired(WarpData warpData) {
+        if (warpData == null) return false;
+        return isExpired(warpData.getName());
+    }
 }

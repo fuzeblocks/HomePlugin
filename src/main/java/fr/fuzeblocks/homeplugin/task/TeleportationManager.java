@@ -57,7 +57,6 @@ public class TeleportationManager {
 
         Location location = HomePlugin.getWarpManager().getWarp(warpName).getLocation();
 
-        // Early return if world is not loaded
         if (location == null || location.getWorld() == null) {
             player.sendMessage(languageManager.getStringWithColor(WARP_PREFIX + "Warp-world-not-loaded"));
             return;

@@ -34,5 +34,6 @@ public class PermissionItem extends AbstractItem {
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent inventoryClickEvent) {
             HomePlugin.getInputsManager().createInputsForPlayer(player.getUniqueId(),new Input(player.getUniqueId(), InputsSession.PERMISSION, warpData));
             player.closeInventory();
+            player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor("Warp.Modify.Permission-item-message", "&eVeuillez entrer la nouvelle permission du warp dans le chat. (none pour aucune permission, cancel pour annuler)"));
     }
 }

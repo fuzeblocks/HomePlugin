@@ -34,5 +34,6 @@ public class LoreItem extends AbstractItem {
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent inventoryClickEvent) {
             HomePlugin.getInputsManager().createInputsForPlayer(player.getUniqueId(),new Input(player.getUniqueId(), InputsSession.LORE, warpData));
             player.closeInventory();
+            player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor("Warp.Modify.Lore-item-message", "&eVeuillez entrer la nouvelle lore du warp dans le chat. (cancel pour annuler)"));
     }
 }

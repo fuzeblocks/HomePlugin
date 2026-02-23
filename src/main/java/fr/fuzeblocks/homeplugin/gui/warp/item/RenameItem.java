@@ -35,5 +35,6 @@ public class RenameItem extends AbstractItem {
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent inventoryClickEvent) {
             HomePlugin.getInputsManager().createInputsForPlayer(player.getUniqueId(),new Input(player.getUniqueId(), InputsSession.NAME, warpData));
             player.closeInventory();
+            player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor("Warp.Modify.Rename-item-message", "&eVeuillez entrer le nouveau nom du warp dans le chat. (cancel pour annuler)"));
     }
 }

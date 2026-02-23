@@ -281,4 +281,8 @@ public interface Warp {
      * @return the warp names
      */
     Set<String> getWarpNames();
+
+    boolean isExpired(String name);
+
+    boolean isExpired(WarpData warpData);
 }

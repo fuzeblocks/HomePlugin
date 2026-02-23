@@ -34,5 +34,6 @@ public class ExpirationItem extends AbstractItem {
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent inventoryClickEvent) {
             HomePlugin.getInputsManager().createInputsForPlayer(player.getUniqueId(),new Input(player.getUniqueId(), InputsSession.EXPIRATION, warpData));
             player.closeInventory();
+            player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor("Warp.Modify.Expiration-item-message", "&eVeuillez entrer la nouvelle durée d'expiration du warp dans le chat (en secondes). (cancel pour annuler ou never pour ne jamais faire expirer)"));
     }
 }

@@ -36,5 +36,6 @@ public class LocationItem extends AbstractItem {
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent inventoryClickEvent) {
            HomePlugin.getInputsManager().createInputsForPlayer(player.getUniqueId(),new Input(player.getUniqueId(), InputsSession.LOCATION, warpData));
             player.closeInventory();
+            player.sendMessage(languageManager.getStringWithColor("Warp.Edit.Location.Message", "&eVeuillez entrer la location du warp dans le chat. (Format: x=100 y=64 z=200 ou 'here')"));
     }
 }

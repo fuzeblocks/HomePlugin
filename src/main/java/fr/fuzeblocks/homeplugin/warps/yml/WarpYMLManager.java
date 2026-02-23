@@ -503,4 +503,20 @@ public class WarpYMLManager implements Warp {
                         .collect(Collectors.toSet())
         );
     }
+    @Override
+    public boolean isExpired(String name) {
+        WarpData data = getWarpInternal(name);
+        if (data == null) return false;
+
+        Timestamp expiration = data.getExpirationDate();
+        if (expiration == null) return false;
+
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+        return now.after(expiration);
+    }
+    @Override
+    public boolean isExpired(WarpData warpData) {
+        if (warpData == null) return false;
+        return isExpired(warpData.getName());
+    }
 }

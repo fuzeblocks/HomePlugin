@@ -53,7 +53,7 @@ public class WarpCommand implements CommandExecutor {
                     return false;
                 }
                 WarpData warpData = warpManager.getWarp(warpName);
-                if (warpData.canAccess(player.getUniqueId()) && EconomyManager.pay(player, EconomyManager.getWarpUsePrice())) {
+                if (warpData.canAccess(player.getUniqueId()) && EconomyManager.pay(player, EconomyManager.getWarpUsePrice()) && warpManager.isExpired(warpData)) {
                     TeleportationManager.teleportPlayerToWarp(player, warpName);
                 } else {
                     player.sendMessage(languageManager.getStringWithColor(WARP + "Warp-teleport-failed", "&cLa téléportation vers le warp &e({warp}) a échoué !").replace("{warp}", warpName));

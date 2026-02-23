@@ -224,4 +224,13 @@ public class WarpManager implements Warp {
     public Set<String> getWarpNames() {
         return warpImplementation.getWarpNames();
     }
+
+    @Override
+    public boolean isExpired(WarpData warpData) {
+        return warpImplementation.isExpired(warpData);
+    }
+    @Override
+    public boolean isExpired(String name) {
+       return warpImplementation.isExpired(name);
+    }
 }
