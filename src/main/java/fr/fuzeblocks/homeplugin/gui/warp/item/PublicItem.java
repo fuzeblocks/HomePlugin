@@ -26,7 +26,7 @@ public class PublicItem extends AbstractItem {
     @Override
     public ItemProvider getItemProvider() {
         return new ItemBuilder(Material.END_PORTAL_FRAME)
-                .setDisplayName(languageManager.getStringWithColor("Warp.Modify.Public-item-name", "&aRendre le warp public"));
+                .setDisplayName(languageManager.getStringWithColor("Warp.Modify.Public-item-name", "&aChanger la visibilité du warp"));
     }
 
     @Override

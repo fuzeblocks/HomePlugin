@@ -103,7 +103,6 @@ public class WarpData {
         UUID creatorUUID = UUID.fromString(parts[2]);
         Material icon = Material.valueOf(parts[3]);
 
-        // Lores
         List<String> lores;
         if (parts[4].isEmpty()) {
             lores = Collections.emptyList();
@@ -113,7 +112,6 @@ public class WarpData {
 
         boolean isPublic = Boolean.parseBoolean(parts[5]);
 
-        // Allowed players
         Set<UUID> allowedPlayers;
         if (parts[6].isEmpty()) {
             allowedPlayers = Collections.emptySet();
@@ -175,37 +173,7 @@ public class WarpData {
         return parts.length == 12;
     }
 
-    public static ItemBuilder toItemBuilder(WarpData warpData) {
-        org.bukkit.ChatColor titleColor = org.bukkit.ChatColor.GOLD;
-        org.bukkit.ChatColor labelColor = org.bukkit.ChatColor.AQUA;
-        org.bukkit.ChatColor valueColor = org.bukkit.ChatColor.WHITE;
-        org.bukkit.ChatColor accentColor = org.bukkit.ChatColor.YELLOW;
 
-        ItemBuilder itemBuilder = new ItemBuilder(warpData.getIcon())
-                .setDisplayName(titleColor + warpData.getName());
-
-        if (!warpData.getLores().isEmpty()) {
-            List<String> coloredLores = warpData.getLores().stream()
-                    .map(l -> valueColor + l)
-                    .collect(Collectors.toList());
-            itemBuilder.setLegacyLore(coloredLores);
-        }
-
-        itemBuilder.addLegacyLoreLines(Arrays.asList(
-                labelColor + "Public: " + valueColor + warpData.isPublic(),
-                labelColor + "Coût: " + valueColor + warpData.getCost(),
-                labelColor + "Créateur: " + valueColor + warpData.getCreatorName(),
-                labelColor + "Créé le: " + valueColor + (warpData.getCreationDate() != null ? warpData.getCreationDate().toString() : "N/A"),
-                labelColor + "Expire: " + valueColor + (warpData.getExpirationDate() != null ? warpData.getExpirationDate().toString() : "Jamais"),
-                labelColor + "Lieu: " + valueColor + warpData.getLocation().getWorld().getName() + " " +
-                        accentColor + "(" + String.format("%.1f, %.1f, %.1f)", warpData.getLocation().getX(), warpData.getLocation().getY(), warpData.getLocation().getZ()) + valueColor,
-                labelColor + "Permission: " + valueColor + (warpData.getPermission() != null ? warpData.getPermission() : "Aucune")
-        ));
-
-        return itemBuilder;
-    }
-    //Language keys are missing.
-    //Todo
     public static ItemBuilder toItemBuilderUsingLanguage(WarpData warpData, fr.fuzeblocks.homeplugin.language.LanguageManager languageManager) {
         org.bukkit.ChatColor titleColor = org.bukkit.ChatColor.GOLD;
         org.bukkit.ChatColor labelColor = org.bukkit.ChatColor.AQUA;

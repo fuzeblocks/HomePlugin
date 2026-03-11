@@ -85,6 +85,7 @@ public class InputsListener implements Listener {
 
         Location location = parseLocation(player, message, warpData);
         warpManager.relocateWarp(warpData, location);
+        player.sendMessage(color("&aLe warp a été déplacé à la nouvelle position !"));
     }
 
     private boolean isValidLocationInput(String message) {
@@ -145,7 +146,13 @@ public class InputsListener implements Listener {
             return;
         }
 
+        if (warpManager.warpExists(name)) {
+            player.sendMessage(color("&cUn warp avec ce nom existe déjà !"));
+            return;
+        }
+
         warpManager.renameWarp(warpData, name);
+        player.sendMessage(color("&aLe warp a été renommé en &e" + name + " &a!"));
     }
 
     /* ---------------- LORE ---------------- */
@@ -160,6 +167,7 @@ public class InputsListener implements Listener {
         }
 
         warpManager.setWarpLores(warpData, Collections.singletonList(lore));
+        player.sendMessage(color("&aLe lore du warp a été mis à jour !"));
     }
 
     /* ---------------- PERMISSION ---------------- */
@@ -175,6 +183,7 @@ public class InputsListener implements Listener {
 
         if (permission.equalsIgnoreCase("none")) {
             warpManager.setWarpPermission(warpData, null);
+            player.sendMessage(color("&aAucune permission ne sera obligatoire pour ce warp !"));
             return;
         }
 
@@ -184,6 +193,7 @@ public class InputsListener implements Listener {
         }
 
         warpManager.setWarpPermission(warpData, permission);
+        player.sendMessage(color("&aLa permission du warp a été mise à jour !"));
     }
 
     /* ---------------- EXPIRATION ---------------- */
@@ -199,6 +209,7 @@ public class InputsListener implements Listener {
 
     if (input.equals("never")) {
         warpManager.setWarpExpirationDate(warpData, null);
+        player.sendMessage(color("&aLe warp n'expirera jamais !"));
         return;
     }
 
@@ -212,6 +223,7 @@ public class InputsListener implements Listener {
     java.sql.Timestamp expiration = new java.sql.Timestamp(futureMillis);
 
     warpManager.setWarpExpirationDate(warpData, expiration);
+    player.sendMessage(color("&aLa durée d'expiration du warp a été mise à jour !"));
 }
 
 

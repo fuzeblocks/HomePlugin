@@ -248,3 +248,7 @@ Warp:
     Warp-location: "&9Position : &6X: %x% Y: %y% Z: %z% Monde: %world%"
     Warp-teleport-hover: "&eCliquez pour vous téléporter."
 
+  Modify:
+    Public-item-name: "&aChanger la visibilité du warp"
+    Expiration-item-message: "&eVeuillez entrer la nouvelle durée d'expiration du warp dans le chat avec pour format s,h,d,m (ex 1d,2m,3d,4s) . (cancel pour annuler ou never pour ne jamais faire expirer)"
+
