@@ -229,6 +229,27 @@ Warp:
   Warp-delete-success: "&aLe warp &e({warp}) &aa été supprimé."
   Warp-world-not-loaded: "&cLe monde du warp spécifié n'est pas chargé !"
 
+  Inputs:
+    CancelModification: "&cModification annulée !"
+    LocationInput:
+      InvalidLocationInput: "&cEntrée invalide ! Format: x=100 y=64 z=200 ou 'here' ou 'cancel'."
+      SuccessLocationInput: "&aPosition du warp définie à X: %x% Y: %y% Z: %z% Monde: %world% !"
+    NameInput:
+      InvalidNameInput: "&cEntrée invalide ! Nom sans espaces."
+      WarpExists: "&cUn warp avec ce nom existe déjà !"
+      SuccessNameInput: "&aLe warp a été renommé en &e{warp}&"
+    LoreInput:
+      SuccessLoreInput: "&aLa lore du warp a été mise à jour !"
+    PermissionInput:
+      NonePermissionInput: "&aAucune permission ne sera obligatoire pour ce warp !"
+      InvalidPermissionInput: "&cEntrée invalide ! Veuillez entrer une permission valide ou 'none' pour aucune permission."
+      SuccessPermissionInput: "&aLa permission du warp a été mise à jour !"
+    ExpirationInput:
+      NeverExpirationInput: "&aLe warp n'expirera jamais !"
+      InvalidExpirationInput: "&cFormat invalide ! Exemples: 10m, 2h, 7d, never"
+      SuccessExpirationInput: "&aLa durée d'expiration du warp a été mise à jour !"
+
+
   Item:
     Public: "Public "
     Cost: "Coût "
@@ -251,4 +272,17 @@ Warp:
   Modify:
     Public-item-name: "&aChanger la visibilité du warp"
     Expiration-item-message: "&eVeuillez entrer la nouvelle durée d'expiration du warp dans le chat avec pour format s,h,d,m (ex 1d,2m,3d,4s) . (cancel pour annuler ou never pour ne jamais faire expirer)"
-
+    Expiration-item-name: "&eChanger la durée d'expiration du warp"
+    Permission-item-message: "&eVeuillez entrer la nouvelle permission du warp dans le chat. (none pour aucune permission, cancel pour annuler)"
+    Permission-item-name: "&eChanger la permission du warp"
+    Cost-item-name: "&aDéfinir le coût du warp"
+    Decrease-cost-item-name: "&aDiminuer le coût du warp"
+    Delete-item-name: "&cSupprimer le warp"
+    Icon-item-name: "&eChanger l'icône du warp"
+    Increase-Cost-item-name: "&aAugmenter le coût du warp"
+    Location-item-name: "&eDéfinir la location du warp"
+    Location-item-message: "&eVeuillez entrer la location du warp dans le chat. (Format: x=100 y=64 z=200 ou 'here')"
+    Lore-item-name: "&eRenommer la lore du warp"
+    Lore-item-message: "&eVeuillez entrer la nouvelle lore du warp dans le chat. (cancel pour annuler)"
+    Rename-item-name: "&eRenommer le warp"
+    Rename-item-message: "&eVeuillez entrer le nouveau nom du warp dans le chat. (cancel pour annuler)"

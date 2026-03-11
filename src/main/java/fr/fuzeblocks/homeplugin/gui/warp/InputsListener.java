@@ -188,7 +188,7 @@ public class InputsListener implements Listener {
         }
 
         if (!permission.matches("[a-zA-Z0-9._-]+")) {
-            player.sendMessage(color("&cPermission invalide !"));
+            player.sendMessage(color("&cEntrée invalide ! Veuillez entrer une permission valide ou 'none' pour aucune permission."));
             return;
         }
 

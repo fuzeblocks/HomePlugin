@@ -29,13 +29,13 @@ public class LocationItem extends AbstractItem {
 
     @Override
     public ItemProvider getItemProvider() {
-        return new ItemBuilder(Material.COMPASS).setDisplayName(languageManager.getStringWithColor("Warp.Edit.Location", "&eDéfinir la location du warp"));
+        return new ItemBuilder(Material.COMPASS).setDisplayName(languageManager.getStringWithColor("Warp.Modify.Location-item-name", "&eDéfinir la location du warp"));
    }
 
     @Override
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent inventoryClickEvent) {
            HomePlugin.getInputsManager().createInputsForPlayer(player.getUniqueId(),new Input(player.getUniqueId(), InputsSession.LOCATION, warpData));
             player.closeInventory();
-            player.sendMessage(languageManager.getStringWithColor("Warp.Edit.Location.Message", "&eVeuillez entrer la location du warp dans le chat. (Format: x=100 y=64 z=200 ou 'here')"));
+            player.sendMessage(languageManager.getStringWithColor("Warp.Modify.Location-item-message", "&eVeuillez entrer la location du warp dans le chat. (Format: x=100 y=64 z=200 ou 'here')"));
     }
 }
