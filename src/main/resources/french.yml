@@ -239,7 +239,7 @@ Warp:
     NameInput:
       InvalidNameInput: "&cEntrée invalide ! Nom sans espaces."
       WarpExists: "&cUn warp avec ce nom existe déjà !"
-      SuccessNameInput: "&aLe warp a été renommé en &e%warp%&"
+      SuccessNameInput: "&aLe warp a été renommé en &e%warp%"
     LoreInput:
       SuccessLoreInput: "&aLa lore du warp a été mise à jour !"
     PermissionInput:

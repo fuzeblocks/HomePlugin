@@ -162,7 +162,7 @@ public class WarpGUIManager {
                 .addIngredient('#', border)
                 .addIngredient('<', new BackItem())
                 .addIngredient('>', new ForwardItem())
-                .setContent(Arrays.stream(Material.values()).filter(mat -> mat != Material.AIR).map(mat -> new IconsItem(mat, warpData)).collect(Collectors.toList()))
+                .setContent(Arrays.stream(Material.values()).filter(WarpGUIManager::isMaterialValidForIcon).map(mat -> new IconsItem(mat, warpData)).collect(Collectors.toList()))
                 .build();
 
         Window window = Window.single()
@@ -172,6 +172,9 @@ public class WarpGUIManager {
                 .build();
 
         window.open();
+    }
+    private static boolean isMaterialValidForIcon(Material material) {
+        return material.isItem() && !material.isAir() && !material.isBlock();
     }
 
 

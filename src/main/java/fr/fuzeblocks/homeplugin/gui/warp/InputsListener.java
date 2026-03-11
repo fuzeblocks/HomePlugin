@@ -139,7 +139,7 @@ public class InputsListener implements Listener {
 
         String name = message.trim();
 
-        if (name.equalsIgnoreCase("cancel")) {
+        if (name.equalsIgnoreCase("cancel") || name.startsWith("/")) {
             player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "CancelModification","&cModification annulée !"));
             return;
         }
@@ -151,6 +151,7 @@ public class InputsListener implements Listener {
 
         if (warpManager.warpExists(name)) {
             player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "NameInput.WarpExists","&cUn warp avec ce nom existe déjà !"));
+            handleNameInput(player, message, warpData);
             return;
         }
 
@@ -167,7 +168,7 @@ public class InputsListener implements Listener {
 
         String lore = message.trim();
 
-        if (lore.equalsIgnoreCase("cancel")) {
+        if (lore.equalsIgnoreCase("cancel") || lore.startsWith("/")) {
             player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "CancelModification","&cModification annulée !"));
             return;
         }
@@ -182,7 +183,7 @@ public class InputsListener implements Listener {
 
         String permission = message.trim();
 
-        if (permission.equalsIgnoreCase("cancel")) {
+        if (permission.equalsIgnoreCase("cancel") || permission.startsWith("/")) {
             player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "CancelModification","&cModification annulée !"));
             return;
         }
