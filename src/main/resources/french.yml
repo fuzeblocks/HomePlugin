@@ -7,6 +7,7 @@ Language:
   Teleport-canceled: "&cTéléportation annulée car vous avez bougé."
   A-teleport-is-already-in-progress: "&cUne téléportation est déjà en cours !"
   Not-Enough-Money: "&cVous n'avez pas assez d'argent pour cette action !"
+  Economy-system-not-found: "&cSystème d'économie introuvable !"
 
   Error: "&cUne erreur est survenue !"
   Unknown: "&cInconnu"
@@ -16,6 +17,7 @@ Language:
   Player-is-not-online: "&cLe joueur spécifié n'existe pas ou n'est pas en ligne !"
   Teleport-to-warp: "&aVous avez été téléporté au warp :"
   Start-of-teleportation-for-warp: "&6Début de la téléportation vers le warp : "
+
 
 Spawn:
   SetSpawn-permission-deny-message: "&cVous n'avez pas la permission de définir le spawn !"
@@ -237,7 +239,7 @@ Warp:
     NameInput:
       InvalidNameInput: "&cEntrée invalide ! Nom sans espaces."
       WarpExists: "&cUn warp avec ce nom existe déjà !"
-      SuccessNameInput: "&aLe warp a été renommé en &e{warp}&"
+      SuccessNameInput: "&aLe warp a été renommé en &e%warp%&"
     LoreInput:
       SuccessLoreInput: "&aLa lore du warp a été mise à jour !"
     PermissionInput:
@@ -248,7 +250,6 @@ Warp:
       NeverExpirationInput: "&aLe warp n'expirera jamais !"
       InvalidExpirationInput: "&cFormat invalide ! Exemples: 10m, 2h, 7d, never"
       SuccessExpirationInput: "&aLa durée d'expiration du warp a été mise à jour !"
-
 
   Item:
     Public: "Public "

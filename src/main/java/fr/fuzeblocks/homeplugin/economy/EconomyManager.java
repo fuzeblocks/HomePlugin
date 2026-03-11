@@ -1,6 +1,7 @@
 package fr.fuzeblocks.homeplugin.economy;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -19,6 +20,7 @@ public class EconomyManager {
     private static Economy economy;
     private static ConfigurationSection config;
     private static boolean enabled = true;
+    private static LanguageManager languageManager = HomePlugin.getLanguageManager();
 
     /**
      * Initialize economy settings and cache config reference.
@@ -113,7 +115,7 @@ public class EconomyManager {
         if (amount <= 0) return true;
 
         if (economy == null) {
-            player.sendMessage("§cAucun système économique détecté.");
+            player.sendMessage(languageManager.getStringWithColor("Language.Economy-system-not-found", "&cSystème économique introuvable !"));
             return false;
         }
 
@@ -124,7 +126,7 @@ public class EconomyManager {
                 ? "&aVous avez été débité de %amount% pour cette action."
                 : "&cLe paiement a échoué. Veuillez réessayer plus tard.";
 
-        player.sendMessage(HomePlugin.getLanguageManager()
+        player.sendMessage(languageManager
                 .getStringWithColor(messageKey, defaultMessage)
                 .replace("%amount%", String.valueOf(amount)));
 

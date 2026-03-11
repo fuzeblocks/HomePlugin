@@ -1,6 +1,7 @@
 package fr.fuzeblocks.homeplugin.gui.warp;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.warps.WarpData;
 import fr.fuzeblocks.homeplugin.warps.WarpManager;
 import org.bukkit.Bukkit;
@@ -17,6 +18,8 @@ public class InputsListener implements Listener {
 
     private final InputsManager inputsManager;
     private final WarpManager warpManager;
+    private final LanguageManager languageManager = HomePlugin.getLanguageManager();
+    private final String INPUTS_PREFIX = "Warp.Inputs.";
 
     public InputsListener() {
         this.inputsManager = HomePlugin.getInputsManager();
@@ -79,13 +82,13 @@ public class InputsListener implements Listener {
     private void handleLocationInput(Player player, String message, WarpData warpData) {
 
         if (!isValidLocationInput(message)) {
-            player.sendMessage(color("&cEntrée invalide ! Format: x=100 y=64 z=200 ou 'here' ou 'cancel'."));
+            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "LocationInput.InvalidLocationInput","&cEntrée invalide ! Format: x=100 y=64 z=200 ou 'here' ou 'cancel'."));
             return;
         }
 
         Location location = parseLocation(player, message, warpData);
         warpManager.relocateWarp(warpData, location);
-        player.sendMessage(color("&aLe warp a été déplacé à la nouvelle position !"));
+        player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "LocationInput.SuccessLocationInput","&aLe warp a été déplacé à la nouvelle position !"));
     }
 
     private boolean isValidLocationInput(String message) {
@@ -110,7 +113,7 @@ public class InputsListener implements Listener {
             return player.getLocation();
         }
         if (message.equalsIgnoreCase("cancel")) {
-            player.sendMessage(color("&cModification annulée !"));
+            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "CancelModification","&cModification annulée !"));
             return warpData.getLocation();
         }
 
@@ -137,22 +140,25 @@ public class InputsListener implements Listener {
         String name = message.trim();
 
         if (name.equalsIgnoreCase("cancel")) {
-            player.sendMessage(color("&cModification annulée !"));
+            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "CancelModification","&cModification annulée !"));
             return;
         }
 
         if (name.isEmpty() || name.contains(" ")) {
-            player.sendMessage(color("&cEntrée invalide ! Nom sans espaces."));
+            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "NameInput.InvalidNameInput","&cEntrée invalide ! Nom sans espaces."));
             return;
         }
 
         if (warpManager.warpExists(name)) {
-            player.sendMessage(color("&cUn warp avec ce nom existe déjà !"));
+            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "NameInput.WarpExists","&cUn warp avec ce nom existe déjà !"));
             return;
         }
 
         warpManager.renameWarp(warpData, name);
-        player.sendMessage(color("&aLe warp a été renommé en &e" + name + " &a!"));
+
+        String successRename = languageManager.getStringWithColor(INPUTS_PREFIX + "NameInput.SuccessNameInput","&aLe warp a été renommé en &e" + name + " &a!");
+        successRename = successRename.replace("{warp}", name).replace("%warp%", name);
+        player.sendMessage(successRename);
     }
 
     /* ---------------- LORE ---------------- */
@@ -162,12 +168,12 @@ public class InputsListener implements Listener {
         String lore = message.trim();
 
         if (lore.equalsIgnoreCase("cancel")) {
-            player.sendMessage(color("&cModification annulée !"));
+            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "CancelModification","&cModification annulée !"));
             return;
         }
 
         warpManager.setWarpLores(warpData, Collections.singletonList(lore));
-        player.sendMessage(color("&aLe lore du warp a été mis à jour !"));
+        player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "LoreInput.SuccessLoreInput","&aLa lore du warp a été mise à jour !"));
     }
 
     /* ---------------- PERMISSION ---------------- */
@@ -177,23 +183,23 @@ public class InputsListener implements Listener {
         String permission = message.trim();
 
         if (permission.equalsIgnoreCase("cancel")) {
-            player.sendMessage(color("&cModification annulée !"));
+            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "CancelModification","&cModification annulée !"));
             return;
         }
 
         if (permission.equalsIgnoreCase("none")) {
             warpManager.setWarpPermission(warpData, null);
-            player.sendMessage(color("&aAucune permission ne sera obligatoire pour ce warp !"));
+            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "PermissionInput.NonePermissionInput","&aAucune permission ne sera obligatoire pour ce warp !"));
             return;
         }
 
         if (!permission.matches("[a-zA-Z0-9._-]+")) {
-            player.sendMessage(color("&cEntrée invalide ! Veuillez entrer une permission valide ou 'none' pour aucune permission."));
+            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "PermissionInput.InvalidPermissionInput","&cEntrée invalide ! Veuillez entrer une permission valide ou 'none' pour aucune permission."));
             return;
         }
 
         warpManager.setWarpPermission(warpData, permission);
-        player.sendMessage(color("&aLa permission du warp a été mise à jour !"));
+        player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "PermissionInput.SuccessPermissionInput","&aLa permission du warp a été mise à jour !"));
     }
 
     /* ---------------- EXPIRATION ---------------- */
@@ -203,19 +209,19 @@ public class InputsListener implements Listener {
     String input = message.trim().toLowerCase();
 
     if (input.equals("cancel")) {
-        player.sendMessage(color("&cModification annulée !"));
+        player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "CancelModification","&cModification annulée !"));
         return;
     }
 
     if (input.equals("never")) {
         warpManager.setWarpExpirationDate(warpData, null);
-        player.sendMessage(color("&aLe warp n'expirera jamais !"));
+        player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "ExpirationInput.NeverExpirationInput","&aLe warp n'expirera jamais !"));
         return;
     }
 
     long seconds = parseDurationToSeconds(input);
     if (seconds <= 0) {
-        player.sendMessage(color("&cFormat invalide ! Exemples: 10m, 2h, 7d, never"));
+        player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "ExpirationInput.InvalidExpirationInput","&cFormat invalide ! Exemples: 10m, 2h, 7d, never"));
         return;
     }
 
@@ -223,7 +229,7 @@ public class InputsListener implements Listener {
     java.sql.Timestamp expiration = new java.sql.Timestamp(futureMillis);
 
     warpManager.setWarpExpirationDate(warpData, expiration);
-    player.sendMessage(color("&aLa durée d'expiration du warp a été mise à jour !"));
+    player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "ExpirationInput.SuccessExpirationInput","&aLa durée d'expiration du warp a été mise à jour !"));
 }
 
 
@@ -241,11 +247,5 @@ public class InputsListener implements Listener {
             case 'd': return value * 86400;
             default: return -1;
         }
-    }
-
-    /* ---------------- UTILS ---------------- */
-
-    private String color(String msg) {
-        return msg.replace("&", "§");
     }
 }
