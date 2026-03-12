@@ -40,6 +40,7 @@ import fr.fuzeblocks.homeplugin.spawn.sql.SpawnSQLManager;
 import fr.fuzeblocks.homeplugin.spawn.yml.SpawnYMLManager;
 import fr.fuzeblocks.homeplugin.sync.SyncMethod;
 import fr.fuzeblocks.homeplugin.update.UpdateChecker;
+import fr.fuzeblocks.homeplugin.update.UpdateDownloader;
 import fr.fuzeblocks.homeplugin.warps.WarpManager;
 import fr.fuzeblocks.homeplugin.warps.sql.WarpSQLManager;
 import fr.fuzeblocks.homeplugin.warps.yml.WarpYMLManager;
@@ -569,14 +570,15 @@ public final class HomePlugin extends JavaPlugin {
         updater.getVersion(currentVersion -> {
             try {
                 String local = safeDigits(version);
-                String remote = safeDigits(version);
+                String remote = safeDigits(currentVersion);
 
                 int localVersion = Integer.parseInt(local.replace(".", ""));
                 int remoteVersion = Integer.parseInt(remote.replace(".", ""));
 
                 if (remoteVersion > localVersion) {
-                    getLogger().warning("A new update is available. Current: " + local + " | Latest: " + remote);
-                    updater.setShoudAskForUpdatePlugin(true);
+                    getLogger().warning("A new update is available. Current: " + currentVersion + " | Latest: " + currentVersion);
+                   // updater.setShoudAskForUpdatePlugin(true);
+                    new UpdateDownloader();
                 }
             } catch (Exception e) {
                 getLogger().fine("Could not compare versions: " + e.getMessage());
