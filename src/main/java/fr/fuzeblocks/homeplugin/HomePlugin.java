@@ -559,9 +559,16 @@ public final class HomePlugin extends JavaPlugin {
     }
 
     private void checkUpdate(int id) {
-        new UpdateChecker(this, id).getVersion(version -> {
+        UpdateChecker updater = new UpdateChecker(this, id);
+        String version = this.getDescription().getVersion();
+        updater.setInitialVersion(version);
+        if (updater.isInitialVersionOutdated(version)) {
+            getLogger().warning("Your current language files version are outdated ! Please update them to avoid any issue.");
+            updater.setShouldAskForUpdateLangFiles(true);
+        }
+        updater.getVersion(currentVersion -> {
             try {
-                String local = safeDigits(this.getDescription().getVersion());
+                String local = safeDigits(version);
                 String remote = safeDigits(version);
 
                 int localVersion = Integer.parseInt(local.replace(".", ""));
@@ -569,6 +576,7 @@ public final class HomePlugin extends JavaPlugin {
 
                 if (remoteVersion > localVersion) {
                     getLogger().warning("A new update is available. Current: " + local + " | Latest: " + remote);
+                    updater.setShoudAskForUpdatePlugin(true);
                 }
             } catch (Exception e) {
                 getLogger().fine("Could not compare versions: " + e.getMessage());

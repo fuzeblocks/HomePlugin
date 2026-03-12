@@ -1,5 +1,8 @@
 Config:
-
+  # ----------------------------------------
+  # Do not edit this line under this section, it is used to identify the config version for updates
+  # ----------------------------------------
+  Initial-Plugin-Version: not-yet-defined #Case sensitive. DO NOT EDIT
   # ----------------------------------------
   # Language / Localization
   # Available: FRENCH, ENGLISH, SPANISH, CUSTOM

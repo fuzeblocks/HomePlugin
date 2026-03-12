@@ -48,6 +48,13 @@ public class WarpGUIManager {
     }
 
     public static void openWarpListGUI(Player player) {
+        List<Item> warpItems = getWarpListItems();
+
+        if (warpItems.isEmpty()) {
+            player.sendMessage(languageManager.getStringWithColor(WARP_LIST + "No-warps", "&cAucun warp n'est défini pour le moment."));
+            return;
+        }
+
         Item border = new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(""));
         Gui gui = PagedGui.items()
                 .setStructure(
@@ -59,7 +66,7 @@ public class WarpGUIManager {
                 .addIngredient('#', border)
                 .addIngredient('<', new BackItem())
                 .addIngredient('>', new ForwardItem())
-                .setContent(getWarpListItems())
+                .setContent(warpItems)
                 .build();
 
         Window window = Window.single()
@@ -72,6 +79,12 @@ public class WarpGUIManager {
     }
 
     public static void openEditWarpGUI(Player player) {
+        List<Item> warpItems = getWarpModifyItems();
+        if (warpItems.isEmpty()) {
+            player.sendMessage(languageManager.getStringWithColor(WARP_LIST + "No-warps", "&cAucun warp n'est défini pour le moment."));
+            return;
+        }
+
         Item border = new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(""));
         Gui gui = PagedGui.items()
                 .setStructure(
@@ -83,7 +96,7 @@ public class WarpGUIManager {
                 .addIngredient('#', border)
                 .addIngredient('<', new BackItem())
                 .addIngredient('>', new ForwardItem())
-                .setContent(getWarpModifyItems())
+                .setContent(warpItems)
                 .build();
 
         Window window = Window.single()
@@ -173,10 +186,10 @@ public class WarpGUIManager {
 
         window.open();
     }
+
+    //TODO bug
     private static boolean isMaterialValidForIcon(Material material) {
-        return material.isItem() && !material.isAir() && !material.isBlock();
+        String name = material.name();
+        return (!(name.equals("AIR") || name.endsWith("_AIR")));
     }
-
-
-
 }

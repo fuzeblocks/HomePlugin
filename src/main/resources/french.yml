@@ -23,6 +23,11 @@ Language:
       Name: "&cPage précédente"
       MaxBack: "&cVous ne pouvez pas revenir plus loin !"
       ChangePage: "Aller à la page %current_page% / %total_pages%"
+    ForwardItem:
+      Name: "&aPage suivante"
+      MaxForward: "&cVous êtes déjà à la dernière page !"
+      ChangePage: "Aller à la page %current_page% / %total_pages%"
+
 
 
 Spawn:
@@ -275,6 +280,7 @@ Warp:
     Warp-name: "&eNom du warp : %warp%"
     Warp-location: "&9Position : &6X: %x% Y: %y% Z: %z% Monde: %world%"
     Warp-teleport-hover: "&eCliquez pour vous téléporter."
+    No-warps: "&cAucun warp n'est défini pour le moment."
 
   Modify:
     Public-item-name: "&aChanger la visibilité du warp"
