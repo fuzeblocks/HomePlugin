@@ -18,6 +18,12 @@ Language:
   Teleport-to-warp: "&aVous avez été téléporté au warp :"
   Start-of-teleportation-for-warp: "&6Début de la téléportation vers le warp : "
 
+  Gui:
+    BackItem:
+      Name: "&cPage précédente"
+      MaxBack: "&cVous ne pouvez pas revenir plus loin !"
+      ChangePage: "Aller à la page %current_page% / %total_pages%"
+
 
 Spawn:
   SetSpawn-permission-deny-message: "&cVous n'avez pas la permission de définir le spawn !"
