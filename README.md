@@ -298,7 +298,6 @@ HomePlugin features a modular, performance-focused architecture:
 - **Optional Redis Layer** - Cross-instance caching and synchronization
 - **Event System** - Comprehensive events for all plugin actions
 - **Extension System** - Internal module loader for custom functionality
-- **Async Operations** - Database queries run asynchronously
 - **Permission-Driven** - Flexible limits and restrictions via permissions
 
 ---
@@ -373,6 +372,7 @@ HomePlugin is licensed under the [Apache License 2.0](https://github.com/fuzeblo
 If you find this plugin useful, consider [sponsoring](https://client.pristis.fr/aff.php?aff=2) to support development!
 
 </div>
+
 
 
 
