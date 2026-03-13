@@ -50,6 +50,8 @@ commands:
     description: Teleport back to your previous location.
   warp:
     description: Teleport to a predefined warp point.
+  update:
+    description: Check for plugin updates.
 
 
 

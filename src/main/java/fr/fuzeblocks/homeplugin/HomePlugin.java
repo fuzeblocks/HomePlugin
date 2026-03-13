@@ -4,6 +4,7 @@ import fr.fuzeblocks.homeplugin.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.commands.BackCommand;
 import fr.fuzeblocks.homeplugin.commands.CacheCommand;
 import fr.fuzeblocks.homeplugin.commands.LangCommand;
+import fr.fuzeblocks.homeplugin.commands.UpdateCommand;
 import fr.fuzeblocks.homeplugin.commands.home.*;
 import fr.fuzeblocks.homeplugin.commands.rtp.RTPCommand;
 import fr.fuzeblocks.homeplugin.commands.spawn.DeleteSpawnCommand;
@@ -528,6 +529,7 @@ public final class HomePlugin extends JavaPlugin {
         bind("homeadmin", new HomeAdminCommand(), new HomeAdminCompleter());
         bind("plugins", new fr.fuzeblocks.homeplugin.commands.PluginCommand(), null);
         bind("lang", new LangCommand(this), new LangTabCompleter(this));
+        bind("update", new UpdateCommand(this), null);
 
         if (isActivatedFeature("Enable-TPA")) {
             bind("tpa", new TPACommand(), new TpaCompleter());
@@ -578,7 +580,8 @@ public final class HomePlugin extends JavaPlugin {
                 if (remoteVersion > localVersion) {
                     getLogger().warning("A new update is available. Current: " + currentVersion + " | Latest: " + currentVersion);
                    // updater.setShoudAskForUpdatePlugin(true);
-                    new UpdateDownloader();
+                    UpdateDownloader downloader = new UpdateDownloader();
+                    downloader.computeLogged("plugins/" + getDescription().getName() + ".jar");
                 }
             } catch (Exception e) {
                 getLogger().fine("Could not compare versions: " + e.getMessage());
