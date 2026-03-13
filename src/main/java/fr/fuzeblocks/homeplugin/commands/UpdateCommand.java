@@ -9,7 +9,10 @@ import org.bukkit.entity.Player;
 import org.jspecify.annotations.NonNull;
 
 public class UpdateCommand implements CommandExecutor {
+
+    private final HomePlugin homePlugin;
     public UpdateCommand(HomePlugin homePlugin) {
+        this.homePlugin = homePlugin;
     }
 
     @Override
@@ -18,8 +21,9 @@ public class UpdateCommand implements CommandExecutor {
             Player player = (Player) sender;
             if (player.isOp()) {
                 UpdateDownloader downloader = new UpdateDownloader();
-                downloader.computeLogged("plugins/");
-
+                    downloader.computeLogged("plugins/");
+                    homePlugin.getUpdateChecker().setMarkForUpdatePlugin(true);
+                    homePlugin.getServer().shutdown();
             }
         }
         return false;

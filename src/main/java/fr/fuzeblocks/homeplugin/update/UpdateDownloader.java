@@ -5,8 +5,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -18,6 +21,7 @@ import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.JarFile;
 
 public class UpdateDownloader {
 
@@ -32,43 +36,51 @@ public class UpdateDownloader {
                     .getDescription()
                     .getVersion();
 
-            String latestVersion = getLatestVersion();
-            if (latestVersion == null) {
-                System.out.println("No version found!");
-                return;
-            }
-
-            if (latestVersion.equals(currentVersion)) {
-                System.out.println("Plugin is already up to date (" + currentVersion + ")");
-                return;
-            }
-
-            System.out.println("Latest version: " + latestVersion);
-
-            String fileUrl = getFileUrl(latestVersion);
-            String expectedHash = getFileSha512(latestVersion);
-
-            if (fileUrl == null || expectedHash == null) {
-                System.out.println("Could not retrieve file URL or hash");
-                return;
-            }
-
-            try {
-                Path tempPath = Path.of(destination + ".tmp");
-                downloadFile(fileUrl, tempPath);
-
-                if (checkSum(tempPath, expectedHash)) {
-                    Files.move(tempPath, Path.of(destination), StandardCopyOption.REPLACE_EXISTING);
-                    System.out.println("Plugin updated successfully to " + latestVersion);
-                } else {
-                    System.out.println("Checksum FAILED. Download discarded.");
-                    Files.deleteIfExists(tempPath);
+           String latestVersion = getLatestVersion();
+                if (latestVersion.equals(currentVersion)) {
+                    System.out.println("Plugin is already up to date (" + currentVersion + ")");
+                    return;
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+                if (latestVersion == null) {
+                    System.out.println("No version found!");
+                    return;
+                }
+
+                if (latestVersion.equals(currentVersion)) {
+                    System.out.println("Plugin is already up to date (" + currentVersion + ")");
+                    return;
+                }
+
+                System.out.println("Latest version: " + latestVersion);
+
+                String fileUrl = getFileUrl(latestVersion);
+                String expectedHash = getFileSha512(latestVersion);
+
+                if (fileUrl == null || expectedHash == null) {
+                    System.out.println("Could not retrieve file URL or hash");
+                    return;
+                }
+
+                try {
+                    Path tempPath = Path.of(destination + latestVersion + ".tmp");
+                    downloadFile(fileUrl, tempPath);
+
+                    if (checkSum(tempPath, expectedHash)) {
+                        String jarVersion = getVersionFromJar(tempPath);
+                        Path finalPath = Path.of(destination + "HomePlugin-" + jarVersion + ".jar");
+                        Files.move(tempPath, finalPath, StandardCopyOption.REPLACE_EXISTING);
+                        System.out.println("Plugin updated successfully to " + latestVersion + " (" + jarVersion + ")");
+                    } else {
+                        System.out.println("Checksum FAILED. Download discarded.");
+                        Files.deleteIfExists(tempPath);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         });
     }
+
 
     private String getLatestVersion() {
         List<String> versions = new ArrayList<>();
@@ -201,5 +213,17 @@ public class UpdateDownloader {
         }
 
         return null;
+    }
+       private String getVersionFromJar(Path jarPath) {
+        try (JarFile jar = new JarFile(jarPath.toFile())) {
+            InputStream is = jar.getInputStream(jar.getEntry("plugin.yml"));
+            if (is != null) {
+                YamlConfiguration yml = YamlConfiguration.loadConfiguration(new java.io.InputStreamReader(is));
+                return yml.getString("version");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "unknown";
     }
 }

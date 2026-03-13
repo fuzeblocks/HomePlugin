@@ -103,6 +103,7 @@ public final class HomePlugin extends JavaPlugin {
     private static WarpYMLManager warpYMLManager;
     private static WarpManager warpManager;
     private static InputsManager inputsManager = new InputsManager();
+    private UpdateChecker updateChecker = new UpdateChecker(this, 113935);
 
     private static String safeDigits(String ver) {
         return ver == null ? "0" : ver.replaceAll("[^0-9.]", "");
@@ -276,8 +277,10 @@ public final class HomePlugin extends JavaPlugin {
         return metrics;
     }
 
+     public static InputsManager getInputsManager() {
+        return inputsManager;
+    }
 
-    // -------------------- Helpers --------------------
 
     /**
      * Gets warp manager.
@@ -306,9 +309,14 @@ public final class HomePlugin extends JavaPlugin {
         return warpSQLManager;
     }
 
-    public static InputsManager getInputsManager() {
-        return inputsManager;
+
+    public UpdateChecker getUpdateChecker() {
+        return updateChecker;
     }
+
+
+
+
 
     @Override
     public void onEnable() {
@@ -342,7 +350,7 @@ public final class HomePlugin extends JavaPlugin {
         initPluginFunc();
 
         // Update check
-        checkUpdate(113935);
+        checkUpdate();
 
         getLogger().info("------------------------------------------------------");
         getLogger().info("HomePlugin started successfully!");
@@ -561,8 +569,8 @@ public final class HomePlugin extends JavaPlugin {
         // Method kept for symmetry and future additions.
     }
 
-    private void checkUpdate(int id) {
-        UpdateChecker updater = new UpdateChecker(this, id);
+    private void checkUpdate() {
+        UpdateChecker updater = getUpdateChecker();
         String version = this.getDescription().getVersion();
         updater.setInitialVersion(version);
         if (updater.isInitialVersionOutdated(version)) {
@@ -579,9 +587,7 @@ public final class HomePlugin extends JavaPlugin {
 
                 if (remoteVersion > localVersion) {
                     getLogger().warning("A new update is available. Current: " + currentVersion + " | Latest: " + currentVersion);
-                   // updater.setShoudAskForUpdatePlugin(true);
-                    UpdateDownloader downloader = new UpdateDownloader();
-                    downloader.computeLogged("plugins/" + getDescription().getName() + ".jar");
+                    updater.setShoudAskForUpdatePlugin(true);
                 }
             } catch (Exception e) {
                 getLogger().fine("Could not compare versions: " + e.getMessage());

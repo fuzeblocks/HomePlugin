@@ -20,6 +20,7 @@ public class UpdateChecker {
     private final String INITIAL_VERSION_KEY = "Config.Initial-Plugin-Version";
     private static boolean shouldAskForUpdateLangFiles = false;
     private static boolean shoudAskForUpdatePlugin = false;
+    private static boolean markForUpdatePlugin = false;
 
 
     /**
@@ -83,4 +84,10 @@ public class UpdateChecker {
     public void setShoudAskForUpdatePlugin(boolean shoudAskForUpdatePlugin) {
         this.shoudAskForUpdatePlugin = shoudAskForUpdatePlugin;
     }
+        public void setMarkForUpdatePlugin(boolean markForUpdatePlugin) {
+            this.markForUpdatePlugin = markForUpdatePlugin;
+        }
+        public static boolean isMarkForUpdatePlugin() {
+            return markForUpdatePlugin;
+        }
 }
