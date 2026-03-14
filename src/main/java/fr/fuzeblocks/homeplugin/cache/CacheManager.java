@@ -187,7 +187,7 @@ public class CacheManager {
      * @param newLocation the new location
      */
     public void relocateHome(UUID playerId, String homeName, Location newLocation) {
-        homeStore.removeHome(playerId, homeName);
+        homeStore.relocateHome(playerId, homeName, newLocation);
     }
 
     /**
