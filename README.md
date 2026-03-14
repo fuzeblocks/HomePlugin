@@ -114,6 +114,8 @@
 | `homeplugin.command.spawn` | Use spawn | `true` |
 | `homeplugin.command.tpa` | Use TPA system | `true` |
 | `homeplugin.command.rtp` | Use random teleport | `true` |
+| `homeplugin.command.renamehome` | Rename home | `true` |
+| `homeplugin.command.relocatehome` | Relocate home | `true` |
 | `homeplugin.back.use` | Use /back command | `op` |
 | `homeplugin.admin` | Admin features | `op` |
 | `homeplugin.lang.update` | Manage languages | `op` |
