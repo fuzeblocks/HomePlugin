@@ -29,7 +29,6 @@ public class UpdateDownloader {
     private final HttpClient client = HttpClient.newHttpClient();
 
     public void computeLogged(String destination) {
-        Bukkit.getScheduler().runTaskAsynchronously(HomePlugin.getPlugin(HomePlugin.class), () -> {
             System.out.println("Checking for new versions...");
 
             String currentVersion = HomePlugin.getPlugin(HomePlugin.class)
@@ -44,11 +43,6 @@ public class UpdateDownloader {
 
                 if (latestVersion == null) {
                     System.out.println("No version found!");
-                    return;
-                }
-
-                if (latestVersion.equals(currentVersion)) {
-                    System.out.println("Plugin is already up to date (" + currentVersion + ")");
                     return;
                 }
 
@@ -67,7 +61,7 @@ public class UpdateDownloader {
                     downloadFile(fileUrl, tempPath);
 
                     if (checkSum(tempPath, expectedHash)) {
-                        String jarVersion = getVersionFromJar(tempPath);
+                        String jarVersion = UpdateChecker.getVersionFromJar(tempPath);
                         Path finalPath = Path.of(destination + "HomePlugin-" + jarVersion + ".jar");
                         Files.move(tempPath, finalPath, StandardCopyOption.REPLACE_EXISTING);
                         System.out.println("Plugin updated successfully to " + latestVersion + " (" + jarVersion + ")");
@@ -78,7 +72,6 @@ public class UpdateDownloader {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-        });
     }
 
 
@@ -213,17 +206,5 @@ public class UpdateDownloader {
         }
 
         return null;
-    }
-       private String getVersionFromJar(Path jarPath) {
-        try (JarFile jar = new JarFile(jarPath.toFile())) {
-            InputStream is = jar.getInputStream(jar.getEntry("plugin.yml"));
-            if (is != null) {
-                YamlConfiguration yml = YamlConfiguration.loadConfiguration(new java.io.InputStreamReader(is));
-                return yml.getString("version");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "unknown";
     }
 }

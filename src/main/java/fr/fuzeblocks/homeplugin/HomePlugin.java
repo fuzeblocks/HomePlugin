@@ -63,6 +63,7 @@ import redis.clients.jedis.JedisPooled;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 /**
  * Main plugin class for HomePlugin.
@@ -309,9 +310,15 @@ public final class HomePlugin extends JavaPlugin {
         return warpSQLManager;
     }
 
+    private final String version = UpdateChecker.getVersionFromJar(this.getFile().toPath());
+
 
     public UpdateChecker getUpdateChecker() {
         return updateChecker;
+    }
+
+    public String getVersion() {
+        return version;
     }
 
 
@@ -363,24 +370,9 @@ public final class HomePlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Close Adventure
-        if (adventure != null) {
-            adventure.close();
-            adventure = null;
-        }
-
-        // Close Redis
-        if (jedisPooled != null) {
-            try {
-                jedisPooled.close();
-            } catch (Exception ignored) {
-            } finally {
-                jedisPooled = null;
-            }
-        }
-
+        closeStatement();
         stopPluginFunc();
-
+        runPluginReplacement();
         getLogger().info("------------------------------------------------------");
         getLogger().info("HomePlugin shut down successfully!");
         getLogger().info("------------------------------------------------------");
@@ -571,7 +563,6 @@ public final class HomePlugin extends JavaPlugin {
 
     private void checkUpdate() {
         UpdateChecker updater = getUpdateChecker();
-        String version = this.getDescription().getVersion();
         updater.setInitialVersion(version);
         if (updater.isInitialVersionOutdated(version)) {
             getLogger().warning("Your current language files version are outdated ! Please update them to avoid any issue.");
@@ -647,6 +638,39 @@ public final class HomePlugin extends JavaPlugin {
     private void setupMetrics() {
         metrics = new Metrics(this, 27702);
         PluginManager.getInstance().loadPlugin(new MetricsPlugin());
+    }
+    private void closeStatement() {
+        // Close Adventure
+        if (adventure != null) {
+            adventure.close();
+            adventure = null;
+        }
+
+        // Close Redis
+        if (jedisPooled != null) {
+            try {
+                jedisPooled.close();
+            } catch (Exception ignored) {
+            } finally {
+                jedisPooled = null;
+            }
+        }
+    }
+    private void runPluginReplacement() {
+        if (updateChecker.isMarkForUpdatePlugin()) {
+            getLogger().info("Plugin marked for update. Attempting to replace files...");
+            //Delete the old jar
+            File oldFile = new File(HomePlugin.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+            if (oldFile.exists()) {
+                if (oldFile.delete()) {
+                    getLogger().info("Old plugin file deleted successfully.");
+                } else {
+                    getLogger().warning("Failed to delete old plugin file. Please check permissions and delete it manually: " + oldFile.getAbsolutePath());
+                }
+            } else {
+                getLogger().warning("Old plugin file not found for deletion: " + oldFile.getAbsolutePath());
+            }
+        }
     }
 
     private void bind(String name, CommandExecutor exec, TabCompleter tab) {

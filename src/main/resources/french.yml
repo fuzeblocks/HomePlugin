@@ -18,6 +18,11 @@ Language:
   Teleport-to-warp: "&aVous avez été téléporté au warp :"
   Start-of-teleportation-for-warp: "&6Début de la téléportation vers le warp : "
 
+  Update:
+    Update-Plugin: "&aMerci de mettre à jour le plugin pour profiter des dernières fonctionnalités et corrections de bugs !"
+    Update-Lang: "&aMerci d'executer la commande /lang update pour mettre à jour votre fichier de langue avec les nouvelles clés et traductions !"
+
+
   Gui:
     BackItem:
       Name: "&cPage précédente"

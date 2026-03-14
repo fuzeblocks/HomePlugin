@@ -2,10 +2,12 @@ package fr.fuzeblocks.homeplugin.commands;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.update.UpdateDownloader;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.jspecify.annotations.NonNull;
 
 public class UpdateCommand implements CommandExecutor {
@@ -20,10 +22,14 @@ public class UpdateCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (player.isOp()) {
-                UpdateDownloader downloader = new UpdateDownloader();
+                Bukkit.getScheduler().runTaskAsynchronously(HomePlugin.getPlugin(HomePlugin.class), () -> {
+                    UpdateDownloader downloader = new UpdateDownloader();
                     downloader.computeLogged("plugins/");
                     homePlugin.getUpdateChecker().setMarkForUpdatePlugin(true);
-                    homePlugin.getServer().shutdown();
+                      Bukkit.getScheduler().runTask(HomePlugin.getPlugin(HomePlugin.class), () -> {
+                          homePlugin.getServer().shutdown();
+                      });
+                });
             }
         }
         return false;

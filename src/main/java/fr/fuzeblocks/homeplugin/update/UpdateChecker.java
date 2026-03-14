@@ -1,14 +1,17 @@
 package fr.fuzeblocks.homeplugin.update;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.function.Consumer;
+import java.util.jar.JarFile;
 
 /**
  * The type Update checker.
@@ -76,18 +79,32 @@ public class UpdateChecker {
     public static boolean shouldAskForUpdateLangFiles() {
         return shouldAskForUpdateLangFiles;
     }
+    public static boolean isMarkForUpdatePlugin() {
+            return markForUpdatePlugin;
+        }
 
     public void setShouldAskForUpdateLangFiles(boolean shouldAskForUpdateLangFiles) {
-        this.shouldAskForUpdateLangFiles = shouldAskForUpdateLangFiles;
+        UpdateChecker.shouldAskForUpdateLangFiles = shouldAskForUpdateLangFiles;
     }
 
     public void setShoudAskForUpdatePlugin(boolean shoudAskForUpdatePlugin) {
-        this.shoudAskForUpdatePlugin = shoudAskForUpdatePlugin;
+        UpdateChecker.shoudAskForUpdatePlugin = shoudAskForUpdatePlugin;
     }
-        public void setMarkForUpdatePlugin(boolean markForUpdatePlugin) {
-            this.markForUpdatePlugin = markForUpdatePlugin;
+    public void setMarkForUpdatePlugin(boolean markForUpdatePlugin) {
+            UpdateChecker.markForUpdatePlugin = markForUpdatePlugin;
+
+    }
+
+    public static String getVersionFromJar(Path jarPath) {
+        try (JarFile jar = new JarFile(jarPath.toFile())) {
+            InputStream is = jar.getInputStream(jar.getEntry("plugin.yml"));
+            if (is != null) {
+                YamlConfiguration yml = YamlConfiguration.loadConfiguration(new java.io.InputStreamReader(is));
+                return yml.getString("version");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        public static boolean isMarkForUpdatePlugin() {
-            return markForUpdatePlugin;
-        }
+        return "unknown";
+    }
 }

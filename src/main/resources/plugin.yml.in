@@ -8,7 +8,6 @@ description: A lightweight and flexible home/spawn management plugin with admin 
 website: https://modrinth.com/plugin/homeplugin
 softdepend:
   - PlaceholderAPI
-dependencies:
   - Vault
 
 commands:
@@ -67,6 +66,12 @@ permissions:
     default: true
   homeplugin.command.listhome:
     description: Allows listing homes.
+    default: true
+  homeplugin.command.renamehome:
+    description: Allows renaming a home.
+    default: true
+  homeplugin.command.relocatehome:
+    description: Allows relocating a home.
     default: true
   homeplugin.command.spawn:
     description: Allows teleporting to spawn.

@@ -14,6 +14,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
  * The type On join listener.
  */
 public class OnJoinListener implements Listener {
+
+    private final String UPDATE_KEY = "Language.Update.";
     /**
      * On join.
      *
@@ -26,13 +28,14 @@ public class OnJoinListener implements Listener {
         if (player.isOp()) {
             if (UpdateChecker.shoudAskForUpdatePlugin()) {
                 player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(
-                        "update.plugin",
-                        "Please update the plugin to the latest version for a better experience."));
+                        UPDATE_KEY + "Update-Plugin",
+                        "&aMerci de mettre à jour le plugin pour profiter des dernières fonctionnalités et corrections de bugs !"));
+
             }
             if (UpdateChecker.shouldAskForUpdateLangFiles()) {
                 player.sendMessage(HomePlugin.getLanguageManager().getStringWithColor(
-                        "update.lang",
-                        "Please run /lang update to update the language files for a better experience."));
+                        UPDATE_KEY + "Update-Lang" ,
+                        "&aMerci d'executer la commande /lang update pour mettre à jour votre fichier de langue avec les nouvelles clés et traductions !"));
             }
         }
         HomeManager homeManager = HomePlugin.getHomeManager();

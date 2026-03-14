@@ -22,14 +22,14 @@ public class LangCommand implements CommandExecutor {
 
     private static final String LANG = "LangCommand.";
     private static final LanguageManager languageManager = HomePlugin.getLanguageManager();
-    private final Plugin plugin;
+    private final HomePlugin plugin;
 
     /**
      * Instantiates a new Lang command.
      *
      * @param plugin the plugin
      */
-    public LangCommand(Plugin plugin) {
+    public LangCommand(HomePlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -119,6 +119,8 @@ public class LangCommand implements CommandExecutor {
             return true;
         }
 
+        plugin.getConfig().set("Config.Initial-Plugin-Version",plugin.getVersion());
+        plugin.getUpdateChecker().setShouldAskForUpdateLangFiles(false);
         sender.sendMessage(languageManager.getStringWithColor(LANG + "Lang-merge-success"));
         return true;
     }
