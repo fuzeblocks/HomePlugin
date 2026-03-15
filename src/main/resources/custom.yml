@@ -7,6 +7,7 @@ Language:
   Teleport-canceled: "&cTeleportation canceled because you moved."
   A-teleport-is-already-in-progress: "&cA teleportation is already in progress!"
   Not-Enough-Money: "&cYou do not have enough money for this action!"
+  Economy-system-not-found: "&cEconomy system not found!"
 
   Error: "&cAn error has occurred!"
   Unknown: "&cUnknown"
@@ -14,6 +15,22 @@ Language:
   Only-a-player-can-execute: "&cOnly a player can execute this command!"
   Player-is-not-OP: "&cYou are not OP!"
   Player-is-not-online: "&cThe specified player does not exist or is not online!"
+  Teleport-to-warp: "&aYou have been teleported to the warp :"
+  Start-of-teleportation-for-warp: "&6Starting teleportation to the warp : "
+
+  Update:
+    Update-Plugin: "&aPlease update the plugin to enjoy the latest features and bug fixes!"
+    Update-Lang: "&aPlease run the /lang update command to update your language file with new keys and translations!"
+
+  Gui:
+    BackItem:
+      Name: "&cPrevious page"
+      MaxBack: "&cYou cannot go back any further!"
+      ChangePage: "Go to page %current_page% / %total_pages%"
+    ForwardItem:
+      Name: "&aNext page"
+      MaxForward: "&cYou are already on the last page!"
+      ChangePage: "Go to page %current_page% / %total_pages%"
 
 Spawn:
   SetSpawn-permission-deny-message: "&cYou do not have permission to set the spawn!"
@@ -28,8 +45,8 @@ Home:
   Home-deleted: "&aHome has been successfully deleted!"
   Home-deleted-with-name: "&aThe home {homeName} has been successfully deleted!"
   Home-does-not-exist: "&cThe specified home does not exist!"
-  Have-no-home: "&cYou have no homes saved."
   Home-world-not-loaded: "&cThe world for this home is not loaded!"
+  Have-no-home: "&cYou have no homes saved."
   Home-limite-permission-for-bypass: "HomePlugin.home.bypass"
   Home-limite-message: "&c&lYou do not have permission to add another home!"
   Home-usage-message: "&cUsage: /home <home-name>"
@@ -226,6 +243,27 @@ Warp:
   Warp-set-success: "&aThe warp &e({warp}) &ahas been set."
   Usage-warp-command: "&cUsage: /warp <warp-name>"
   Warp-delete-success: "&aThe warp &e({warp}) &ahas been deleted."
+  Warp-world-not-loaded: "&cThe world for the specified warp is not loaded!"
+
+  Inputs:
+    CancelModification: "&cModification canceled!"
+    LocationInput:
+      InvalidLocationInput: "&cInvalid input! Format: x=100 y=64 z=200 or 'here' or 'cancel'."
+      SuccessLocationInput: "&aWarp location set to X: %x% Y: %y% Z: %z% World: %world%!"
+    NameInput:
+      InvalidNameInput: "&cInvalid input! Name without spaces."
+      WarpExists: "&cA warp with this name already exists!"
+      SuccessNameInput: "&aThe warp has been renamed to &e%warp%"
+    LoreInput:
+      SuccessLoreInput: "&aThe warp lore has been updated!"
+    PermissionInput:
+      NonePermissionInput: "&aNo permission will be required for this warp!"
+      InvalidPermissionInput: "&cInvalid input! Please enter a valid permission or 'none' for no permission."
+      SuccessPermissionInput: "&aThe warp permission has been updated!"
+    ExpirationInput:
+      NeverExpirationInput: "&aThe warp will never expire!"
+      InvalidExpirationInput: "&cInvalid format! Examples: 10m, 2h, 7d, never"
+      SuccessExpirationInput: "&aThe warp expiration duration has been updated!"
 
   Item:
     Public: "&aPublic "
@@ -245,4 +283,22 @@ Warp:
     Warp-name: "&eWarp name: %warp%"
     Warp-location: "&9Location: &6X: %x% Y: %y% Z: %z% World: %world%"
     Warp-teleport-hover: "&eClick to teleport."
+    No-warps: "&cNo warps are defined at the moment."
 
+  Modify:
+    Public-item-name: "&aChange warp visibility"
+    Expiration-item-message: "&ePlease enter the new warp expiration duration in the chat with format s,h,d,m (e.g. 1d,2m,3d,4s). (cancel to abort or never to never expire)"
+    Expiration-item-name: "&eChange warp expiration duration"
+    Permission-item-message: "&ePlease enter the new warp permission in the chat. (none for no permission, cancel to abort)"
+    Permission-item-name: "&eChange warp permission"
+    Cost-item-name: "&aSet warp cost"
+    Decrease-cost-item-name: "&aDecrease warp cost"
+    Delete-item-name: "&cDelete warp"
+    Icon-item-name: "&eChange warp icon"
+    Increase-Cost-item-name: "&aIncrease warp cost"
+    Location-item-name: "&eSet warp location"
+    Location-item-message: "&ePlease enter the warp location in the chat. (Format: x=100 y=64 z=200 or 'here')"
+    Lore-item-name: "&eRename warp lore"
+    Lore-item-message: "&ePlease enter the new warp lore in the chat. (cancel to abort)"
+    Rename-item-name: "&eRename warp"
+    Rename-item-message: "&ePlease enter the new warp name in the chat. (cancel to abort)"

@@ -21,7 +21,7 @@ public class UpdateCommand implements CommandExecutor {
     public boolean onCommand(@NonNull CommandSender sender, @NonNull Command command, @NonNull String label, @NonNull String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (player.isOp()) {
+            if (player.isOp() || player.hasPermission("homeplugin.admin")) {
                 Bukkit.getScheduler().runTaskAsynchronously(HomePlugin.getPlugin(HomePlugin.class), () -> {
                     UpdateDownloader downloader = new UpdateDownloader();
                     downloader.computeLogged("plugins/");

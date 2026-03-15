@@ -6,36 +6,53 @@ Language:
   Teleport-to-spawn: "&aHas sido teletransportado al spawn."
   Teleport-canceled: "&cTeletransporte cancelado porque te moviste."
   A-teleport-is-already-in-progress: "&c¡Ya hay un teletransporte en curso!"
-  Not-Enough-Money: "&cNo tienes suficiente dinero para esta acción!"
+  Not-Enough-Money: "&c¡No tienes suficiente dinero para esta acción!"
+  Economy-system-not-found: "&c¡Sistema de economía no encontrado!"
 
   Error: "&c¡Ha ocurrido un error!"
   Unknown: "&cDesconocido"
-  No-permission: "&cNo tienes permiso para usar este comando!"
-  Only-a-player-can-execute: "&cSolo un jugador puede ejecutar este comando!"
+  No-permission: "&c¡No tienes permiso para usar este comando!"
+  Only-a-player-can-execute: "&c¡Solo un jugador puede ejecutar este comando!"
   Player-is-not-OP: "&c¡No eres OP!"
-  Player-is-not-online: "&cEl jugador especificado no existe o no está en línea!"
+  Player-is-not-online: "&c¡El jugador especificado no existe o no está en línea!"
+  Teleport-to-warp: "&aHas sido teletransportado al warp :"
+  Start-of-teleportation-for-warp: "&6Iniciando teletransporte al warp : "
+
+  Update:
+    Update-Plugin: "&a¡Por favor, actualiza el plugin para disfrutar de las últimas características y correcciones de errores!"
+    Update-Lang: "&a¡Por favor, ejecuta el comando /lang update para actualizar tu archivo de idioma con nuevas claves y traducciones!"
+
+  Gui:
+    BackItem:
+      Name: "&cPágina anterior"
+      MaxBack: "&c¡No puedes retroceder más!"
+      ChangePage: "Ir a la página %current_page% / %total_pages%"
+    ForwardItem:
+      Name: "&aPágina siguiente"
+      MaxForward: "&c¡Ya estás en la última página!"
+      ChangePage: "Ir a la página %current_page% / %total_pages%"
 
 Spawn:
-  SetSpawn-permission-deny-message: "&cNo tienes permiso para establecer el spawn!"
+  SetSpawn-permission-deny-message: "&c¡No tienes permiso para establecer el spawn!"
   Spawn-usage-message: "&cUso: /spawn"
   Spawn-already-exists: "&c¡El spawn ya existe!"
   Spawn-has-been-set: "&aSpawn establecido en X: %x% Y: %y% Z: %z%"
-  No-spawn-defined: "&cNo hay un spawn definido!"
-  Spawn-deleted: "&aSpawn eliminado!"
+  No-spawn-defined: "&c¡No hay un spawn definido!"
+  Spawn-deleted: "&a¡Spawn eliminado!"
 
 Home:
   Home-added: "&a¡Home añadido!"
   Home-deleted: "&a¡Home eliminado con éxito!"
   Home-deleted-with-name: "&a¡El home {homeName} ha sido eliminado con éxito!"
   Home-does-not-exist: "&c¡El home especificado no existe!"
+  Home-world-not-loaded: "&c¡El mundo de tu home no está cargado!"
   Have-no-home: "&cNo tienes homes guardados."
-  Home-world-not-loaded: "&cEl mundo de tu home no está cargado."
   Home-limite-permission-for-bypass: "HomePlugin.home.bypass"
   Home-limite-message: "&c&l¡No tienes permiso para añadir otro home!"
   Home-usage-message: "&cUso: /home <nombre-home>"
   SetHome-usage-message: "&cUso: /sethome <nombre-home>"
   Home-location-format: "&6X: %.1f, Y: %.1f, Z: %.1f, Mundo: %s"
-  SetHome-permission-deny-message: "&cNo tienes permiso para establecer un home!"
+  SetHome-permission-deny-message: "&c¡No tienes permiso para establecer un home!"
   Invalid-height: "&cNo puedes establecer un home a esta altura."
   Portal-location: "&cNo puedes establecer un home sobre un portal."
   End-disabled: "&cNo puedes establecer un home en el End."
@@ -45,15 +62,15 @@ Home:
   Invalid-world: "&cNo puedes establecer un home en este mundo."
   Disabled-world: "&cLos homes están deshabilitados en este mundo."
   No-solid-ground: "&cNo puedes establecer un home aquí, no hay suelo sólido debajo."
-  Gui-not-supported: "&c¡Tu versión de Minecraft no soporta la interfaz gráfica!"
+  Gui-not-supported: "&cTu versión de Minecraft no soporta la interfaz gráfica."
 
   Home-item-displayname: "({homeName}) Home"
   Home-item-lore-teleport: "&aHaz clic para teletransportarte a este home."
   Home-item-lore-delete: "&cClic derecho para eliminar este home."
   Home-info-count: "&eTienes &6%used%&e home(s), límite: &6%max%, restante: &6%remaining%"
   Home-gui-title: "&eHomes de %player%"
-  Home-renamed: "&aEl home &e{old_home} &aha sido renombrado a &e{new_home}&a!"
-  Home-relocated: "&aEl home &e{home}&a ha sido movido a tu posición actual!"
+  Home-renamed: "&a¡El home &e{old_home} &aha sido renombrado a &e{new_home}&a!"
+  Home-relocated: "&a¡El home &e{home}&a ha sido movido a tu posición actual!"
   Relocate-management-title: "&eGestión de reubicación de homes"
   Relocate-usage-icon: "&7[?]"
   Relocate-click-suggest: "&7Haz clic para insertar el comando en tu chat."
@@ -217,27 +234,48 @@ Back:
   Teleport-failed: "&cEl teletransporte falló."
 
 Economy:
-  Payment-successful: "&a Pago exitoso de %amount%."
-  Payment-failed: "&c El pago de %amount% falló."
+  Payment-successful: "&a¡Pago de %amount% exitoso!"
+  Payment-failed: "&c¡El pago de %amount% falló!"
 
 Warp:
-  Warp-does-not-exist: "&cEl warp &e({warp}) especificado no existe!"
-  Warp-teleport-failed: "&cLa teleportación al warp &e({warp}) falló!"
+  Warp-does-not-exist: "&c¡El warp &e({warp}) especificado no existe!"
+  Warp-teleport-failed: "&c¡La teleportación al warp &e({warp}) falló!"
   Warp-set-success: "&aEl warp &e({warp}) &aha sido configurado."
   Usage-warp-command: "&cUso: /warp <nombre-del-warp>"
   Warp-delete-success: "&aEl warp &e({warp}) &aha sido eliminado."
+  Warp-world-not-loaded: "&c¡El mundo del warp especificado no está cargado!"
+
+  Inputs:
+    CancelModification: "&c¡Modificación cancelada!"
+    LocationInput:
+      InvalidLocationInput: "&c¡Entrada inválida! Formato: x=100 y=64 z=200 o 'here' o 'cancel'."
+      SuccessLocationInput: "&a¡Posición del warp establecida en X: %x% Y: %y% Z: %z% Mundo: %world%!"
+    NameInput:
+      InvalidNameInput: "&c¡Entrada inválida! Nombre sin espacios."
+      WarpExists: "&c¡Ya existe un warp con este nombre!"
+      SuccessNameInput: "&aEl warp ha sido renombrado a &e%warp%"
+    LoreInput:
+      SuccessLoreInput: "&a¡La descripción del warp ha sido actualizada!"
+    PermissionInput:
+      NonePermissionInput: "&a¡No se requerirá ningún permiso para este warp!"
+      InvalidPermissionInput: "&c¡Entrada inválida! Por favor, introduce un permiso válido o 'none' para ningún permiso."
+      SuccessPermissionInput: "&a¡El permiso del warp ha sido actualizado!"
+    ExpirationInput:
+      NeverExpirationInput: "&a¡El warp nunca expirará!"
+      InvalidExpirationInput: "&c¡Formato inválido! Ejemplos: 10m, 2h, 7d, never"
+      SuccessExpirationInput: "&a¡La duración de expiración del warp ha sido actualizada!"
 
   Item:
-    Public: "&aPúblico "
-    Cost: "&eCosto "
-    Creator: "&bCreador: "
-    Created-On: "&aCreado el "
-    Expires: "&cExpira el "
-    Location: "&9Ubicación "
-    Permission: "&dPermiso requerido "
-    None: "&cNinguno"
-    N/A: "&7N/A"
-    Never: "&cNunca"
+    Public: "Público "
+    Cost: "Costo "
+    Creator: "Creador: "
+    Created-On: "Creado el "
+    Expires: "Expira el "
+    Location: "Ubicación "
+    Permission: "Permiso requerido "
+    None: "Ninguno"
+    N/A: "N/A"
+    Never: "Nunca"
 
   List:
     Warp-list-header: "&6&lLista de Warps"
@@ -245,4 +283,22 @@ Warp:
     Warp-name: "&eNombre del warp: %warp%"
     Warp-location: "&9Ubicación: &6X: %x% Y: %y% Z: %z% Mundo: %world%"
     Warp-teleport-hover: "&eHaz clic para teletransportarte."
+    No-warps: "&cNo hay warps definidos en este momento."
 
+  Modify:
+    Public-item-name: "&aCambiar visibilidad del warp"
+    Expiration-item-message: "&ePor favor, introduce la nueva duración de expiración del warp en el chat en formato s,h,d,m (ej. 1d,2m,3d,4s). (cancel para cancelar o never para que nunca expire)"
+    Expiration-item-name: "&eCambiar duración de expiración del warp"
+    Permission-item-message: "&ePor favor, introduce el nuevo permiso del warp en el chat. (none para ningún permiso, cancel para cancelar)"
+    Permission-item-name: "&eCambiar permiso del warp"
+    Cost-item-name: "&aEstablecer costo del warp"
+    Decrease-cost-item-name: "&aDisminuir costo del warp"
+    Delete-item-name: "&cEliminar el warp"
+    Icon-item-name: "&eCambiar el icono del warp"
+    Increase-Cost-item-name: "&aAumentar costo del warp"
+    Location-item-name: "&eEstablecer ubicación del warp"
+    Location-item-message: "&ePor favor, introduce la ubicación del warp en el chat. (Formato: x=100 y=64 z=200 o 'here')"
+    Lore-item-name: "&eRenombrar descripción del warp"
+    Lore-item-message: "&ePor favor, introduce la nueva descripción del warp en el chat. (cancel para cancelar)"
+    Rename-item-name: "&eRenombrar el warp"
+    Rename-item-message: "&ePor favor, introduce el nuevo nombre del warp en el chat. (cancel para cancelar)"

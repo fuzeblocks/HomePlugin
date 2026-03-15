@@ -119,7 +119,7 @@ public class LangCommand implements CommandExecutor {
             return true;
         }
 
-        plugin.getConfig().set("Config.Initial-Plugin-Version",plugin.getVersion());
+        plugin.getConfig().set("Config.Initial-Plugin-Version", plugin.getVersion());
         plugin.getUpdateChecker().setShouldAskForUpdateLangFiles(false);
         sender.sendMessage(languageManager.getStringWithColor(LANG + "Lang-merge-success"));
         return true;
