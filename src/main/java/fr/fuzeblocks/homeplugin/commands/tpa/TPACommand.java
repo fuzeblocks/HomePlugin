@@ -33,7 +33,7 @@ public class TPACommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (!player.hasPermission("homeplugin.command.tpa")) {
+        if (!player.hasPermission("homeplugin.command.tpa.use")) {
             player.sendMessage(languageManager.getStringWithColor(LANG + "No-permission"));
             return false;
         }

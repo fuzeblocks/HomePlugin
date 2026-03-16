@@ -40,6 +40,9 @@ public class LangCommand implements CommandExecutor {
             sender.sendMessage(languageManager.getStringWithColor(LANG + "Lang-usage-message"));
             return true;
         }
+        if (!player.hasPermission("homeplugin.command.lang")) {
+            return true;
+        }
 
         String sub = args[0].toLowerCase();
 

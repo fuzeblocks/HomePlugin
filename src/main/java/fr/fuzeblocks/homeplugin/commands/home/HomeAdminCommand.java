@@ -39,7 +39,7 @@ public class HomeAdminCommand implements CommandExecutor {
 
         Player admin = (Player) sender;
 
-        if (!admin.hasPermission("homeplugin.admin")) {
+        if (!admin.hasPermission("homeplugin.command.admin")) {
             sendError(admin, translate(LANG + "No-permission"));
             return false;
         }
