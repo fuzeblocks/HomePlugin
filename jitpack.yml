@@ -1,7 +1,2 @@
 jdk:
   - openjdk21
-
-install:
-  - mvn clean install -DskipTests=true
-  - VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-  - mvn install:install-file -Dfile=target/HomePlugin-${VERSION}.jar -DgroupId=fr.fuzeblocks -DartifactId=HomePlugin -Dversion=${VERSION} -Dpackaging=jar
