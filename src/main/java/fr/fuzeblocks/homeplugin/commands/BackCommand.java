@@ -21,7 +21,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
  */
 public class BackCommand implements CommandExecutor {
 
-    private static final String PERM_USE = "homeplugin.back.use";
+    private static final String PERM_USE = "homeplugin.command.back.use";
     private static final String LANG = "Language.";
     private static final String BACK = "Back.";
 
