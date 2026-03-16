@@ -1,5 +1,10 @@
 jdk:
   - openjdk21
+  
+  before_install:
+  - export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+  - export PATH=$JAVA_HOME/bin:$PATH
+  
 install:
   - mvn clean install -DskipTests=true
   - VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
