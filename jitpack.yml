@@ -1,4 +1,4 @@
 jdk:
   - openjdk21
 install:
-  - mvn clean install -DskipTests=true -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true maven.repo.local=$HOME/.m2
+  - mvn clean install -DskipTests=true -Drevision=$JITPACK_VERSION
