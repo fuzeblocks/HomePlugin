@@ -9,6 +9,7 @@ import java.util.List;
 public class PluginManager implements PluginLoader {
     private static final List<fr.fuzeblocks.homeplugin.plugin.HomePlugin> homePlugins = new ArrayList<>();
     private static PluginManager pluginManager = null;
+    private boolean isCoreEnabled = false;
 
     /**
      * Gets instance.
@@ -25,6 +26,10 @@ public class PluginManager implements PluginLoader {
     @Override
     public void loadPlugin(HomePlugin homePlugin) {
         homePlugins.add(homePlugin);
+        if (isCoreEnabled) {
+            homePlugin.initialize();
+            System.out.println("[HomePlugin] " + homePlugin.getName() + " plugin initialized (late load).");
+        }
     }
 
     @Override
@@ -35,5 +40,11 @@ public class PluginManager implements PluginLoader {
     @Override
     public void unregisterPlugin(fr.fuzeblocks.homeplugin.plugin.HomePlugin homePlugin) {
         homePlugins.remove(homePlugin);
+    }
+    public boolean isCoreEnabled() {
+        return isCoreEnabled;
+    }
+    public void setCoreEnabled(boolean coreEnabled) {
+        isCoreEnabled = coreEnabled;
     }
 }

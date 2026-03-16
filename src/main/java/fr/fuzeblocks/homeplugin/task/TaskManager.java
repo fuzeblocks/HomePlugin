@@ -188,7 +188,7 @@ public class TaskManager extends BukkitRunnable {
 
             @Override
             public void run() {
-                if (timeRemaining < 0) {
+                if (timeRemaining <= 0) {
                     player.resetTitle();
                     cancel();
                     return;

@@ -97,7 +97,7 @@ public class WarpCommand implements CommandExecutor {
         WarpData warpData = warpManager.getWarp(warpName);
 
         // access check
-        if (!warpData.canAccess(player.getUniqueId())) {
+        if (!warpData.canAccess(player.getUniqueId()) || !player.hasPermission(warpData.getPermission()) ) {
             player.sendMessage(languageManager.getStringWithColor(WARP + "Warp-no-access", "&cVous n'avez pas la permission d'accéder à ce warp.").replace("{warp}", warpName));
             return false;
         }

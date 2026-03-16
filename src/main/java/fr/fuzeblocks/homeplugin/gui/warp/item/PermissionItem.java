@@ -27,7 +27,7 @@ public class PermissionItem extends AbstractItem {
 
     @Override
     public ItemProvider getItemProvider() {
-        return new ItemBuilder(Material.PAINTING).setDisplayName(HomePlugin.getLanguageManager().getStringWithColor("Warp.Modify.Permission-item-name", "&eChanger la permission du warp"));
+        return new ItemBuilder(Material.REDSTONE_BLOCK).setDisplayName(HomePlugin.getLanguageManager().getStringWithColor("Warp.Modify.Permission-item-name", "&eChanger la permission du warp"));
     }
 
     @Override

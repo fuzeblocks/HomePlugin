@@ -27,7 +27,7 @@ public class ExpirationItem extends AbstractItem {
 
     @Override
     public ItemProvider getItemProvider() {
-        return new ItemBuilder(Material.PAINTING).setDisplayName(HomePlugin.getLanguageManager().getStringWithColor("Warp.Modify.Expiration-item-name", "&eChanger la durée d'expiration du warp"));
+        return new ItemBuilder(Material.CLOCK).setDisplayName(HomePlugin.getLanguageManager().getStringWithColor("Warp.Modify.Expiration-item-name", "&eChanger la durée d'expiration du warp"));
     }
 
     @Override

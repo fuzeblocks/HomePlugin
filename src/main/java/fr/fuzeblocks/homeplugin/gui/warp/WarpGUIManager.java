@@ -33,7 +33,7 @@ public class WarpGUIManager {
         return warps.keySet()
                 .stream()
                 .filter(name -> name != null)
-                .map(name -> new WarpListItem(name, languageManager.getStringWithColor(WARP_LIST + "Warp-name", "&eNom du warp : %warp%").replace("{warp}", name)))
+                .map(name -> new WarpListItem(name, languageManager.getStringWithColor(WARP_LIST + "Warp-name", "&eNom du warp : %warp%").replace("%warp%", name)))
                 .collect(Collectors.toList());
     }
 

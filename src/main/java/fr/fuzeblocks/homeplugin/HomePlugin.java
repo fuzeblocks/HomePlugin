@@ -597,6 +597,7 @@ public final class HomePlugin extends JavaPlugin {
                 }
             }
         }
+        pluginManager.setCoreEnabled(true);
     }
 
     private void stopPluginFunc() {
@@ -609,6 +610,7 @@ public final class HomePlugin extends JavaPlugin {
                 }
             }
         }
+        pluginManager.setCoreEnabled(false);
     }
 
     private void countPlugins() {
