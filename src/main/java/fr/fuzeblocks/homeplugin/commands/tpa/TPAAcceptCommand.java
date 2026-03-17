@@ -31,7 +31,7 @@ public class TPAAcceptCommand implements CommandExecutor {
 
         Player target = (Player) sender;
 
-        if (!target.hasPermission("homeplugin.command.tpa")) {
+        if (!target.hasPermission("homeplugin.command.tpa.use")) {
             target.sendMessage(languageManager.getStringWithColor(LANG + "No-permission"));
             return false;
         }

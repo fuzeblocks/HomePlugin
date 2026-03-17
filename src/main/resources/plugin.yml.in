@@ -76,21 +76,21 @@ permissions:
   homeplugin.command.spawn:
     description: Allows teleporting to spawn.
     default: true
-  homeplugin.admin:
+  homeplugin.command.admin:
     description: Allows managing the internal cache and viewing homes of other players and add/deleting spawns.
     default: op
-  homeplugin.lang.update:
-    description: Allows updating the plugin language.
+  homeplugin.command.lang:
+    description: Allows to managing langs
     default: op
-  homeplugin.command.tpa:
+  homeplugin.command.tpa.use:
     description: Allows sending/accept/deny teleport requests to other players.
     default: true
-  homeplugin.back.use:
+  homeplugin.command.back.use:
     description: Allows using the /back command.
     default: op
-  homeplugin.warp.use:
+  homeplugin.command.warp.use:
     description: Allows using /back for other players.
     default: true
-  homeplugin.warp.modify:
+  homeplugin.command.warp.modify:
     description: Allows setting/modifying warps.
     default: op

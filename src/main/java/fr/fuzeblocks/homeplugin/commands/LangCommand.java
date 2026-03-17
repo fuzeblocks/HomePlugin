@@ -41,6 +41,10 @@ public class LangCommand implements CommandExecutor {
             return true;
         }
 
+         if (!sender.hasPermission("homeplugin.command.lang")) {
+            return true;
+        }
+
         String sub = args[0].toLowerCase();
 
         switch (sub) {
