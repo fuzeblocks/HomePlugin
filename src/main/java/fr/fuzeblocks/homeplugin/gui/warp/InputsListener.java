@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.Collections;
+import java.util.Set;
 import java.util.UUID;
 
 public class InputsListener implements Listener {
@@ -70,6 +71,9 @@ public class InputsListener implements Listener {
                     break;
                 case EXPIRATION:
                     handleExpirationInput(player, message, warpData);
+                    break;
+                case BLACKLIST:
+                    handleBlackListInput(player, message, warpData);
                     break;
             }
         } finally {
@@ -207,31 +211,60 @@ public class InputsListener implements Listener {
 
     private void handleExpirationInput(Player player, String message, WarpData warpData) {
 
-    String input = message.trim().toLowerCase();
+        String input = message.trim().toLowerCase();
 
-    if (input.equals("cancel")) {
-        player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "CancelModification","&cModification annulée !"));
-        return;
+        if (input.equals("cancel")) {
+            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "CancelModification","&cModification annulée !"));
+            return;
+        }
+
+        if (input.equals("never")) {
+            warpManager.setWarpExpirationDate(warpData, null);
+            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "ExpirationInput.NeverExpirationInput","&aLe warp n'expirera jamais !"));
+            return;
+        }
+
+        long seconds = parseDurationToSeconds(input);
+        if (seconds <= 0) {
+            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "ExpirationInput.InvalidExpirationInput","&cFormat invalide ! Exemples: 10m, 2h, 7d, never"));
+            return;
+        }
+
+        long futureMillis = System.currentTimeMillis() + (seconds * 1000);
+        java.sql.Timestamp expiration = new java.sql.Timestamp(futureMillis);
+
+        warpManager.setWarpExpirationDate(warpData, expiration);
+        player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "ExpirationInput.SuccessExpirationInput","&aLa durée d'expiration du warp a été mise à jour !"));
     }
 
-    if (input.equals("never")) {
-        warpManager.setWarpExpirationDate(warpData, null);
-        player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "ExpirationInput.NeverExpirationInput","&aLe warp n'expirera jamais !"));
-        return;
+    /* ---------------- BLACKLIST---------------- */
+    private void handleBlackListInput(Player player, String message, WarpData warpData) {
+
+        String targetName = message.trim();
+
+        if (targetName.equalsIgnoreCase("cancel") || targetName.startsWith("/")) {
+            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "CancelModification","&cModification annulée !"));
+            return;
+        }
+
+        Player targetPlayer = Bukkit.getPlayerExact(targetName);
+        if (targetPlayer == null) {
+            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "BlackListInput.PlayerNotFound","&cJoueur introuvable ! Assurez-vous que le nom est correct et que le joueur est en ligne."));
+            return;
+        }
+
+        UUID targetUUID = targetPlayer.getUniqueId();
+        Set<UUID> deniedPlayers = warpData.getDeniedPlayers();
+        if (deniedPlayers.contains(targetUUID)) {
+            deniedPlayers.remove(targetUUID);
+            warpManager.setDeniedPlayers(warpData, deniedPlayers);
+            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "BlackListInput.RemovedFromBlacklist","&aLe joueur &e{player} &aa été retiré de la blacklist du warp !").replace("{player}", targetName));
+        } else {
+            deniedPlayers.add(targetUUID);
+            warpManager.setDeniedPlayers(warpData, deniedPlayers);
+            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "BlackListInput.AddedToBlacklist","&aLe joueur &e{player} &aa été ajouté à la blacklist du warp !").replace("{player}", targetName));
+        }
     }
-
-    long seconds = parseDurationToSeconds(input);
-    if (seconds <= 0) {
-        player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "ExpirationInput.InvalidExpirationInput","&cFormat invalide ! Exemples: 10m, 2h, 7d, never"));
-        return;
-    }
-
-    long futureMillis = System.currentTimeMillis() + (seconds * 1000);
-    java.sql.Timestamp expiration = new java.sql.Timestamp(futureMillis);
-
-    warpManager.setWarpExpirationDate(warpData, expiration);
-    player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "ExpirationInput.SuccessExpirationInput","&aLa durée d'expiration du warp a été mise à jour !"));
-}
 
 
     private long parseDurationToSeconds(String input) {

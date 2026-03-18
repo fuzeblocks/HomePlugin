@@ -170,23 +170,9 @@ public interface Warp {
      */
     boolean setWarpPublic(WarpData warpData, boolean isPublic);
 
-    /**
-     * Sets warp allowed players.
-     *
-     * @param name           the name
-     * @param allowedPlayers the allowed players
-     * @return the warp allowed players
-     */
-    boolean setWarpAllowedPlayers(String name, Set<UUID> allowedPlayers);
+    boolean setDeniedPlayers(String name, Set<UUID> deniedPlayers);
 
-    /**
-     * Sets warp allowed players.
-     *
-     * @param warpData       the warp data
-     * @param allowedPlayers the allowed players
-     * @return the warp allowed players
-     */
-    boolean setWarpAllowedPlayers(WarpData warpData, Set<UUID> allowedPlayers);
+    boolean setDeniedPlayers(WarpData warpData, Set<UUID> deniedPlayers);
 
     /**
      * Sets warp cost.

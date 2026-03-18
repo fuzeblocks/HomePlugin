@@ -114,7 +114,7 @@ public class WarpGUIManager {
                 .setStructure(
                         "# # # # # # # # #",
                         "# D E P A I C N #",
-                        "# S L x x x x x #",
+                        "# S L B x x x x #",
                         "# # # # # # # # #")
                 .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
                 .addIngredient('#', border)
@@ -127,6 +127,7 @@ public class WarpGUIManager {
                 .addIngredient('N', new RenameItem(warpData))
                 .addIngredient('S',new LoreItem(warpData))
                 .addIngredient('L', new LocationItem(warpData))
+                .addIngredient('B',new BlackListItem(warpData))
 
 
                 .build();

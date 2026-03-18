@@ -160,13 +160,13 @@ public class WarpManager implements Warp {
     }
 
     @Override
-    public boolean setWarpAllowedPlayers(String name, Set<UUID> allowedPlayers) {
-        return warpImplementation.setWarpAllowedPlayers(name, allowedPlayers);
+    public boolean setDeniedPlayers(String name, Set<UUID> deniedPlayers) {
+        return warpImplementation.setDeniedPlayers(name, deniedPlayers);
     }
 
     @Override
-    public boolean setWarpAllowedPlayers(WarpData warpData, Set<UUID> allowedPlayers) {
-        return warpImplementation.setWarpAllowedPlayers(warpData, allowedPlayers);
+    public boolean setDeniedPlayers(WarpData warpData, Set<UUID> deniedPlayers) {
+        return warpImplementation.setDeniedPlayers(warpData, deniedPlayers);
     }
 
     @Override

@@ -5,5 +5,6 @@ public enum InputsSession {
     PERMISSION,
     NAME,
     LORE,
-    LOCATION
+    LOCATION,
+    BLACKLIST
 }

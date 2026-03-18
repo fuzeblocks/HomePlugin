@@ -21,7 +21,7 @@ public class WarpData {
     private final Material icon;
     private final List<String> lores;
     private final boolean isPublic;
-    private final Set<UUID> allowedPlayers;
+    private final Set<UUID> deniedPlayers;
     private final double cost;
     private final String permission;
     private final Timestamp expirationDate;
@@ -38,7 +38,7 @@ public class WarpData {
      * @param icon           the icon
      * @param lores          the lores
      * @param isPublic       the is public
-     * @param allowedPlayers the allowed players
+     * @param deniedPlayers the denied players
      * @param cost           the cost
      * @param permission     the permission
      * @param expirationDate the expiration date
@@ -51,7 +51,7 @@ public class WarpData {
                     Material icon,
                     List<String> lores,
                     boolean isPublic,
-                    Set<UUID> allowedPlayers,
+                    Set<UUID> deniedPlayers,
                     double cost,
                     String permission,
                     Timestamp expirationDate,
@@ -63,7 +63,7 @@ public class WarpData {
         this.icon = icon;
         this.lores = lores == null ? Collections.emptyList() : Collections.unmodifiableList(new ArrayList<>(lores));
         this.isPublic = isPublic;
-        this.allowedPlayers = allowedPlayers == null ? Collections.emptySet() : Collections.unmodifiableSet(new HashSet<>(allowedPlayers));
+        this.deniedPlayers = deniedPlayers == null ? Collections.emptySet() : Collections.unmodifiableSet(new HashSet<>(deniedPlayers));
         this.cost = cost;
         this.permission = permission;
         this.expirationDate = expirationDate;
@@ -258,13 +258,8 @@ public class WarpData {
         return isPublic;
     }
 
-    /**
-     * Gets allowed players.
-     *
-     * @return the allowed players
-     */
-    public Set<UUID> getAllowedPlayers() {
-        return allowedPlayers;
+    public Set<UUID> getDeniedPlayers() {
+        return deniedPlayers;
     }
 
     /**
@@ -316,7 +311,7 @@ public class WarpData {
         if (isPublic) {
             return true;
         }
-        return allowedPlayers.contains(playerUUID);
+        return !deniedPlayers.contains(playerUUID);
     }
 
     /**
@@ -329,7 +324,7 @@ public class WarpData {
      * 3  icon (Material name)
      * 4  lores joined by ","
      * 5  isPublic
-     * 6  allowedPlayers UUIDs joined by ","
+     * 6  deniedPlayers UUIDs joined by ","
      * 7  cost
      * 8  permission
      * 9  expirationDate millis or "null"
@@ -340,7 +335,7 @@ public class WarpData {
      */
     public String serialize() {
         String loresPart = String.join(",", lores);
-        String allowedPlayersPart = allowedPlayers.stream()
+        String deniedPlayersPart = deniedPlayers.stream()
                 .map(UUID::toString)
                 .collect(Collectors.joining(","));
 
@@ -362,7 +357,7 @@ public class WarpData {
                 icon.name(),
                 loresPart,
                 String.valueOf(isPublic),
-                allowedPlayersPart,
+                deniedPlayersPart,
                 String.valueOf(cost),
                 permission == null ? "" : permission,
                 expirationPart,
