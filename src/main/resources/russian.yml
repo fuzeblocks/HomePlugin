@@ -7,6 +7,7 @@ Language:
   Teleport-canceled: "&cТелепортация отменена, потому что вы двинулись."
   A-teleport-is-already-in-progress: "&cТелепортация уже выполняется!"
   Not-Enough-Money: "&cУ вас недостаточно денег для этого действия!"
+  Economy-system-not-found: "&cСистема экономики не найдена!"
 
   Error: "&cПроизошла ошибка!"
   Unknown: "&cНеизвестно"
@@ -14,6 +15,22 @@ Language:
   Only-a-player-can-execute: "&cТолько игрок может выполнить эту команду!"
   Player-is-not-OP: "&cВы не OP!"
   Player-is-not-online: "&cУказанный игрок не существует или не в сети!"
+  Teleport-to-warp: "&aВы были телепортированы на варп :"
+  Start-of-teleportation-for-warp: "&6Начинаю телепортацию на варп : "
+
+  Update:
+    Update-Plugin: "&aПожалуйста, обновите плагин, чтобы воспользоваться новыми функциями и исправлениями ошибок!"
+    Update-Lang: "&aПожалуйста, выполните команду /lang update, чтобы обновить ваш файл языка с новыми ключами и переводами!"
+
+  Gui:
+    BackItem:
+      Name: "&cПредыдущая страница"
+      MaxBack: "&cВы не можете вернуться еще дальше!"
+      ChangePage: "Перейти на страницу %current_page% / %total_pages%"
+    ForwardItem:
+      Name: "&aСледующая страница"
+      MaxForward: "&cВы уже на последней странице!"
+      ChangePage: "Перейти на страницу %current_page% / %total_pages%"
 
 Spawn:
   SetSpawn-permission-deny-message: "&cУ вас нет прав, чтобы установить спавн!"
@@ -28,8 +45,8 @@ Home:
   Home-deleted: "&aДом успешно удалён!"
   Home-deleted-with-name: "&aДом {homeName} успешно удалён!"
   Home-does-not-exist: "&cУказанный дом не существует!"
-  Have-no-home: "&cУ вас нет сохранённых домов."
   Home-world-not-loaded: "&cМир вашего дома не загружен!"
+  Have-no-home: "&cУ вас нет сохранённых домов."
   Home-limite-permission-for-bypass: "HomePlugin.home.bypass"
   Home-limite-message: "&c&lУ вас нет прав добавлять ещё один дом!"
   Home-usage-message: "&cИспользование: /home <имя-дома>"
@@ -219,3 +236,69 @@ Back:
 Economy:
   Payment-successful: "&a Платёж на сумму %amount% выполнен успешно."
   Payment-failed: "&c Платёж на сумму %amount% не удался."
+
+Warp:
+  Warp-does-not-exist: "&cУказанный варп &e({warp}) не существует!"
+  Warp-teleport-failed: "&cТелепортация к варпу &e({warp}) не удалась!"
+  Warp-set-success: "&aВарп &e({warp}) &aуспешно установлен."
+  Usage-warp-command: "&cИспользование: /warp <название-варпа>"
+  Warp-delete-success: "&aВарп &e({warp}) &aуспешно удален."
+  Warp-world-not-loaded: "&cМир указанного варпа не загружен!"
+
+  Inputs:
+    CancelModification: "&cИзменение отменено!"
+    LocationInput:
+      InvalidLocationInput: "&cНеверный ввод! Формат: x=100 y=64 z=200 или 'here' или 'cancel'."
+      SuccessLocationInput: "&aПозиция варпа установлена на X: %x% Y: %y% Z: %z% Мир: %world%!"
+    NameInput:
+      InvalidNameInput: "&cНеверный ввод! Имя не должно содержать пробелов."
+      WarpExists: "&cВарп с таким именем уже существует!"
+      SuccessNameInput: "&aВарп был переименован в &e%warp%"
+    LoreInput:
+      SuccessLoreInput: "&aОписание варпа обновлено!"
+    PermissionInput:
+      NonePermissionInput: "&aДля этого варпа не потребуется никаких прав!"
+      InvalidPermissionInput: "&cНеверный ввод! Пожалуйста, введите действительное право или 'none' для отсутствия прав."
+      SuccessPermissionInput: "&aПрава варпа обновлены!"
+    ExpirationInput:
+      NeverExpirationInput: "&aСрок действия варпа никогда не истечет!"
+      InvalidExpirationInput: "&cНеверный формат! Примеры: 10m, 2h, 7d, never"
+      SuccessExpirationInput: "&aСрок действия варпа обновлен!"
+
+  Item:
+    Public: "&aПубличный "
+    Cost: "&eСтоимость "
+    Creator: "&bСоздатель: "
+    Created-On: "&aСоздан: "
+    Expires: "&cИстекает: "
+    Location: "&9Локация "
+    Permission: "&dНеобходимое разрешение "
+    None: "&cНет"
+    N/A: "&7Н/Д"
+    Never: "&cНикогда"
+
+  List:
+    Warp-list-header: "&6&lСписок Варпов"
+    Warp-modify-header: "&6&lУправление Варпами"
+    Warp-name: "&eНазвание варпа: %warp%"
+    Warp-location: "&9Локация: &6X: %x% Y: %y% Z: %z% Мир: %world%"
+    Warp-teleport-hover: "&eНажмите, чтобы телепортироваться."
+    No-warps: "&cВ данный момент варпы не заданы."
+
+  Modify:
+    Public-item-name: "&aИзменить видимость варпа"
+    Expiration-item-message: "&eПожалуйста, введите новый срок действия варпа в чат в формате s,h,d,m (например, 1d,2m,3d,4s). (cancel для отмены или never, чтобы никогда не истекал)"
+    Expiration-item-name: "&eИзменить срок действия варпа"
+    Permission-item-message: "&eПожалуйста, введите новые права для варпа в чат. (none для отсутствия прав, cancel для отмены)"
+    Permission-item-name: "&eИзменить права варпа"
+    Cost-item-name: "&aУстановить стоимость варпа"
+    Decrease-cost-item-name: "&aУменьшить стоимость варпа"
+    Delete-item-name: "&cУдалить варп"
+    Icon-item-name: "&eИзменить иконку варпа"
+    Increase-Cost-item-name: "&aУвеличить стоимость варпа"
+    Location-item-name: "&eУстановить позицию варпа"
+    Location-item-message: "&eПожалуйста, введите позицию варпа в чат. (Формат: x=100 y=64 z=200 или 'here')"
+    Lore-item-name: "&eИзменить описание варпа"
+    Lore-item-message: "&eПожалуйста, введите новое описание варпа в чат. (cancel для отмены)"
+    Rename-item-name: "&eПереименовать варп"
+    Rename-item-message: "&eПожалуйста, введите новое имя варпа в чат. (cancel для отмены)"

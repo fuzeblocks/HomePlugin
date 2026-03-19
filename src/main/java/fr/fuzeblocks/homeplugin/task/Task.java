@@ -11,5 +11,9 @@ public enum Task {
     /**
      * Home task.
      */
-    HOME
+    HOME,
+    /**
+     * Warp task.
+     */
+    WARP
 }

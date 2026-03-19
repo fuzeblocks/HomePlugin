@@ -42,12 +42,12 @@ public class HomeOfflineManager implements OfflineHome {
 
     @Override
     public boolean renameHome(UUID uuid, String oldHomeName, String newHomeName) {
-        return homeImplementation.renameHome(uuid,oldHomeName,newHomeName);
+        return homeImplementation.renameHome(uuid, oldHomeName, newHomeName);
     }
 
     @Override
     public boolean relocateHome(UUID uuid, String homeName, Location newLocation) {
-        return homeImplementation.relocateHome(uuid,homeName,newLocation);
+        return homeImplementation.relocateHome(uuid, homeName, newLocation);
     }
 
     @Override
@@ -72,16 +72,16 @@ public class HomeOfflineManager implements OfflineHome {
 
     @Override
     public Location getHomeLocation(UUID uuid, String homeName) {
-        return homeImplementation.getHomeLocation(uuid,homeName);
+        return homeImplementation.getHomeLocation(uuid, homeName);
     }
 
     @Override
     public boolean deleteHome(UUID uuid, String homeName) {
-        return homeImplementation.deleteHome(uuid,homeName);
+        return homeImplementation.deleteHome(uuid, homeName);
     }
 
     @Override
     public boolean exist(UUID uuid, String homeName) {
-        return homeImplementation.exist(uuid,homeName);
+        return homeImplementation.exist(uuid, homeName);
     }
 }

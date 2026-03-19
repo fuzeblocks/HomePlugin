@@ -7,6 +7,7 @@ Language:
   Teleport-canceled: "&cHareket ettiğin için ışınlanma iptal edildi."
   A-teleport-is-already-in-progress: "&cZaten devam eden bir ışınlanma var!"
   Not-Enough-Money: "&cBu işlem için yeterli paran yok!"
+  Economy-system-not-found: "&cEkonomi sistemi bulunamadı!"
 
   Error: "&cBir hata oluştu!"
   Unknown: "&cBilinmiyor"
@@ -14,6 +15,22 @@ Language:
   Only-a-player-can-execute: "&cBu komutu sadece oyuncular kullanabilir!"
   Player-is-not-OP: "&cOP değilsin!"
   Player-is-not-online: "&cBelirtilen oyuncu mevcut değil veya çevrimiçi değil!"
+  Teleport-to-warp: "&aWarp'a ışınlandın :"
+  Start-of-teleportation-for-warp: "&6Warp konumuna ışınlanma başlıyor : "
+
+  Update:
+    Update-Plugin: "&aEn son özellikleri ve hata düzeltmelerini almak için lütfen eklentiyi güncelleyin!"
+    Update-Lang: "&aDil dosyanızı yeni anahtarlar ve çevirilerle güncellemek için lütfen /lang update komutunu kullanın!"
+
+  Gui:
+    BackItem:
+      Name: "&cÖnceki sayfa"
+      MaxBack: "&cDaha fazla geri gidemezsin!"
+      ChangePage: "Sayfaya git %current_page% / %total_pages%"
+    ForwardItem:
+      Name: "&aSonraki sayfa"
+      MaxForward: "&cZaten son sayfadasın!"
+      ChangePage: "Sayfaya git %current_page% / %total_pages%"
 
 Spawn:
   SetSpawn-permission-deny-message: "&cSpawn ayarlamak için yetkin yok!"
@@ -219,3 +236,69 @@ Back:
 Economy:
   Payment-successful: "&a%amount% tutarında ödeme başarıyla tamamlandı!"
   Payment-failed: "&c%amount% tutarındaki ödeme başarısız oldu!"
+
+Warp:
+  Warp-does-not-exist: "&cBelirtilen warp &e({warp}) mevcut değil!"
+  Warp-teleport-failed: "&cWarp &e({warp}) 'a teleportasyon başarısız oldu!"
+  Warp-set-success: "&aWarp &e({warp}) &aayarlanmıştır."
+  Usage-warp-command: "&cKullanım: /warp <warp-adı>"
+  Warp-delete-success: "&aWarp &e({warp}) &asilindi."
+  Warp-world-not-loaded: "&cBelirtilen warp'ın dünyası yüklü değil!"
+
+  Inputs:
+    CancelModification: "&cDeğişiklik iptal edildi!"
+    LocationInput:
+      InvalidLocationInput: "&cGeçersiz giriş! Format: x=100 y=64 z=200 veya 'here' veya 'cancel'."
+      SuccessLocationInput: "&aWarp konumu X: %x% Y: %y% Z: %z% Dünya: %world% olarak ayarlandı!"
+    NameInput:
+      InvalidNameInput: "&cGeçersiz giriş! Boşluk içermeyen bir ad girin."
+      WarpExists: "&cBu isimde bir warp zaten var!"
+      SuccessNameInput: "&aWarp &e%warp% olarak yeniden adlandırıldı"
+    LoreInput:
+      SuccessLoreInput: "&aWarp açıklaması güncellendi!"
+    PermissionInput:
+      NonePermissionInput: "&aBu warp için hiçbir izin gerekmeyecek!"
+      InvalidPermissionInput: "&cGeçersiz giriş! Lütfen geçerli bir izin girin veya izin istemiyorsanız 'none' yazın."
+      SuccessPermissionInput: "&aWarp izni güncellendi!"
+    ExpirationInput:
+      NeverExpirationInput: "&aWarp'ın süresi asla dolmayacak!"
+      InvalidExpirationInput: "&cGeçersiz format! Örnekler: 10m, 2h, 7d, never"
+      SuccessExpirationInput: "&aWarp'ın sona erme süresi güncellendi!"
+
+  Item:
+    Public: "&aHerkese Açık "
+    Cost: "&eMaliyet "
+    Creator: "&bOluşturan: "
+    Created-On: "&aOluşturuldu: "
+    Expires: "&cSona erme tarihi: "
+    Location: "&9Konum "
+    Permission: "&dGerekli izin "
+    None: "&cYok"
+    N/A: "&7N/A"
+    Never: "&cAsla"
+
+  List:
+    Warp-list-header: "&6&lWarp Listesi"
+    Warp-modify-header: "&6&lWarp Yönetimi"
+    Warp-name: "&eWarp adı: %warp%"
+    Warp-location: "&9Konum: &6X: %x% Y: %y% Z: %z% Dünya: %world%"
+    Warp-teleport-hover: "&eTeleport etmek için tıklayın."
+    No-warps: "&cŞu anda tanımlı hiçbir warp yok."
+
+  Modify:
+    Public-item-name: "&aWarp görünürlüğünü değiştir"
+    Expiration-item-message: "&eLütfen sohbete s,h,d,m formatında (örn. 1d,2m,3d,4s) warp için yeni sona erme süresini girin. (iptal etmek için cancel, süresiz yapmak için never)"
+    Expiration-item-name: "&eWarp sona erme süresini değiştir"
+    Permission-item-message: "&eLütfen sohbete warp için yeni izni girin. (izin istemiyorsanız none, iptal etmek için cancel)"
+    Permission-item-name: "&eWarp iznini değiştir"
+    Cost-item-name: "&aWarp ücretini belirle"
+    Decrease-cost-item-name: "&aWarp ücretini azalt"
+    Delete-item-name: "&cWarp'ı sil"
+    Icon-item-name: "&eWarp ikonunu değiştir"
+    Increase-Cost-item-name: "&aWarp ücretini artır"
+    Location-item-name: "&eWarp konumunu belirle"
+    Location-item-message: "&eLütfen sohbete warp konumunu girin. (Format: x=100 y=64 z=200 veya 'here')"
+    Lore-item-name: "&eWarp açıklamasını yeniden adlandır"
+    Lore-item-message: "&eLütfen sohbete warp için yeni açıklamayı girin. (iptal etmek için cancel)"
+    Rename-item-name: "&eWarp'ı yeniden adlandır"
+    Rename-item-message: "&eLütfen sohbete warp için yeni ismi girin. (iptal etmek için cancel)"

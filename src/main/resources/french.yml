@@ -7,6 +7,7 @@ Language:
   Teleport-canceled: "&cTéléportation annulée car vous avez bougé."
   A-teleport-is-already-in-progress: "&cUne téléportation est déjà en cours !"
   Not-Enough-Money: "&cVous n'avez pas assez d'argent pour cette action !"
+  Economy-system-not-found: "&cSystème d'économie introuvable !"
 
   Error: "&cUne erreur est survenue !"
   Unknown: "&cInconnu"
@@ -14,6 +15,24 @@ Language:
   Only-a-player-can-execute: "&cSeul un joueur peut exécuter cette commande !"
   Player-is-not-OP: "&cVous n'êtes pas OP !"
   Player-is-not-online: "&cLe joueur spécifié n'existe pas ou n'est pas en ligne !"
+  Teleport-to-warp: "&aVous avez été téléporté au warp :"
+  Start-of-teleportation-for-warp: "&6Début de la téléportation vers le warp : "
+
+  Update:
+    Update-Plugin: "&aMerci de mettre à jour le plugin pour profiter des dernières fonctionnalités et corrections de bugs !"
+    Update-Lang: "&aMerci d'executer la commande /lang update pour mettre à jour votre fichier de langue avec les nouvelles clés et traductions !"
+
+  Gui:
+    BackItem:
+      Name: "&cPage précédente"
+      MaxBack: "&cVous ne pouvez pas revenir plus loin !"
+      ChangePage: "Aller à la page %current_page% / %total_pages%"
+    ForwardItem:
+      Name: "&aPage suivante"
+      MaxForward: "&cVous êtes déjà à la dernière page !"
+      ChangePage: "Aller à la page %current_page% / %total_pages%"
+
+
 
 Spawn:
   SetSpawn-permission-deny-message: "&cVous n'avez pas la permission de définir le spawn !"
@@ -218,3 +237,75 @@ Back:
 Economy:
   Payment-successful: "&aPayement de %amount% reussi !"
   Payment-failed: "&cLe payement de %amount% a échoué !"
+
+Warp:
+  Warp-does-not-exist: "&cLe warp &e({warp}) spécifié n'existe pas !"
+  Warp-teleport-failed: "&cLa téléportation vers le warp &e({warp}) a échoué !"
+  Warp-set-success: "&aLe warp &e({warp}) &aa été défini."
+  Usage-warp-command: "&cUtilisation : /warp <nom-du-warp>"
+  Warp-delete-success: "&aLe warp &e({warp}) &aa été supprimé."
+  Warp-world-not-loaded: "&cLe monde du warp spécifié n'est pas chargé !"
+
+  Inputs:
+    CancelModification: "&cModification annulée !"
+    LocationInput:
+      InvalidLocationInput: "&cEntrée invalide ! Format: x=100 y=64 z=200 ou 'here' ou 'cancel'."
+      SuccessLocationInput: "&aPosition du warp définie à X: %x% Y: %y% Z: %z% Monde: %world% !"
+    NameInput:
+      InvalidNameInput: "&cEntrée invalide ! Nom sans espaces."
+      WarpExists: "&cUn warp avec ce nom existe déjà !"
+      SuccessNameInput: "&aLe warp a été renommé en &e%warp%"
+    LoreInput:
+      SuccessLoreInput: "&aLa lore du warp a été mise à jour !"
+    PermissionInput:
+      NonePermissionInput: "&aAucune permission ne sera obligatoire pour ce warp !"
+      InvalidPermissionInput: "&cEntrée invalide ! Veuillez entrer une permission valide ou 'none' pour aucune permission."
+      SuccessPermissionInput: "&aLa permission du warp a été mise à jour !"
+    ExpirationInput:
+      NeverExpirationInput: "&aLe warp n'expirera jamais !"
+      InvalidExpirationInput: "&cFormat invalide ! Exemples: 10m, 2h, 7d, never"
+      SuccessExpirationInput: "&aLa durée d'expiration du warp a été mise à jour !"
+    BlackListInput:
+      AddedToBlacklist: "&aLe joueur &e%player% &aa été ajouté à la blacklist du warp !"
+      RemovedFromBlacklist:  "&aLe joueur &e%player% &aa été retiré de la blacklist du warp !"
+      PlayerNotFound: "&cJoueur introuvable ! Assurez-vous que le nom est correct et que le joueur est en ligne."
+
+  Item:
+    Public: "Public "
+    Cost: "Coût "
+    Creator: "Créateur: "
+    Created-On: "Créé le "
+    Expires: "Expire le "
+    Location: "Position "
+    Permission: "Permission requise "
+    None: "Aucun"
+    N/A: "N/A"
+    Never: "Jamais"
+
+  List:
+    Warp-list-header: "&6&lListe des Warps"
+    Warp-modify-header: "&6&lGestion des Warps"
+    Warp-name: "&eNom du warp : %warp%"
+    Warp-location: "&9Position : &6X: %x% Y: %y% Z: %z% Monde: %world%"
+    Warp-teleport-hover: "&eCliquez pour vous téléporter."
+    No-warps: "&cAucun warp n'est défini pour le moment."
+
+  Modify:
+    Public-item-name: "&aChanger la visibilité du warp"
+    Expiration-item-message: "&eVeuillez entrer la nouvelle durée d'expiration du warp dans le chat avec pour format s,h,d,m (ex 1d,2m,3d,4s) . (cancel pour annuler ou never pour ne jamais faire expirer)"
+    Expiration-item-name: "&eChanger la durée d'expiration du warp"
+    Permission-item-message: "&eVeuillez entrer la nouvelle permission du warp dans le chat. (none pour aucune permission, cancel pour annuler)"
+    Permission-item-name: "&eChanger la permission du warp"
+    Cost-item-name: "&aDéfinir le coût du warp"
+    Decrease-cost-item-name: "&aDiminuer le coût du warp"
+    Delete-item-name: "&cSupprimer le warp"
+    Icon-item-name: "&eChanger l'icône du warp"
+    Increase-Cost-item-name: "&aAugmenter le coût du warp"
+    Location-item-name: "&eDéfinir la location du warp"
+    Location-item-message: "&eVeuillez entrer la location du warp dans le chat. (Format: x=100 y=64 z=200 ou 'here')"
+    Lore-item-name: "&eRenommer la lore du warp"
+    Lore-item-message: "&eVeuillez entrer la nouvelle lore du warp dans le chat. (cancel pour annuler)"
+    Rename-item-name: "&eRenommer le warp"
+    Rename-item-message: "&eVeuillez entrer le nouveau nom du warp dans le chat. (cancel pour annuler)"
+    BlackList-item-name: "&eGérer la blacklist du warp"
+    BlackList-item-message: "&eVeuillez entrer le nom du joueur à ajouter ou retirer de la blacklist du warp dans le chat. (cancel pour annuler)"

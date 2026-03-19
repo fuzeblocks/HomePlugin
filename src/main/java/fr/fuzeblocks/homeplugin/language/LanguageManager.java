@@ -38,6 +38,19 @@ public class LanguageManager {
     }
 
     /**
+     * Translate alternate color codes string.
+     *
+     * @param s the s
+     * @return the string
+     */
+    public static @NotNull String translateAlternateColorCodes(@Nullable String s) {
+        if (s == null) {
+            return "§c[Traduction manquante]";
+        }
+        return s.replace('&', '§');
+    }
+
+    /**
      * Gets string.
      *
      * @param key the key
@@ -83,20 +96,6 @@ public class LanguageManager {
     public String getStringWithColor(String key, String defaultValue) {
         return translateAlternateColorCodes(yamlConfiguration.getString(key, defaultValue));
     }
-
-    /**
-     * Translate alternate color codes string.
-     *
-     * @param s the s
-     * @return the string
-     */
-    public static @NotNull String translateAlternateColorCodes(@Nullable String s) {
-        if (s == null) {
-            return "§c[Traduction manquante]";
-        }
-        return s.replace('&', '§');
-    }
-
 
     /**
      * Regenerates the language file from the internal resource and reloads it.

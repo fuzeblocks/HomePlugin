@@ -1,13 +1,14 @@
-package fr.fuzeblocks. homeplugin.task;
+package fr.fuzeblocks.homeplugin.task;
 
-import fr.fuzeblocks. homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.event. OnHomeTeleportEvent;
-import fr.fuzeblocks. homeplugin.event.OnSpawnTeleportEvent;
-import fr.fuzeblocks. homeplugin.language.LanguageManager;
+import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.event.OnHomeTeleportEvent;
+import fr.fuzeblocks.homeplugin.event.OnSpawnTeleportEvent;
+import fr.fuzeblocks.homeplugin.event.OnWarpTeleportEvent;
+import fr.fuzeblocks.homeplugin.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.status.StatusManager;
 import fr.fuzeblocks.homeplugin.task.exception.TeleportTaskException;
-import org.bukkit. Bukkit;
-import org. bukkit.Effect;
+import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -23,7 +24,7 @@ public class TaskManager extends BukkitRunnable {
     private static final String TASK_PREFIX = "Config.Task.";
     private static final long TICKS_PER_SECOND = 20L;
 
-    private final HomePlugin plugin = HomePlugin.getPlugin(HomePlugin. class);
+    private final HomePlugin plugin = HomePlugin.getPlugin(HomePlugin.class);
     private final ConfigurationSection config = HomePlugin.getConfigurationSection();
     private final LanguageManager languageManager = HomePlugin.getLanguageManager();
 
@@ -41,6 +42,8 @@ public class TaskManager extends BukkitRunnable {
                 teleportHome();
             } else if (task == Task.SPAWN) {
                 teleportSpawn();
+            } else {
+                teleportWarp();
             }
         } finally {
             cleanup();
@@ -58,7 +61,7 @@ public class TaskManager extends BukkitRunnable {
             return;
         }
 
-        player.teleport(event. getLocation());
+        player.teleport(event.getLocation());
         sendTeleportMessage(LANG_PREFIX + "Teleport-to-home", homeName);
 
         if (shouldPlayParticles()) {
@@ -79,8 +82,19 @@ public class TaskManager extends BukkitRunnable {
         }
 
         Player target = event.getPlayer();
-        target.teleport(event. getLocation());
-        target.sendMessage(languageManager. getStringWithColor(LANG_PREFIX + "Teleport-to-spawn"));
+        target.teleport(event.getLocation());
+        target.sendMessage(languageManager.getStringWithColor(LANG_PREFIX + "Teleport-to-spawn"));
+    }
+
+    private void teleportWarp() {
+        OnWarpTeleportEvent event = new OnWarpTeleportEvent(player, homeLocation, homeName);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+        if (event.isCancelled()) {
+            return;
+        }
+        Player target = event.getPlayer();
+        target.teleport(event.getLocation());
+        sendTeleportMessage(LANG_PREFIX + "Teleport-to-warp", homeName);
     }
 
     /**
@@ -113,7 +127,7 @@ public class TaskManager extends BukkitRunnable {
         }
 
         player.resetTitle();
-        player.sendMessage(languageManager. getStringWithColor(LANG_PREFIX + "Teleport-canceled"));
+        player.sendMessage(languageManager.getStringWithColor(LANG_PREFIX + "Teleport-canceled"));
         StatusManager.setPlayerStatus(player, false);
         TaskSaveUtils.removeTaskManagerInstance(player);
     }
@@ -143,6 +157,20 @@ public class TaskManager extends BukkitRunnable {
     }
 
     /**
+     * Warp task.
+     *
+     * @param warpName the warp name
+     * @param player   the player
+     * @param location the location
+     */
+    public void warpTask(String warpName, Player player, Location location) {
+        this.player = player;
+        this.homeName = warpName;
+        this.homeLocation = location;
+        this.task = Task.WARP;
+    }
+
+    /**
      * Starts the title/message countdown task.
      *
      * @param duration the duration in seconds
@@ -151,7 +179,7 @@ public class TaskManager extends BukkitRunnable {
         final boolean useTitle = config.getBoolean(TASK_PREFIX + "Use-Title");
         final boolean useMessage = config.getBoolean(TASK_PREFIX + "Use-Message");
 
-        if (! useTitle && !useMessage) {
+        if (!useTitle && !useMessage) {
             return; // No need to start task if neither is enabled
         }
 
@@ -160,7 +188,7 @@ public class TaskManager extends BukkitRunnable {
 
             @Override
             public void run() {
-                if (timeRemaining < 0) {
+                if (timeRemaining <= 0) {
                     player.resetTitle();
                     cancel();
                     return;
@@ -208,11 +236,11 @@ public class TaskManager extends BukkitRunnable {
     /**
      * Sends a teleport completion message.
      *
-     * @param key the language key
+     * @param key    the language key
      * @param suffix optional suffix to append
      */
     private void sendTeleportMessage(String key, String suffix) {
-        String message = languageManager. getStringWithColor(key);
+        String message = languageManager.getStringWithColor(key);
         if (suffix != null && !suffix.isEmpty()) {
             message += " " + suffix;
         }

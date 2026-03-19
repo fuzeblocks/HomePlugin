@@ -33,7 +33,7 @@ public interface HomeRequestStore {
      * @param homeName    the home name
      * @param newLocation the new location
      */
-    void relocateHome(UUID playerId, String homeName,Location newLocation);
+    void relocateHome(UUID playerId, String homeName, Location newLocation);
 
     /**
      * Gets homes.

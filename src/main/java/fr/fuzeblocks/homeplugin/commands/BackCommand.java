@@ -27,7 +27,7 @@ public class BackCommand implements CommandExecutor {
 
     private final BackManager backManager = BackManager.getInstance();
     private final LanguageManager languageManager = HomePlugin.getLanguageManager();
-    
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {

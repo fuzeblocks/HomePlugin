@@ -69,7 +69,7 @@ public class ListHomeCommand implements CommandExecutor {
     /**
      * Sends the header with home count.
      *
-     * @param player The player
+     * @param player    The player
      * @param homeCount Number of homes
      */
     private void sendHeader(Player player, int homeCount) {
@@ -101,7 +101,7 @@ public class ListHomeCommand implements CommandExecutor {
     /**
      * Sends a single home entry with interactive buttons.
      *
-     * @param player The player
+     * @param player   The player
      * @param homeName The home name
      * @param location The home location
      */

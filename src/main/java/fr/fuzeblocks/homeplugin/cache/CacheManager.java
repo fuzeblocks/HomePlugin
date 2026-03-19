@@ -14,6 +14,10 @@ import fr.fuzeblocks.homeplugin.spawn.SpawnRequestStore;
 import fr.fuzeblocks.homeplugin.tpa.LocalTpaRequestStore;
 import fr.fuzeblocks.homeplugin.tpa.RedisTpaRequestStore;
 import fr.fuzeblocks.homeplugin.tpa.TpaRequestStore;
+import fr.fuzeblocks.homeplugin.warps.LocalWarpStore;
+import fr.fuzeblocks.homeplugin.warps.RedisWarpStore;
+import fr.fuzeblocks.homeplugin.warps.WarpData;
+import fr.fuzeblocks.homeplugin.warps.WarpRequestStore;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import redis.clients.jedis.JedisPooled;
@@ -36,6 +40,7 @@ public class CacheManager {
     private final HomeRequestStore homeStore;
     private final SpawnRequestStore spawnStore;
     private final RtpRequestStore rtpRequestStore;
+    private final WarpRequestStore warpRequestStore;
 
     private CacheManager() {
         this.useRedis = HomePlugin.getConfigurationSection().getBoolean("Config.Connector.Redis.UseRedis");
@@ -46,11 +51,13 @@ public class CacheManager {
             this.homeStore = new RedisHomeStore(jedis);
             this.spawnStore = new RedisSpawnStore(jedis);
             this.rtpRequestStore = new RedisRtpRequestStore(jedis);
+            this.warpRequestStore = new RedisWarpStore(jedis);
         } else {
             this.tpaRequestStore = new LocalTpaRequestStore();
             this.homeStore = new LocalHomeStore();
             this.spawnStore = new LocalSpawnStore();
             this.rtpRequestStore = new LocalRtpRequestStore();
+            this.warpRequestStore = new LocalWarpStore();
         }
     }
 
@@ -63,6 +70,7 @@ public class CacheManager {
         if (instance == null) instance = new CacheManager();
         return instance;
     }
+
 
     // --- TPA REQUESTS ---
 
@@ -84,8 +92,8 @@ public class CacheManager {
      * @param target the target
      * @return the boolean
      */
-    public boolean hasTpaRequest(UUID sender,UUID target) {
-        return tpaRequestStore.hasTpaRequest(sender,target);
+    public boolean hasTpaRequest(UUID sender, UUID target) {
+        return tpaRequestStore.hasTpaRequest(sender, target);
     }
 
     /**
@@ -94,7 +102,7 @@ public class CacheManager {
      * @param sender the sender
      * @param target the target
      */
-    public void removeTpaRequest(UUID sender,UUID target) {
+    public void removeTpaRequest(UUID sender, UUID target) {
         tpaRequestStore.removeTpaRequest(sender, target);
     }
 
@@ -143,7 +151,7 @@ public class CacheManager {
      *
      * @return the all tpa senders
      */
-    public  Set<UUID> getAllTpaSenders() {
+    public Set<UUID> getAllTpaSenders() {
         return tpaRequestStore.getAllTpaSenders();
     }
 
@@ -178,8 +186,8 @@ public class CacheManager {
      * @param homeName    the home name
      * @param newLocation the new location
      */
-    public void relocateHome(UUID playerId, String homeName,Location newLocation) {
-        homeStore.removeHome(playerId, homeName);
+    public void relocateHome(UUID playerId, String homeName, Location newLocation) {
+        homeStore.relocateHome(playerId, homeName, newLocation);
     }
 
     /**
@@ -227,21 +235,21 @@ public class CacheManager {
     // --- SPAWN ---
 
     /**
-     * Sets spawn.
-     *
-     * @param location the location
-     */
-    public void setSpawn(Location location) {
-        spawnStore.setSpawn(location);
-    }
-
-    /**
      * Gets spawn.
      *
      * @return the spawn
      */
     public Location getSpawn() {
         return spawnStore.getSpawn();
+    }
+
+    /**
+     * Sets spawn.
+     *
+     * @param location the location
+     */
+    public void setSpawn(Location location) {
+        spawnStore.setSpawn(location);
     }
 
     /**
@@ -291,8 +299,8 @@ public class CacheManager {
      * @return the boolean
      */
     public boolean hasRtpRequest(UUID playerId) {
-            return rtpRequestStore.hasRtpRequest(playerId);
-        }
+        return rtpRequestStore.hasRtpRequest(playerId);
+    }
 
 
     /**
@@ -302,6 +310,65 @@ public class CacheManager {
      */
     public Map<UUID, Long> getAllRtpRequests() {
         return rtpRequestStore.getAllRtpRequests();
+    }
+
+
+    // --- WARPS ---
+
+    /**
+     * Ajoute ou met à jour un warp dans le cache.
+     *
+     * @param warpData the warp data
+     */
+    public void addWarp(WarpData warpData) {
+        warpRequestStore.saveWarp(warpData);
+    }
+
+    /**
+     * Supprime un warp par son nom.
+     *
+     * @param name the name
+     */
+    public void removeWarp(String name) {
+        warpRequestStore.deleteWarp(name);
+    }
+
+    /**
+     * Charge un warp par son nom.
+     *
+     * @param name the name
+     * @return the warp
+     */
+    public WarpData getWarp(String name) {
+        return warpRequestStore.loadWarp(name);
+    }
+
+    /**
+     * Vérifie si un warp existe dans le cache.
+     *
+     * @param name the name
+     * @return the boolean
+     */
+    public boolean warpExists(String name) {
+        return warpRequestStore.warpExists(name);
+    }
+
+    /**
+     * Retourne tous les warps dans le cache (nom -> WarpData).
+     *
+     * @return the all warps
+     */
+    public Map<String, WarpData> getAllWarps() {
+        return warpRequestStore.loadAllWarps();
+    }
+
+    /**
+     * Retourne tous les noms de warps dans le cache.
+     *
+     * @return the warp names
+     */
+    public Set<String> getWarpNames() {
+        return warpRequestStore.getWarpNames();
     }
 
 

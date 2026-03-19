@@ -20,16 +20,16 @@ import java.io.IOException;
  */
 public class LangCommand implements CommandExecutor {
 
-    private final Plugin plugin;
     private static final String LANG = "LangCommand.";
     private static final LanguageManager languageManager = HomePlugin.getLanguageManager();
+    private final HomePlugin plugin;
 
     /**
      * Instantiates a new Lang command.
      *
      * @param plugin the plugin
      */
-    public LangCommand(Plugin plugin) {
+    public LangCommand(HomePlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -40,7 +40,8 @@ public class LangCommand implements CommandExecutor {
             sender.sendMessage(languageManager.getStringWithColor(LANG + "Lang-usage-message"));
             return true;
         }
-        if (!sender.hasPermission("homeplugin.command.lang")) {
+
+         if (!sender.hasPermission("homeplugin.command.lang")) {
             return true;
         }
 
@@ -66,7 +67,7 @@ public class LangCommand implements CommandExecutor {
      * Handles the update subcommand.
      *
      * @param sender The command sender
-     * @param args Command arguments
+     * @param args   Command arguments
      * @return true always
      */
     private boolean handleUpdate(CommandSender sender, String[] args) {
@@ -122,6 +123,8 @@ public class LangCommand implements CommandExecutor {
             return true;
         }
 
+        plugin.getConfig().set("Config.Initial-Plugin-Version", plugin.getVersion());
+        plugin.getUpdateChecker().setShouldAskForUpdateLangFiles(false);
         sender.sendMessage(languageManager.getStringWithColor(LANG + "Lang-merge-success"));
         return true;
     }
@@ -130,7 +133,7 @@ public class LangCommand implements CommandExecutor {
      * Handles the merge subcommand.
      *
      * @param sender The command sender
-     * @param args Command arguments
+     * @param args   Command arguments
      * @return true always
      */
     private boolean handleMerge(CommandSender sender, String[] args) {
@@ -169,7 +172,7 @@ public class LangCommand implements CommandExecutor {
      * Handles the set subcommand.
      *
      * @param sender The command sender
-     * @param args Command arguments
+     * @param args   Command arguments
      * @return true always
      */
     private boolean handleSet(CommandSender sender, String[] args) {

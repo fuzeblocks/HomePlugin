@@ -171,7 +171,7 @@ public class HomeYMLManager implements Home {
     }
 
     @Override
-    public Location getHomeLocation(@NotNull Player player,String homeName) {
+    public Location getHomeLocation(@NotNull Player player, String homeName) {
         String key = player.getUniqueId() + ".Home." + homeName + ".";
         assert homeName != null;
         if (yaml.contains(key)) {

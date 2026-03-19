@@ -8,7 +8,6 @@ description: A lightweight and flexible home/spawn management plugin with admin 
 website: https://modrinth.com/plugin/homeplugin
 softdepend:
   - PlaceholderAPI
-dependencies:
   - Vault
 
 commands:
@@ -48,6 +47,10 @@ commands:
     description: Teleport to a random location within a specified radius.
   back:
     description: Teleport back to your previous location.
+  warp:
+    description: Teleport to a predefined warp point.
+  update:
+    description: Check for plugin updates.
 
 
 
@@ -64,18 +67,30 @@ permissions:
   homeplugin.command.listhome:
     description: Allows listing homes.
     default: true
+  homeplugin.command.renamehome:
+    description: Allows renaming a home.
+    default: true
+  homeplugin.command.relocatehome:
+    description: Allows relocating a home.
+    default: true
   homeplugin.command.spawn:
     description: Allows teleporting to spawn.
     default: true
-  homeplugin.admin:
+  homeplugin.command.admin:
     description: Allows managing the internal cache and viewing homes of other players and add/deleting spawns.
     default: op
-  homeplugin.lang.update:
-    description: Allows updating the plugin language.
+  homeplugin.command.lang:
+    description: Allows to managing langs
     default: op
-  homeplugin.command.tpa:
+  homeplugin.command.tpa.use:
     description: Allows sending/accept/deny teleport requests to other players.
     default: true
-  homeplugin.back.use:
+  homeplugin.command.back.use:
     description: Allows using the /back command.
+    default: op
+  homeplugin.command.warp.use:
+    description: Allows using /back for other players.
+    default: true
+  homeplugin.command.warp.modify:
+    description: Allows setting/modifying warps.
     default: op

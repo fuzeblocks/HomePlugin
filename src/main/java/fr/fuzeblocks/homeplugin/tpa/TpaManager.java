@@ -66,8 +66,8 @@ public class TpaManager {
     /**
      * Sends the interactive request notification to the target player.
      *
-     * @param sender The sender of the request
-     * @param target The receiver of the request
+     * @param sender          The sender of the request
+     * @param target          The receiver of the request
      * @param languageManager The language manager instance
      */
     private static void sendRequestNotification(Player sender, Player target, LanguageManager languageManager) {
@@ -95,11 +95,11 @@ public class TpaManager {
     /**
      * Starts the timeout task for a TPA request.
      *
-     * @param sender The sender of the request
-     * @param target The receiver of the request
-     * @param senderId The sender's UUID
-     * @param targetId The target's UUID
-     * @param cacheManager The cache manager instance
+     * @param sender          The sender of the request
+     * @param target          The receiver of the request
+     * @param senderId        The sender's UUID
+     * @param targetId        The target's UUID
+     * @param cacheManager    The cache manager instance
      * @param languageManager The language manager instance
      */
     private static void startTimeoutTask(Player sender, Player target, UUID senderId, UUID targetId,

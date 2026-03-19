@@ -46,8 +46,8 @@ public class TPADenyCommand implements CommandExecutor {
     /**
      * Denies a TPA request from a specific player.
      *
-     * @param target The player denying the request
-     * @param senderName The name of the player who sent the request
+     * @param target          The player denying the request
+     * @param senderName      The name of the player who sent the request
      * @param languageManager The language manager instance
      * @return true if successful, false otherwise
      */

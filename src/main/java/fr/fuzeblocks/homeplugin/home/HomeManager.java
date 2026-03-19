@@ -1,9 +1,9 @@
-package fr.fuzeblocks. homeplugin.home;
+package fr.fuzeblocks.homeplugin.home;
 
-import fr.fuzeblocks. homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.cache. CacheManager;
-import fr. fuzeblocks.homeplugin.status.StatusManager;
-import org. bukkit.Location;
+import fr.fuzeblocks.homeplugin.HomePlugin;
+import fr.fuzeblocks.homeplugin.cache.CacheManager;
+import fr.fuzeblocks.homeplugin.status.StatusManager;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.List;
