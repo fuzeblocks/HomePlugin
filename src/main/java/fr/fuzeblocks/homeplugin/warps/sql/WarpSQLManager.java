@@ -81,7 +81,7 @@ public class WarpSQLManager implements Warp {
                            Material icon,
                            List<String> lores,
                            boolean isPublic,
-                           Set<UUID> allowedPlayers,
+                           Set<UUID> deniedPlayers,
                            double cost,
                            String permission,
                            Timestamp expirationDate,
@@ -95,7 +95,7 @@ public class WarpSQLManager implements Warp {
                 icon,
                 lores,
                 isPublic,
-                allowedPlayers,
+                deniedPlayers,
                 cost,
                 permission,
                 expirationDate,
@@ -147,7 +147,7 @@ public class WarpSQLManager implements Warp {
                 data.getIcon(),
                 data.getLores(),
                 data.isPublic(),
-                data.getAllowedPlayers(),
+                data.getDeniedPlayers(),
                 data.getCost(),
                 data.getPermission(),
                 data.getExpirationDate(),
@@ -181,7 +181,7 @@ public class WarpSQLManager implements Warp {
                 data.getIcon(),
                 data.getLores(),
                 data.isPublic(),
-                data.getAllowedPlayers(),
+                data.getDeniedPlayers(),
                 data.getCost(),
                 data.getPermission(),
                 data.getExpirationDate(),
@@ -213,7 +213,7 @@ public class WarpSQLManager implements Warp {
                 newIcon,
                 data.getLores(),
                 data.isPublic(),
-                data.getAllowedPlayers(),
+                data.getDeniedPlayers(),
                 data.getCost(),
                 data.getPermission(),
                 data.getExpirationDate(),
@@ -250,7 +250,7 @@ public class WarpSQLManager implements Warp {
                 warpData.getIcon(),
                 newLores,
                 warpData.isPublic(),
-                warpData.getAllowedPlayers(),
+                warpData.getDeniedPlayers(),
                 warpData.getCost(),
                 warpData.getPermission(),
                 warpData.getExpirationDate(),
@@ -275,7 +275,7 @@ public class WarpSQLManager implements Warp {
                 data.getIcon(),
                 data.getLores(),
                 isPublic,
-                data.getAllowedPlayers(),
+                data.getDeniedPlayers(),
                 data.getCost(),
                 data.getPermission(),
                 data.getExpirationDate(),
@@ -291,11 +291,12 @@ public class WarpSQLManager implements Warp {
         if (warpData == null) return false;
         return setWarpPublic(warpData.getName(), isPublic);
     }
-
-    // ---------- Allowed players ----------
-
+    
+    // ---------- Denied players ----------
     @Override
-    public boolean setWarpAllowedPlayers(String name, Set<UUID> allowedPlayers) {
+    public boolean setDeniedPlayers(String name, Set<UUID> deniedPlayers) {
+        if (name == null) return false;
+
         WarpData data = loadWarpInternal(name);
         if (data == null) return false;
 
@@ -306,7 +307,7 @@ public class WarpSQLManager implements Warp {
                 data.getIcon(),
                 data.getLores(),
                 data.isPublic(),
-                allowedPlayers,
+                deniedPlayers,
                 data.getCost(),
                 data.getPermission(),
                 data.getExpirationDate(),
@@ -318,11 +319,10 @@ public class WarpSQLManager implements Warp {
     }
 
     @Override
-    public boolean setWarpAllowedPlayers(WarpData warpData, Set<UUID> allowedPlayers) {
-        if (warpData == null) return false;
-        return setWarpAllowedPlayers(warpData.getName(), allowedPlayers);
+    public boolean setDeniedPlayers(WarpData warpData, Set<UUID> deniedPlayers) {
+        return setDeniedPlayers(warpData.getName(), deniedPlayers);
     }
-
+    
     // ---------- Cost ----------
 
     @Override
@@ -337,7 +337,7 @@ public class WarpSQLManager implements Warp {
                 data.getIcon(),
                 data.getLores(),
                 data.isPublic(),
-                data.getAllowedPlayers(),
+                data.getDeniedPlayers(),
                 cost,
                 data.getPermission(),
                 data.getExpirationDate(),
@@ -368,7 +368,7 @@ public class WarpSQLManager implements Warp {
                 data.getIcon(),
                 data.getLores(),
                 data.isPublic(),
-                data.getAllowedPlayers(),
+                data.getDeniedPlayers(),
                 data.getCost(),
                 permission,
                 data.getExpirationDate(),
@@ -399,7 +399,7 @@ public class WarpSQLManager implements Warp {
                 data.getIcon(),
                 data.getLores(),
                 data.isPublic(),
-                data.getAllowedPlayers(),
+                data.getDeniedPlayers(),
                 data.getCost(),
                 data.getPermission(),
                 expirationDate,

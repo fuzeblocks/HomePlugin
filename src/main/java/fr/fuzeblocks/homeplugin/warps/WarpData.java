@@ -112,11 +112,11 @@ public class WarpData {
 
         boolean isPublic = Boolean.parseBoolean(parts[5]);
 
-        Set<UUID> allowedPlayers;
+        Set<UUID> deniedPlayers;
         if (parts[6].isEmpty()) {
-            allowedPlayers = Collections.emptySet();
+            deniedPlayers = Collections.emptySet();
         } else {
-            allowedPlayers = Arrays.stream(parts[6].split(",", -1))
+            deniedPlayers = Arrays.stream(parts[6].split(",", -1))
                     .map(UUID::fromString)
                     .collect(Collectors.toSet());
         }
@@ -152,7 +152,7 @@ public class WarpData {
                 icon,
                 lores,
                 isPublic,
-                allowedPlayers,
+                deniedPlayers,
                 cost,
                 permission,
                 expirationDate,

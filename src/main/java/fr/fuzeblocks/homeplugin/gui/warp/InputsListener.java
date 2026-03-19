@@ -258,11 +258,11 @@ public class InputsListener implements Listener {
         if (deniedPlayers.contains(targetUUID)) {
             deniedPlayers.remove(targetUUID);
             warpManager.setDeniedPlayers(warpData, deniedPlayers);
-            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "BlackListInput.RemovedFromBlacklist","&aLe joueur &e{player} &aa été retiré de la blacklist du warp !").replace("{player}", targetName));
+            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "BlackListInput.RemovedFromBlacklist","&aLe joueur &e%player% &aa été retiré de la blacklist du warp !").replace("%player%", targetName));
         } else {
             deniedPlayers.add(targetUUID);
             warpManager.setDeniedPlayers(warpData, deniedPlayers);
-            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "BlackListInput.AddedToBlacklist","&aLe joueur &e{player} &aa été ajouté à la blacklist du warp !").replace("{player}", targetName));
+            player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "BlackListInput.AddedToBlacklist","&aLe joueur &e%player% &aa été ajouté à la blacklist du warp !").replace("%player%", targetName));
         }
     }
 

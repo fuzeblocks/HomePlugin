@@ -10,10 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -74,7 +71,7 @@ public class WarpYMLManager implements Warp {
                            Material icon,
                            java.util.List<String> lores,
                            boolean isPublic,
-                           java.util.Set<java.util.UUID> allowedPlayers,
+                           java.util.Set<java.util.UUID> deniedPlayers,
                            double cost,
                            String permission,
                            Timestamp expirationDate,
@@ -86,7 +83,7 @@ public class WarpYMLManager implements Warp {
         if (yaml.contains(key)) return false; // already exists
 
         WarpData warpData = new WarpData(name, creatorName, creatorUUID, icon, lores,
-                isPublic, allowedPlayers, cost, permission, expirationDate, creationDate, location);
+                isPublic, deniedPlayers, cost, permission, expirationDate, creationDate, location);
 
         yaml.set(key, warpData.serialize());
         return saveSafely();
@@ -162,7 +159,7 @@ public class WarpYMLManager implements Warp {
                 oldData.getIcon(),
                 oldData.getLores(),
                 oldData.isPublic(),
-                oldData.getAllowedPlayers(),
+                oldData.getDeniedPlayers(),
                 oldData.getCost(),
                 oldData.getPermission(),
                 oldData.getExpirationDate(),
@@ -196,7 +193,7 @@ public class WarpYMLManager implements Warp {
                 data.getIcon(),
                 data.getLores(),
                 data.isPublic(),
-                data.getAllowedPlayers(),
+                data.getDeniedPlayers(),
                 data.getCost(),
                 data.getPermission(),
                 data.getExpirationDate(),
@@ -229,7 +226,7 @@ public class WarpYMLManager implements Warp {
                 newIcon,
                 data.getLores(),
                 data.isPublic(),
-                data.getAllowedPlayers(),
+                data.getDeniedPlayers(),
                 data.getCost(),
                 data.getPermission(),
                 data.getExpirationDate(),
@@ -268,7 +265,7 @@ public class WarpYMLManager implements Warp {
                 data.getIcon(),
                 newLores,
                 data.isPublic(),
-                data.getAllowedPlayers(),
+                data.getDeniedPlayers(),
                 data.getCost(),
                 data.getPermission(),
                 data.getExpirationDate(),
@@ -301,7 +298,7 @@ public class WarpYMLManager implements Warp {
                 data.getIcon(),
                 data.getLores(),
                 isPublic,
-                data.getAllowedPlayers(),
+                data.getDeniedPlayers(),
                 data.getCost(),
                 data.getPermission(),
                 data.getExpirationDate(),
@@ -319,11 +316,10 @@ public class WarpYMLManager implements Warp {
         return setWarpPublic(warpData.getName(), isPublic);
     }
 
-    // ----------------- SET ALLOWED PLAYERS -----------------
-
+     // ----------------- SET DENIED PLAYERS -----------------
     @Override
-    public boolean setWarpAllowedPlayers(String name, java.util.Set<java.util.UUID> allowedPlayers) {
-        if (name == null) return false;
+    public boolean setDeniedPlayers(String name, Set<UUID> deniedPlayers) {
+        if (name != null) return false;
         WarpData data = getWarpInternal(name);
         if (data == null) return false;
 
@@ -334,23 +330,24 @@ public class WarpYMLManager implements Warp {
                 data.getIcon(),
                 data.getLores(),
                 data.isPublic(),
-                allowedPlayers,
+                deniedPlayers,
                 data.getCost(),
                 data.getPermission(),
                 data.getExpirationDate(),
                 data.getCreationDate(),
                 data.getLocation()
         );
-
         yaml.set(keyOf(name), updated.serialize());
         return saveSafely();
     }
 
     @Override
-    public boolean setWarpAllowedPlayers(WarpData warpData, java.util.Set<java.util.UUID> allowedPlayers) {
-        if (warpData == null) return false;
-        return setWarpAllowedPlayers(warpData.getName(), allowedPlayers);
+    public boolean setDeniedPlayers(WarpData warpData, Set<UUID> deniedPlayers) {
+        return false;
     }
+
+
+
 
     // ----------------- SET COST -----------------
 
@@ -367,7 +364,7 @@ public class WarpYMLManager implements Warp {
                 data.getIcon(),
                 data.getLores(),
                 data.isPublic(),
-                data.getAllowedPlayers(),
+                data.getDeniedPlayers(),
                 cost,
                 data.getPermission(),
                 data.getExpirationDate(),
@@ -400,7 +397,7 @@ public class WarpYMLManager implements Warp {
                 data.getIcon(),
                 data.getLores(),
                 data.isPublic(),
-                data.getAllowedPlayers(),
+                data.getDeniedPlayers(),
                 data.getCost(),
                 permission,
                 data.getExpirationDate(),
@@ -433,7 +430,7 @@ public class WarpYMLManager implements Warp {
                 data.getIcon(),
                 data.getLores(),
                 data.isPublic(),
-                data.getAllowedPlayers(),
+                data.getDeniedPlayers(),
                 data.getCost(),
                 data.getPermission(),
                 expirationDate,
