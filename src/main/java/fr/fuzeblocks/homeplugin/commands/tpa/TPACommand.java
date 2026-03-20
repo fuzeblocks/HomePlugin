@@ -71,7 +71,7 @@ public class TPACommand implements CommandExecutor {
         if (TpaManager.hasRequest(target.getUniqueId())) {
             TpaRequest existingRequest = TpaManager.getRequest(target.getUniqueId());
             if (existingRequest != null && existingRequest.sender.equals(player)) {
-                player.sendMessage(languageManager.getStringWithColor(TPA + "Tpa-already-sent")
+                player.sendMessage(languageManager.getStringWithColor(TPA + "Tpa-already-sent", "&cVous avez déjà envoyé une demande à %player%.")
                         .replace("%player%", target.getName()));
                 return false;
             }
@@ -94,7 +94,7 @@ public class TPACommand implements CommandExecutor {
         boolean success = TpaManager.sendTpaRequest(player, target);
 
         if (!success) {
-            player.sendMessage(languageManager.getStringWithColor(TPA + "Tpa-send-failed"));
+            player.sendMessage(languageManager.getStringWithColor(TPA + "Tpa-send-failed", "&cImpossible d'envoyer la demande de téléportation."));
             return false;
         }
 

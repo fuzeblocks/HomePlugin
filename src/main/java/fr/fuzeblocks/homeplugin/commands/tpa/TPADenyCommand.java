@@ -63,7 +63,7 @@ public class TPADenyCommand implements CommandExecutor {
         TpaRequest request = TpaManager.getRequest(target.getUniqueId());
 
         if (request == null) {
-            target.sendMessage(languageManager.getStringWithColor(TPA + "Tpa-no-pending-request"));
+            target.sendMessage(languageManager.getStringWithColor(TPA + "Tpa-no-pending-request", "&cVous n'avez aucune demande de téléportation en attente."));
             return false;
         }
 

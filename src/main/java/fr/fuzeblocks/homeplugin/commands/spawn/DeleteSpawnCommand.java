@@ -40,7 +40,7 @@ public class DeleteSpawnCommand implements CommandExecutor {
         Location currentSpawn = HomePlugin.getSpawnManager().getSpawn(world);
 
         if (currentSpawn == null) {
-            player.sendMessage(languageManager.getStringWithColor(SPAWN + "No-spawn-set"));
+            player.sendMessage(languageManager.getStringWithColor(SPAWN + "No-spawn-set", "&cAucun spawn n'est défini dans ce monde."));
             return false;
         }
 

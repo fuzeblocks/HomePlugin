@@ -64,7 +64,7 @@ public class TPAAcceptCommand implements CommandExecutor {
         TpaRequest request = TpaManager.getRequest(target.getUniqueId());
 
         if (request == null) {
-            target.sendMessage(languageManager.getStringWithColor(TPA + "Tpa-no-pending-request"));
+            target.sendMessage(languageManager.getStringWithColor(TPA + "Tpa-no-pending-request", "&cVous n'avez aucune demande de téléportation en attente."));
             return false;
         }
 
@@ -86,12 +86,12 @@ public class TPAAcceptCommand implements CommandExecutor {
         Location targetLocation = target.getLocation();
 
         if (targetLocation.getWorld() == null) {
-            target.sendMessage(languageManager.getStringWithColor(LANG + "Invalid-world"));
+            target.sendMessage(languageManager.getStringWithColor(LANG + "Invalid-world", "&cMonde invalide ou introuvable."));
             return false;
         }
 
         if (!senderPlayer.isOnline()) {
-            target.sendMessage(languageManager.getStringWithColor(TPA + "Tpa-player-offline")
+            target.sendMessage(languageManager.getStringWithColor(TPA + "Tpa-player-offline", "&cLe joueur %player% n'est plus en ligne.")
                     .replace("%player%", senderPlayer.getName()));
             return false;
         }
