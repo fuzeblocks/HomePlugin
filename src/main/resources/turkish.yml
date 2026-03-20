@@ -209,6 +209,7 @@ TpaCommand:
   Tpa-request-accepted: "&a%player% adlı oyuncunun isteğini kabul ettin."
   Tpa-request-declined: "&c%player% adlı oyuncunun isteğini reddettin."
   Tpa-request-expired: "&cIşınlanma isteğinin süresi doldu."
+  Tpa-request-expired-target: "&c&e%player% &cadlı oyuncunun ışınlanma isteğinin süresi doldu."
   Tpa-no-request: "&cBekleyen bir ışınlanma isteği yok."
   Tpa-player-not-found: "&c%player% çevrimiçi değil veya mevcut değil."
   Tpa-accept-usage: "&cKullanım: /tpaccept <oyuncu>"

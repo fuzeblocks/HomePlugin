@@ -209,6 +209,7 @@ TpaCommand:
   Tpa-request-accepted: "&aYou have accepted %player%'s teleport request."
   Tpa-request-declined: "&cYou have declined %player%'s teleport request."
   Tpa-request-expired: "&cThe teleport request has expired."
+  Tpa-request-expired-target: "&cThe teleport request from &e%player% &chas expired."
   Tpa-no-request: "&cNo teleport request pending."
   Tpa-player-not-found: "&cPlayer %player% is not online or does not exist."
   Tpa-accept-usage: "&cUsage: /tpaccept <player>"

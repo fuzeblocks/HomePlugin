@@ -209,6 +209,7 @@ TpaCommand:
   Tpa-request-accepted: "&aHas aceptado la solicitud de teletransporte de %player%."
   Tpa-request-declined: "&cHas rechazado la solicitud de teletransporte de %player%."
   Tpa-request-expired: "&cLa solicitud de teletransporte ha expirado."
+  Tpa-request-expired-target: "&cLa solicitud de teletransporte de &e%player% &cha expirado."
   Tpa-no-request: "&cNo hay solicitudes de teletransporte pendientes."
   Tpa-player-not-found: "&cEl jugador %player% no está en línea o no existe."
   Tpa-accept-usage: "&cUso: /tpaccept <player>"

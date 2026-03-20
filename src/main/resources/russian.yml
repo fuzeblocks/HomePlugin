@@ -209,6 +209,7 @@ TpaCommand:
   Tpa-request-accepted: "&aВы приняли запрос телепортации от %player%."
   Tpa-request-declined: "&cВы отклонили запрос телепортации от %player%."
   Tpa-request-expired: "&cЗапрос телепортации истёк."
+  Tpa-request-expired-target: "&cЗапрос телепортации от &e%player% &cистёк."
   Tpa-no-request: "&cНет ожидающих запросов телепортации."
   Tpa-player-not-found: "&cИгрок %player% не в сети или не существует."
   Tpa-accept-usage: "&cИспользование: /tpaccept <player>"

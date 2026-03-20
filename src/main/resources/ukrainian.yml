@@ -209,6 +209,7 @@ TpaCommand:
   Tpa-request-accepted: "&aВи прийняли запит на телепортацію від %player%."
   Tpa-request-declined: "&cВи відхилили запит на телепортацію від %player%."
   Tpa-request-expired: "&cЧас запиту на телепортацію минув."
+  Tpa-request-expired-target: "&cЧас запиту на телепортацію від &e%player% &cминув."
   Tpa-no-request: "&cНемає очікуючих запитів на телепортацію."
   Tpa-player-not-found: "&cГравець %player% не в мережі або не існує."
   Tpa-accept-usage: "&cВикористання: /tpaccept <гравець>"
