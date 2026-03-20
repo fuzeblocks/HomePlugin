@@ -49,7 +49,7 @@ Home:
   Home-world-not-loaded: "&cBu evin bulunduğu dünya yüklü değil!"
   Home-limite-permission-for-bypass: "HomePlugin.home.bypass"
   Home-limite-message: "&c&lBaşka bir ev ekleme yetkin yok!"
-  Home-usage-message: "&cKullanım: /home <home-adı>"
+  Home-usage-message: "&cKullanım: /home"
   SetHome-usage-message: "&cKullanım: /sethome <home-adı>"
   Home-location-format: "&6X: %.1f, Y: %.1f, Z: %.1f, Dünya: %s"
   SetHome-permission-deny-message: "&cEv ayarlamak için yetkin yok!"

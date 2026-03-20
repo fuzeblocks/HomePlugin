@@ -49,7 +49,7 @@ Home:
   Have-no-home: "&cYou have no homes saved."
   Home-limite-permission-for-bypass: "HomePlugin.home.bypass"
   Home-limite-message: "&c&lYou do not have permission to add another home!"
-  Home-usage-message: "&cUsage: /home <home-name>"
+  Home-usage-message: "&cUsage: /home"
   SetHome-usage-message: "&cUsage: /sethome <home-name>"
   Home-location-format: "&6X: %.1f, Y: %.1f, Z: %.1f, World: %s"
   SetHome-permission-deny-message: "&cYou do not have permission to set a home!"

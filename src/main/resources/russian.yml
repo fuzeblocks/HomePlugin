@@ -49,7 +49,7 @@ Home:
   Have-no-home: "&cУ вас нет сохранённых домов."
   Home-limite-permission-for-bypass: "HomePlugin.home.bypass"
   Home-limite-message: "&c&lУ вас нет прав добавлять ещё один дом!"
-  Home-usage-message: "&cИспользование: /home <имя-дома>"
+  Home-usage-message: "&cИспользование: /home"
   SetHome-usage-message: "&cИспользование: /sethome <имя-дома>"
   Home-location-format: "&6X: %.1f, Y: %.1f, Z: %.1f, Мир: %s"
   SetHome-permission-deny-message: "&cУ вас нет прав установить дом!"
