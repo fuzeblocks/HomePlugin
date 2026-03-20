@@ -62,19 +62,8 @@ public class LanguageManager {
      */
     @NotNull
     public String getString(String key) {
-        String value = yamlConfiguration.getString(key);
-        if (value != null) {
-            return value;
-        }
-
-        if (fallbackFrenchConfiguration != null) {
-            String fallback = fallbackFrenchConfiguration.getString(key);
-            if (fallback != null) {
-                return fallback;
-            }
-        }
-
-        return "";
+        String value = getLocalizedValueOrNull(key);
+        return value != null ? value : "";
     }
 
     /**
@@ -86,7 +75,8 @@ public class LanguageManager {
      */
     @NotNull
     public String getString(String key, String defaultValue) {
-        return yamlConfiguration.getString(key, defaultValue);
+        String value = getLocalizedValueOrNull(key);
+        return value != null ? value : defaultValue;
     }
 
     /**
@@ -109,7 +99,7 @@ public class LanguageManager {
      */
     @NotNull
     public String getStringWithColor(String key, String defaultValue) {
-        return translateAlternateColorCodes(yamlConfiguration.getString(key, defaultValue));
+        return translateAlternateColorCodes(getString(key, defaultValue));
     }
 
     @Nullable
@@ -122,6 +112,20 @@ public class LanguageManager {
         } catch (Exception ignored) {
             return null;
         }
+    }
+
+    @Nullable
+    private String getLocalizedValueOrNull(String key) {
+        String value = yamlConfiguration.getString(key);
+        if (value != null) {
+            return value;
+        }
+
+        if (fallbackFrenchConfiguration != null) {
+            return fallbackFrenchConfiguration.getString(key);
+        }
+
+        return null;
     }
 
     /**
