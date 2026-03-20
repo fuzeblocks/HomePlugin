@@ -6,8 +6,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 
 /**
  * The type Language manager.
@@ -18,7 +16,6 @@ public class LanguageManager {
     private final File file;
     private final HomePlugin plugin;
     private YamlConfiguration yamlConfiguration;
-    private YamlConfiguration fallbackFrenchConfiguration;
 
     /**
      * Instantiates a new Language manager.
@@ -38,7 +35,6 @@ public class LanguageManager {
         }
 
         this.yamlConfiguration = YamlConfiguration.loadConfiguration(file);
-        this.fallbackFrenchConfiguration = loadFallbackFrenchConfiguration(plugin);
     }
 
     /**
@@ -62,7 +58,7 @@ public class LanguageManager {
      */
     @NotNull
     public String getString(String key) {
-        String value = getLocalizedValueOrNull(key);
+        String value = yamlConfiguration.getString(key);
         return value != null ? value : "";
     }
 
@@ -75,8 +71,7 @@ public class LanguageManager {
      */
     @NotNull
     public String getString(String key, String defaultValue) {
-        String value = getLocalizedValueOrNull(key);
-        return value != null ? value : defaultValue;
+        return yamlConfiguration.getString(key, defaultValue);
     }
 
     /**
@@ -87,7 +82,7 @@ public class LanguageManager {
      */
     @NotNull
     public String getStringWithColor(String key) {
-        return translateAlternateColorCodes(getString(key));
+        return translateAlternateColorCodes(yamlConfiguration.getString(key));
     }
 
     /**
@@ -99,33 +94,7 @@ public class LanguageManager {
      */
     @NotNull
     public String getStringWithColor(String key, String defaultValue) {
-        return translateAlternateColorCodes(getString(key, defaultValue));
-    }
-
-    @Nullable
-    private YamlConfiguration loadFallbackFrenchConfiguration(HomePlugin plugin) {
-        try (var stream = plugin.getResource("french.yml")) {
-            if (stream == null) {
-                return null;
-            }
-            return YamlConfiguration.loadConfiguration(new InputStreamReader(stream, StandardCharsets.UTF_8));
-        } catch (Exception ignored) {
-            return null;
-        }
-    }
-
-    @Nullable
-    private String getLocalizedValueOrNull(String key) {
-        String value = yamlConfiguration.getString(key);
-        if (value != null) {
-            return value;
-        }
-
-        if (fallbackFrenchConfiguration != null) {
-            return fallbackFrenchConfiguration.getString(key);
-        }
-
-        return null;
+        return translateAlternateColorCodes(yamlConfiguration.getString(key, defaultValue));
     }
 
     /**

@@ -87,7 +87,7 @@ public class LangCommand implements CommandExecutor {
 
         File backupFile = new File(plugin.getDataFolder(), langName + "_backup.yml");
         if (backupFile.exists() && !backupFile.delete()) {
-            sender.sendMessage(languageManager.getStringWithColor(LANG + "Lang-backup-delete-fail"));
+            sender.sendMessage(languageManager.getStringWithColor(LANG + "Lang-backup-delete-fail", "&cImpossible de supprimer l'ancien fichier de sauvegarde de langue."));
             return true;
         }
 
@@ -99,7 +99,7 @@ public class LangCommand implements CommandExecutor {
         if (!languageManager.regenerate()) {
             sender.sendMessage(languageManager.getStringWithColor(LANG + "Lang-regeneration-fail"));
             if (!backupFile.renameTo(oldFile)) {
-                sender.sendMessage(languageManager.getStringWithColor(LANG + "Lang-restore-fail"));
+                sender.sendMessage(languageManager.getStringWithColor(LANG + "Lang-restore-fail", "&cImpossible de restaurer le fichier de langue précédent."));
             }
             return true;
         }
@@ -110,7 +110,7 @@ public class LangCommand implements CommandExecutor {
             sender.sendMessage(languageManager.getStringWithColor(LANG + "Lang-new-file-missing")
                     .replace("%file%", newFile.getName()));
             if (!backupFile.renameTo(oldFile)) {
-                sender.sendMessage(languageManager.getStringWithColor(LANG + "Lang-restore-fail"));
+                sender.sendMessage(languageManager.getStringWithColor(LANG + "Lang-restore-fail", "&cImpossible de restaurer le fichier de langue précédent."));
             }
             return true;
         }

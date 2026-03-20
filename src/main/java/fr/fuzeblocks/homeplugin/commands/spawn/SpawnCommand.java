@@ -52,7 +52,7 @@ public class SpawnCommand implements CommandExecutor {
         SpawnManager spawnManager = HomePlugin.getSpawnManager();
 
         if (player.getWorld() == null) {
-            player.sendMessage(languageManager.getStringWithColor(SPAWN + "Invalid-world"));
+            player.sendMessage(languageManager.getStringWithColor(SPAWN + "Invalid-world", "&cMonde invalide ou introuvable."));
             return false;
         }
 

@@ -65,7 +65,7 @@ public class RenameHomeCommand implements CommandExecutor {
         }
 
         if (homeManager.exist(player, newHomeName)) {
-            player.sendMessage(languageManager.getStringWithColor(HOME + "Home-already-exists")
+            player.sendMessage(languageManager.getStringWithColor(HOME + "Home-already-exists", "&cUn home avec ce nom existe déjà : %home%")
                     .replace("{home}", newHomeName)
                     .replace("%home%", newHomeName));
             return false;

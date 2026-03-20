@@ -38,7 +38,7 @@ public class SetSpawnCommand implements CommandExecutor {
         Location location = player.getLocation();
 
         if (location.getWorld() == null) {
-            player.sendMessage(languageManager.getStringWithColor(SPAWN + "Invalid-world"));
+            player.sendMessage(languageManager.getStringWithColor(SPAWN + "Invalid-world", "&cMonde invalide ou introuvable."));
             return false;
         }
 
