@@ -81,7 +81,7 @@ public class TPAAcceptCommand implements CommandExecutor {
             return false;
         }
 
-        TpaManager.cancelRequest(target.getUniqueId());
+        TpaManager.cancelRequest(senderPlayer.getUniqueId());
 
         Location targetLocation = target.getLocation();
 
