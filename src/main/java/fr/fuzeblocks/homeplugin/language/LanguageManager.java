@@ -6,6 +6,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 /**
  * The type Language manager.
@@ -16,6 +18,7 @@ public class LanguageManager {
     private final File file;
     private final HomePlugin plugin;
     private YamlConfiguration yamlConfiguration;
+    private YamlConfiguration fallbackFrenchConfiguration;
 
     /**
      * Instantiates a new Language manager.
@@ -35,6 +38,7 @@ public class LanguageManager {
         }
 
         this.yamlConfiguration = YamlConfiguration.loadConfiguration(file);
+        this.fallbackFrenchConfiguration = loadFallbackFrenchConfiguration(plugin);
     }
 
     /**
@@ -59,7 +63,18 @@ public class LanguageManager {
     @NotNull
     public String getString(String key) {
         String value = yamlConfiguration.getString(key);
-        return value != null ? value : "";
+        if (value != null) {
+            return value;
+        }
+
+        if (fallbackFrenchConfiguration != null) {
+            String fallback = fallbackFrenchConfiguration.getString(key);
+            if (fallback != null) {
+                return fallback;
+            }
+        }
+
+        return "";
     }
 
     /**
@@ -82,7 +97,7 @@ public class LanguageManager {
      */
     @NotNull
     public String getStringWithColor(String key) {
-        return translateAlternateColorCodes(yamlConfiguration.getString(key));
+        return translateAlternateColorCodes(getString(key));
     }
 
     /**
@@ -95,6 +110,18 @@ public class LanguageManager {
     @NotNull
     public String getStringWithColor(String key, String defaultValue) {
         return translateAlternateColorCodes(yamlConfiguration.getString(key, defaultValue));
+    }
+
+    @Nullable
+    private YamlConfiguration loadFallbackFrenchConfiguration(HomePlugin plugin) {
+        try (var stream = plugin.getResource("french.yml")) {
+            if (stream == null) {
+                return null;
+            }
+            return YamlConfiguration.loadConfiguration(new InputStreamReader(stream, StandardCharsets.UTF_8));
+        } catch (Exception ignored) {
+            return null;
+        }
     }
 
     /**
