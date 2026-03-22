@@ -32,8 +32,6 @@ Language:
       MaxForward: "&cVous êtes déjà à la dernière page !"
       ChangePage: "Aller à la page %current_page% / %total_pages%"
 
-
-
 Spawn:
   SetSpawn-permission-deny-message: "&cVous n'avez pas la permission de définir le spawn !"
   Spawn-usage-message: "&cUtilisation : /spawn"
@@ -229,6 +227,7 @@ Rtp:
   Teleport-success: "&aTéléportation aléatoire réussie !"
   Teleport-failed: "&cImpossible de trouver un endroit sûr pour téléporter."
   Cooldown-message: "&cVous devez attendre %seconds% secondes avant de refaire un RTP."
+
 Back:
   No-previous-location: "&cAucune position précédente trouvée."
   Previous-location-invalid: "&cVotre position précédente n'est plus disponible."
@@ -268,7 +267,7 @@ Warp:
       SuccessExpirationInput: "&aLa durée d'expiration du warp a été mise à jour !"
     BlackListInput:
       AddedToBlacklist: "&aLe joueur &e%player% &aa été ajouté à la blacklist du warp !"
-      RemovedFromBlacklist:  "&aLe joueur &e%player% &aa été retiré de la blacklist du warp !"
+      RemovedFromBlacklist: "&aLe joueur &e%player% &aa été retiré de la blacklist du warp !"
       PlayerNotFound: "&cJoueur introuvable ! Assurez-vous que le nom est correct et que le joueur est en ligne."
 
   Item:
