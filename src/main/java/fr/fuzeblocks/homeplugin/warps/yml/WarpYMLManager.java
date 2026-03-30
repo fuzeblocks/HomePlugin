@@ -319,7 +319,7 @@ public class WarpYMLManager implements Warp {
      // ----------------- SET DENIED PLAYERS -----------------
     @Override
     public boolean setDeniedPlayers(String name, Set<UUID> deniedPlayers) {
-        if (name != null) return false;
+        if (name == null) return false;
         WarpData data = getWarpInternal(name);
         if (data == null) return false;
 
@@ -343,7 +343,7 @@ public class WarpYMLManager implements Warp {
 
     @Override
     public boolean setDeniedPlayers(WarpData warpData, Set<UUID> deniedPlayers) {
-        return false;
+        return setDeniedPlayers(warpData.getName(), deniedPlayers);
     }
 
 

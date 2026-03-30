@@ -13,6 +13,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
+
 /**
  * The type Warp command.
  */
@@ -96,9 +98,22 @@ public class WarpCommand implements CommandExecutor {
 
         WarpData warpData = warpManager.getWarp(warpName);
 
-        // access check
-        if (!warpData.canAccess(player.getUniqueId()) || !player.hasPermission(warpData.getPermission()) ) {
-            player.sendMessage(languageManager.getStringWithColor(WARP + "Warp-no-access", "&cVous n'avez pas la permission d'accéder à ce warp.").replace("{warp}", warpName));
+       UUID uuid = player.getUniqueId();
+
+
+        if (!warpData.canAccess(uuid)) {
+            player.sendMessage(languageManager.getStringWithColor(
+                WARP + "Warp-no-access",
+                "&cVous n'avez pas la permission d'accéder à ce warp."
+            ).replace("{warp}", warpName));
+            return false;
+        }
+
+        if (!player.hasPermission(warpData.getPermission())) {
+            player.sendMessage(languageManager.getStringWithColor(
+                WARP + "Warp-no-permission",
+                "&cVous n'avez pas la permission d'accéder à ce warp."
+            ).replace("{warp}", warpName));
             return false;
         }
 

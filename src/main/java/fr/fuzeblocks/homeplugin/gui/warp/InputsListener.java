@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -254,7 +255,7 @@ public class InputsListener implements Listener {
         }
 
         UUID targetUUID = targetPlayer.getUniqueId();
-        Set<UUID> deniedPlayers = warpData.getDeniedPlayers();
+        Set<UUID> deniedPlayers = new HashSet<>(warpData.getDeniedPlayers());
         if (deniedPlayers.contains(targetUUID)) {
             deniedPlayers.remove(targetUUID);
             warpManager.setDeniedPlayers(warpData, deniedPlayers);

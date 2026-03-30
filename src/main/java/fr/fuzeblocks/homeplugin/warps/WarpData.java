@@ -198,7 +198,7 @@ public class WarpData {
                 labelColor + languageManager.getString("Warp.Item.Expires") + ": " + valueColor + (warpData.getExpirationDate() != null ? warpData.getExpirationDate().toString() : languageManager.getString("Warp.Item.Never")),
                 labelColor + languageManager.getString("Warp.Item.Location") + ": " + valueColor + warpData.getLocation().getWorld().getName() + " " +
                         accentColor + "(" + String.format("%.1f, %.1f, %.1f)", warpData.getLocation().getX(), warpData.getLocation().getY(), warpData.getLocation().getZ()) + valueColor,
-                labelColor + languageManager.getString("Warp.Item.Permission") + ": " + valueColor + (warpData.getPermission() != null ? warpData.getPermission() : languageManager.getString("Warp.Item.None"))
+                labelColor + languageManager.getString("Warp.Item.Permission") + ": " + valueColor + (!warpData.getPermission().equals("") ? warpData.getPermission() : languageManager.getString("Warp.Item.None"))
         ));
 
         return itemBuilder;
@@ -277,7 +277,7 @@ public class WarpData {
      * @return the permission
      */
     public String getPermission() {
-        return permission;
+        return permission == null ? "" : permission;
     }
 
     /**
@@ -307,11 +307,11 @@ public class WarpData {
         return location;
     }
 
-    public boolean canAccess(UUID playerUUID) {
-        if (isPublic) {
+       public boolean canAccess(UUID playerUUID) {
+        if (creatorUUID.equals(playerUUID)) {
             return true;
         }
-        return !deniedPlayers.contains(playerUUID);
+        return isPublic && !deniedPlayers.contains(playerUUID);
     }
 
     /**
