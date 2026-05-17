@@ -125,7 +125,6 @@
 Set custom home limits using `homeplugin.limit.<number>`:
 - `homeplugin.limit.5` - 5 homes
 - `homeplugin.limit.10` - 10 homes
-- `homeplugin.limit.unlimited` - No limit
 
 The plugin scans from 1-100 and applies the highest value held by the player.
 
@@ -133,9 +132,7 @@ The plugin scans from 1-100 and applies the highest value held by the player.
 
 | Permission | Description |
 |------------|-------------|
-| `homeplugin.bypass.limit` | Ignore home limits |
-| `homeplugin.bypass.validation` | Bypass location restrictions |
-| `homeplugin.bypass.cooldown` | Ignore teleport cooldowns |
+| `HomePlugin.home.bypass` | Ignore home limits |
 
 ---
 
