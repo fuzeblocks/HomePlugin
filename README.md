@@ -1,7 +1,7 @@
 <div align="center">
 
 
-<img width="1021" height="48" alt="homeplugin_author" src="https://github.com/user-attachments/assets/31d00352-ad6c-42e0-8901-8e07f6088153" />
+<img width="1021" height="55" alt="homeplugin_author" src="https://github.com/user-attachments/assets/31d00352-ad6c-42e0-8901-8e07f6088153" />
 
 [![](https://jitpack.io/v/fuzeblocks/HomePlugin.svg)](https://jitpack.io/#fuzeblocks/HomePlugin)
 [![sponsor](https://img.shields.io/badge/Sponsor-Support%20Development-blue)](https://client.pristis.fr/aff.php?aff=2)
@@ -54,7 +54,8 @@
 
 ---
 
-## ⬇️ Installation
+<img width="270" height="50" alt="minecraft_installation" src="https://github.com/user-attachments/assets/9b10527b-9826-4ba1-90c8-721fda75eba7" />
+
 
 1. **Download** the latest release from [Releases](https://github.com/fuzeblocks/HomePlugin/releases) or build from source
 2. **Place** the JAR file into your server's `plugins/` folder
@@ -69,7 +70,8 @@
 
 ---
 
-## 🧾 Commands
+<img width="250" height="50" alt="minecraft_commands" src="https://github.com/user-attachments/assets/cf985ede-73b7-4e8a-a3e0-5d499e929ade" />
+
 
 ### Player Commands
 
@@ -139,7 +141,8 @@ The plugin scans from 1-100 and applies the highest value held by the player.
 
 ---
 
-## ⚙️ Configuration
+<img width="270" height="50" alt="homeplugin_config" src="https://github.com/user-attachments/assets/8f51b1c3-2c5b-4c16-91de-328482b45a39" />
+
 
 ### 📄 Configuration File
 
@@ -194,7 +197,8 @@ Enable or disable specific features:
 
 ---
 
-## 🧩 Integrations
+<img width="260" height="50" alt="homeplugin_integration" src="https://github.com/user-attachments/assets/553fad7a-6d23-4e4c-881e-b9a7e4372177" />
+
 
 ### PlaceholderAPI
 
