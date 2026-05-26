@@ -224,7 +224,7 @@ Configure optional costs for various actions through Vault integration. Supports
 
 ---
 
-## 🌍 Supported Languages
+<img width="250" height="50" alt="homeplugin_languages" src="https://github.com/user-attachments/assets/b2046b7e-35f1-4a8a-bfd4-376f3350096f" />
 
 Built-in language support with fully customizable YAML files:
 
@@ -240,7 +240,7 @@ Set your language in `config.yml` or use `/lang set <LANGUAGE>` in-game.
 
 ---
 
-## 🧑‍💻 Developer API
+<img width="270" height="50" alt="homeplugin_dev" src="https://github.com/user-attachments/assets/59a564f0-8254-431b-867d-7a7982bd32ea" />
 
 HomePlugin provides a comprehensive API for developers to integrate and extend functionality.
 
