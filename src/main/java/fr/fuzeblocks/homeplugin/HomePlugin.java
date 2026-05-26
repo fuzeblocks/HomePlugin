@@ -1,5 +1,7 @@
 package fr.fuzeblocks.homeplugin;
 
+import fr.fuzeblocks.homeplugin.core.audience.AudienceProvider;import fr.fuzeblocks.homeplugin.core.audience.PaperAudienceProvider;
+import fr.fuzeblocks.homeplugin.core.audience.SpigotAudienceProvider;
 import fr.fuzeblocks.homeplugin.core.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.core.database.CreateTable;
 import fr.fuzeblocks.homeplugin.core.database.DatabaseConnection;
@@ -97,7 +99,7 @@ public final class HomePlugin extends JavaPlugin {
     private static HomeOfflineManager homeOfflineManager;
     private static SpawnManager spawnManager;
     private static LanguageManager languageManager;
-    private static BukkitAudiences adventure;
+    private static AudienceProvider adventure;
     private static GUIManager guiManager;
     private static Economy economy;
     private static Metrics metrics;
@@ -265,7 +267,7 @@ public final class HomePlugin extends JavaPlugin {
      * @return the adventure
      */
     @NonNull
-    public static BukkitAudiences getAdventure() {
+    public static AudienceProvider getAdventure() {
         if (adventure == null) {
             throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
         }
@@ -330,7 +332,12 @@ public final class HomePlugin extends JavaPlugin {
         saveDefaultConfig();
         applyDefaultConfigValues();
         configurationSection = getConfig();
-        adventure = BukkitAudiences.create(this);
+        try {
+            Class.forName("io.papermc.paper.datacomponent.DataComponentType");
+            adventure = new PaperAudienceProvider();
+        } catch (ClassNotFoundException e) {
+            adventure = new SpigotAudienceProvider(BukkitAudiences.create(this));
+        }
         setupMetrics();
 
         // Dependencies and services
@@ -647,7 +654,6 @@ public final class HomePlugin extends JavaPlugin {
     private void closeStatement() {
         // Close Adventure
         if (adventure != null) {
-            adventure.close();
             adventure = null;
         }
 

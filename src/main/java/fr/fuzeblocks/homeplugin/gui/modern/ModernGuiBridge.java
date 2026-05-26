@@ -478,10 +478,10 @@ public final class ModernGuiBridge implements GuiBridge {
     }
 
     private void openWindow(Player player, Gui gui, Component title) {
-        Window.mergedBuilder()
+        Window.builder()
                 .setViewer(player)
                 .setTitle(title)
-                .setGui(gui)
+                .setUpperGui(gui)
                 .build()
                 .open();
     }
