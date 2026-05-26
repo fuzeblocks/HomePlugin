@@ -10,6 +10,7 @@
     <version>${revision}</version>
 
     <modules>
+        <module>profiles/legacy</module>
         <module>profiles/modern</module>
     </modules>
 
@@ -37,7 +38,7 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
-                    <include>plugin.yml.in</include>
+                    <include>plugin.yml</include>
                     <include>french.yml</include>
                     <include>english.yml</include>
                     <include>spanish.yml</include>
@@ -135,22 +136,8 @@
                 <version>3.1.0</version>
                 <executions>
                     <execution>
-                        <id>move-plugin-yml</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-                                <move file="${project.build.outputDirectory}/plugin.yml.in"
-                                      tofile="${project.build.outputDirectory}/plugin.yml"/>
-                            </target>
-                        </configuration>
-                    </execution>
-
-                    <execution>
                         <id>move-javadoc</id>
-                        <phase>package</phase>
+                        <phase>none</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>

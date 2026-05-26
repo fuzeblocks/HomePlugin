@@ -1,6 +1,6 @@
 package fr.fuzeblocks.homeplugin;
 
-import fr.fuzeblocks.homeplugin.core.audience.AudienceProvider;import fr.fuzeblocks.homeplugin.core.audience.PaperAudienceProvider;
+import fr.fuzeblocks.homeplugin.core.audience.AudienceProvider;
 import fr.fuzeblocks.homeplugin.core.audience.SpigotAudienceProvider;
 import fr.fuzeblocks.homeplugin.core.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.core.database.CreateTable;
@@ -67,6 +67,7 @@ import redis.clients.jedis.JedisPooled;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Main plugin class for HomePlugin.
@@ -99,7 +100,7 @@ public final class HomePlugin extends JavaPlugin {
     private static HomeOfflineManager homeOfflineManager;
     private static SpawnManager spawnManager;
     private static LanguageManager languageManager;
-    private static AudienceProvider adventure;
+    private static Object adventure;
     private static GUIManager guiManager;
     private static Economy economy;
     private static Metrics metrics;
@@ -271,7 +272,7 @@ public final class HomePlugin extends JavaPlugin {
         if (adventure == null) {
             throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
         }
-        return adventure;
+        return (AudienceProvider) adventure;
     }
 
     /**
@@ -334,8 +335,11 @@ public final class HomePlugin extends JavaPlugin {
         configurationSection = getConfig();
         try {
             Class.forName("io.papermc.paper.datacomponent.DataComponentType");
-            adventure = new PaperAudienceProvider();
-        } catch (ClassNotFoundException e) {
+            adventure = Class.forName("fr.fuzeblocks.homeplugin.core.audience.PaperAudienceProvider")
+                                 .getConstructor(HomePlugin.class)
+                                 .newInstance(this);
+        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException |
+                 InvocationTargetException e) {
             adventure = new SpigotAudienceProvider(BukkitAudiences.create(this));
         }
         setupMetrics();
