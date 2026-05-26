@@ -1,0 +1,40 @@
+package fr.fuzeblocks.homeplugin.core.language;
+
+
+/**
+ * The enum Language.
+ */
+public enum Language {
+    /**
+     * French language.
+     */
+    FRENCH,
+    /**
+     * English language.
+     */
+    ENGLISH,
+    /**
+     * Spanish language.
+     */
+    SPANISH,
+    /**
+     * Ukrainian language.
+     */
+    UKRAINIAN,
+    /**
+     * German language.
+     */
+    GERMAN,
+    /**
+     * Russian language.
+     */
+    RUSSIAN,
+    /**
+     * Turkish language.
+     */
+    TURKISH,
+    /**
+     * Custom language.
+     */
+    CUSTOM
+}

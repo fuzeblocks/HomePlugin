@@ -1,0 +1,52 @@
+package fr.fuzeblocks.homeplugin.core.plugin;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * The type Plugin manager.
+ */
+public class PluginManager implements PluginLoader {
+    private static final List<fr.fuzeblocks.homeplugin.core.plugin.HomePlugin> homePlugins = new ArrayList<>();
+    private static PluginManager pluginManager = null;
+    private boolean isCoreEnabled = false;
+
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
+    public static PluginManager getInstance() {
+        if (pluginManager == null) {
+            pluginManager = new PluginManager();
+        }
+        return pluginManager;
+    }
+
+    @Override
+    public void loadPlugin(HomePlugin homePlugin) {
+        homePlugins.add(homePlugin);
+        if (isCoreEnabled) {
+            homePlugin.initialize();
+            System.out.println("[HomePlugin] " + homePlugin.getName() + " plugin initialized (late load).");
+        }
+    }
+
+    @Override
+    public List<HomePlugin> getHomePlugin() {
+        return homePlugins;
+    }
+
+    @Override
+    public void unregisterPlugin(fr.fuzeblocks.homeplugin.core.plugin.HomePlugin homePlugin) {
+        homePlugins.remove(homePlugin);
+    }
+
+    public boolean isCoreEnabled() {
+        return isCoreEnabled;
+    }
+
+    public void setCoreEnabled(boolean coreEnabled) {
+        isCoreEnabled = coreEnabled;
+    }
+}

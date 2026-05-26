@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>fr.fuzeblocks.homeplugin</groupId>
+    <artifactId>legacy</artifactId>
+    <packaging>jar</packaging>
+
+    <parent>
+      <groupId>fr.fuzeblocks</groupId>
+      <artifactId>HomePlugin</artifactId>
+      <version>0.8.7-warps_dev-SNAPSHOT</version>
+      <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <name>HomePlugin - Legacy</name>
+    <description>HomePlugin - Legacy</description>
+
+    <repositories>
+        <repository>
+          <id>xenondevs-releases</id>
+          <name>xenondevs repository</name>
+          <url>https://repo.xenondevs.xyz/releases</url>
+        </repository>
+    </repositories>
+    <dependencies>
+        <dependency>
+          <groupId>xyz.xenondevs.invui</groupId>
+          <artifactId>invui-core</artifactId>
+          <version>1.49</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.20.4-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+   <build>
+  <sourceDirectory>${project.basedir}/../../src/main/java</sourceDirectory>
+
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>move-plugin-yml</id>
+              <phase>none</phase>
+            </execution>
+            <execution>
+              <id>move-javadoc</id>
+              <phase>none</phase>
+            </execution>
+          </executions>
+        </plugin>
+
+          <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.4.0</version>
+          <configuration>
+            <sourcepath>${project.basedir}/../../src/main/java</sourcepath>
+            <subpackages>fr.fuzeblocks.homeplugin.core:fr.fuzeblocks.homeplugin.other:fr.fuzeblocks.homeplugin.gui.legacy</subpackages>
+            <excludePackageNames>fr.fuzeblocks.homeplugin.gui.modern.*</excludePackageNames>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.11.0</version>
+          <configuration>
+            <release>21</release>
+            <excludes>
+              <exclude>fr/fuzeblocks/homeplugin/gui/modern/**/*.java</exclude>
+            </excludes>
+          </configuration>
+        </plugin>
+      </plugins>
+    </build>
+
+
+</project>

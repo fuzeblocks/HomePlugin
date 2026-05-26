@@ -1,50 +1,52 @@
 package fr.fuzeblocks.homeplugin;
 
-import fr.fuzeblocks.homeplugin.cache.CacheManager;
-import fr.fuzeblocks.homeplugin.commands.BackCommand;
-import fr.fuzeblocks.homeplugin.commands.CacheCommand;
-import fr.fuzeblocks.homeplugin.commands.LangCommand;
-import fr.fuzeblocks.homeplugin.commands.UpdateCommand;
-import fr.fuzeblocks.homeplugin.commands.home.*;
-import fr.fuzeblocks.homeplugin.commands.rtp.RTPCommand;
-import fr.fuzeblocks.homeplugin.commands.spawn.DeleteSpawnCommand;
-import fr.fuzeblocks.homeplugin.commands.spawn.SetSpawnCommand;
-import fr.fuzeblocks.homeplugin.commands.spawn.SpawnCommand;
-import fr.fuzeblocks.homeplugin.commands.tpa.TPAAcceptCommand;
-import fr.fuzeblocks.homeplugin.commands.tpa.TPACommand;
-import fr.fuzeblocks.homeplugin.commands.tpa.TPADenyCommand;
-import fr.fuzeblocks.homeplugin.commands.warp.WarpCommand;
-import fr.fuzeblocks.homeplugin.completers.*;
-import fr.fuzeblocks.homeplugin.database.CreateTable;
-import fr.fuzeblocks.homeplugin.database.DatabaseConnection;
-import fr.fuzeblocks.homeplugin.database.DatabaseManager;
-import fr.fuzeblocks.homeplugin.economy.EconomyManager;
-import fr.fuzeblocks.homeplugin.gui.warp.InputsListener;
-import fr.fuzeblocks.homeplugin.gui.warp.InputsManager;
-import fr.fuzeblocks.homeplugin.home.HomeManager;
-import fr.fuzeblocks.homeplugin.home.offline.HomeOfflineManager;
-import fr.fuzeblocks.homeplugin.home.offline.sql.HomeOfflineSQLManager;
-import fr.fuzeblocks.homeplugin.home.offline.yml.HomeOfflineYMLManager;
-import fr.fuzeblocks.homeplugin.home.sql.HomeSQLManager;
-import fr.fuzeblocks.homeplugin.home.yml.HomeYMLManager;
-import fr.fuzeblocks.homeplugin.language.Language;
-import fr.fuzeblocks.homeplugin.language.LanguageManager;
-import fr.fuzeblocks.homeplugin.listeners.BackListener;
-import fr.fuzeblocks.homeplugin.listeners.OnJoinListener;
-import fr.fuzeblocks.homeplugin.listeners.OnMoveListener;
-import fr.fuzeblocks.homeplugin.listeners.OnPlayerTakeDamageByAnotherPlayer;
-import fr.fuzeblocks.homeplugin.metrics.MetricsPlugin;
-import fr.fuzeblocks.homeplugin.placeholder.HomePluginExpansion;
-import fr.fuzeblocks.homeplugin.plugin.PluginManager;
-import fr.fuzeblocks.homeplugin.spawn.SpawnManager;
-import fr.fuzeblocks.homeplugin.spawn.sql.SpawnSQLManager;
-import fr.fuzeblocks.homeplugin.spawn.yml.SpawnYMLManager;
-import fr.fuzeblocks.homeplugin.sync.SyncMethod;
-import fr.fuzeblocks.homeplugin.update.UpdateChecker;
-import fr.fuzeblocks.homeplugin.update.UpdateDownloader;
-import fr.fuzeblocks.homeplugin.warps.WarpManager;
-import fr.fuzeblocks.homeplugin.warps.sql.WarpSQLManager;
-import fr.fuzeblocks.homeplugin.warps.yml.WarpYMLManager;
+import fr.fuzeblocks.homeplugin.core.cache.CacheManager;
+import fr.fuzeblocks.homeplugin.core.database.CreateTable;
+import fr.fuzeblocks.homeplugin.core.database.DatabaseConnection;
+import fr.fuzeblocks.homeplugin.core.database.DatabaseManager;
+import fr.fuzeblocks.homeplugin.core.economy.EconomyManager;
+import fr.fuzeblocks.homeplugin.core.home.HomeManager;
+import fr.fuzeblocks.homeplugin.core.home.offline.HomeOfflineManager;
+import fr.fuzeblocks.homeplugin.core.home.offline.sql.HomeOfflineSQLManager;
+import fr.fuzeblocks.homeplugin.core.home.offline.yml.HomeOfflineYMLManager;
+import fr.fuzeblocks.homeplugin.core.home.sql.HomeSQLManager;
+import fr.fuzeblocks.homeplugin.core.home.yml.HomeYMLManager;
+import fr.fuzeblocks.homeplugin.core.language.Language;
+import fr.fuzeblocks.homeplugin.core.language.LanguageManager;
+import fr.fuzeblocks.homeplugin.core.metrics.MetricsPlugin;
+import fr.fuzeblocks.homeplugin.core.placeholder.HomePluginExpansion;
+import fr.fuzeblocks.homeplugin.core.plugin.PluginManager;
+import fr.fuzeblocks.homeplugin.core.spawn.SpawnManager;
+import fr.fuzeblocks.homeplugin.core.spawn.sql.SpawnSQLManager;
+import fr.fuzeblocks.homeplugin.core.spawn.yml.SpawnYMLManager;
+import fr.fuzeblocks.homeplugin.core.sync.SyncMethod;
+import fr.fuzeblocks.homeplugin.core.warps.WarpManager;
+import fr.fuzeblocks.homeplugin.core.warps.input.InputsListener;
+import fr.fuzeblocks.homeplugin.core.warps.input.InputsManager;
+import fr.fuzeblocks.homeplugin.core.warps.sql.WarpSQLManager;
+import fr.fuzeblocks.homeplugin.core.warps.yml.WarpYMLManager;
+import fr.fuzeblocks.homeplugin.gui.GUIManager;
+import fr.fuzeblocks.homeplugin.gui.GuiBridge;
+import fr.fuzeblocks.homeplugin.gui.GuiBridgeFactory;
+import fr.fuzeblocks.homeplugin.other.commands.BackCommand;
+import fr.fuzeblocks.homeplugin.other.commands.CacheCommand;
+import fr.fuzeblocks.homeplugin.other.commands.LangCommand;
+import fr.fuzeblocks.homeplugin.other.commands.UpdateCommand;
+import fr.fuzeblocks.homeplugin.other.commands.home.*;
+import fr.fuzeblocks.homeplugin.other.commands.rtp.RTPCommand;
+import fr.fuzeblocks.homeplugin.other.commands.spawn.DeleteSpawnCommand;
+import fr.fuzeblocks.homeplugin.other.commands.spawn.SetSpawnCommand;
+import fr.fuzeblocks.homeplugin.other.commands.spawn.SpawnCommand;
+import fr.fuzeblocks.homeplugin.other.commands.tpa.TPAAcceptCommand;
+import fr.fuzeblocks.homeplugin.other.commands.tpa.TPACommand;
+import fr.fuzeblocks.homeplugin.other.commands.tpa.TPADenyCommand;
+import fr.fuzeblocks.homeplugin.other.commands.warp.WarpCommand;
+import fr.fuzeblocks.homeplugin.other.completers.*;
+import fr.fuzeblocks.homeplugin.other.listeners.BackListener;
+import fr.fuzeblocks.homeplugin.other.listeners.OnJoinListener;
+import fr.fuzeblocks.homeplugin.other.listeners.OnMoveListener;
+import fr.fuzeblocks.homeplugin.other.listeners.OnPlayerTakeDamageByAnotherPlayer;
+import fr.fuzeblocks.homeplugin.other.update.UpdateChecker;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
@@ -63,7 +65,6 @@ import redis.clients.jedis.JedisPooled;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 
 /**
  * Main plugin class for HomePlugin.
@@ -97,6 +98,7 @@ public final class HomePlugin extends JavaPlugin {
     private static SpawnManager spawnManager;
     private static LanguageManager languageManager;
     private static BukkitAudiences adventure;
+    private static GUIManager guiManager;
     private static Economy economy;
     private static Metrics metrics;
     private static PluginManager pluginManager = PluginManager.getInstance();
@@ -104,17 +106,18 @@ public final class HomePlugin extends JavaPlugin {
     private static WarpYMLManager warpYMLManager;
     private static WarpManager warpManager;
     private static InputsManager inputsManager = new InputsManager();
+    private final String version = UpdateChecker.getVersionFromJar(this.getFile().toPath());
     private UpdateChecker updateChecker = new UpdateChecker(this, 113935);
 
     private static String safeDigits(String ver) {
         return ver == null ? "0" : ver.replaceAll("[^0-9.]", "");
     }
 
+    // -------------------- Setup and registration --------------------
+
     private static String blankToNull(String s) {
         return (s == null || s.isBlank()) ? null : s;
     }
-
-    // -------------------- Setup and registration --------------------
 
     private static boolean isActivatedFeature(String feature) {
         return HomePlugin.getConfigurationSection().getBoolean(CFG_FEATURES + feature, false);
@@ -278,10 +281,9 @@ public final class HomePlugin extends JavaPlugin {
         return metrics;
     }
 
-     public static InputsManager getInputsManager() {
+    public static InputsManager getInputsManager() {
         return inputsManager;
     }
-
 
     /**
      * Gets warp manager.
@@ -310,8 +312,9 @@ public final class HomePlugin extends JavaPlugin {
         return warpSQLManager;
     }
 
-    private final String version = UpdateChecker.getVersionFromJar(this.getFile().toPath());
-
+    public static GUIManager getGuiManager() {
+        return guiManager;
+    }
 
     public UpdateChecker getUpdateChecker() {
         return updateChecker;
@@ -321,10 +324,6 @@ public final class HomePlugin extends JavaPlugin {
         return version;
     }
 
-
-
-
-
     @Override
     public void onEnable() {
         // Config and metrics
@@ -332,6 +331,8 @@ public final class HomePlugin extends JavaPlugin {
         applyDefaultConfigValues();
         configurationSection = getConfig();
         adventure = BukkitAudiences.create(this);
+        GuiBridge bridge = GuiBridgeFactory.create(this);
+        guiManager = new GUIManager(bridge);
         setupMetrics();
 
         // Dependencies and services
@@ -527,7 +528,7 @@ public final class HomePlugin extends JavaPlugin {
 
         bind("cache", new CacheCommand(), new CacheCompleter());
         bind("homeadmin", new HomeAdminCommand(), new HomeAdminCompleter());
-        bind("plugins", new fr.fuzeblocks.homeplugin.commands.PluginCommand(), null);
+        bind("plugins", new fr.fuzeblocks.homeplugin.other.commands.PluginCommand(), null);
         bind("lang", new LangCommand(this), new LangTabCompleter(this));
         bind("update", new UpdateCommand(this), null);
 
@@ -553,7 +554,7 @@ public final class HomePlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new OnMoveListener(), this);
         Bukkit.getPluginManager().registerEvents(new OnPlayerTakeDamageByAnotherPlayer(), this);
         Bukkit.getPluginManager().registerEvents(new BackListener(), this);
-        Bukkit.getPluginManager().registerEvents(new InputsListener(),this);
+        Bukkit.getPluginManager().registerEvents(new InputsListener(), this);
     }
 
     private void completerRegistration() {
@@ -587,7 +588,7 @@ public final class HomePlugin extends JavaPlugin {
     }
 
     private void initPluginFunc() {
-        for (fr.fuzeblocks.homeplugin.plugin.HomePlugin plug : pluginManager.getHomePlugin()) {
+        for (fr.fuzeblocks.homeplugin.core.plugin.HomePlugin plug : pluginManager.getHomePlugin()) {
             if (plug != null) {
                 try {
                     plug.initialize();
@@ -601,7 +602,7 @@ public final class HomePlugin extends JavaPlugin {
     }
 
     private void stopPluginFunc() {
-        for (fr.fuzeblocks.homeplugin.plugin.HomePlugin plug : pluginManager.getHomePlugin()) {
+        for (fr.fuzeblocks.homeplugin.core.plugin.HomePlugin plug : pluginManager.getHomePlugin()) {
             if (plug != null) {
                 try {
                     plug.stop();
@@ -641,6 +642,7 @@ public final class HomePlugin extends JavaPlugin {
         metrics = new Metrics(this, 27702);
         PluginManager.getInstance().loadPlugin(new MetricsPlugin());
     }
+
     private void closeStatement() {
         // Close Adventure
         if (adventure != null) {
@@ -658,6 +660,7 @@ public final class HomePlugin extends JavaPlugin {
             }
         }
     }
+
     private void runPluginReplacement() {
         if (updateChecker.isMarkForUpdatePlugin()) {
             getLogger().info("Plugin marked for update. Attempting to replace files...");
