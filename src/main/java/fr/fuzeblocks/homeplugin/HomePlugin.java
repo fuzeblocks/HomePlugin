@@ -331,8 +331,6 @@ public final class HomePlugin extends JavaPlugin {
         applyDefaultConfigValues();
         configurationSection = getConfig();
         adventure = BukkitAudiences.create(this);
-        GuiBridge bridge = GuiBridgeFactory.create(this);
-        guiManager = new GUIManager(bridge);
         setupMetrics();
 
         // Dependencies and services
@@ -341,6 +339,9 @@ public final class HomePlugin extends JavaPlugin {
         loadLanguage();
         redisRegistration();
         databaseRegistration();
+
+        GuiBridge bridge = GuiBridgeFactory.create(this);
+        guiManager = new GUIManager(bridge);
 
         // Domain managers
         homeRegistration();

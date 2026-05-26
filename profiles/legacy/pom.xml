@@ -15,6 +15,13 @@
       <relativePath>../../pom.xml</relativePath>
     </parent>
 
+    <properties>
+        <revision>0.0.0</revision>
+        <maven.compiler.release>11</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+
     <name>HomePlugin - Legacy</name>
     <description>HomePlugin - Legacy</description>
 
@@ -24,12 +31,19 @@
           <name>xenondevs repository</name>
           <url>https://repo.xenondevs.xyz/releases</url>
         </repository>
+
     </repositories>
+
     <dependencies>
         <dependency>
           <groupId>xyz.xenondevs.invui</groupId>
           <artifactId>invui-core</artifactId>
           <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r1</artifactId>
+            <version>1.49</version>
         </dependency>
 
         <dependency>
@@ -40,49 +54,55 @@
         </dependency>
     </dependencies>
 
-   <build>
-  <sourceDirectory>${project.basedir}/../../src/main/java</sourceDirectory>
+    <build>
+        <sourceDirectory>${project.basedir}/../../src/main/java</sourceDirectory>
 
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>move-plugin-yml</id>
-              <phase>none</phase>
-            </execution>
-            <execution>
-              <id>move-javadoc</id>
-              <phase>none</phase>
-            </execution>
-          </executions>
-        </plugin>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/../../src/main/resources</directory>
+                 <filtering>true</filtering>
+            </resource>
+        </resources>
 
-          <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.4.0</version>
-          <configuration>
-            <sourcepath>${project.basedir}/../../src/main/java</sourcepath>
-            <subpackages>fr.fuzeblocks.homeplugin.core:fr.fuzeblocks.homeplugin.other:fr.fuzeblocks.homeplugin.gui.legacy</subpackages>
-            <excludePackageNames>fr.fuzeblocks.homeplugin.gui.modern.*</excludePackageNames>
-          </configuration>
-        </plugin>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>move-plugin-yml</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>move-javadoc</id>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
+            </plugin>
 
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.11.0</version>
-          <configuration>
-            <release>21</release>
-            <excludes>
-              <exclude>fr/fuzeblocks/homeplugin/gui/modern/**/*.java</exclude>
-            </excludes>
-          </configuration>
-        </plugin>
-      </plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <sourcepath>${project.basedir}/../../src/main/java</sourcepath>
+                    <subpackages>fr.fuzeblocks.homeplugin.core:fr.fuzeblocks.homeplugin.other:fr.fuzeblocks.homeplugin.gui.legacy</subpackages>
+                    <excludePackageNames>fr.fuzeblocks.homeplugin.gui.modern.*</excludePackageNames>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <release>11</release>
+                    <excludes>
+                        <exclude>fr/fuzeblocks/homeplugin/gui/modern/**/*.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
-
 
 </project>

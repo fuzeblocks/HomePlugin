@@ -8,15 +8,11 @@ public final class GuiBridgeFactory {
     }
 
     public static GuiBridge create(HomePlugin plugin) {
-        String mode = plugin.getConfig().getString("gui-mode", "legacy").toLowerCase();
-
-        if ("modern".equals(mode)) {
-            GuiBridge modern = instantiate("fr.fuzeblocks.homeplugin.gui.modern.ModernGuiBridge");
-            if (modern != null) {
-                return modern;
-            }
-            plugin.getLogger().warning("Modern GUI indisponible, fallback legacy.");
+        GuiBridge modern = instantiate("fr.fuzeblocks.homeplugin.gui.modern.ModernGuiBridge");
+        if (modern != null) {
+            return modern;
         }
+        plugin.getLogger().warning("Modern GUI indisponible, fallback legacy.");
 
         GuiBridge legacy = instantiate("fr.fuzeblocks.homeplugin.gui.legacy.LegacyGuiBridge");
         if (legacy != null) {

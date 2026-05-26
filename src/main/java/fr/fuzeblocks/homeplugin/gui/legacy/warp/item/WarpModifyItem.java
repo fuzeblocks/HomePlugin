@@ -20,7 +20,7 @@ public class WarpModifyItem extends AbstractItem {
 
     @Override
     public ItemProvider getItemProvider() {
-        return new ItemBuilder(WarpData.toItemBuilderUsingLanguage(warpData, HomePlugin.getLanguageManager()));
+        return new ItemBuilder(WarpData.toItemStackUsingLanguage(warpData, HomePlugin.getLanguageManager()));
     }
 
     @Override

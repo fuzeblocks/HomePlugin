@@ -27,6 +27,10 @@
             <id>xenondevs</id>
             <url>https://repo.xenondevs.xyz/releases</url>
         </repository>
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -38,13 +42,20 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.21.4-R0.1-SNAPSHOT</version>
+            <version>26.1.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
 
     <build>
         <sourceDirectory>${project.basedir}/../../src/main/java</sourceDirectory>
+
+        <resources>
+            <resource>
+                <directory>${project.basedir}/../../src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
 
         <plugins>
             <plugin>
@@ -62,14 +73,14 @@
                 </executions>
             </plugin>
 
-            <plugin>
+             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.4.0</version>
                 <configuration>
-                    <failOnError>false</failOnError>
-                    <excludePackageNames>
-                        fr.fuzeblocks.homeplugin.gui.legacy:fr.fuzeblocks.homeplugin.gui.legacy.*
-                    </excludePackageNames>
+                    <sourcepath>${project.basedir}/../../src/main/java</sourcepath>
+                    <subpackages>fr.fuzeblocks.homeplugin.core:fr.fuzeblocks.homeplugin.other:fr.fuzeblocks.homeplugin.gui.modern</subpackages>
+                    <excludePackageNames>fr.fuzeblocks.homeplugin.gui.legacy.*</excludePackageNames>
                 </configuration>
             </plugin>
 
@@ -90,6 +101,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.6.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <dependencies>
                     <dependency>
                         <groupId>org.ow2.asm</groupId>
