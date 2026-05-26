@@ -296,7 +296,8 @@ Replace `Tag` with the desired version/release tag.
 
 ---
 
-## 🧱 Architecture
+<img width="270" height="50" alt="minecraft_architecture" src="https://github.com/user-attachments/assets/38fa8062-0509-4ca5-8ba3-2cbc048ae26e" />
+
 
 HomePlugin features a modular, performance-focused architecture:
 
@@ -308,7 +309,8 @@ HomePlugin features a modular, performance-focused architecture:
 
 ---
 
-## ✅ Compatibility
+<img width="270" height="50" alt="minecraft_compatibility" src="https://github.com/user-attachments/assets/2b8f8dc2-d722-40e6-9eb5-d009330cf8c9" />
+
 
 - **Minecraft:** 1.14+ (declared `api-version: 1.14`)
 - **Server:** Paper, Spigot, and derivatives
@@ -317,7 +319,8 @@ HomePlugin features a modular, performance-focused architecture:
 
 ---
 
-## 🗺️ Roadmap
+<img width="250" height="50" alt="minecraft_roadmap" src="https://github.com/user-attachments/assets/e90b5113-37ca-4f76-a887-29e1b5bad413" />
+
 
 | Feature | Status |
 |---------|--------|
@@ -335,7 +338,8 @@ Have a suggestion? Open a [Discussion](https://github.com/fuzeblocks/HomePlugin/
 
 ---
 
-## 🤝 Contributing
+<img width="270" height="50" alt="minecraft_contributing" src="https://github.com/user-attachments/assets/8e6d9f33-35ba-4bbd-80f0-b7ac36fc33f1" />
+
 
 Contributions are welcome! Here's how you can help:
 
@@ -354,7 +358,8 @@ Contributions are welcome! Here's how you can help:
 
 ---
 
-## 💬 Support
+<img width="250" height="50" alt="minecraft_support" src="https://github.com/user-attachments/assets/d93ca611-eeee-4afb-97b3-f7a6b2966719" />
+
 
 Need help? Have questions?
 
@@ -365,7 +370,7 @@ Need help? Have questions?
 
 ---
 
-## 📄 License
+<img width="250" height="50" alt="minecraft_license" src="https://github.com/user-attachments/assets/f0424130-cd3e-4c26-b9e0-544eb60d6ac1" />
 
 HomePlugin is licensed under the [Apache License 2.0](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file).
 
