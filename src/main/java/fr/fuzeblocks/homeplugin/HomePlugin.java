@@ -333,14 +333,24 @@ public final class HomePlugin extends JavaPlugin {
         saveDefaultConfig();
         applyDefaultConfigValues();
         configurationSection = getConfig();
-        try {
+       try {
             Class.forName("io.papermc.paper.datacomponent.DataComponentType");
             adventure = Class.forName("fr.fuzeblocks.homeplugin.core.audience.PaperAudienceProvider")
-                                 .getConstructor(HomePlugin.class)
-                                 .newInstance(this);
+                                 .getConstructor()
+                                 .newInstance();
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException |
                  InvocationTargetException e) {
-            adventure = new SpigotAudienceProvider(BukkitAudiences.create(this));
+
+            try {
+                adventure = Class.forName("fr.fuzeblocks.homeplugin.core.audience.SpigotAudienceProvider")
+                                     .getConstructor(HomePlugin.class)
+                                     .newInstance(this);
+            } catch (Exception ex) {
+                getLogger().severe("Impossible d'initialiser le fournisseur d'audience Adventure !");
+                ex.printStackTrace();
+                getServer().getPluginManager().disablePlugin(this);
+                return;
+            }
         }
         setupMetrics();
 

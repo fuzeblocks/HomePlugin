@@ -8,9 +8,11 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
-import xyz.xenondevs.invui.Click;import xyz.xenondevs.invui.item.AbstractItem;import xyz.xenondevs.invui.item.ItemBuilder;import xyz.xenondevs.invui.item.ItemProvider;
+import xyz.xenondevs.invui.Click;
+import xyz.xenondevs.invui.item.AbstractItem;
+import xyz.xenondevs.invui.item.ItemBuilder;
+import xyz.xenondevs.invui.item.ItemProvider;
 
 public class PublicItem extends AbstractItem {
 

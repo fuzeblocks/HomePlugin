@@ -1,14 +1,14 @@
 package fr.fuzeblocks.homeplugin.core.audience;
 
-import net.kyori.adventure.audience.Audience;
+import fr.fuzeblocks.homeplugin.HomePlugin;import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.entity.Player;
 
 public class SpigotAudienceProvider implements AudienceProvider {
     private final BukkitAudiences bukkit;
 
-    public SpigotAudienceProvider(BukkitAudiences bukkit) {
-        this.bukkit = bukkit;
+    public SpigotAudienceProvider(HomePlugin plugin) {
+        this.bukkit = BukkitAudiences.create(plugin);
     }
 
     @Override
