@@ -21,7 +21,8 @@
 
 ---
 
-## ✨ Features
+<img width="250" height="50" alt="homeplugin_features" src="https://github.com/user-attachments/assets/5e770d8e-1dea-45f5-b58f-f1a77713fb90" />
+
 
 ### 🏠 **Core Functionality**
 - **Named Homes** - Set multiple homes with custom names and optional metadata
