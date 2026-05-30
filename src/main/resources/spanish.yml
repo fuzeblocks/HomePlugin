@@ -308,3 +308,4 @@ Warp:
     Rename-item-message: "&eIntroduce en el chat el nuevo nombre del warp. (cancel para cancelar)"
     BlackList-item-name: "&eGestionar la lista negra del warp"
     BlackList-item-message: "&eIntroduce en el chat el nombre del jugador a añadir o quitar de la lista negra del warp. (cancel para cancelar)"
+    Public-item-message: "&a¡El warp ahora está &e{status}&a!"

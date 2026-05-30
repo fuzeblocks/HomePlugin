@@ -33,7 +33,7 @@ public class IconsItem extends AbstractItem {
     @Override
     @TestOnly
     public ItemProvider getItemProvider(Player player) {
-        if (material == warpMaterial) {
+        if (warpMaterial.equals(material)) {
           return new ItemBuilder(material)
                     .addModifier(new Function<ItemStack, ItemStack>() {
                         @Override

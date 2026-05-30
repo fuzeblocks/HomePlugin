@@ -4,6 +4,7 @@ import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.core.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.core.warps.WarpData;
 import fr.fuzeblocks.homeplugin.core.warps.WarpManager;
+import fr.fuzeblocks.homeplugin.gui.modern.ModernGuiBridge;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -34,6 +35,7 @@ public class PublicItem extends AbstractItem {
         WarpManager warpManager = HomePlugin.getWarpManager();
         warpManager.setWarpPublic(warpData, !warpData.isPublic());
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0f, 1.0f);
+        player.sendMessage(languageManager.getStringWithColor("Warp.Modify.Public-item-message", "&aLe warp est maintenant &e{status}&a !").replace("{status}", String.valueOf(warpData.isPublic())));
         HomePlugin.getGuiManager().openOptionsWarpGUI(player, warpManager.getWarp(warpData.getName()));
     }
 }

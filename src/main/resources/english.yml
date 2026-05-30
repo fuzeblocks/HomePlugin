@@ -308,3 +308,4 @@ Warp:
     Rename-item-message: "&ePlease enter the new warp name in chat. (cancel to cancel)"
     BlackList-item-name: "&eManage warp blacklist"
     BlackList-item-message: "&ePlease enter the player name to add or remove from the warp blacklist in chat. (cancel to cancel)"
+    Public-item-message: "&aThe warp is now &e{status}&a!"

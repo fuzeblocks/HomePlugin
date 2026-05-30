@@ -35,6 +35,7 @@ public class PublicItem extends AbstractItem {
         WarpManager warpManager = HomePlugin.getWarpManager();
         warpManager.setWarpPublic(warpData, !warpData.isPublic());
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0f, 1.0f);
+        player.sendMessage(ModernGuiBridge.component(languageManager.getStringWithColor("Warp.Modify.Public-item-message", "&aLe warp est maintenant &e{status}&a !").replace("{status}", String.valueOf(warpData.isPublic()))));
         HomePlugin.getGuiManager().openOptionsWarpGUI(player, warpManager.getWarp(warpData.getName()));
     }
 }

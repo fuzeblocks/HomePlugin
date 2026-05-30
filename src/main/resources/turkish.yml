@@ -308,3 +308,4 @@ Warp:
     Rename-item-message: "&eLütfen sohbette yeni warp adını girin. (iptal için cancel)"
     BlackList-item-name: "&eWarp kara listesini yönet"
     BlackList-item-message: "&eLütfen sohbette warp kara listesine eklemek veya çıkarmak istediğiniz oyuncu adını girin. (iptal için cancel)"
+    Public-item-message: "&aWarp artık &e{status}&a!"
