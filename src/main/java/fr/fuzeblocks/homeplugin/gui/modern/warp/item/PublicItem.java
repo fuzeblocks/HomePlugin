@@ -4,6 +4,7 @@ import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.core.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.core.warps.WarpData;
 import fr.fuzeblocks.homeplugin.core.warps.WarpManager;
+import fr.fuzeblocks.homeplugin.gui.modern.ModernGuiBridge;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -26,7 +27,7 @@ public class PublicItem extends AbstractItem {
     @Override
     public ItemProvider getItemProvider(Player player) {
         return new ItemBuilder(Material.END_PORTAL_FRAME)
-                .setName(languageManager.getStringWithColor("Warp.Modify.Public-item-name", "&aChanger la visibilité du warp"));
+                .setName(ModernGuiBridge.component(languageManager.getStringWithColor("Warp.Modify.Public-item-name", "&aChanger la visibilité du warp")));
     }
 
     @Override

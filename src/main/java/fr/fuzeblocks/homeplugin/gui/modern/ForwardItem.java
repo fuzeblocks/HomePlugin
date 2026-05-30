@@ -19,15 +19,17 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class ForwardItem extends AbstractItem {
 
-    private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.legacySection();
 
     private final LanguageManager languageManager = HomePlugin.getLanguageManager();
     private final String ITEM_KEY = "Language.Gui.ForwardItem.";
 
-    private final PagedGui<?> gui;
+    private PagedGui<?> gui;
 
-    public ForwardItem(AtomicReference<PagedGui<Item>> guiRef) {
-        this.gui = guiRef.get();
+    public ForwardItem() {
+
+    }
+    public void setGui(PagedGui<?> gui) {
+        this.gui = gui;
         gui.addPageChangeHandler((oldPage, newPage) -> notifyWindows());
         gui.addPageCountChangeHandler((oldCount, newCount) -> notifyWindows());
     }
@@ -45,8 +47,8 @@ public class ForwardItem extends AbstractItem {
                 : languageManager.getStringWithColor(ITEM_KEY + "MaxForward", "&cVous êtes déjà à la dernière page !");
 
         return new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE)
-                .setName(LEGACY.deserialize(name))
-                .setLore(List.of(LEGACY.deserialize(lore)));
+                .setName(ModernGuiBridge.component((name)))
+                .setLore(List.of(ModernGuiBridge.component((lore))));
     }
 
     @Override

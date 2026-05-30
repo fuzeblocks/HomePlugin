@@ -3,6 +3,7 @@ package fr.fuzeblocks.homeplugin.gui.modern.warp.item;
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.core.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.core.warps.WarpData;
+import fr.fuzeblocks.homeplugin.gui.modern.ModernGuiBridge;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -26,7 +27,7 @@ public class DeleteItem extends AbstractItem {
     @Override
     public ItemProvider getItemProvider(Player player) {
         return new ItemBuilder(Material.BARRIER)
-                .setName(languageManager.getStringWithColor("Warp.Modify.Delete-item-name", "&cSupprimer le warp"));
+                .setName(ModernGuiBridge.component(languageManager.getStringWithColor("Warp.Modify.Delete-item-name", "&cSupprimer le warp")));
     }
 
     @Override

@@ -3,6 +3,7 @@ package fr.fuzeblocks.homeplugin.gui.modern.warp.item;
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.core.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.core.warps.WarpData;
+import fr.fuzeblocks.homeplugin.gui.modern.ModernGuiBridge;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -34,8 +35,18 @@ public class WarpListItem extends AbstractItem {
         int y = location.getBlockY();
         int z = location.getBlockZ();
         String world = location.getWorld() != null ? location.getWorld().getName() : "Unknown";
-        return new ItemBuilder(Material.RED_BED).setName(displayName).addLoreLines(languageManager.getStringWithColor(WARP_LIST + "Warp-location", "&9Position : &6X: %x% Y: %y% Z: %z% Monde: %world%").replace("%x%", String.valueOf(x)).replace("%y%", String.valueOf(y)).replace("%z%", String.valueOf(z)).replace("%world%", world), languageManager.getStringWithColor(WARP_LIST + "Warp-teleport-hover", "&eCliquez pour vous téléporter."));
-
+        return new ItemBuilder(Material.RED_BED)
+        .setName(ModernGuiBridge.component(displayName))
+        .addLoreLines(
+                ModernGuiBridge.component(
+                        languageManager.getStringWithColor(WARP_LIST + "Warp-location", "&9Position : &6X: %x% Y: %y% Z: %z% Monde: %world%")
+                                .replace("%x%", String.valueOf(x))
+                                .replace("%y%", String.valueOf(y))
+                                .replace("%z%", String.valueOf(z))
+                                .replace("%world%", world)
+                ),
+                ModernGuiBridge.component(languageManager.getStringWithColor(WARP_LIST + "Warp-teleport-hover", "&eCliquez pour vous téléporter."))
+        );
     }
 
     @Override

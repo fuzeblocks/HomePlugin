@@ -4,6 +4,7 @@ import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.core.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.core.warps.WarpData;
 import fr.fuzeblocks.homeplugin.core.warps.WarpManager;
+import fr.fuzeblocks.homeplugin.gui.modern.ModernGuiBridge;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -25,7 +26,7 @@ public class DecreaseCostItem extends AbstractItem {
     @Override
     public ItemProvider getItemProvider(Player player) {
         return new ItemBuilder(Material.REDSTONE_BLOCK)
-                .setName(languageManager.getStringWithColor("Warp.Modify.Decrease-cost-item-name", "&cDiminuer le coût du warp"));
+                .setName(ModernGuiBridge.component(languageManager.getStringWithColor("Warp.Modify.Decrease-cost-item-name", "&cDiminuer le coût du warp")));
     }
 
     @Override

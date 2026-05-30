@@ -93,7 +93,7 @@ public class InputsListener implements Listener {
 
         Location location = parseLocation(player, message, warpData);
         warpManager.relocateWarp(warpData, location);
-        player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "LocationInput.SuccessLocationInput", "&aLe warp a été déplacé à la nouvelle position !"));
+        player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "LocationInput.SuccessLocationInput", "&aLe warp a été déplacé à la nouvelle position !").replace("%world%", location.getWorld().getName()).replace("%x%", String.valueOf(location.getX())).replace("%y%", String.valueOf(location.getY())).replace("%z%", String.valueOf(location.getZ())));
     }
 
     private boolean isValidLocationInput(String message) {
@@ -162,7 +162,6 @@ public class InputsListener implements Listener {
 
         if (warpManager.warpExists(name)) {
             player.sendMessage(languageManager.getStringWithColor(INPUTS_PREFIX + "NameInput.WarpExists", "&cUn warp avec ce nom existe déjà !"));
-            handleNameInput(player, message, warpData);
             return;
         }
 

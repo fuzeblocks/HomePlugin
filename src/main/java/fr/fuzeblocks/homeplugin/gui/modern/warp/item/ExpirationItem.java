@@ -2,7 +2,9 @@ package fr.fuzeblocks.homeplugin.gui.modern.warp.item;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.core.warps.WarpData;
-import fr.fuzeblocks.homeplugin.core.warps.input.Input;import fr.fuzeblocks.homeplugin.core.warps.input.InputsSession;import org.bukkit.Material;
+import fr.fuzeblocks.homeplugin.core.warps.input.Input;import fr.fuzeblocks.homeplugin.core.warps.input.InputsSession;
+import fr.fuzeblocks.homeplugin.gui.modern.ModernGuiBridge;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +23,7 @@ public class ExpirationItem extends AbstractItem {
 
     @Override
     public ItemProvider getItemProvider(Player player) {
-        return new ItemBuilder(Material.CLOCK).setName(HomePlugin.getLanguageManager().getStringWithColor("Warp.Modify.Expiration-item-name", "&eChanger la durée d'expiration du warp"));
+        return new ItemBuilder(Material.CLOCK).setName(ModernGuiBridge.component(HomePlugin.getLanguageManager().getStringWithColor("Warp.Modify.Expiration-item-name", "&eChanger la durée d'expiration du warp")));
     }
 
     @Override

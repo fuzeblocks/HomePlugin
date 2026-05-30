@@ -26,11 +26,15 @@ public class BackItem extends AbstractItem {
     private final LanguageManager languageManager = HomePlugin.getLanguageManager();
     private final String ITEM_KEY = "Language.Gui.BackItem.";
 
-    private final PagedGui<Item> gui;
+    private PagedGui<Item> gui;
 
 
-    public BackItem(AtomicReference<PagedGui<Item>> guiRef) {
-        this.gui = guiRef.get();
+    public BackItem() {
+
+    }
+
+    public void setGui(PagedGui<Item> gui) {
+        this.gui = gui;
         gui.addPageChangeHandler((oldPage, newPage) -> notifyWindows());
         gui.addPageCountChangeHandler((oldCount, newCount) -> notifyWindows());
     }
@@ -49,8 +53,8 @@ public class BackItem extends AbstractItem {
                 : languageManager.getStringWithColor(ITEM_KEY + "MaxBack", "&cVous ne pouvez pas revenir plus loin !");
 
         return new ItemBuilder(Material.RED_STAINED_GLASS_PANE)
-                .setName(LEGACY.deserialize(name))
-                .setLore(List.of(LEGACY.deserialize(lore)));
+                .setName(ModernGuiBridge.component(name))
+                .setLore(List.of(ModernGuiBridge.component((lore))));
     }
 
     @Override

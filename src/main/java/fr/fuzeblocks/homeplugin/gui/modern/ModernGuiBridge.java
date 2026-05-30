@@ -48,6 +48,8 @@ public final class ModernGuiBridge implements GuiBridge {
             return;
         }
         AtomicReference<PagedGui<Item>> guiRef = new AtomicReference<>();
+        BackItem backItem = new BackItem();
+        ForwardItem forwardItem = new ForwardItem();
         PagedGui<Item> gui = PagedGui.itemsBuilder()
                 .setStructure(
                         "# # # # # # # # #",
@@ -56,11 +58,13 @@ public final class ModernGuiBridge implements GuiBridge {
                         "# # # < # > # # #")
                 .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
                 .addIngredient('#', borderItem())
-                .addIngredient('<', new BackItem(guiRef))
-                .addIngredient('>', new ForwardItem(guiRef))
+                .addIngredient('<', backItem)
+                .addIngredient('>', forwardItem)
                 .setContent(warpItems)
                 .build();
         guiRef.set(gui);
+        backItem.setGui(gui);
+        forwardItem.setGui(gui);
         openWindow(player, gui, component(LANGUAGE_MANAGER.getStringWithColor(WARP_LIST + "Warp-list-header", "&6&lListe des Warps")));
     }
 
@@ -72,6 +76,8 @@ public final class ModernGuiBridge implements GuiBridge {
             return;
         }
         AtomicReference<PagedGui<Item>> guiRef = new AtomicReference<>();
+        BackItem backItem = new BackItem();
+        ForwardItem forwardItem = new ForwardItem();
         PagedGui<Item> gui = PagedGui.itemsBuilder()
                 .setStructure(
                         "# # # # # # # # #",
@@ -80,11 +86,13 @@ public final class ModernGuiBridge implements GuiBridge {
                         "# # # < # > # # #")
                 .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
                 .addIngredient('#', borderItem())
-                .addIngredient('<', new BackItem(guiRef))
-                .addIngredient('>', new ForwardItem(guiRef))
+                .addIngredient('<', backItem)
+                .addIngredient('>', forwardItem)
                 .setContent(warpItems)
                 .build();
         guiRef.set(gui);
+        backItem.setGui(gui);
+        forwardItem.setGui(gui);
         openWindow(player, gui, component(LANGUAGE_MANAGER.getStringWithColor(WARP_LIST + "Warp-modify-header", "&6&lGestion des Warps")));
     }
 
@@ -96,7 +104,8 @@ public final class ModernGuiBridge implements GuiBridge {
                         "# D E P A I C N #",
                         "# S L B x x x x #",
                         "# # # # # # # # #")
-                .addIngredient('x', borderItem())
+                .addIngredient('#', borderItem())
+                .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
                 .addIngredient('D', new DeleteItem(warpData))
                 .addIngredient('E', new ExpirationItem(warpData))
                 .addIngredient('P', new PublicItem(warpData))
@@ -119,7 +128,8 @@ public final class ModernGuiBridge implements GuiBridge {
                         "# x + x N x - x #",
                         "# # # # # # # # #",
                         "# # # # # # # # #")
-                .addIngredient('x', borderItem())
+                .addIngredient('#', borderItem())
+                .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
                 .addIngredient('+', new IncreaseCostItem(warpData))
                 .addIngredient('-', new DecreaseCostItem(warpData))
                 .addIngredient('N', currentCostItem(warpData))
@@ -131,6 +141,8 @@ public final class ModernGuiBridge implements GuiBridge {
     public void openChangeIconWarpGUI(Player player, WarpData warpData) {
 
         AtomicReference<PagedGui<Item>> guiRef = new AtomicReference<>();
+        BackItem backItem = new BackItem();
+        ForwardItem forwardItem = new ForwardItem();
         PagedGui<Item> gui = PagedGui.itemsBuilder()
                 .setStructure(
                         "# # # # # # # # #",
@@ -139,11 +151,13 @@ public final class ModernGuiBridge implements GuiBridge {
                         "# # # < # > # # #")
                 .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
                 .addIngredient('#', borderItem())
-                .addIngredient('<', new BackItem(guiRef))
-                .addIngredient('>', new ForwardItem(guiRef))
+                .addIngredient('<', backItem)
+                .addIngredient('>', forwardItem)
                 .setContent(Arrays.stream(Material.values()).filter(ModernGuiBridge::isMaterialValidForIcon).map(mat -> new fr.fuzeblocks.homeplugin.gui.modern.warp.item.IconsItem(mat, warpData)).collect(Collectors.toList()))
                 .build();
         guiRef.set(gui);
+        backItem.setGui(gui);
+        forwardItem.setGui(gui);
         openWindow(player, gui, component(LANGUAGE_MANAGER.getStringWithColor(WARP_LIST + "Warp-modify-icon-header", "&6&lChanger l'icône du Warp")));
     }
 
@@ -155,6 +169,8 @@ public final class ModernGuiBridge implements GuiBridge {
             return;
         }
         AtomicReference<PagedGui<Item>> guiRef = new AtomicReference<>();
+        BackItem backItem = new BackItem();
+        ForwardItem forwardItem = new ForwardItem();
         PagedGui<Item> gui = PagedGui.itemsBuilder()
                 .setStructure(
                         "# # # # # # # # #",
@@ -163,11 +179,13 @@ public final class ModernGuiBridge implements GuiBridge {
                         "# # # < # > # # #")
                 .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
                 .addIngredient('#', borderItem())
-                .addIngredient('<', new BackItem(guiRef))
-                .addIngredient('>', new ForwardItem(guiRef))
+                .addIngredient('<', backItem)
+                .addIngredient('>', forwardItem)
                 .setContent(homeItems)
                 .build();
         guiRef.set(gui);
+        backItem.setGui(gui);
+        forwardItem.setGui(gui);
         openWindow(player, gui, component(LANGUAGE_MANAGER.getStringWithColor(HOME + "Home-gui-title").replace("%player%", player.getName())));
     }
 
@@ -218,8 +236,10 @@ public final class ModernGuiBridge implements GuiBridge {
                 .open();
     }
 
-    private Component component(String text) {
+    public static Component component(String text) {
         return LEGACY.deserialize(text == null ? "" : text);
     }
+
+
 }
 

@@ -4,6 +4,7 @@ import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.core.warps.WarpData;
 import fr.fuzeblocks.homeplugin.core.warps.input.Input;
 import fr.fuzeblocks.homeplugin.core.warps.input.InputsSession;
+import fr.fuzeblocks.homeplugin.gui.modern.ModernGuiBridge;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -23,7 +24,7 @@ public class PermissionItem extends AbstractItem {
 
     @Override
     public ItemProvider getItemProvider(Player player) {
-        return new ItemBuilder(Material.REDSTONE_BLOCK).setName(HomePlugin.getLanguageManager().getStringWithColor("Warp.Modify.Permission-item-name", "&eChanger la permission du warp"));
+        return new ItemBuilder(Material.REDSTONE_BLOCK).setName(ModernGuiBridge.component(HomePlugin.getLanguageManager().getStringWithColor("Warp.Modify.Permission-item-name", "&eChanger la permission du warp")));
     }
 
     @Override
