@@ -1,7 +1,6 @@
 package fr.fuzeblocks.homeplugin;
 
 import fr.fuzeblocks.homeplugin.core.audience.AudienceProvider;
-import fr.fuzeblocks.homeplugin.core.audience.SpigotAudienceProvider;
 import fr.fuzeblocks.homeplugin.core.cache.CacheManager;
 import fr.fuzeblocks.homeplugin.core.database.CreateTable;
 import fr.fuzeblocks.homeplugin.core.database.DatabaseConnection;
@@ -49,7 +48,6 @@ import fr.fuzeblocks.homeplugin.other.listeners.OnJoinListener;
 import fr.fuzeblocks.homeplugin.other.listeners.OnMoveListener;
 import fr.fuzeblocks.homeplugin.other.listeners.OnPlayerTakeDamageByAnotherPlayer;
 import fr.fuzeblocks.homeplugin.other.update.UpdateChecker;
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -104,13 +102,13 @@ public final class HomePlugin extends JavaPlugin {
     private static GUIManager guiManager;
     private static Economy economy;
     private static Metrics metrics;
-    private static PluginManager pluginManager = PluginManager.getInstance();
+    private static final PluginManager pluginManager = PluginManager.getInstance();
     private static WarpSQLManager warpSQLManager;
     private static WarpYMLManager warpYMLManager;
     private static WarpManager warpManager;
-    private static InputsManager inputsManager = new InputsManager();
+    private static final InputsManager inputsManager = new InputsManager();
     private final String version = UpdateChecker.getVersionFromJar(this.getFile().toPath());
-    private UpdateChecker updateChecker = new UpdateChecker(this, 113935);
+    private final UpdateChecker updateChecker = new UpdateChecker(this, 113935);
 
     private static String safeDigits(String ver) {
         return ver == null ? "0" : ver.replaceAll("[^0-9.]", "");
@@ -333,25 +331,7 @@ public final class HomePlugin extends JavaPlugin {
         saveDefaultConfig();
         applyDefaultConfigValues();
         configurationSection = getConfig();
-       try {
-            Class.forName("io.papermc.paper.datacomponent.DataComponentType");
-            adventure = Class.forName("fr.fuzeblocks.homeplugin.core.audience.PaperAudienceProvider")
-                                 .getConstructor()
-                                 .newInstance();
-        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException |
-                 InvocationTargetException e) {
-
-            try {
-                adventure = Class.forName("fr.fuzeblocks.homeplugin.core.audience.SpigotAudienceProvider")
-                                     .getConstructor(HomePlugin.class)
-                                     .newInstance(this);
-            } catch (Exception ex) {
-                getLogger().severe("Impossible d'initialiser le fournisseur d'audience Adventure !");
-                ex.printStackTrace();
-                getServer().getPluginManager().disablePlugin(this);
-                return;
-            }
-        }
+        loadAdventure();
         setupMetrics();
 
         // Dependencies and services
@@ -361,14 +341,14 @@ public final class HomePlugin extends JavaPlugin {
         redisRegistration();
         databaseRegistration();
 
-        GuiBridge bridge = GuiBridgeFactory.create(this);
-        guiManager = new GUIManager(bridge);
+        loadGuiBridge();
 
         // Domain managers
         homeRegistration();
         spawnRegistration();
         warpRegistration();
-        cacheManager = CacheManager.getInstance();
+        loadCache();
+
 
         // Commands, events, completers
         commandRegistration();
@@ -486,6 +466,11 @@ public final class HomePlugin extends JavaPlugin {
         }
     }
 
+    private void loadGuiBridge() {
+        GuiBridge bridge = GuiBridgeFactory.create(this);
+        guiManager = new GUIManager(bridge);
+    }
+
     private void homeRegistration() {
         getLogger().info("Registering Homes...");
         File home = new File(getDataFolder(), "homes.yml");
@@ -510,6 +495,10 @@ public final class HomePlugin extends JavaPlugin {
         ensureFile(warp);
         warpYMLManager = new WarpYMLManager(warp);
         warpManager = WarpManager.getInstance();
+    }
+    private void loadCache() {
+        getLogger().info("Loading cache...");
+        cacheManager = CacheManager.getInstance();
     }
 
     private void ensureFile(File file) {
@@ -660,6 +649,28 @@ public final class HomePlugin extends JavaPlugin {
         return economy != null;
     }
 
+    private void loadAdventure() {
+        try {
+            Class.forName("io.papermc.paper.datacomponent.DataComponentType");
+            adventure = Class.forName("fr.fuzeblocks.homeplugin.core.audience.PaperAudienceProvider")
+                    .getConstructor()
+                    .newInstance();
+        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException |
+                 InvocationTargetException e) {
+
+            try {
+                adventure = Class.forName("fr.fuzeblocks.homeplugin.core.audience.SpigotAudienceProvider")
+                        .getConstructor(HomePlugin.class)
+                        .newInstance(this);
+            } catch (Exception ex) {
+                getLogger().severe("Impossible d'initialiser le fournisseur d'audience Adventure !");
+                ex.printStackTrace();
+                getServer().getPluginManager().disablePlugin(this);
+            }
+        }
+    }
+
+
     private void setupMetrics() {
         metrics = new Metrics(this, 27702);
         PluginManager.getInstance().loadPlugin(new MetricsPlugin());
@@ -683,7 +694,7 @@ public final class HomePlugin extends JavaPlugin {
     }
 
     private void runPluginReplacement() {
-        if (updateChecker.isMarkForUpdatePlugin()) {
+        if (UpdateChecker.isMarkForUpdatePlugin()) {
             getLogger().info("Plugin marked for update. Attempting to replace files...");
             //Delete the old jar
             File oldFile = new File(HomePlugin.class.getProtectionDomain().getCodeSource().getLocation().getPath());
