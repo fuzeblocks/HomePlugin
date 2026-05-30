@@ -7,14 +7,17 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.UnknownNullability;
 import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.gui.PagedGui;
 import xyz.xenondevs.invui.item.AbstractItem;
+import xyz.xenondevs.invui.item.Item;
 import xyz.xenondevs.invui.item.ItemBuilder;
 import xyz.xenondevs.invui.item.ItemProvider;
 
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class BackItem extends AbstractItem {
 
@@ -23,16 +26,18 @@ public class BackItem extends AbstractItem {
     private final LanguageManager languageManager = HomePlugin.getLanguageManager();
     private final String ITEM_KEY = "Language.Gui.BackItem.";
 
-    private final PagedGui<?> gui;
+    private final PagedGui<Item> gui;
 
-    public BackItem(PagedGui<?> gui) {
-        this.gui = gui;
+
+    public BackItem(AtomicReference<PagedGui<Item>> guiRef) {
+        this.gui = guiRef.get();
         gui.addPageChangeHandler((oldPage, newPage) -> notifyWindows());
         gui.addPageCountChangeHandler((oldCount, newCount) -> notifyWindows());
     }
 
     @Override
     public ItemProvider getItemProvider(Player viewer) {
+
         String name = languageManager.getStringWithColor(ITEM_KEY + "Name", "&cPage précédente");
 
         boolean hasPrevious = gui.getPage() > 0;

@@ -18,6 +18,7 @@ import xyz.xenondevs.invui.window.Window;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class LegacyGuiBridge implements GuiBridge {
@@ -31,7 +32,7 @@ public final class LegacyGuiBridge implements GuiBridge {
 
         return warps.keySet()
                 .stream()
-                .filter(name -> name != null)
+                .filter(Objects::nonNull)
                 .map(name -> new fr.fuzeblocks.homeplugin.gui.legacy.warp.item.WarpListItem(name, languageManager.getStringWithColor(WARP_LIST + "Warp-name", "&eNom du warp : %warp%").replace("%warp%", name)))
                 .collect(Collectors.toList());
     }

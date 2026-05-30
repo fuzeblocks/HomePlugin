@@ -3,16 +3,15 @@ package fr.fuzeblocks.homeplugin.gui.modern.warp.item;
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.core.warps.WarpData;
 import org.bukkit.Material;
-import org.bukkit.Warning;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.TestOnly;
-import xyz.xenondevs.invui.Click;import xyz.xenondevs.invui.item.AbstractItem;
+import xyz.xenondevs.invui.Click;
+import xyz.xenondevs.invui.item.AbstractItem;
 import xyz.xenondevs.invui.item.ItemBuilder;
 import xyz.xenondevs.invui.item.ItemProvider;
 

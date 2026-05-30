@@ -10,10 +10,12 @@ import org.jetbrains.annotations.NotNull;
 import xyz.xenondevs.invui.Click;
 import xyz.xenondevs.invui.gui.PagedGui;
 import xyz.xenondevs.invui.item.AbstractItem;
+import xyz.xenondevs.invui.item.Item;
 import xyz.xenondevs.invui.item.ItemBuilder;
 import xyz.xenondevs.invui.item.ItemProvider;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ForwardItem extends AbstractItem {
 
@@ -24,8 +26,8 @@ public class ForwardItem extends AbstractItem {
 
     private final PagedGui<?> gui;
 
-    public ForwardItem(PagedGui<?> gui) {
-        this.gui = gui;
+    public ForwardItem(AtomicReference<PagedGui<Item>> guiRef) {
+        this.gui = guiRef.get();
         gui.addPageChangeHandler((oldPage, newPage) -> notifyWindows());
         gui.addPageCountChangeHandler((oldCount, newCount) -> notifyWindows());
     }
