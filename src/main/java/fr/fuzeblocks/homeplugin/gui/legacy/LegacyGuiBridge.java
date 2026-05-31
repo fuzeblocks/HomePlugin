@@ -232,6 +232,14 @@ public final class LegacyGuiBridge implements GuiBridge {
 
         window.open();
     }
+    @Override
+    public void openDeleteHome(Player player, String homeName) {
+
+    }
+    @Override
+    public void openDeleteWarp(Player player, WarpData warpData) {
+
+    }
 
     /**
      * Gets the list of home items for the GUI.

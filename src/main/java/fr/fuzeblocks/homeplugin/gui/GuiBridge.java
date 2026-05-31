@@ -15,4 +15,6 @@ public interface GuiBridge {
     void openChangeIconWarpGUI(Player player, WarpData warpData);
 
     void openHomeGui(Player player);
+    void openDeleteHome(Player player, String homeName);
+    void openDeleteWarp(Player player, WarpData warpData);
 }

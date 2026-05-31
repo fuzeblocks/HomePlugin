@@ -71,6 +71,11 @@ Home:
   Home-gui-title: "&eHomes de %player%"
   Home-renamed: "&aLe home &e{old_home} &aa été renommé en &e{new_home}&a !"
   Home-relocated: "&aLe home &e{home}&a a été déplacé à votre position actuelle !"
+  Home-delete-confirmation-title: "&cConfirmer la suppression de %home%"
+  Home-delete-confirmation-lore: "&cÊtes-vous sûr de vouloir supprimer ce home ? Cette action ne peut pas être annulée !"
+  Home-cancel-deletion-title: "&aAnnuler la suppression de %home%"
+  Home-cancel-deletion-lore: "&aÊtes-vous sûr de vouloir annuler la suppression de ce home ?"
+  Home-delete-canceled: "&aSuppression annulée !"
   Relocate-management-title: "&eGestion du déplacement des homes"
   Relocate-usage-icon: "&7[?]"
   Relocate-click-suggest: "&7Cliquez pour insérer la commande dans votre chat."
@@ -83,6 +88,7 @@ Home:
   SetHome-click-suggest: "&7Cliquez pour insérer la commande dans votre chat."
   SetHome-view-description: "&7Définit un nouveau home à votre position actuelle."
   SetHome-usage-icon: "&7[＋]"
+
 
   List:
     Home-count: "&bVous avez &6%count%&b home(s) enregistré(s)."

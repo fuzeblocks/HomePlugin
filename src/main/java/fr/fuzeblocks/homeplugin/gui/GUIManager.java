@@ -1,5 +1,6 @@
 package fr.fuzeblocks.homeplugin.gui;
 
+import fr.fuzeblocks.homeplugin.core.warps.WarpData;
 import org.bukkit.entity.Player;
 
 public final class GUIManager {
@@ -29,12 +30,16 @@ public final class GUIManager {
         bridge.openChangeIconWarpGUI(player, warpData);
     }
 
-    public void openEditHomeGUI(Player player) {
-        bridge.openEditWarpGUI(player);
-    }
 
     public void openHomeGui(Player player) {
         bridge.openHomeGui(player);
+    }
+
+    public void openDeleteHome(Player player, String homeName) {
+        bridge.openDeleteHome(player, homeName);
+    }
+    public void openDeleteWarp(Player player, WarpData warpName) {
+        bridge.openDeleteWarp(player, warpName);
     }
 
 

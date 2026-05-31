@@ -22,7 +22,6 @@ public class HomeItem extends AbstractItem {
     private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.legacySection();
 
     private final String homeName;
-    private boolean deleted;
 
     public HomeItem(String homeName) {
         this.homeName = homeName;
@@ -48,9 +47,7 @@ public class HomeItem extends AbstractItem {
                             .getStringWithColor(HOME + "Home-deleted-with-name")
                             .replace("{homeName}", homeName)
             );
-            homeManager.deleteHome(player, homeName);
-            deleted = true;
-            notifyWindows();
+            HomePlugin.getGuiManager().openDeleteHome(player, homeName);
             return;
         }
 
@@ -66,10 +63,6 @@ public class HomeItem extends AbstractItem {
 
     @Override
     public @NotNull ItemProvider getItemProvider(Player viewer) {
-        if (deleted) {
-            return new ItemBuilder(Material.AIR);
-        }
-
         String displayName = HomePlugin.getLanguageManager()
                 .getStringWithColor(HOME + "Home-item-displayname")
                 .replace("{homeName}", homeName);

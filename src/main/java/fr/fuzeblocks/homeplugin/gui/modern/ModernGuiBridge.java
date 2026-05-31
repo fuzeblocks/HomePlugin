@@ -33,6 +33,7 @@ public final class ModernGuiBridge implements GuiBridge {
     private static final String HOME = "Home.";
     private static final LanguageManager LANGUAGE_MANAGER = HomePlugin.getLanguageManager();
     private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.legacyAmpersand();
+    private final HomeManager homeManager = HomePlugin.getHomeManager();
 
     private static boolean isMaterialValidForIcon(Material material) {
         String name = material.name();
@@ -139,7 +140,6 @@ public final class ModernGuiBridge implements GuiBridge {
 
     @Override
     public void openChangeIconWarpGUI(Player player, WarpData warpData) {
-
         AtomicReference<PagedGui<Item>> guiRef = new AtomicReference<>();
         BackItem backItem = new BackItem();
         ForwardItem forwardItem = new ForwardItem();
@@ -189,12 +189,46 @@ public final class ModernGuiBridge implements GuiBridge {
         openWindow(player, gui, component(LANGUAGE_MANAGER.getStringWithColor(HOME + "Home-gui-title").replace("%player%", player.getName())));
     }
 
+    @Override
+    public void openDeleteHome(Player player, String homeName) {
+       if (!homeManager.exist(player, homeName)) {
+           player.sendMessage(LANGUAGE_MANAGER.getStringWithColor(HOME + "Home-does-not-exist"));
+           return;
+       }
+       PagedGui<Item> gui = PagedGui.itemsBuilder()
+                .setStructure(
+                        "# # # # # # # # #",
+                        "# x C x H x D x #",
+                        "# x x x x x x x #",
+                        "# # # < # > # # #")
+                .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
+                .addIngredient('#', borderItem())
+                .addIngredient('<', new BackItem())
+                .addIngredient('>', new ForwardItem())
+                .addIngredient('H', getHomeItem(player, homeName))
+                .addIngredient('D', new DeleteHomeConfirmation(homeName))
+                .addIngredient('C', new CancelHomeDeleteConfirmation(homeName))
+                .build();
+        openWindow(player, gui, component(LANGUAGE_MANAGER.getStringWithColor(HOME + "Home-delete-confirmation-title", "&cConfirmer la suppression de %home%").replace("%home%", homeName)));
+    }
+
+    @Override
+    public void openDeleteWarp(Player player, WarpData warpData) {
+
+    }
+
     private List<Item> getHomeItems(Player player) {
-        HomeManager homeManager = HomePlugin.getHomeManager();
         return homeManager.getHomesName(player).stream()
                 .filter(Objects::nonNull)
                 .map(HomeItem::new)
                 .collect(Collectors.toList());
+    }
+
+    private Item getHomeItem(Player player, String homeName) {
+        if (!homeManager.exist(player, homeName)) {
+            return null;
+        }
+        return new HomeItem(homeName);
     }
 
     private List<Item> getWarpListItems() {
