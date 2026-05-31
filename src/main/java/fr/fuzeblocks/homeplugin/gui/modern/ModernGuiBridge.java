@@ -200,11 +200,9 @@ public final class ModernGuiBridge implements GuiBridge {
                         "# # # # # # # # #",
                         "# x C x H x D x #",
                         "# x x x x x x x #",
-                        "# # # < # > # # #")
+                        "# # # # # # # # #")
                 .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
                 .addIngredient('#', borderItem())
-                .addIngredient('<', new BackItem())
-                .addIngredient('>', new ForwardItem())
                 .addIngredient('H', getHomeItem(player, homeName))
                 .addIngredient('D', new DeleteHomeConfirmation(homeName))
                 .addIngredient('C', new CancelHomeDeleteConfirmation(homeName))
