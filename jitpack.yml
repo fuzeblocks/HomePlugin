@@ -2,3 +2,7 @@ before_install:
   - echo "French fries are very good in production"
   - sdk install java 25.0.1-tem
   - sdk use java 25.0.1-tem
+
+install:
+  - mvn -N install
+  - mvn clean install -DskipTests

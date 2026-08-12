@@ -58,7 +58,8 @@
                <version>3.4.0</version>
                <configuration>
                    <encoding>UTF-8</encoding>
-                   <outputDirectory>${project.basedir}/../docs</outputDirectory>
+                   <reportOutputDirectory>${project.basedir}/../docs</reportOutputDirectory>
+                   <destDir>.</destDir>
                </configuration>
                <executions>
                    <execution>
