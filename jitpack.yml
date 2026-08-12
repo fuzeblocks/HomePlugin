@@ -2,6 +2,8 @@ jdk:
   - openjdk25
 before_install:
   - echo "using jgitver for version resolution"
+  - sdk install java 25.0.1-tem
+  - sdk use java 25.0.1-tem
 install:
   - mvn -N install
   - mvn clean install -DskipTests
