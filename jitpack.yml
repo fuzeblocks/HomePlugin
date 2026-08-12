@@ -1,5 +1,5 @@
 jdk:
-  - openjdk21
+  - openjdk25
 before_install:
   - echo "using jgitver for version resolution"
 install:
