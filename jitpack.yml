@@ -1,15 +1,4 @@
 before_install:
-  - sdk install java 25.0.4-amzn
-  - sdk use java 25.0.4-amzn
-  - echo "JAVA_HOME=$JAVA_HOME"
-  - which java
-  - java -version
-  - which javac
-  - javac -version
-  - which mvn
-  - mvn -version
   - echo "TEST"
-
-install:
-  - mvn -N install
-  - mvn clean install -DskipTests
+  - sdk install java 25.0.1-tem
+  - sdk use java 25.0.1-tem
