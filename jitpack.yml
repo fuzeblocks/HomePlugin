@@ -1,4 +1,4 @@
 before_install:
-  - echo "TEST"
+  - echo "French fries are very good in production"
   - sdk install java 25.0.1-tem
   - sdk use java 25.0.1-tem
