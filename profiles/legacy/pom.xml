@@ -2,36 +2,39 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>fr.fuzeblocks.homeplugin</groupId>
     <artifactId>legacy</artifactId>
     <packaging>jar</packaging>
     <parent>
-      <groupId>fr.fuzeblocks</groupId>
-      <artifactId>HomePlugin</artifactId>
-      <version>0.8.7-warps_dev-SNAPSHOT</version>
-      <relativePath>../../pom.xml</relativePath>
+        <groupId>fr.fuzeblocks</groupId>
+        <artifactId>HomePlugin</artifactId>
+        <version>0.8.7-warps_dev-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
     <name>HomePlugin - Legacy</name>
     <description>HomePlugin - Legacy</description>
     <properties>
-        <revision>0.0.0</revision>
         <maven.compiler.release>11</maven.compiler.release>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <repositories>
         <repository>
-          <id>xenondevs-releases</id>
-          <name>xenondevs repository</name>
-          <url>https://repo.xenondevs.xyz/releases</url>
+            <id>xenondevs-releases</id>
+            <name>xenondevs repository</name>
+            <url>https://repo.xenondevs.xyz/releases</url>
         </repository>
     </repositories>
     <dependencies>
         <dependency>
-          <groupId>xyz.xenondevs.invui</groupId>
-          <artifactId>invui-core</artifactId>
-          <version>1.49</version>
+            <groupId>fr.fuzeblocks.homeplugin</groupId>
+            <artifactId>core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>invui-core</artifactId>
+            <version>1.49</version>
         </dependency>
         <dependency>
             <groupId>xyz.xenondevs.invui</groupId>
@@ -46,35 +49,21 @@
         </dependency>
     </dependencies>
     <build>
-        <sourceDirectory>${project.basedir}/../../src/main/java</sourceDirectory>
+        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
         <resources>
             <resource>
-                <directory>${project.basedir}/../../src/main/resources</directory>
-                 <filtering>true</filtering>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
             </resource>
         </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>move-javadoc</id>
-                        <phase>none</phase>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.12.0</version>
                 <configuration>
-                    <sourcepath>${project.basedir}/../../src/main/java</sourcepath>
-                    <subpackages>fr.fuzeblocks.homeplugin.core:fr.fuzeblocks.homeplugin.other:fr.fuzeblocks.homeplugin.gui.legacy</subpackages>
-                    <excludePackageNames>fr.fuzeblocks.homeplugin.gui.modern.*</excludePackageNames>
-                    <sourceFileExcludes>
-                        <sourceFileExclude>fr/fuzeblocks/homeplugin/core/audience/PaperAudienceProvider.java</sourceFileExclude>
-                    </sourceFileExcludes>
+                    <sourcepath>${project.basedir}/src/main/java</sourcepath>
+                    <subpackages>fr.fuzeblocks.homeplugin.gui.legacy</subpackages>
                 </configuration>
             </plugin>
             <plugin>
@@ -83,14 +72,56 @@
                 <version>3.11.0</version>
                 <configuration>
                     <release>11</release>
-                    <excludes>
-                        <exclude>fr/fuzeblocks/homeplugin/gui/modern/**</exclude>
-                        <exclude>fr/fuzeblocks/homeplugin/core/audience/PaperAudienceProvider.java</exclude>
-                    </excludes>
                     <compilerArgs>
                         <arg>-implicit:none</arg>
                     </compilerArgs>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.0</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.ow2.asm</groupId>
+                        <artifactId>asm</artifactId>
+                        <version>9.6</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.ow2.asm</groupId>
+                        <artifactId>asm-commons</artifactId>
+                        <version>9.5</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <relocations>
+                        <relocation>
+                            <pattern>org.bstats</pattern>
+                            <shadedPattern>fr.fuzeblocks.homeplugin.bstats</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>net.kyori</pattern>
+                            <shadedPattern>fr.fuzeblocks.libs.net.kyori</shadedPattern>
+                        </relocation>
+                    </relocations>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>module-info.class</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

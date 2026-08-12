@@ -1,248 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                            http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
 
-    <groupId>fr.fuzeblocks</groupId>
-    <artifactId>HomePlugin</artifactId>
-    <version>${revision}</version>
+   <groupId>fr.fuzeblocks</groupId>
+   <artifactId>HomePlugin</artifactId>
+   <version>${revision}</version>
+   <packaging>pom</packaging>
 
-    <modules>
-        <module>profiles/legacy</module>
-        <module>profiles/modern</module>
-    </modules>
+   <name>HomePlugin</name>
+   <description>[Created by fuzeblocks]</description>
 
-    <properties>
-        <revision>0.0.0</revision>
-        <!-- Compile target: Java 11 bytecode so the jar runs on JRE 11..21 -->
-        <maven.compiler.release>11</maven.compiler.release>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+   <modules>
+       <module>core</module>
+       <module>profiles/legacy</module>
+       <module>profiles/modern</module>
+   </modules>
 
-    <packaging>pom</packaging>
+   <properties>
+       <revision>0.0.0</revision>
+       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+   </properties>
 
-    <name>HomePlugin</name>
-    <description>[Created by fuzeblocks]</description>
+   <distributionManagement>
+       <repository>
+           <id>github</id>
+           <url>https://maven.pkg.github.com/fuzeblocks/HomePlugin</url>
+       </repository>
+   </distributionManagement>
 
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/fuzeblocks/HomePlugin</url>
-        </repository>
-    </distributionManagement>
-
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>plugin.yml</include>
-                    <include>french.yml</include>
-                    <include>english.yml</include>
-                    <include>spanish.yml</include>
-                    <include>config.yml</include>
-                    <include>custom.yml</include>
-                    <include>ukrainian.yml</include>
-                    <include>russian.yml</include>
-                    <include>german.yml</include>
-                    <include>turkish.yml</include>
-                </includes>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-                <configuration>
-                    <release>${maven.compiler.release}</release>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.0</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.ow2.asm</groupId>
-                        <artifactId>asm</artifactId>
-                        <version>9.6</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.ow2.asm</groupId>
-                        <artifactId>asm-commons</artifactId>
-                        <version>9.5</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <relocations>
-                        <relocation>
-                            <pattern>org.bstats</pattern>
-                            <shadedPattern>fr.fuzeblocks.homeplugin.bstats</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>net.kyori</pattern>
-                            <shadedPattern>fr.fuzeblocks.libs.net.kyori</shadedPattern>
-                        </relocation>
-                    </relocations>
-                    <filters>
-                        <filter>
-                            <artifact>*:*</artifact>
-                            <excludes>
-                                <exclude>module-info.class</exclude>
-                            </excludes>
-                        </filter>
-                    </filters>
-                    <createDependencyReducedPom>false</createDependencyReducedPom>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- other plugins unchanged (javadoc, antrun) -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.4.0</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                    <outputDirectory>${project.basedir}/docs</outputDirectory>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>generate-javadocs</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>javadoc</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>move-javadoc</id>
-                        <phase>none</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-                                <mkdir dir="${project.basedir}/docs/apidocs"/>
-                                <move todir="${project.basedir}/docs" overwrite="true">
-                                    <fileset dir="${project.reporting.outputDirectory}/apidocs">
-                                        <include name="**/*"/>
-                                    </fileset>
-                                </move>
-                                <delete dir="${project.basedir}/docs/apidocs" failonerror="false"/>
-                            </target>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-        </plugins>
-    </build>
-
-    <repositories>
-        <repository>
-            <id>xenondevs</id>
-            <url>https://repo.xenondevs.xyz/releases</url>
-        </repository>
-        <repository>
-            <id>placeholderapi</id>
-            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
-        </repository>
-        <repository>
-            <id>spigotmc-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-        </repository>
-        <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
-
-    <dependencies>
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>5.2.0</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>me.clip</groupId>
-            <artifactId>placeholderapi</artifactId>
-            <version>2.11.6</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.yworks</groupId>
-            <artifactId>yguard</artifactId>
-            <version>4.1.0</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.20.4-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>26.0.2</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.11.3</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.MilkBowl</groupId>
-            <artifactId>VaultAPI</artifactId>
-            <version>1.7</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>net.kyori</groupId>
-            <artifactId>adventure-platform-bukkit</artifactId>
-            <version>4.4.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.bstats</groupId>
-            <artifactId>bstats-bukkit</artifactId>
-            <version>3.0.2</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
+   <repositories>
+       <repository>
+           <id>xenondevs</id>
+           <url>https://repo.xenondevs.xyz/releases</url>
+       </repository>
+       <repository>
+           <id>placeholderapi</id>
+           <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+       </repository>
+       <repository>
+           <id>spigotmc-repo</id>
+           <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+       </repository>
+       <repository>
+           <id>sonatype</id>
+           <url>https://oss.sonatype.org/content/groups/public/</url>
+       </repository>
+       <repository>
+           <id>jitpack.io</id>
+           <url>https://jitpack.io</url>
+       </repository>
+   </repositories>
 </project>

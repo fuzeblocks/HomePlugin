@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
+ <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>fr.fuzeblocks.homeplugin</groupId>
     <artifactId>modern</artifactId>
@@ -39,6 +39,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>fr.fuzeblocks.homeplugin</groupId>
+            <artifactId>core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>xyz.xenondevs.invui</groupId>
             <artifactId>invui</artifactId>
             <version>2.1.0</version>
@@ -52,55 +57,34 @@
     </dependencies>
 
     <build>
-        <sourceDirectory>${project.basedir}/../../src/main/java</sourceDirectory>
-
+        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
         <resources>
             <resource>
-                <directory>${project.basedir}/../../src/main/resources</directory>
+                <directory>${project.basedir}/src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>move-javadoc</id>
-                        <phase>none</phase>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.4.0</version>
+                <version>3.12.0</version>
                 <configuration>
-                    <sourcepath>${project.basedir}/../../src/main/java</sourcepath>
-                    <subpackages>fr.fuzeblocks.homeplugin.core:fr.fuzeblocks.homeplugin.other:fr.fuzeblocks.homeplugin.gui.modern</subpackages>
-                    <excludePackageNames>fr.fuzeblocks.homeplugin.gui.legacy.*</excludePackageNames>
+                    <sourcepath>${project.basedir}/src/main/java</sourcepath>
+                    <subpackages>fr.fuzeblocks.homeplugin.gui.modern</subpackages>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
                     <release>25</release>
-                    <excludes>
-                        <exclude>**/gui/legacy/**/*.java</exclude>
-                        <exclude>fr/fuzeblocks/homeplugin/gui/legacy/**/*.java</exclude>
-                        <exclude>fr/fuzeblocks/homeplugin/core/audience/SpigotAudienceProvider.java</exclude>
-                    </excludes>
                     <compilerArgs>
                         <arg>-implicit:none</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -156,5 +140,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
