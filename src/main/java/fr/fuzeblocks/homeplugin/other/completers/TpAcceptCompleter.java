@@ -1,0 +1,40 @@
+package fr.fuzeblocks.homeplugin.other.completers;
+
+import fr.fuzeblocks.homeplugin.core.cache.CacheManager;
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * The type Tp accept completer.
+ */
+public class TpAcceptCompleter implements TabCompleter {
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        List<String> completions = new ArrayList<>();
+
+        if (!(sender instanceof Player) || args.length != 1) return completions;
+
+        Player target = (Player) sender;
+        CacheManager cacheManager = CacheManager.getInstance();
+
+        for (UUID senderUUID : cacheManager.getAllTpaSenders()) {
+            UUID tpaTargetUUID = cacheManager.getTargetWithSender(senderUUID);
+            if (tpaTargetUUID != null && tpaTargetUUID.equals(target.getUniqueId())) {
+                Player requester = Bukkit.getPlayer(senderUUID);
+                if (requester != null && requester.isOnline()) {
+                    completions.add(requester.getName());
+                }
+            }
+        }
+
+        return completions;
+    }
+}

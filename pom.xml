@@ -9,6 +9,11 @@
     <artifactId>HomePlugin</artifactId>
     <version>${revision}</version>
 
+    <modules>
+        <module>profiles/legacy</module>
+        <module>profiles/modern</module>
+    </modules>
+
     <properties>
         <revision>0.0.0</revision>
         <!-- Compile target: Java 11 bytecode so the jar runs on JRE 11..21 -->
@@ -16,7 +21,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>HomePlugin</name>
     <description>[Created by fuzeblocks]</description>
@@ -33,7 +38,7 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
-                    <include>plugin.yml.in</include>
+                    <include>plugin.yml</include>
                     <include>french.yml</include>
                     <include>english.yml</include>
                     <include>spanish.yml</include>
@@ -131,22 +136,8 @@
                 <version>3.1.0</version>
                 <executions>
                     <execution>
-                        <id>move-plugin-yml</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-                                <move file="${project.build.outputDirectory}/plugin.yml.in"
-                                      tofile="${project.build.outputDirectory}/plugin.yml"/>
-                            </target>
-                        </configuration>
-                    </execution>
-
-                    <execution>
                         <id>move-javadoc</id>
-                        <phase>package</phase>
+                        <phase>none</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
@@ -213,8 +204,6 @@
             <scope>compile</scope>
         </dependency>
 
-
-
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
@@ -227,13 +216,6 @@
             <artifactId>annotations</artifactId>
             <version>26.0.2</version>
             <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xenondevs.invui</groupId>
-            <artifactId>invui</artifactId>
-            <version>1.49</version>
-            <type>pom</type>
         </dependency>
 
         <dependency>

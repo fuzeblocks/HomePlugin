@@ -1,13 +1,15 @@
 <div align="center">
 
-# 🏡 HomePlugin
 
-**A lightweight, flexible home & teleport management plugin for Paper/Spigot servers**
+<img width="1021" height="55" alt="homeplugin_author" src="https://github.com/user-attachments/assets/31d00352-ad6c-42e0-8901-8e07f6088153" />
 
 [![](https://jitpack.io/v/fuzeblocks/HomePlugin.svg)](https://jitpack.io/#fuzeblocks/HomePlugin)
 [![sponsor](https://img.shields.io/badge/Sponsor-Support%20Development-blue)](https://client.pristis.fr/aff.php?aff=2)
 [![Discord](https://img.shields.io/discord/1394947383560900618?color=5865F2&logo=discord&logoColor=white&label=Discord)](https://discord.gg/5zJyKz6Nfm)
 [![License](https://img.shields.io/badge/license-Apache--2.0-orange.svg)](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
+
+
+**A lightweight, flexible home & teleport management plugin for Paper/Spigot servers**
 
 **Stable • Fast • Modular • API-Driven**
 
@@ -19,7 +21,8 @@
 
 ---
 
-## ✨ Features
+<img width="250" height="50" alt="homeplugin_features" src="https://github.com/user-attachments/assets/5e770d8e-1dea-45f5-b58f-f1a77713fb90" />
+
 
 ### 🏠 **Core Functionality**
 - **Named Homes** - Set multiple homes with custom names and optional metadata
@@ -51,7 +54,8 @@
 
 ---
 
-## ⬇️ Installation
+<img width="270" height="50" alt="minecraft_installation" src="https://github.com/user-attachments/assets/9b10527b-9826-4ba1-90c8-721fda75eba7" />
+
 
 1. **Download** the latest release from [Releases](https://github.com/fuzeblocks/HomePlugin/releases) or build from source
 2. **Place** the JAR file into your server's `plugins/` folder
@@ -66,7 +70,8 @@
 
 ---
 
-## 🧾 Commands
+<img width="250" height="50" alt="minecraft_commands" src="https://github.com/user-attachments/assets/cf985ede-73b7-4e8a-a3e0-5d499e929ade" />
+
 
 ### Player Commands
 
@@ -136,7 +141,8 @@ The plugin scans from 1-100 and applies the highest value held by the player.
 
 ---
 
-## ⚙️ Configuration
+<img width="270" height="50" alt="homeplugin_config" src="https://github.com/user-attachments/assets/8f51b1c3-2c5b-4c16-91de-328482b45a39" />
+
 
 ### 📄 Configuration File
 
@@ -191,7 +197,8 @@ Enable or disable specific features:
 
 ---
 
-## 🧩 Integrations
+<img width="260" height="50" alt="homeplugin_integration" src="https://github.com/user-attachments/assets/553fad7a-6d23-4e4c-881e-b9a7e4372177" />
+
 
 ### PlaceholderAPI
 
@@ -217,7 +224,7 @@ Configure optional costs for various actions through Vault integration. Supports
 
 ---
 
-## 🌍 Supported Languages
+<img width="250" height="50" alt="homeplugin_languages" src="https://github.com/user-attachments/assets/b2046b7e-35f1-4a8a-bfd4-376f3350096f" />
 
 Built-in language support with fully customizable YAML files:
 
@@ -233,7 +240,7 @@ Set your language in `config.yml` or use `/lang set <LANGUAGE>` in-game.
 
 ---
 
-## 🧑‍💻 Developer API
+<img width="270" height="50" alt="homeplugin_dev" src="https://github.com/user-attachments/assets/59a564f0-8254-431b-867d-7a7982bd32ea" />
 
 HomePlugin provides a comprehensive API for developers to integrate and extend functionality.
 
@@ -289,7 +296,8 @@ Replace `Tag` with the desired version/release tag.
 
 ---
 
-## 🧱 Architecture
+<img width="270" height="50" alt="minecraft_architecture" src="https://github.com/user-attachments/assets/38fa8062-0509-4ca5-8ba3-2cbc048ae26e" />
+
 
 HomePlugin features a modular, performance-focused architecture:
 
@@ -301,7 +309,8 @@ HomePlugin features a modular, performance-focused architecture:
 
 ---
 
-## ✅ Compatibility
+<img width="270" height="50" alt="minecraft_compatibility" src="https://github.com/user-attachments/assets/2b8f8dc2-d722-40e6-9eb5-d009330cf8c9" />
+
 
 - **Minecraft:** 1.14+ (declared `api-version: 1.14`)
 - **Server:** Paper, Spigot, and derivatives
@@ -310,7 +319,8 @@ HomePlugin features a modular, performance-focused architecture:
 
 ---
 
-## 🗺️ Roadmap
+<img width="250" height="50" alt="minecraft_roadmap" src="https://github.com/user-attachments/assets/e90b5113-37ca-4f76-a887-29e1b5bad413" />
+
 
 | Feature | Status |
 |---------|--------|
@@ -328,7 +338,8 @@ Have a suggestion? Open a [Discussion](https://github.com/fuzeblocks/HomePlugin/
 
 ---
 
-## 🤝 Contributing
+<img width="270" height="50" alt="minecraft_contributing" src="https://github.com/user-attachments/assets/8e6d9f33-35ba-4bbd-80f0-b7ac36fc33f1" />
+
 
 Contributions are welcome! Here's how you can help:
 
@@ -347,7 +358,8 @@ Contributions are welcome! Here's how you can help:
 
 ---
 
-## 💬 Support
+<img width="250" height="50" alt="minecraft_support" src="https://github.com/user-attachments/assets/d93ca611-eeee-4afb-97b3-f7a6b2966719" />
+
 
 Need help? Have questions?
 
@@ -358,7 +370,7 @@ Need help? Have questions?
 
 ---
 
-## 📄 License
+<img width="250" height="50" alt="minecraft_license" src="https://github.com/user-attachments/assets/f0424130-cd3e-4c26-b9e0-544eb60d6ac1" />
 
 HomePlugin is licensed under the [Apache License 2.0](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file).
 

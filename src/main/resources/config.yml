@@ -1,5 +1,8 @@
 Config:
-
+  # ----------------------------------------
+  # Do not edit this line under this section, it is used to identify the config version for updates
+  # ----------------------------------------
+  Initial-Plugin-Version: not-yet-defined #Case sensitive. DO NOT EDIT
   # ----------------------------------------
   # Language / Localization
   # Available: FRENCH, ENGLISH, SPANISH, CUSTOM
@@ -78,6 +81,7 @@ Config:
     Home-Teleport-Price: 50.0
     Tpa-Request-Price: 20.0
     RTP-Price: 150.0
+    Warp-Use-Price: 75.0
 
   # ----------------------------------------
   # Features
@@ -87,3 +91,4 @@ Config:
     Enable-TPA: true
     Enable-Spawn: true
     Enable-Home: true
+    Enable-Warp: true
