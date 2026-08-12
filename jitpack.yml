@@ -8,6 +8,7 @@ before_install:
   - javac -version
   - which mvn
   - mvn -version
+  - echo "TEST"
 
 install:
   - mvn -N install
