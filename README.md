@@ -330,7 +330,7 @@ HomePlugin features a modular, performance-focused architecture:
 | `/back` command | ✅ Complete |
 | Clickable chat messages | ✅ Complete |
 | Public homes | 📝 Planned |
-| Warps | 📝 Beta |
+| Warps | ✅ Complete |
 | UI/style refresh | 📝 Planned |
 | BlueMap and Dynmap integration | 📝 Planned |
 
