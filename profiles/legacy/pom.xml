@@ -7,34 +7,26 @@
     <groupId>fr.fuzeblocks.homeplugin</groupId>
     <artifactId>legacy</artifactId>
     <packaging>jar</packaging>
-
     <parent>
       <groupId>fr.fuzeblocks</groupId>
       <artifactId>HomePlugin</artifactId>
       <version>0.8.7-warps_dev-SNAPSHOT</version>
       <relativePath>../../pom.xml</relativePath>
     </parent>
-
-
     <name>HomePlugin - Legacy</name>
     <description>HomePlugin - Legacy</description>
-
     <properties>
         <revision>0.0.0</revision>
         <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-
     <repositories>
         <repository>
           <id>xenondevs-releases</id>
           <name>xenondevs repository</name>
           <url>https://repo.xenondevs.xyz/releases</url>
         </repository>
-
     </repositories>
-
     <dependencies>
         <dependency>
           <groupId>xyz.xenondevs.invui</groupId>
@@ -46,7 +38,6 @@
             <artifactId>inventory-access-r1</artifactId>
             <version>1.49</version>
         </dependency>
-
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
@@ -54,7 +45,6 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
     <build>
         <sourceDirectory>${project.basedir}/../../src/main/java</sourceDirectory>
         <resources>
@@ -63,7 +53,6 @@
                  <filtering>true</filtering>
             </resource>
         </resources>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -75,22 +64,19 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.12.0</version>
                 <configuration>
-
                     <sourcepath>${project.basedir}/../../src/main/java</sourcepath>
                     <subpackages>fr.fuzeblocks.homeplugin.core:fr.fuzeblocks.homeplugin.other:fr.fuzeblocks.homeplugin.gui.legacy</subpackages>
                     <excludePackageNames>fr.fuzeblocks.homeplugin.gui.modern.*</excludePackageNames>
-                    <excludes>
-                        <exclude>fr/fuzeblocks/homeplugin/core/audience/PaperAudienceProvider.java</exclude>
-                    </excludes>
+                    <sourceFileExcludes>
+                        <sourceFileExclude>fr/fuzeblocks/homeplugin/core/audience/PaperAudienceProvider.java</sourceFileExclude>
+                    </sourceFileExcludes>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -101,9 +87,11 @@
                         <exclude>fr/fuzeblocks/homeplugin/gui/modern/**</exclude>
                         <exclude>fr/fuzeblocks/homeplugin/core/audience/PaperAudienceProvider.java</exclude>
                     </excludes>
-                    </configuration>
+                    <compilerArgs>
+                        <arg>-implicit:none</arg>
+                    </compilerArgs>
+                </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>

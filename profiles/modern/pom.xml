@@ -95,6 +95,9 @@
                         <exclude>fr/fuzeblocks/homeplugin/gui/legacy/**/*.java</exclude>
                         <exclude>fr/fuzeblocks/homeplugin/core/audience/SpigotAudienceProvider.java</exclude>
                     </excludes>
+                    <compilerArgs>
+                        <arg>-implicit:none</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
 
