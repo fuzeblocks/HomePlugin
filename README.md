@@ -13,7 +13,7 @@
 
 **Stable • Fast • Modular • API-Driven**
 
-[Features](#-features) • [Installation](#%EF%B8%8F-installation) • [Commands & Permissions](#-commands--permissions) • [Configuration](#%EF%B8%8F-configuration) • [API Documentation](http[...]
+[Features](#-features) • [Installation](#%EF%B8%8F-installation) • [Commands & Permissions](#-commands--permissions) • [Configuration](#%EF%B8%8F-configuration) • [API Documentation](https://github.com/fuzeblocks/HomePlugin/wiki)
 
 ![Usage](https://bstats.org/signatures/bukkit/HomePlugin.svg)
 
