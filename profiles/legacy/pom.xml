@@ -10,7 +10,7 @@
     <parent>
         <groupId>fr.fuzeblocks</groupId>
         <artifactId>HomePlugin</artifactId>
-        <version>0.8.7-warps_dev-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <name>HomePlugin - Legacy</name>
