@@ -21,6 +21,7 @@
 
    <properties>
        <maven.compiler.release>11</maven.compiler.release>
+       <maven.deploy.skip>false</maven.deploy.skip>
    </properties>
 
    <build>
@@ -51,25 +52,6 @@
                <configuration>
                    <release>11</release>
                </configuration>
-           </plugin>
-           <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
-               <artifactId>maven-javadoc-plugin</artifactId>
-               <version>3.4.0</version>
-               <configuration>
-                   <encoding>UTF-8</encoding>
-                   <reportOutputDirectory>${project.basedir}/../docs</reportOutputDirectory>
-                   <destDir>.</destDir>
-               </configuration>
-               <executions>
-                   <execution>
-                       <id>generate-javadocs</id>
-                       <phase>package</phase>
-                       <goals>
-                           <goal>javadoc</goal>
-                       </goals>
-                   </execution>
-               </executions>
            </plugin>
        </plugins>
    </build>
