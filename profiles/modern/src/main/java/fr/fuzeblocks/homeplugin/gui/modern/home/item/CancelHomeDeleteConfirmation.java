@@ -1,4 +1,4 @@
-package fr.fuzeblocks.homeplugin.gui.modern.warp.item;
+package fr.fuzeblocks.homeplugin.gui.modern.home.item;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.core.language.LanguageManager;
@@ -13,24 +13,24 @@ import xyz.xenondevs.invui.item.ItemProvider;
 
 import java.util.List;
 
-public class DeleteHomeConfirmation extends AbstractItem {
-    private final String homeName;
+public class CancelHomeDeleteConfirmation extends AbstractItem {
+ private final String homeName;
     private final LanguageManager languageManager = HomePlugin.getLanguageManager();
     private static final String HOME = "Home.";
-    public DeleteHomeConfirmation(String homeName) {
+    public CancelHomeDeleteConfirmation(String homeName) {
         this.homeName = homeName;
     }
 
     @Override
     public ItemProvider getItemProvider(Player viewer) {
         String displayName = languageManager
-                .getStringWithColor(HOME + "Home-delete-confirmation-title","&cConfirmer la suppression de %home%")
+                .getStringWithColor(HOME + "Home-cancel-deletion-title","&aAnnuler la suppression de %home%")
                 .replace("%home%", homeName);
 
-        String lore = languageManager.getStringWithColor(HOME + "Home-delete-confirmation-lore","&cÊtes-vous sûr de vouloir supprimer ce home ? Cette action ne peut pas être annulée !");
+        String lore = languageManager.getStringWithColor(HOME + "Home-cancel-deletion-lore","&aÊtes-vous sûr de vouloir annuler la suppression de ce home ?");
 
 
-        return new ItemBuilder(Material.BARRIER)
+        return new ItemBuilder(Material.EMERALD_BLOCK)
                 .setName(ModernGuiBridge.component(displayName))
                 .setLore(List.of(
                         ModernGuiBridge.component(lore)
@@ -39,8 +39,8 @@ public class DeleteHomeConfirmation extends AbstractItem {
 
     @Override
     public void handleClick(ClickType clickType, Player player, Click click) {
-        HomePlugin.getHomeManager().deleteHome(player, homeName);
-        player.sendMessage(languageManager.getStringWithColor(HOME + "Home-deleted"));
         player.closeInventory();
+        HomePlugin.getGuiManager().openDeleteHome(player, homeName);
+        player.sendMessage(languageManager.getStringWithColor(HOME + "Home-delete-canceled","&aSuppression annulée"));
     }
 }

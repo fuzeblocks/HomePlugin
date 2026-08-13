@@ -1,4 +1,4 @@
-package fr.fuzeblocks.homeplugin.gui.legacy.warp.item;
+package fr.fuzeblocks.homeplugin.gui.legacy.home.item;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.core.language.LanguageManager;
@@ -12,34 +12,32 @@ import xyz.xenondevs.invui.item.builder.ItemBuilder;import xyz.xenondevs.invui.i
 
 import java.util.List;
 
-public class CancelHomeDeleteConfirmation extends AbstractItem {
+public class DeleteHomeConfirmation extends AbstractItem {
     private final String homeName;
     private final LanguageManager languageManager = HomePlugin.getLanguageManager();
     private static final String HOME = "Home.";
-    public CancelHomeDeleteConfirmation(String homeName) {
+    public DeleteHomeConfirmation(String homeName) {
         this.homeName = homeName;
     }
 
     @Override
-    public ItemProvider getItemProvider(Player viewer) {
+    public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent event) {
+        HomePlugin.getHomeManager().deleteHome(player, homeName);
+        player.sendMessage(languageManager.getStringWithColor(HOME + "Home-deleted"));
+        player.closeInventory();
+    }
+    @Override
+    public ItemProvider getItemProvider() {
         String displayName = languageManager
-                .getStringWithColor(HOME + "Home-cancel-deletion-title","&aAnnuler la suppression de %home%")
+                .getStringWithColor(HOME + "Home-delete-confirmation-title","&cConfirmer la suppression de %home%")
                 .replace("%home%", homeName);
 
-        String lore = languageManager.getStringWithColor(HOME + "Home-cancel-deletion-lore","&aÊtes-vous sûr de vouloir annuler la suppression de ce home ?");
+        String lore = languageManager.getStringWithColor(HOME + "Home-delete-confirmation-lore","&cÊtes-vous sûr de vouloir supprimer ce home ? Cette action ne peut pas être annulée !");
 
 
-        return new ItemBuilder(Material.EMERALD_BLOCK)
+        return new ItemBuilder(Material.BARRIER)
                 .setDisplayName(displayName)
                 .setLegacyLore(List.of(
                         lore
                 ));
-    }
-
-    @Override
-    public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent event) {
-        player.closeInventory();
-        HomePlugin.getGuiManager().openDeleteHome(player, homeName);
-        player.sendMessage(languageManager.getStringWithColor(HOME + "Home-delete-canceled","&aSuppression annulée"));
-    }
-}
+    }}

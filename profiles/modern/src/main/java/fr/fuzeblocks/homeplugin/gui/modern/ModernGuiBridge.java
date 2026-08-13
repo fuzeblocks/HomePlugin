@@ -5,6 +5,8 @@ import fr.fuzeblocks.homeplugin.core.home.HomeManager;
 import fr.fuzeblocks.homeplugin.core.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.core.warps.WarpData;
 import fr.fuzeblocks.homeplugin.gui.GuiBridge;
+import fr.fuzeblocks.homeplugin.gui.modern.home.item.CancelHomeDeleteConfirmation;
+import fr.fuzeblocks.homeplugin.gui.modern.home.item.DeleteHomeConfirmation;
 import fr.fuzeblocks.homeplugin.gui.modern.warp.item.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;

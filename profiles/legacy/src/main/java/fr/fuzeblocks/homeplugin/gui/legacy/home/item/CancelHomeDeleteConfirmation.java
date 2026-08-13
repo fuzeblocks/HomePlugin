@@ -1,20 +1,19 @@
-package fr.fuzeblocks.homeplugin.gui.modern.warp.item;
+package fr.fuzeblocks.homeplugin.gui.legacy.home.item;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
 import fr.fuzeblocks.homeplugin.core.language.LanguageManager;
-import fr.fuzeblocks.homeplugin.gui.modern.ModernGuiBridge;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import xyz.xenondevs.invui.Click;
-import xyz.xenondevs.invui.item.AbstractItem;
-import xyz.xenondevs.invui.item.ItemBuilder;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.jetbrains.annotations.NotNull;
 import xyz.xenondevs.invui.item.ItemProvider;
+import xyz.xenondevs.invui.item.builder.ItemBuilder;import xyz.xenondevs.invui.item.impl.AbstractItem;
 
 import java.util.List;
 
 public class CancelHomeDeleteConfirmation extends AbstractItem {
- private final String homeName;
+    private final String homeName;
     private final LanguageManager languageManager = HomePlugin.getLanguageManager();
     private static final String HOME = "Home.";
     public CancelHomeDeleteConfirmation(String homeName) {
@@ -31,14 +30,14 @@ public class CancelHomeDeleteConfirmation extends AbstractItem {
 
 
         return new ItemBuilder(Material.EMERALD_BLOCK)
-                .setName(ModernGuiBridge.component(displayName))
-                .setLore(List.of(
-                        ModernGuiBridge.component(lore)
+                .setDisplayName(displayName)
+                .setLegacyLore(List.of(
+                        lore
                 ));
     }
 
     @Override
-    public void handleClick(ClickType clickType, Player player, Click click) {
+    public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent event) {
         player.closeInventory();
         HomePlugin.getGuiManager().openDeleteHome(player, homeName);
         player.sendMessage(languageManager.getStringWithColor(HOME + "Home-delete-canceled","&aSuppression annulée"));

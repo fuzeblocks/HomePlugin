@@ -5,6 +5,8 @@ import fr.fuzeblocks.homeplugin.core.home.HomeManager;
 import fr.fuzeblocks.homeplugin.core.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.core.warps.WarpData;
 import fr.fuzeblocks.homeplugin.gui.GuiBridge;
+import fr.fuzeblocks.homeplugin.gui.legacy.home.item.CancelHomeDeleteConfirmation;
+import fr.fuzeblocks.homeplugin.gui.legacy.home.item.DeleteHomeConfirmation;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import xyz.xenondevs.invui.gui.Gui;
@@ -20,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static net.kyori.adventure.text.TranslationArgument.component;
 
 public final class LegacyGuiBridge implements GuiBridge {
 
@@ -232,10 +236,39 @@ public final class LegacyGuiBridge implements GuiBridge {
 
         window.open();
     }
+
     @Override
     public void openDeleteHome(Player player, String homeName) {
+        HomeManager homeManager = HomePlugin.getHomeManager();
+        LanguageManager LANGUAGE_MANAGER = HomePlugin.getLanguageManager();
+        if (!homeManager.exist(player, homeName)) {
+           player.sendMessage(LANGUAGE_MANAGER.getStringWithColor(HOME + "Home-does-not-exist"));
+           return;
+       }
+       Item border = new SimpleItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(""));
+       PagedGui<Item> gui = PagedGui.items()
+                .setStructure(
+                        "# # # # # # # # #",
+                        "# x C x H x D x #",
+                        "# x x x x x x x #",
+                        "# # # # # # # # #")
+                .addIngredient('x', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
+                .addIngredient('#', border)
+                .addIngredient('H', new HomeItem(homeName))
+                .addIngredient('D', new DeleteHomeConfirmation(homeName))
+                .addIngredient('C', new CancelHomeDeleteConfirmation(homeName))
+                .build();
 
+       Window window = Window.single()
+                .setViewer(player)
+                .setTitle(HomePlugin.getLanguageManager().getStringWithColor(HOME + "Home-gui-title")
+                        .replace("%player%", player.getName()))
+                .setGui(gui)
+                .build();
+
+        window.open();
     }
+
     @Override
     public void openDeleteWarp(Player player, WarpData warpData) {
 
