@@ -13,7 +13,7 @@
 
 **Stable • Fast • Modular • API-Driven**
 
-[Features](#-features) • [Installation](#%EF%B8%8F-installation) • [Commands](#-commands) • [Configuration](#%EF%B8%8F-configuration) • [API Documentation](https://fuzeblocks.github.io/HomePlugin/)
+[Features](#-features) • [Installation](#%EF%B8%8F-installation) • [Commands & Permissions](#-commands--permissions) • [Configuration](#%EF%B8%8F-configuration) • [API Documentation](https://github.com/fuzeblocks/HomePlugin/wiki)
 
 ![Usage](https://bstats.org/signatures/bukkit/HomePlugin.svg)
 
@@ -73,127 +73,145 @@
 <img width="250" height="50" alt="minecraft_commands" src="https://github.com/user-attachments/assets/cf985ede-73b7-4e8a-a3e0-5d499e929ade" />
 
 
-### Player Commands
+### Commands & Permissions
+
+Below is the full list of plugin commands (as registered in plugin.yml / code) and the permissions used by the plugin. Defaults are taken from `plugin.yml` where present.
+
+Player commands
+
+| Command | Description | Permission | Default |
+|---|---:|---|---:|
+| `/sethome [name] [info]` | Create or update a named home (default name: `home`) | `homeplugin.command.sethome` | true |
+| `/home [name]` | Teleport to a home or open the home GUI | `homeplugin.command.home` | true |
+| `/delhome <name>` | Delete a named home | `homeplugin.command.delhome` | true |
+| `/listhome` or `/homes` | List your homes | `homeplugin.command.listhome` | true |
+| `/renamehome <old> <new>` | Rename an existing home | `homeplugin.command.renamehome` | true |
+| `/relocatehome <name>` | Move a home to your current location | `homeplugin.command.relocatehome` | true |
+| `/back` | Return to your previous location | `homeplugin.command.back.use` | op |
+| `/spawn` | Teleport to the global spawn | `homeplugin.command.spawn` | true |
+| `/tpa <player>` | Send a teleport request to another player | `homeplugin.command.tpa.use` | true |
+| `/tpaccept <player>` | Accept a teleport request | `homeplugin.command.tpa.use` (tpaccept) | true |
+| `/tpdeny <player>` | Deny a teleport request | `homeplugin.command.tpa.use` (tpdeny) | true |
+| `/rtp` | Random teleport (RTP) | `homeplugin.command.rtp` | true (when enabled) |
+| `/warp <name>` | Teleport to a predefined warp | `homeplugin.command.warp.use` | true |
+
+Admin / utility commands
 
 | Command | Description | Permission |
-|---------|-------------|------------|
-| `/sethome [name] [info]` | Create or update a home | `homeplugin.command.sethome` |
-| `/home [name]` | Teleport to a home (opens GUI if no name) | `homeplugin.command.home` |
-| `/delhome <name>` | Delete a home | `homeplugin.command.delhome` |
-| `/listhome` | List all your homes | `homeplugin.command.listhome` |
-| `/renamehome <old> <new>` | Rename an existing home | `homeplugin.command.home` |
-| `/relocatehome <name>` | Move a home to your current location | `homeplugin.command.home` |
-| `/back` | Return to your previous location | `homeplugin.back.use` |
-| `/spawn` | Teleport to server spawn | `homeplugin.command.spawn` |
-| `/tpa <player>` | Request to teleport to a player | `homeplugin.command.tpa` |
-| `/tpaccept [player]` | Accept a teleport request | `homeplugin.command.tpa` |
-| `/tpdeny [player]` | Deny a teleport request | `homeplugin.command.tpa` |
-| `/rtp` | Random teleport | `homeplugin.command.rtp` |
+|---|---:|---|
+| `/setspawn` | Set the global spawn for the current world | `homeplugin.admin` or `homeplugin.admin.spawn.set` |
+| `/delspawn` | Remove the global spawn for the current world | `homeplugin.admin` or `homeplugin.admin.spawn.delete` |
+| `/homeadmin <player>` | Manage another player's homes (create/delete/edit) | `homeplugin.admin` or `homeplugin.admin.home.manage` |
+| `/cache view` | View cache statistics | `homeplugin.admin` or `homeplugin.admin.cache.view` |
+| `/cache clearall` | Clear all plugin caches | `homeplugin.admin` or `homeplugin.admin.cache.clear` |
+| `/cache player <name>` | Clear cache for a specific player | `homeplugin.admin` or `homeplugin.admin.cache.player` |
+| `/lang set <code>` | Set server language (e.g. `en`, `fr`) | `homeplugin.admin` or `homeplugin.command.lang` |
+| `/lang update` | Update/merge language files | `homeplugin.admin` or `homeplugin.command.lang` |
+| `/plugins` | List loaded HomePlugin modules/extensions | `homeplugin.admin` |
+| `/update` | Trigger plugin update (shuts down server to replace jar) | `homeplugin.admin` |
 
-### Admin Commands
-
-| Command | Description | Permission |
-|---------|-------------|------------|
-| `/setspawn` | Set the global spawn point | `homeplugin.admin` |
-| `/delspawn` | Remove the global spawn point | `homeplugin.admin` |
-| `/homeadmin <player>` | Manage another player's homes | `homeplugin.admin` |
-| `/cache view` | View cache statistics | `homeplugin.admin` |
-| `/cache clearall` | Clear all plugin caches | `homeplugin.admin` |
-| `/cache player <name>` | Clear cache for a specific player | `homeplugin.admin` |
-| `/lang set <code>` | Set the active language | `homeplugin.lang.update` |
-| `/lang update` | Update language files (merge new keys) | `homeplugin.lang.update` |
-| `/plugins` | List loaded HomePlugin modules | `homeplugin.admin` |
+Notes:
+- Some permissions are grouped (e.g. `homeplugin.admin` is commonly used to gate admin commands).
+- The plugin also recognizes dynamic limit permissions of the form `homeplugin.limit.<N>` (e.g. `homeplugin.limit.5`). The highest matching value between 1 and 100 is applied.
+- Bypass permissions used: `homeplugin.home.bypass` (ignore limits), `homeplugin.spawn.bypassworlds` (allow /spawn in disabled worlds).
 
 ---
 
-## 🔐 Permissions
-
-### Basic Permissions
+## 🔐 Permissions (details)
 
 | Permission | Description | Default |
-|------------|-------------|---------|
-| `homeplugin.command.home` | Use home commands | `true` |
-| `homeplugin.command.sethome` | Create homes | `true` |
-| `homeplugin.command.delhome` | Delete homes | `true` |
-| `homeplugin.command.listhome` | List homes | `true` |
-| `homeplugin.command.spawn` | Use spawn | `true` |
-| `homeplugin.command.tpa` | Use TPA system | `true` |
-| `homeplugin.command.rtp` | Use random teleport | `true` |
-| `homeplugin.command.renamehome` | Rename home | `true` |
-| `homeplugin.command.relocatehome` | Relocate home | `true` |
-| `homeplugin.back.use` | Use /back command | `op` |
-| `homeplugin.admin` | Admin features | `op` |
-| `homeplugin.lang.update` | Manage languages | `op` |
+|---|---:|---:|
+| `homeplugin.command.home` | Use `/home` | true |
+| `homeplugin.command.sethome` | Create/modify homes | true |
+| `homeplugin.command.delhome` | Delete homes | true |
+| `homeplugin.command.listhome` | List homes | true |
+| `homeplugin.command.renamehome` | Rename homes | true |
+| `homeplugin.command.relocatehome` | Relocate homes | true |
+| `homeplugin.command.spawn` | Use `/spawn` | true |
+| `homeplugin.command.tpa.use` | Send/accept/deny TPA requests | true |
+| `homeplugin.command.rtp` | Use RTP (if enabled) | true |
+| `homeplugin.command.back.use` | Use `/back` | op |
+| `homeplugin.admin` | Access admin features (cache, manage others) | op |
+| `homeplugin.command.lang` | Manage language files | op |
+| `homeplugin.command.warp.modify` | Create/modify warps | op |
 
-### Dynamic Home Limits
+Dynamic limits:
+- `homeplugin.limit.<N>` — grants N homes. Range scanned 1..100; highest value applies.
 
-Set custom home limits using `homeplugin.limit.<number>`:
-- `homeplugin.limit.5` - 5 homes
-- `homeplugin.limit.10` - 10 homes
-
-The plugin scans from 1-100 and applies the highest value held by the player.
-
-### Bypass Permissions
-
-| Permission | Description |
-|------------|-------------|
-| `HomePlugin.home.bypass` | Ignore home limits |
+Bypass:
+- `homeplugin.home.bypass` — bypass home limits and some placement checks.
+- `homeplugin.spawn.bypassworlds` — allow `/spawn` even in disabled worlds.
 
 ---
 
 <img width="270" height="50" alt="homeplugin_config" src="https://github.com/user-attachments/assets/8f51b1c3-2c5b-4c16-91de-328482b45a39" />
 
 
-### 📄 Configuration File
+### 📄 Configuration (config.yml)
 
-The plugin's configuration is located at `plugins/HomePlugin/config.yml` after the first server start.
+The default configuration file is created at `plugins/HomePlugin/config.yml` on first start.
 
-**[📖 View Full config.yml](https://github.com/fuzeblocks/HomePlugin/blob/main/src/main/resources/config.yml)**
+**[📖 View full config.yml](https://github.com/fuzeblocks/HomePlugin/blob/main/src/main/resources/config.yml)**
 
-### 🔧 Configuration Overview
+Example (excerpt):
 
-#### Language & Localization
-Set your preferred language from: `FRENCH`, `ENGLISH`, `SPANISH`, `RUSSIAN`, `UKRAINIAN`, `GERMAN`, `TURKISH`
+```yaml
+# Simplified configuration — see the full file for all options
+General:
+  Language: "ENGLISH" # Options: FRENCH, ENGLISH, SPANISH, RUSSIAN, UKRAINIAN, GERMAN, TURKISH
+  Default-Home-Limit: 3
+  Disabled-Worlds: []
 
-#### Storage Backend
-Choose between **YAML** (simple file-based) or **MySQL** (database) storage:
-- `TYPE: "YAML"` - Default, no additional setup required
-- `TYPE: "MYSQL"` - Configure `HOST`, `PORT`, `USERNAME`, `PASSWORD`, `DATABASE`
+Storage:
+  TYPE: "YAML" # YAML or MYSQL
+  MYSQL:
+    HOST: "127.0.0.1"
+    PORT: 3306
+    USERNAME: "user"
+    PASSWORD: "password"
+    DATABASE: "homeplugin"
 
-#### Redis Cache (Optional)
-Enable `Use-Redis: true` for cross-instance synchronization. Configure host, port, SSL, and password as needed.
+Redis:
+  Use-Redis: false
+  Host: "127.0.0.1"
+  Port: 6379
+  UseSSL: false
+  Password: ""
 
-#### Home Settings
-- `Default-Home-Limit` - Base home limit (override with permissions)
-- `Prevent-Unfair-Location` - Block unsafe home placements
-- `Disabled-Worlds` - List of worlds where homes cannot be created
+Teleport:
+  Task-Duration: 3
+  Use-Title: true
+  Use-Message: true
+  Particles-After-Teleport: true
+  Skip-If-Op: true
 
-#### Teleport Warmup & Effects
-- `Task-Duration` - Delay before teleport (seconds)
-- `Use-Title` / `Use-Message` - Show teleport notifications
-- `Particles-After-Teleport` - Spawn particles on arrival
-- `Skip-If-Op` - Instant teleport for operators
+TPA:
+  Enabled: true
+  Tpa-Duration: 45
 
-#### TPA System
-- `Tpa-Duration` - Request expiration time (seconds)
+RTP:
+  Enabled: true
+  Cooldown-Seconds: 300
+  Max-Radius: 1000
 
-#### Random Teleport (RTP)
-- `Enabled` - Enable/disable RTP feature
-- `Cooldown-Seconds` - Cooldown between uses
-- `Max-Radius` - Maximum teleport distance from spawn
+Economy:
+  UseEconomy: false
+  Home-Creation-Price: 0.0
+  Home-Teleport-Price: 0.0
+  Tpa-Request-Price: 0.0
+  RTP-Price: 0.0
 
-#### Economy (Vault Integration)
-- `UseEconomy` - Enable economy features
-- `Home-Creation-Price` - Cost to create a home
-- `Home-Teleport-Price` - Cost to teleport to a home
-- `Tpa-Request-Price` - Cost to send TPA request
-- `RTP-Price` - Cost to use random teleport
+Features:
+  Enable-Home: true
+  Enable-TPA: true
+  Enable-Spawn: true
+  Enable-Warp: true
+```
 
-#### Feature Toggles
-Enable or disable specific features:
-- `Enable-TPA` - TPA system
-- `Enable-Spawn` - Spawn teleportation
-- `Enable-Home` - Home system
+Key notes:
+- Set `Storage.TYPE` to `MYSQL` and fill credentials when using a database backend.
+- Enable `Use-Redis: true` for cross-instance cache synchronization.
+- Adjust `Task-Duration` (teleport warmup) and RTP limits to suit gameplay balance.
 
 ---
 
@@ -202,15 +220,15 @@ Enable or disable specific features:
 
 ### PlaceholderAPI
 
-HomePlugin provides rich placeholders for use in other plugins:
+HomePlugin provides placeholders usable in other plugins:
 
 | Placeholder | Description |
-|-------------|-------------|
+|---|---|
 | `%homeplugin_homes%` | Comma-separated list of home names |
 | `%homeplugin_homes_numbers%` | Total number of homes |
 | `%homeplugin_has_homes%` | `true` if player has homes |
 | `%homeplugin_home_location_<name>%` | Formatted location |
-| `%homeplugin_home_exists_<name>%` | Check if home exists |
+| `%homeplugin_home_exists_<name>%` | Check if a home exists |
 | `%homeplugin_home_world_<name>%` | Home world name |
 | `%homeplugin_home_coordinates_<name>%` | Raw coordinates (X Y Z) |
 | `%homeplugin_home_teleport_price%` | Teleport cost |
@@ -220,23 +238,26 @@ HomePlugin provides rich placeholders for use in other plugins:
 
 ### Vault Economy
 
-Configure optional costs for various actions through Vault integration. Supports any Vault-compatible economy plugin.
+Configure optional costs via Vault. Compatible with any Vault-compatible economy plugin.
 
 ---
 
 <img width="250" height="50" alt="homeplugin_languages" src="https://github.com/user-attachments/assets/b2046b7e-35f1-4a8a-bfd4-376f3350096f" />
 
-Built-in language support with fully customizable YAML files:
+Built-in language support and customizable YAML files:
 
-- 🇫🇷 **French** (FRENCH)
-- 🇬🇧 **English** (ENGLISH)
-- 🇪🇸 **Spanish** (SPANISH) - _by Henri Topper_
-- 🇷🇺 **Russian** (RUSSIAN)
-- 🇺🇦 **Ukrainian** (UKRAINIAN)
-- 🇩🇪 **German** (GERMAN)
-- 🇹🇷 **Turkish** (TURKISH) - _by Xenetotyp3_
+- 🇫🇷 French — code: `FRENCH` (or `fr` for `/lang set`)
+- 🇬🇧 English — code: `ENGLISH` (or `en`)
+- 🇪🇸 Spanish — code: `SPANISH` (or `es`) — translation by Henri Topper
+- 🇷🇺 Russian — code: `RUSSIAN` (or `ru`)
+- 🇺🇦 Ukrainian — code: `UKRAINIAN` (or `uk`)
+- 🇩🇪 German — code: `GERMAN` (or `de`)
+- 🇹🇷 Turkish — code: `TURKISH` (or `tr`) — translation by Xenetotyp3
 
-Set your language in `config.yml` or use `/lang set <LANGUAGE>` in-game.
+How to add/update a language:
+1. Copy an existing language file from `plugins/HomePlugin/lang/` or `src/main/resources/lang/`.
+2. Translate the YAML keys while keeping the structure.
+3. Reload or merge via `/lang update` (or restart the server).
 
 ---
 
@@ -383,7 +404,3 @@ HomePlugin is licensed under the [Apache License 2.0](https://github.com/fuzeblo
 If you find this plugin useful, consider [sponsoring](https://client.pristis.fr/aff.php?aff=2) to support development!
 
 </div>
-
-
-
-
