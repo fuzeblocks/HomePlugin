@@ -18,8 +18,8 @@ Language:
   Start-of-teleportation-for-warp: "&6Warp'a ışınlanma başlıyor : "
 
   Update:
-    Update-Plugin: "&aLütfen eklentiyi güncelle, böylece en son özelliklerden ve hata düzeltmelerinden yararlanabilirsin!"
-    Update-Lang: "&aLütfen /lang update komutunu çalıştırarak dil dosyanı yeni anahtarlar ve çevirilerle güncelle!"
+    Update-Plugin: "&a[HomePlugin] Lütfen eklentiyi güncelle, böylece en son özelliklerden ve hata düzeltmelerinden yararlanabilirsin!"
+    Update-Lang: "&a[HomePlugin] Lütfen /lang update komutunu çalıştırarak dil dosyanı yeni anahtarlar ve çevirilerle güncelle!"
 
   Gui:
     BackItem:

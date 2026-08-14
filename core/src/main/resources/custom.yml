@@ -18,8 +18,8 @@ Language:
   Start-of-teleportation-for-warp: "&6Starting teleportation to warp : "
 
   Update:
-    Update-Plugin: "&aPlease update the plugin to enjoy the latest features and bug fixes!"
-    Update-Lang: "&aPlease run the /lang update command to update your language file with the new keys and translations!"
+    Update-Plugin: "&a[HomePlugin] Please update the plugin to enjoy the latest features and bug fixes!"
+    Update-Lang: "&a[HomePlugin] Please run the /lang update command to update your language file with the new keys and translations!"
 
   Gui:
     BackItem:
