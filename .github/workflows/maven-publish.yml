@@ -35,6 +35,7 @@ jobs:
         with:
           files: |
             profiles/legacy/target/legacy-*.jar
-            profiles/modern/target/modern-*.jar
+            profiles/modern-26.1.x/target/modern-*.jar
+            profiles/modern-26.2/target/modern-*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
