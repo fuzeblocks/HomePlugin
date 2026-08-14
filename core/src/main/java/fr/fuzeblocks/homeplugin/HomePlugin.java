@@ -32,7 +32,6 @@ import fr.fuzeblocks.homeplugin.gui.GuiBridgeFactory;
 import fr.fuzeblocks.homeplugin.other.commands.BackCommand;
 import fr.fuzeblocks.homeplugin.other.commands.CacheCommand;
 import fr.fuzeblocks.homeplugin.other.commands.LangCommand;
-import fr.fuzeblocks.homeplugin.other.commands.UpdateCommand;
 import fr.fuzeblocks.homeplugin.other.commands.home.*;
 import fr.fuzeblocks.homeplugin.other.commands.rtp.RTPCommand;
 import fr.fuzeblocks.homeplugin.other.commands.spawn.DeleteSpawnCommand;
@@ -108,7 +107,7 @@ public final class HomePlugin extends JavaPlugin {
     private static WarpManager warpManager;
     private static final InputsManager inputsManager = new InputsManager();
     private final String version = UpdateChecker.getVersionFromJar(this.getFile().toPath());
-    private final UpdateChecker updateChecker = new UpdateChecker(this, 113935);
+    private final UpdateChecker updateChecker = new UpdateChecker(this);
 
     private static String safeDigits(String ver) {
         return ver == null ? "0" : ver.replaceAll("[^0-9.]", "");
@@ -541,7 +540,6 @@ public final class HomePlugin extends JavaPlugin {
         bind("homeadmin", new HomeAdminCommand(), new HomeAdminCompleter());
         bind("plugins", new fr.fuzeblocks.homeplugin.other.commands.PluginCommand(), null);
         bind("lang", new LangCommand(this), new LangTabCompleter(this));
-        bind("update", new UpdateCommand(this), null);
 
         if (isActivatedFeature("Enable-TPA")) {
             bind("tpa", new TPACommand(), new TpaCompleter());
@@ -575,28 +573,71 @@ public final class HomePlugin extends JavaPlugin {
 
     private void checkUpdate() {
         UpdateChecker updater = getUpdateChecker();
+
         updater.setInitialVersion(version);
+
         if (updater.isInitialVersionOutdated(version)) {
-            getLogger().warning("Your current language files version are outdated ! Please update them to avoid any issue.");
+            getLogger().warning(
+                    "Your current language files version are outdated! " +
+                    "Please update them to avoid any issue."
+            );
+
             updater.setShouldAskForUpdateLangFiles(true);
         }
+
         updater.getVersion(currentVersion -> {
-            try {
-                String local = safeDigits(version);
-                String remote = safeDigits(currentVersion);
+        getLogger().warning(
+                "GitHub version received: [" + currentVersion + "]"
+        );
 
-                int localVersion = Integer.parseInt(local.replace(".", ""));
-                int remoteVersion = Integer.parseInt(remote.replace(".", ""));
+        if (isNewerVersion(version, currentVersion)) {
+            getLogger().warning(
+                    "A new update is available. Current: "
+                            + version
+                            + " | Latest: "
+                            + currentVersion
+            );
 
-                if (remoteVersion > localVersion) {
-                    getLogger().warning("A new update is available. Current: " + currentVersion + " | Latest: " + currentVersion);
-                    updater.setShoudAskForUpdatePlugin(true);
-                }
-            } catch (Exception e) {
-                getLogger().fine("Could not compare versions: " + e.getMessage());
-            }
-        });
+            updater.setShouldAskForUpdatePlugin(true);
+        }
+    });
     }
+
+    private boolean isNewerVersion(String current, String latest) {
+        String currentClean = current
+                .replaceFirst("^[vV]", "")
+                .split("-", 2)[0];
+
+        String latestClean = latest
+                .replaceFirst("^[vV]", "")
+                .split("-", 2)[0];
+
+        String[] currentParts = currentClean.split("\\.");
+        String[] latestParts = latestClean.split("\\.");
+
+        int length = Math.max(currentParts.length, latestParts.length);
+
+        for (int i = 0; i < length; i++) {
+            int currentPart = i < currentParts.length
+                    ? Integer.parseInt(currentParts[i])
+                    : 0;
+
+            int latestPart = i < latestParts.length
+                    ? Integer.parseInt(latestParts[i])
+                    : 0;
+
+            if (latestPart > currentPart) {
+                return true;
+            }
+
+            if (latestPart < currentPart) {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
 
     private void initPluginFunc() {
         for (fr.fuzeblocks.homeplugin.core.plugin.HomePlugin plug : pluginManager.getHomePlugin()) {
