@@ -14,7 +14,7 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <name>HomePlugin - Legacy</name>
-    <description>HomePlugin - Legacy</description>
+    <description>HomePlugin - Legacy (1.14 -> 1.21.11)</description>
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
         <maven.deploy.skip>false</maven.deploy.skip>
@@ -37,9 +37,135 @@
             <artifactId>invui-core</artifactId>
             <version>1.49</version>
         </dependency>
+
         <dependency>
             <groupId>xyz.xenondevs.invui</groupId>
             <artifactId>inventory-access-r1</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r2</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r3</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r4</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r5</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r6</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r7</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r8</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r9</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r10</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r11</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r12</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r13</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r14</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r15</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r16</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r17</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r18</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r19</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r20</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r21</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r22</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r23</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r24</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r25</artifactId>
+            <version>1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.xenondevs.invui</groupId>
+            <artifactId>inventory-access-r26</artifactId>
             <version>1.49</version>
         </dependency>
         <dependency>

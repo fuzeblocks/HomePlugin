@@ -184,7 +184,7 @@ public class HomeCommand implements CommandExecutor {
             String ver = raw.split("-")[0];
             int[] current = parseVersionTriple(ver);
             int[] min = {1, 14, 0};
-            int[] max = {26, 1, 2};
+            int[] max = {26, 2, 0};
             return compareVersion(current, min) >= 0 && compareVersion(current, max) <= 0;
         } catch (Exception e) {
             return false;

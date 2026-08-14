@@ -23,8 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static net.kyori.adventure.text.TranslationArgument.component;
-
 public final class LegacyGuiBridge implements GuiBridge {
 
     private static final String WARP_LIST = "Warp.List.";

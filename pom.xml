@@ -16,7 +16,8 @@
    <modules>
        <module>core</module>
        <module>profiles/legacy</module>
-       <module>profiles/modern</module>
+       <module>profiles/modern-26.1.x</module>
+       <module>profiles/modern-26.2</module>
    </modules>
 
    <properties>

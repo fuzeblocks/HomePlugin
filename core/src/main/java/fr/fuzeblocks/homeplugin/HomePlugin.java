@@ -341,7 +341,6 @@ public final class HomePlugin extends JavaPlugin {
         redisRegistration();
         databaseRegistration();
 
-        loadGuiBridge();
 
         // Domain managers
         homeRegistration();
@@ -349,6 +348,7 @@ public final class HomePlugin extends JavaPlugin {
         warpRegistration();
         loadCache();
 
+        loadGuiBridge();
 
         // Commands, events, completers
         commandRegistration();

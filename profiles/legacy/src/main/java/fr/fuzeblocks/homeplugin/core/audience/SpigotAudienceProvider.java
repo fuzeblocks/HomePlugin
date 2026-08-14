@@ -1,7 +1,6 @@
-package core.audience;
+package fr.fuzeblocks.homeplugin.core.audience;
 
 import fr.fuzeblocks.homeplugin.HomePlugin;
-import fr.fuzeblocks.homeplugin.core.audience.AudienceProvider;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.entity.Player;
