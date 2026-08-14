@@ -1,10 +1,9 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+# Deploy generated Javadoc (Core, Legacy, Modern) to GitHub Pages
+name: Deploy Javadoc to Pages
 
 on:
   release:
     types: [created]
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -21,8 +20,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
-  deploy:
+  build-and-deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -30,13 +28,34 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '25'
+          cache: maven
+
+      - name: Build all modules (core, legacy, modern)
+        run: mvn -B install -DskipTests
+
+      - name: Generate aggregated Javadoc
+        run: >
+          mvn -B org.apache.maven.plugins:maven-javadoc-plugin:3.4.0:aggregate
+          -DreportOutputDirectory=${{ github.workspace }}/target/site
+          -DdestDir=apidocs
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          path: 'target/site/apidocs'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
