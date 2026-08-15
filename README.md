@@ -4,7 +4,6 @@
 <img width="1021" height="55" alt="homeplugin_author" src="https://github.com/user-attachments/assets/31d00352-ad6c-42e0-8901-8e07f6088153" />
 
 [![](https://jitpack.io/v/fuzeblocks/HomePlugin.svg)](https://jitpack.io/#fuzeblocks/HomePlugin)
-[![sponsor](https://img.shields.io/badge/Sponsor-Support%20Development-blue)](https://client.pristis.fr/aff.php?aff=2)
 [![Discord](https://img.shields.io/discord/1394947383560900618?color=5865F2&logo=discord&logoColor=white&label=Discord)](https://discord.gg/5zJyKz6Nfm)
 [![License](https://img.shields.io/badge/license-Apache--2.0-orange.svg)](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
 
@@ -400,7 +399,5 @@ HomePlugin is licensed under the [Apache License 2.0](https://github.com/fuzeblo
 <div align="center">
 
 **Made with ❤️ by [fuzeblocks](https://github.com/fuzeblocks)**
-
-If you find this plugin useful, consider [sponsoring](https://client.pristis.fr/aff.php?aff=2) to support development!
 
 </div>
