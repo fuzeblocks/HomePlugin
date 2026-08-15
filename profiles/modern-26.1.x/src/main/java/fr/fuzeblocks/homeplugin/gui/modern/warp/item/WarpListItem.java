@@ -35,7 +35,13 @@ public class WarpListItem extends AbstractItem {
         int y = location.getBlockY();
         int z = location.getBlockZ();
         String world = location.getWorld() != null ? location.getWorld().getName() : "Unknown";
-        return new ItemBuilder(Material.RED_BED)
+        ItemBuilder itemBuilder = null;
+        if (warpData.getIcon() != null) {
+            itemBuilder = new ItemBuilder(warpData.getIcon());
+        } else {
+            itemBuilder = new ItemBuilder(Material.RED_BED);
+        }
+        return itemBuilder
         .setName(ModernGuiBridge.component(displayName))
         .addLoreLines(
                 ModernGuiBridge.component(

@@ -34,7 +34,14 @@ public class WarpListItem extends AbstractItem {
         int y = location.getBlockY();
         int z = location.getBlockZ();
         String world = location.getWorld() != null ? location.getWorld().getName() : "Unknown";
-        return new ItemBuilder(Material.RED_BED).setDisplayName(displayName).addLoreLines(languageManager.getStringWithColor(WARP_LIST + "Warp-location", "&9Position : &6X: %x% Y: %y% Z: %z% Monde: %world%").replace("%x%", String.valueOf(x)).replace("%y%", String.valueOf(y)).replace("%z%", String.valueOf(z)).replace("%world%", world), languageManager.getStringWithColor(WARP_LIST + "Warp-teleport-hover", "&eCliquez pour vous téléporter."));
+        ItemBuilder itemBuilder = null;
+        if (warpData.getIcon() != null) {
+            itemBuilder = new ItemBuilder(warpData.getIcon());
+        } else {
+            itemBuilder = new ItemBuilder(Material.RED_BED);
+        }
+        return itemBuilder.setDisplayName(displayName).addLoreLines(languageManager.getStringWithColor(WARP_LIST + "Warp-location", "&9Position : &6X: %x% Y: %y% Z: %z% Monde: %world%").replace("%x%", String.valueOf(x)).replace("%y%", String.valueOf(y)).replace("%z%", String.valueOf(z)).replace("%world%", world), languageManager.getStringWithColor(WARP_LIST + "Warp-teleport-hover", "&eCliquez pour vous téléporter."));
+
 
     }
 
