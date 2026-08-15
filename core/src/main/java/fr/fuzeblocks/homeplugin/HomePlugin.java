@@ -56,6 +56,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jspecify.annotations.NonNull;
 import redis.clients.jedis.DefaultJedisClientConfig;
 import redis.clients.jedis.HostAndPort;
@@ -355,8 +356,7 @@ public final class HomePlugin extends JavaPlugin {
         completerRegistration();
 
         // Optional plugin extensions
-        countPlugins();
-        initPluginFunc();
+        handlePlugins();
 
         // Update check
         checkUpdate();
@@ -651,6 +651,17 @@ public final class HomePlugin extends JavaPlugin {
             }
         }
         pluginManager.setCoreEnabled(true);
+    }
+
+    private void handlePlugins() {
+        BukkitRunnable task = new BukkitRunnable() {
+            @Override
+            public void run() {
+                countPlugins();
+                initPluginFunc();
+            }
+        };
+        task.runTaskLater(this, 1L); // Delay of 1 tick to ensure the server is fully initialized
     }
 
     private void stopPluginFunc() {
