@@ -1,58 +1,149 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                            http://maven.apache.org/xsd/maven-4.0.0.xsd">
-   <modelVersion>4.0.0</modelVersion>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-   <groupId>fr.fuzeblocks</groupId>
-   <artifactId>HomePlugin</artifactId>
-   <version>${revision}</version>
-   <packaging>pom</packaging>
+    <modelVersion>4.0.0</modelVersion>
 
-   <name>HomePlugin</name>
-   <description>[Created by fuzeblocks]</description>
+    <!-- Maven coordinates -->
+    <groupId>io.github.fuzeblocks</groupId>
+    <artifactId>HomePlugin</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
 
-   <modules>
-       <module>core</module>
-       <module>profiles/legacy</module>
-       <module>profiles/modern-26.1.x</module>
-       <module>profiles/modern-26.2</module>
-   </modules>
+    <!-- Project metadata -->
+    <name>HomePlugin</name>
+    <description>A lightweight, flexible home and teleport management plugin for Paper and Spigot servers.</description>
+    <url>https://github.com/fuzeblocks/HomePlugin</url>
 
-   <properties>
-       <revision>0.0.0</revision>
-       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-       <maven.deploy.skip>true</maven.deploy.skip>
-   </properties>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
-   <distributionManagement>
-       <repository>
-           <id>github</id>
-           <url>https://maven.pkg.github.com/fuzeblocks/HomePlugin</url>
-       </repository>
-   </distributionManagement>
+    <developers>
+        <developer>
+            <id>fuzeblocks</id>
+            <name>Thomas VILLIOT</name>
+            <url>https://github.com/fuzeblocks</url>
+        </developer>
+    </developers>
 
-   <repositories>
-       <repository>
-           <id>xenondevs</id>
-           <url>https://repo.xenondevs.xyz/releases</url>
-       </repository>
-       <repository>
-           <id>placeholderapi</id>
-           <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
-       </repository>
-       <repository>
-           <id>spigotmc-repo</id>
-           <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-       </repository>
-       <repository>
-           <id>sonatype</id>
-           <url>https://oss.sonatype.org/content/groups/public/</url>
-       </repository>
-       <repository>
-           <id>jitpack.io</id>
-           <url>https://jitpack.io</url>
-       </repository>
-   </repositories>
+    <scm>
+        <connection>scm:git:https://github.com/fuzeblocks/HomePlugin.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/fuzeblocks/HomePlugin.git</developerConnection>
+        <url>https://github.com/fuzeblocks/HomePlugin</url>
+    </scm>
+
+    <!-- Modules -->
+    <modules>
+        <module>core</module>
+        <module>profiles/legacy</module>
+        <module>profiles/modern-26.1.x</module>
+        <module>profiles/modern-26.2</module>
+    </modules>
+
+    <!-- Properties -->
+    <properties>
+        <revision>0.0.0</revision>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- Do not deploy the parent POM itself -->
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
+    <!-- GitHub Packages -->
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/fuzeblocks/HomePlugin</url>
+        </repository>
+    </distributionManagement>
+
+    <!-- Repositories used to resolve dependencies -->
+    <repositories>
+
+        <repository>
+            <id>xenondevs</id>
+            <url>https://repo.xenondevs.xyz/releases</url>
+        </repository>
+
+        <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
+
+        <repository>
+            <id>spigotmc-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+
+    </repositories>
+
+    <!-- Build configuration -->
+    <build>
+        <plugins>
+
+            <!-- Sources JAR required by Maven Central -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Javadoc JAR required by Maven Central -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.11.2</version>
+                <configuration>
+                    <doclint>none</doclint>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Maven Central Publisher Portal -->
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.11.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
+                    <waitUntil>published</waitUntil>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
 </project>
