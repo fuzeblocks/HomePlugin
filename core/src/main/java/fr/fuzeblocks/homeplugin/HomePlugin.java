@@ -456,7 +456,7 @@ public final class HomePlugin extends JavaPlugin {
                 new CreateTable(connection);
                 homeSQLManager = new HomeSQLManager(connection);
                 homeOfflineSQLManager = new HomeOfflineSQLManager();
-                spawnSQLManager = new SpawnSQLManager();
+                spawnSQLManager = new SpawnSQLManager(connection);
                 warpSQLManager = new WarpSQLManager(connection);
                 getLogger().info("MySQL storage initialized.");
             } catch (Exception e) {

@@ -18,7 +18,11 @@ import java.sql.SQLException;
  * The type Spawn sql manager.
  */
 public class SpawnSQLManager implements Spawn {
-    private final Connection connection = DatabaseConnection.getConnection();
+    private Connection connection;
+
+    public SpawnSQLManager(Connection connection) {
+        this.connection = connection;
+    }
 
     public boolean setSpawn(Location location) {
         String request = "INSERT INTO SpawnPlugin (X, Y, Z, YAW, PITCH, WORLD) VALUES (?, ?, ?, ?, ?, ?)";
