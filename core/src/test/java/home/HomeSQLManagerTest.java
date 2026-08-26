@@ -1,3 +1,5 @@
+package home;
+
 import fr.fuzeblocks.homeplugin.core.home.sql.HomeSQLManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

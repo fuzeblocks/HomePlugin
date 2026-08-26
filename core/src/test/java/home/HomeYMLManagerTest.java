@@ -1,3 +1,5 @@
+package home;
+
 import fr.fuzeblocks.homeplugin.core.home.yml.HomeYMLManager;
 import org.bukkit.Location;
 import org.bukkit.World;

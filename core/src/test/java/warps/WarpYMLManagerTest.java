@@ -1,3 +1,5 @@
+package warps;
+
 import fr.fuzeblocks.homeplugin.core.warps.WarpData;
 import fr.fuzeblocks.homeplugin.core.warps.yml.WarpYMLManager;
 import org.bukkit.Bukkit;
