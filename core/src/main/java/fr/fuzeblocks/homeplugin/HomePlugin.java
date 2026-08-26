@@ -66,6 +66,7 @@ import redis.clients.jedis.JedisPooled;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.Connection;
 
 /**
  * Main plugin class for HomePlugin.
@@ -451,11 +452,12 @@ public final class HomePlugin extends JavaPlugin {
             getLogger().info("Setting up MySQL storage...");
             try {
                 new DatabaseManager(this);
-                new CreateTable(DatabaseConnection.getConnection());
-                homeSQLManager = new HomeSQLManager();
+                Connection connection = DatabaseConnection.getConnection();
+                new CreateTable(connection);
+                homeSQLManager = new HomeSQLManager(connection);
                 homeOfflineSQLManager = new HomeOfflineSQLManager();
                 spawnSQLManager = new SpawnSQLManager();
-                warpSQLManager = new WarpSQLManager();
+                warpSQLManager = new WarpSQLManager(connection);
                 getLogger().info("MySQL storage initialized.");
             } catch (Exception e) {
                 getLogger().severe("Failed to initialize MySQL storage: " + e.getMessage());

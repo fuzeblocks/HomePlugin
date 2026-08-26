@@ -14,7 +14,11 @@ import java.util.*;
  */
 public class WarpSQLManager implements Warp {
 
-    private final Connection connection = DatabaseConnection.getConnection();
+    private Connection connection;
+
+    public WarpSQLManager(Connection connection) {
+        this.connection = connection;
+    }
 
 
     // ---------- Helpers ----------
@@ -320,6 +324,7 @@ public class WarpSQLManager implements Warp {
 
     @Override
     public boolean setDeniedPlayers(WarpData warpData, Set<UUID> deniedPlayers) {
+        if (warpData == null) return false;
         return setDeniedPlayers(warpData.getName(), deniedPlayers);
     }
 

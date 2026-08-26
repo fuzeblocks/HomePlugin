@@ -21,7 +21,10 @@ import java.util.List;
  * The type Home sql manager.
  */
 public class HomeSQLManager implements Home {
-    private final Connection connection = DatabaseConnection.getConnection();
+    private Connection connection;
+    public HomeSQLManager(Connection connection) {
+        this.connection = connection;
+    }
 
 
     @Override
