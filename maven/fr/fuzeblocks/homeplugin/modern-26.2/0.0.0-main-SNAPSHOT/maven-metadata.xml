@@ -3,21 +3,21 @@
   <groupId>fr.fuzeblocks.homeplugin</groupId>
   <artifactId>modern-26.2</artifactId>
   <versioning>
-    <lastUpdated>20260930132906</lastUpdated>
+    <lastUpdated>20260930133738</lastUpdated>
     <snapshot>
-      <timestamp>20260930.132906</timestamp>
+      <timestamp>20260930.133738</timestamp>
       <buildNumber>1</buildNumber>
     </snapshot>
     <snapshotVersions>
       <snapshotVersion>
         <extension>pom</extension>
-        <value>0.0.0-main-20260930.132906-1</value>
-        <updated>20260930132906</updated>
+        <value>0.0.0-main-20260930.133738-1</value>
+        <updated>20260930133738</updated>
       </snapshotVersion>
       <snapshotVersion>
         <extension>jar</extension>
-        <value>0.0.0-main-20260930.132906-1</value>
-        <updated>20260930132906</updated>
+        <value>0.0.0-main-20260930.133738-1</value>
+        <updated>20260930133738</updated>
       </snapshotVersion>
     </snapshotVersions>
   </versioning>
