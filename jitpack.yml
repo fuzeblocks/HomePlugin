@@ -1,5 +1,5 @@
 jdk:
-  - openjdk25
+  - openjdk21
 
 install:
-  - mvn clean install -pl core -am
+  - mvn clean install -pl core
