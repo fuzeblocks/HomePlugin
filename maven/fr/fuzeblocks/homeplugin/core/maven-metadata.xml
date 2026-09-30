@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>fr.fuzeblocks.homeplugin</groupId>
+  <artifactId>core</artifactId>
+  <versioning>
+    <versions>
+      <version>0.0.0-main-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20260930132906</lastUpdated>
+  </versioning>
+</metadata>
