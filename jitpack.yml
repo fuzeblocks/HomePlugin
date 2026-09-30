@@ -1,8 +1,5 @@
-before_install:
-  - echo "French fries are very good in production"
-  - sdk install java 25.0.1-tem
-  - sdk use java 25.0.1-tem
+jdk:
+  - openjdk25
 
 install:
-  - mvn -N install
-  - mvn clean install -DskipTests
+  - mvn clean install -pl core -am
