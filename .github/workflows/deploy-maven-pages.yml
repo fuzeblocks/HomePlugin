@@ -1,5 +1,5 @@
-# Deploy generated Javadoc (Core, Legacy, Modern) to GitHub Pages
-name: Deploy Javadoc and maven to Pages
+# Build once, publish Javadoc + a static Maven repo to GitHub Pages
+name: Deploy Javadoc and Maven repo to Pages
 
 on:
   release:
@@ -35,10 +35,24 @@ jobs:
           -DreportOutputDirectory=${{ github.workspace }}/target/site
           -DdestDir=apidocs
 
+      - name: Deploy artifacts to local staging repo
+        run: |
+          mkdir -p /tmp/maven-repo
+          mvn -B deploy -DskipTests \
+            -DaltDeploymentRepository=local::default::file:///tmp/maven-repo
+
       - name: Publish Javadoc to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: target/site/apidocs
           destination_dir: apidocs
+          keep_files: true
+
+      - name: Publish Maven repo to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: /tmp/maven-repo
+          destination_dir: maven
           keep_files: true
