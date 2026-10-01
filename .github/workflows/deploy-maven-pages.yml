@@ -1,5 +1,5 @@
 # Deploy generated Javadoc (Core, Legacy, Modern) to GitHub Pages
-name: Deploy Javadoc to Pages
+name: Deploy Javadoc and maven to Pages
 
 on:
   release:
