@@ -5,6 +5,8 @@ import fr.fuzeblocks.homeplugin.core.economy.EconomyManager;
 import fr.fuzeblocks.homeplugin.core.home.HomeManager;
 import fr.fuzeblocks.homeplugin.core.language.LanguageManager;
 import fr.fuzeblocks.homeplugin.core.task.TeleportationManager;
+import fr.fuzeblocks.homeplugin.gui.GUIManager;
+import fr.fuzeblocks.homeplugin.gui.GuiBridge;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,48 +22,6 @@ public class HomeCommand implements CommandExecutor {
 
     private static final String HOME = "Home.";
     private static final String LANG = "Language.";
-
-    /**
-     * Parses a version string into a triple array [major, minor, patch].
-     *
-     * @param v The version string
-     * @return Array of [major, minor, patch]
-     */
-    private static int[] parseVersionTriple(String v) {
-        if (v == null) return new int[]{0, 0, 0};
-        v = v.replaceAll("[^0-9.]", "");
-        String[] p = v.split("\\.");
-        int major = 0, minor = 0, patch = 0;
-        try {
-            if (p.length > 0) major = Integer.parseInt(p[0]);
-        } catch (Exception ignored) {
-        }
-        try {
-            if (p.length > 1) minor = Integer.parseInt(p[1]);
-        } catch (Exception ignored) {
-        }
-        try {
-            if (p.length > 2) patch = Integer.parseInt(p[2]);
-        } catch (Exception ignored) {
-        }
-        return new int[]{major, minor, patch};
-    }
-
-    /**
-     * Compares two version arrays.
-     *
-     * @param a First version array
-     * @param b Second version array
-     * @return Negative if a < b, 0 if equal, positive if a > b
-     */
-    private static int compareVersion(int[] a, int[] b) {
-        for (int i = 0; i < 3; i++) {
-            int cmp = Integer.compare(a[i], b[i]);
-            if (cmp != 0) return cmp;
-        }
-        return 0;
-    }
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         final LanguageManager languageManager = HomePlugin.getLanguageManager();
@@ -150,12 +110,7 @@ public class HomeCommand implements CommandExecutor {
             player.sendMessage(languageManager.getStringWithColor(HOME + "Have-no-home"));
             return false;
         }
-
-        if (isGuiSupported()) {
-            HomePlugin.getGuiManager().openHomeGui(player);
-        } else {
-            player.sendMessage(languageManager.getStringWithColor(HOME + "Gui-not-supported"));
-        }
+        HomePlugin.getGuiManager().openHomeGui(player);
         return true;
     }
 
@@ -173,21 +128,5 @@ public class HomeCommand implements CommandExecutor {
     }
 
 
-    /**
-     * Checks if the GUI is supported on the current server version.
-     *
-     * @return true if supported, false otherwise
-     */
-    private boolean isGuiSupported() {
-        try {
-            String raw = org.bukkit.Bukkit.getBukkitVersion();
-            String ver = raw.split("-")[0];
-            int[] current = parseVersionTriple(ver);
-            int[] min = {1, 14, 0};
-            int[] max = {26, 3, 0};
-            return compareVersion(current, min) >= 0 && compareVersion(current, max) <= 0;
-        } catch (Exception e) {
-            return false;
-        }
-    }
+
 }

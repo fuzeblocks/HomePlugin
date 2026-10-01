@@ -349,7 +349,11 @@ public final class HomePlugin extends JavaPlugin {
         warpRegistration();
         loadCache();
 
-        loadGuiBridge();
+        if (!loadGuiBridge()) {
+            getLogger().severe("Failed to load GUI bridge. Disabling plugin.");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
 
         // Commands, events, completers
         commandRegistration();
@@ -467,10 +471,23 @@ public final class HomePlugin extends JavaPlugin {
         }
     }
 
-    private void loadGuiBridge() {
+    private boolean loadGuiBridge() {
         GuiBridge bridge = GuiBridgeFactory.create(this);
         guiManager = new GUIManager(bridge);
+        getLogger().info("GUI bridge initialized with supported versions: " + guiManager.supportedVersions() + " and current server version: " + Bukkit.getBukkitVersion());
+        if (guiManager.supportedVersions().isEmpty()) {
+            getLogger().severe("No supported versions found for the GUI bridge. Disabling plugin...");
+            return false;
+        } else if (guiManager.isGuiSupported()) {
+            getLogger().info("Current server version is supported for the GUI bridge.");
+            return true;
+        } else {
+            getLogger().warning("Current server version is not supported for the GUI bridge.");
+            return false;
+        }
     }
+
+
 
     private void homeRegistration() {
         getLogger().info("Registering Homes...");
