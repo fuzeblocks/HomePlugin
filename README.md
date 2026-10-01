@@ -269,7 +269,7 @@ HomePlugin provides a comprehensive API for developers to integrate and extend f
 
 ### 📚 Documentation
 
-- **[JavaDocs](https://fuzeblocks.github.io/HomePlugin/)** - Complete API reference
+- **[JavaDocs](https://fuzeblocks.github.io/HomePlugin/apidocs)** - Complete API reference
 - **[Wiki](https://github.com/fuzeblocks/HomePlugin/wiki)** - Usage guides and examples
   - [Events](https://github.com/fuzeblocks/HomePlugin/wiki/Events)
   - [Home Managers](https://github.com/fuzeblocks/HomePlugin/wiki/Home-API-usage)
