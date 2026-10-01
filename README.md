@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/license-Apache--2.0-orange.svg)](https://github.com/fuzeblocks/HomePlugin?tab=Apache-2.0-1-ov-file)
 [![Maven test](https://github.com/fuzeblocks/HomePlugin/actions/workflows/maven-test.yml/badge.svg?branch=main)](https://github.com/fuzeblocks/HomePlugin/actions/workflows/maven-test.yml)
 [![Maven Package and publish](https://github.com/fuzeblocks/HomePlugin/actions/workflows/maven-publish.yml/badge.svg?event=release)](https://github.com/fuzeblocks/HomePlugin/actions/workflows/maven-publish.yml)
-[![Deploy Javadoc to Pages](https://github.com/fuzeblocks/HomePlugin/actions/workflows/javadoc.yml/badge.svg?branch=main)](https://github.com/fuzeblocks/HomePlugin/actions/workflows/javadoc.yml)
+[![Deploy Javadoc and Maven repo to Pages](https://github.com/fuzeblocks/HomePlugin/actions/workflows/deploy-maven-pages.yml/badge.svg)](https://github.com/fuzeblocks/HomePlugin/actions/workflows/deploy-maven-pages.yml)
 
 
 **A lightweight, flexible home & teleport management plugin for Paper/Spigot servers**
