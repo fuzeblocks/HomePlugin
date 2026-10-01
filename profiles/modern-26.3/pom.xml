@@ -5,7 +5,7 @@
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>fr.fuzeblocks.homeplugin</groupId>
-    <artifactId>modern-26.1.x</artifactId>
+    <artifactId>modern-26.3</artifactId>
     <packaging>jar</packaging>
 
     <parent>
@@ -15,8 +15,8 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <name>HomePlugin - Modern-26.1.x</name>
-    <description>HomePlugin - Modern-26.1.x</description>
+    <name>HomePlugin - Modern-26.3</name>
+    <description>HomePlugin - Modern-26.3</description>
 
     <properties>
         <maven.compiler.release>25</maven.compiler.release>
@@ -47,12 +47,12 @@
           <dependency>
             <groupId>xyz.xenondevs.invui</groupId>
             <artifactId>invui</artifactId>
-            <version>2.1.1</version>
+            <version>2.5.1</version>
         </dependency>
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>[26.1.2.build,)</version>
+            <version>[26.3.0.build,)</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
