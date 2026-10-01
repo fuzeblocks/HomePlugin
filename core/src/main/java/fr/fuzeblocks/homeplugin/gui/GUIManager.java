@@ -56,12 +56,16 @@ public final class GUIManager {
     private boolean isVersionSupported(String version) {
         return supportedVersions().stream()
                 .anyMatch(supportedVersion -> {
-                    String regex = "^" + supportedVersion
-                            .replace(".", "\\.")
-                            .replace("x", "\\d+")
-                            + (supportedVersion.contains("x")
-                            ? "$"
-                            : "(?:\\.build\\..+)?$");
+                    String regex;
+                    if (supportedVersion.endsWith(".x")) {
+                        String baseVersion = supportedVersion.substring(0, supportedVersion.length() - 2)
+                                .replace(".", "\\.");
+                        regex = "^" + baseVersion
+                                + "(?:\\.\\d+(?:\\.\\d+)*|-R\\d+(?:\\.\\d+)*(?:-[A-Za-z0-9.-]+)?)$";
+                    } else {
+                        regex = "^" + supportedVersion.replace(".", "\\.")
+                                + "(?:\\.build\\..+)?$";
+                    }
                     return version.matches(regex);
                 });
     }
