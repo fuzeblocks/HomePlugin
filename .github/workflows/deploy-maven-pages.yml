@@ -44,10 +44,10 @@ jobs:
             -DskipTests \
             -DaltDeploymentRepository=local::default::file:///tmp/maven-repo
 
-      - name: Publish to gh-pages
+      - name: Publish Maven repo to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: /tmp/maven-repo
           destination_dir: maven
-          keep_files: true
+          keep_files: true 
