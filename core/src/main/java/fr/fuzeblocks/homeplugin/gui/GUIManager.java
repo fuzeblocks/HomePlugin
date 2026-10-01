@@ -4,6 +4,8 @@ import fr.fuzeblocks.homeplugin.core.warps.WarpData;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 public final class GUIManager {
     private final GuiBridge bridge;
@@ -52,21 +54,29 @@ public final class GUIManager {
         String currentVersion = org.bukkit.Bukkit.getBukkitVersion();
         return isVersionSupported(currentVersion);
     }
+    protected boolean isVersionSupported(String version) {
+        if (version == null || version.isBlank()) {
+            return false;
+        }
 
-    private boolean isVersionSupported(String version) {
-        return supportedVersions().stream()
-                .anyMatch(supportedVersion -> {
-                    String regex;
-                    if (supportedVersion.endsWith(".x")) {
-                        String baseVersion = supportedVersion.substring(0, supportedVersion.length() - 2)
-                                .replace(".", "\\.");
-                        regex = "^" + baseVersion
-                                + "(?:\\.\\d+(?:\\.\\d+)*|-R\\d+(?:\\.\\d+)*(?:-[A-Za-z0-9.-]+)?)$";
-                    } else {
-                        regex = "^" + supportedVersion.replace(".", "\\.")
-                                + "(?:\\.build\\..+)?$";
+        String cleanVersion = version.toLowerCase(Locale.ROOT)
+                .split("[-_]")[0]
+                .replaceAll("\\.build\\..*", "");
+
+        List<String> supported = supportedVersions();
+        if (supported == null || supported.isEmpty()) {
+            return false;
+        }
+
+        return supported.stream()
+                .filter(Objects::nonNull)
+                .anyMatch(sup -> {
+                    String target = sup.toLowerCase(Locale.ROOT);
+                    if (target.endsWith(".x")) {
+                        String prefix = target.substring(0, target.length() - 2);
+                        return cleanVersion.equals(prefix) || cleanVersion.startsWith(prefix + ".");
                     }
-                    return version.matches(regex);
+                    return cleanVersion.equals(target);
                 });
     }
 
