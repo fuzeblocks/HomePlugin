@@ -61,7 +61,6 @@ Home:
   Invalid-world: "&cВи не можете встановити home в цьому світі."
   Disabled-world: "&cHomes вимкнено в цьому світі."
   No-solid-ground: "&cВи не можете встановити home тут, під ним немає твердої поверхні."
-  Gui-not-supported: "&cВаш клієнт не підтримує графічні інтерфейси."
 
   Home-item-displayname: "({homeName}) Home"
   Home-item-lore-teleport: "&aНатисніть, щоб телепортуватися до цього home."

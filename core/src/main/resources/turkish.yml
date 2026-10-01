@@ -61,7 +61,6 @@ Home:
   Invalid-world: "&cBu dünyada home ayarlayamazsın."
   Disabled-world: "&cBu dünyada home'lar devre dışı."
   No-solid-ground: "&cBuraya home ayarlayamazsın, altında sağlam zemin yok."
-  Gui-not-supported: "&cİstemcin grafik arayüzleri desteklemiyor."
 
   Home-item-displayname: "({homeName}) Home"
   Home-item-lore-teleport: "&aBu home'a ışınlanmak için tıkla."

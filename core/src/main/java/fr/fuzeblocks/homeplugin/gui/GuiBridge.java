@@ -3,7 +3,10 @@ package fr.fuzeblocks.homeplugin.gui;
 import fr.fuzeblocks.homeplugin.core.warps.WarpData;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 public interface GuiBridge {
+    List<String> supportedVersions();
     void openWarpListGUI(Player player);
 
     void openEditWarpGUI(Player player);

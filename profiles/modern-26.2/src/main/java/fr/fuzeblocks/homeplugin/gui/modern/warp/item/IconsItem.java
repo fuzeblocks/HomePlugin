@@ -40,7 +40,7 @@ public class IconsItem extends AbstractItem {
                         public ItemStack apply(ItemStack itemStack) {
                             ItemStack i = new ItemStack(material, 1);
                             i.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-                            i.addEnchantment(Enchantment.UNBREAKING,1);
+                            i.addUnsafeEnchantment(Enchantment.UNBREAKING,1);
                             return i;
                         }
                     });

@@ -38,10 +38,16 @@ public final class ModernGuiBridge implements GuiBridge {
     private final HomeManager homeManager = HomePlugin.getHomeManager();
 
     private static boolean isMaterialValidForIcon(Material material) {
-        String name = material.name();
-        return !name.equals("AIR") && !name.endsWith("_AIR");
+        return material.isItem()
+            && !material.isAir()
+            && !material.isLegacy();
     }
 
+
+    @Override
+    public List<String> supportedVersions() {
+        return List.of("26.3");
+    }
 
     @Override
     public void openWarpListGUI(Player player) {

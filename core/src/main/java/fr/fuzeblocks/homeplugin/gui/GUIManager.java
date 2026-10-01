@@ -3,6 +3,8 @@ package fr.fuzeblocks.homeplugin.gui;
 import fr.fuzeblocks.homeplugin.core.warps.WarpData;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 public final class GUIManager {
     private final GuiBridge bridge;
 
@@ -40,6 +42,28 @@ public final class GUIManager {
     }
     public void openDeleteWarp(Player player, WarpData warpName) {
         bridge.openDeleteWarp(player, warpName);
+    }
+
+    public List<String> supportedVersions() {
+        return bridge.supportedVersions();
+    }
+
+    public boolean isGuiSupported() {
+        String currentVersion = org.bukkit.Bukkit.getBukkitVersion();
+        return isVersionSupported(currentVersion);
+    }
+
+    private boolean isVersionSupported(String version) {
+        return supportedVersions().stream()
+                .anyMatch(supportedVersion -> {
+                    String regex = "^" + supportedVersion
+                            .replace(".", "\\.")
+                            .replace("x", "\\d+")
+                            + (supportedVersion.contains("x")
+                            ? "$"
+                            : "(?:\\.build\\..+)?$");
+                    return version.matches(regex);
+                });
     }
 
 
