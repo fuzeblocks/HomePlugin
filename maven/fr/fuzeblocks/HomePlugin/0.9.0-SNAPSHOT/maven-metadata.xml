@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>fr.fuzeblocks</groupId>
+  <artifactId>HomePlugin</artifactId>
+  <versioning>
+    <lastUpdated>20261006183324</lastUpdated>
+    <snapshot>
+      <timestamp>20261006.183324</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>0.9.0-20261006.183324-1</value>
+        <updated>20261006183324</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+  <version>0.9.0-SNAPSHOT</version>
+</metadata>
