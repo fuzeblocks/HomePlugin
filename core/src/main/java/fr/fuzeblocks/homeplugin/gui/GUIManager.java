@@ -54,7 +54,7 @@ public final class GUIManager {
         String currentVersion = org.bukkit.Bukkit.getBukkitVersion();
         return isVersionSupported(currentVersion);
     }
-    protected boolean isVersionSupported(String version) {
+    private boolean isVersionSupported(String version) {
         if (version == null || version.isBlank()) {
             return false;
         }
