@@ -126,6 +126,7 @@ HomePlugin works perfectly alongside the most popular Minecraft server plugins.
 |---|---|
 | **PlaceholderAPI** | Display homes, locations, counts and teleport information |
 | **Vault** | Add optional economy costs to teleportation features |
+| **LuckPerms** | Manage permissions |
 | **Paper** | Full support |
 | **Spigot** | Full support |
 | **Server forks** | Compatible with most Paper and Spigot derivatives |
