@@ -189,7 +189,7 @@ HomePlugin includes built-in translations for international communities.
 - **Minecraft:** 1.14 and newer
 - **Servers:** Paper, Spigot and derivatives
 - **Java:** Java 8 or newer
-- **Optional plugins:** Vault and PlaceholderAPI
+- **Optional plugins:** Vault, LuckPerms and PlaceholderAPI
 - **Storage:** YAML, MySQL and optional Redis caching
 
 ---
