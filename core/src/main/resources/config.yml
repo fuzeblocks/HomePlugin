@@ -42,6 +42,10 @@ Config:
   Home:
     Default-Home-Limit: 3
     Prevent-Unfair-Location: true
+    # Worlds where homes cannot be set.
+    # To disable none, use [] (empty list).
+    # WARNING: do NOT delete this section or leave it empty (Disabled-Worlds:),
+    # the default worlds will be restored on the next restart.
     Disabled-Worlds:
       - "world_nether"
       - "world_the_end"
