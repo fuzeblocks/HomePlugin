@@ -680,7 +680,7 @@ public final class HomePlugin extends JavaPlugin {
                 initPluginFunc();
             }
         };
-        task.runTaskLater(this, 1L); // Delay of 1 tick to ensure the server is fully initialized
+        task.runTaskLater(this, 1L);
     }
 
     private void stopPluginFunc() {
